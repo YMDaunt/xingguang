@@ -1,0 +1,44 @@
+<p>私信功能即将改版，暂不开放私信卡购买通道，如有不便，敬请谅解！祝您玩得开心哦~</p>
+<article>
+	<!-- <h3>您有<span v-cloak>{{ cardNum }}张私信卡</span></h3>
+	<p class="hint_1">使用私信卡后可畅快地与对方聊天哦</p>
+
+	<p class="hint_2">
+	私信是开启与主播1V1私密空间的第一步。<br>
+	大多数主播会通过私信和您交换微信哦。<br>
+	私信卡在使用后，有效期为1个月。
+	</p>
+
+	<ul class="type_list clearfix">
+		<li v-cloak v-for="(item, key, index) in cardsInfo" :class="{'active': clickIndex == key}" @click="readyBuy(key)">
+			<div class="ti_wrap">
+				<span class="type_icon ti_1"></span>
+			</div>
+			<h4>{{key}}张卡</h4>
+			<p><span>{{item}}</span>泡泡</p>
+		</li>
+
+	</ul> -->
+</article>
+
+<script type="text/javascript">
+//支付成功后回调，app调用
+function payResultCallback(code, errMsg){
+
+	if(code){
+		hasUnpayOrder = 0 //订单已成功支付
+
+		layer.closeAll()
+		vm.coin = parseInt(vm.coin) + parseFloat(localStorage.payMoney)*100
+
+		vm.buyMessageCard(vm.clickIndex)
+
+		//创建订单成功，调用app统计
+		try{
+			gBridge.onEvent('__submit_payment','{"userid": "'+ localStorage.uid +'","orderid": ' + localStorage.orderId + ',"item":"生成订单","amount": ' + localStorage.payMoney +' }')
+		}catch(e){
+		}
+	}
+}
+
+</script>

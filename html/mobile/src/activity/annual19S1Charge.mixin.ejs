@@ -1,0 +1,91 @@
+<div class="page-content">
+    <div class="banner"></div>
+
+    <div class="sec-charge">
+        <div class="pic-s sec-h1">充值福利1：充值返利 助攻年度</div>
+        <div class="state-i flex">
+            <span class="label">活动时间：</span>
+            <span class="value">6.12 12:00:00 - 6.25 23:59:59。</span>
+        </div>
+        <div class="state-i flex">
+            <span class="label">充值说明：</span>
+            <span class="value">24小时累计充值达到指定额度，可获得对应返点的克拉奖励。</span>
+        </div>
+        <div class="state-i flex">
+            <span class="label">充值方式：</span>
+            <span class="value">所有正规充值渠道均可。</span>
+        </div>
+        <div class="state-i flex">
+            <span class="label">返利方式：</span>
+            <span class="value">系统返利+人工补差额（联系客服处理）。</span>
+        </div>
+        <div class="state-i">充值金额及对应返点明细：</div>
+        <div class="pic-s charge-pic"></div>
+    </div>
+
+    <div class="sec-lot">
+        <div class="pic-s sec-h2">充值福利2：充值抽奖 好礼送不停</div>
+        <div class="state-i flex">
+            <span class="label">活动时间：</span>
+            <span class="value">6.12 12:00:00 - 6.25 23:59:59。</span>
+        </div>
+        <div class="state-i flex">
+            <span class="label">充值说明：</span>
+            <span class="value">1.单笔充值30元及以上即有机会获得年度礼物以及稀有靓号奖励。<br/>2.一个设备/IP每日仅一个ID第一次成功充值可参与抽奖，仅限当日抽奖。</span>
+        </div>
+        <div class="state-i flex">
+            <span class="label">充值方式：</span>
+            <span class="value">所有正规充值渠道均可。</span>
+        </div>
+    </div>
+
+    <!-- 抽奖框 -->
+    <div class="lot-box">
+        <div
+            v-for="(litem, li) in lotBox"
+            class="lot-i g-s fl-box g-common"
+            ref="lotI">
+            <div :class="['lot-g g-s', litem.icon]">{{ litem.name }}</div>
+        </div>
+
+        <div :class="['btn-s lottery', lotType]" @click="goLot"></div>
+    </div>
+
+    <!-- 公告框 -->
+    <div class="pic-s boardbox">
+        <div
+            class="board-inner"
+            ref="board-warp">
+            <div
+                class="board-list"
+                ref="board-list">
+                <div
+                    v-for="(lo, lind) in lotList"
+                    :key="'lot-i1-' + lind"
+                    class="board-i txt-of">{{ lo }}</div>
+                <div
+                    v-if="lotList.length > 3"
+                    v-for="(lo, lind) in lotList"
+                    :key="'lot-i2-' + lind"
+                    class="board-i txt-of">{{ lo }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tips">
+        <div class="state-i flex">
+            <span class="label">注：</span>
+            <span class="value">1.单笔充值金额越大，中的奖品会越好哦。<br/><br/>2.用户中奖后，所获年度礼物将直接发放至用户背包，自定义8位靓号为稀有奖励，总共会有3个，会在年度结束之后发放，抽中用户需在年度大人物之后选择靓号。<br/><br/>3.本活动最终解释权归平台运营团队所有。</span>
+        </div>
+    </div>
+</div>
+
+<!-- floater -->
+<div class="floater btn btn-s btn-charge" @click="goRecharge">去充值</div>
+
+<!-- toast msg层 -->
+<div class="toast-container" v-show="toastState" @click="hideToast">
+    <div class="toast-msg">{{ toastMsg }}</div>
+</div>
+
+<loading ref="loading" />

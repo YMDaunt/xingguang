@@ -1,0 +1,20 @@
+<div id="app"  v-cloak>
+	<div class="input_wrap">
+		<span class="label_1">点播收益</span>
+		<div class="fee_num" @click="inputNum">
+			{{feeNum}}
+			<p class="conversion_price" >{{feeNum/100}}元/分钟</p>
+		</div>
+		<span class="label_2">克拉/分钟</span>
+	</div>
+	
+	<small class="error_hint" v-if="isInputError" ><i></i>输入违规！仅限30-1000的整数数字</small>
+
+	<ul class="rule">
+		<li>1. 输入30-1000之间的数字，不可出现小数点；</li>
+		<li>2. 建议收费为50克拉/分钟。</li>
+	</ul>
+
+	<button class="btn" v-if="!isSaveSuccess" @click="setFee()">保存</button>
+	<button class="btn readonly" disabled="disabled" v-if="isSaveSuccess">已保存</button>
+</div>

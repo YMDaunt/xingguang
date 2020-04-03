@@ -1,0 +1,28 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/mobile/v2/img/activity/springFestival2018" */ -->
+    <%= content %>
+</div>
+
+<script>
+(function adaptation () {
+    let href = window.location
+    if (/Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone|SymbianOS/i.test(navigator.userAgent)) {
+        if (href.host.indexOf('www') >= 0) {
+            window.location.href = '//m.tuho.tv/dist' + href.pathname
+        }
+    } else {
+        if (href.host.indexOf('www') < 0) {
+            window.location.href = '//www.tuho.tv' + href.pathname.replace('/dist', '')
+        }
+    }
+}())
+</script>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '2019，星光来了',
+    content: '管你是用户还是主播，大过年的，星光送礼就是了！',
+    link: location.href,
+    imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/springFestival2018/share.jpg")}' // eslint-disable-line
+})
+</script>

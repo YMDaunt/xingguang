@@ -1,0 +1,21 @@
+<article>
+<nav>
+	我的积分：<span class="num" v-cloak>{{myCredits}}</span>
+	<img class="help_icon" src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/family/help.png')}" @click="showHelp"/>
+</nav>
+
+<section class="credits_list_wrap">
+	<ul>
+		<li v-for="item in creditsList">
+			<p v-cloak>{{item.desc}}</p>
+			<p v-cloak>{{item.add_time}}</p>
+
+			<span v-cloak>{{item.bonus_point | getListCredits(item.discount_point)}}</span>
+		</li>
+	</ul>
+
+	<p class="click_load_more" v-cloak >
+		<i v-show="isLoading"></i><span v-show="isEnd">没有更多了哦 ㄒoㄒ~~</span>
+	</p>
+</section>
+</article>

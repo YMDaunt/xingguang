@@ -1,0 +1,50 @@
+/**
+ * @authors edge 
+ */
+@bf: 108rem;
+@fr: 3;
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
+h1,h2,h3,strong {
+    font-weight: normal;
+}
+[v-cloak] {
+    display: none;
+}
+//滚动更流畅
+body {
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+    color: #ffee9f;
+}
+.bgm(@imgName) {
+    background-image: url('../../img/activity/withdraw/@{imgName}');
+}
+.wrap {
+    height: 3386/@bf;
+    padding-top: 976/@bf;
+    .bgm('bg.jpg');
+    background-size: 1080/@bf 3386/@bf;
+}
+.text {
+    width: 830/@bf;
+    margin: 0 auto;
+    color: #801800;
+    font-size: 36/@bf;
+    p {
+        line-height: 50/@bf;
+        margin-bottom: 22/@bf;
+    }
+    strong {
+        color: #ff4323;
+    }
+    .max-bottom {
+        padding-bottom: 32/@bf;
+    }
+}
+.tr {
+    text-align: right;
+    line-height: 64/@bf;
+    font-size: 36/@bf;
+    color: #ff4323;
+}

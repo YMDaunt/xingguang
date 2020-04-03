@@ -1,0 +1,82 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="wrap">
+        <div class="ban"></div>
+        <div class="con">
+            <div class="share-con">
+                <p>奖励1：好友每笔充值，你都能拿10%分成</p>
+                <p>奖励2：好友赚钱收益，你都能拿10%分成</p>
+                <span>PS：有效期3年，赚钱赚到手软</span>
+                <h3>我的邀请码</h3>
+                <div class="code"> 
+                    <strong>{{inviteCode}}</strong>
+                    <button class="copy" onclick="" v-bind:data-clipboard-text="inviteCode"></button> 
+                </div>
+                <div class="invite" @click="invite()"></div>
+            </div>
+
+            <!-- rank -->
+            <div class="rank">
+                <div class="tab-tit">
+                    <div :class="{'choose': tabCon}" @click="tab('choose')"></div>
+                    <div :class="{'choose': !tabCon}" @click="tab('')"></div>
+                </div>
+                <div class="tab-rank">
+                    <div class="mk-list" v-show="tabCon">
+                        <ul v-if="rankList.length > 0">
+                            <li v-for="(item, index) in rankList">
+                                <div class="mes">
+                                    <div class="number" v-if="index < 3"></div>
+                                    <div class="number" v-else>NO.{{index+1}}</div>
+                                    <img :src="item.headPic" alt="" />
+                                    <strong>{{item.nickname}}</strong>
+                                </div>
+                                <div class="mark">邀请收益{{item.money}}元</div>
+                            </li>
+                        </ul>
+                        <p v-else>收益正在路上</p>
+                    </div>
+                    <div class="invite-list" v-show="!tabCon">
+                        <div class="total">
+                            <p>总收益金额(元)： <span>{{money}}</span></p>
+                            <p>总邀请人数(人)： <span>{{count}}</span></p>
+                        </div>
+                        <div class="detail">
+                            <ul>
+                                <li v-for="(item, index) in inviteList">
+                                    <div class="mes">
+                                        <img :src="item.headPic" alt="" />
+                                        <span>{{item.nickname}}</span>
+                                    </div>
+                                    <div class="time">{{item.addTime}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rule-btn" @click="ruleBox = true"></div>
+        <div class="posi rule" v-show="ruleBox">
+            <div class="rule-con">
+                <div class="close-btn" @click="ruleBox = false"></div>
+                <h2>规则介绍</h2>
+                <p>1.将自己的邀请码发送给好友，好友在注册时填写，则可与你形成绑定关系；</p>
+                <p>2.绑定后，好友的每次充值，你都能获得10%的分成；好友收礼物获得的收益（打招呼除外），你也能获得10%的分成；</p>
+                <p>3.分成收益可以直接提现；</p>
+                <p>4.只有成功邀请的前50名好友的充值/收益行为可以给你带来分成收益；后续邀请的好友将不会给你带来分成收益。</p>
+                <span>例，若好友充值10000元，则可得分成1000元；若好友收益10000金豆，则可得分成1000金豆。</span>
+            </div>
+        </div>
+        <div class="copy-right">本活动最终解释权归平台所有</div>
+    </div>
+    <div class="tost" v-show="tostBox">{{tostText}}</div>
+</main>
+
+<script type="text/javascript">
+    // var gjShareParam = JSON.stringify({
+    //     title: '如何赚钱',
+    //     content: '',
+    //     link: location.href,
+    //     imgLink: ''
+    // });
+</script>

@@ -1,0 +1,38 @@
+// ../../img/business/one
+
+@activityName: 'business/one';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+@baseImgPath: '../../img/business/one';
+body, html{
+    height: 100%;
+}
+img{
+    width: 100%;
+    display: block;
+}
+.swiper-container {
+    width: 100%;
+    height: 721/@bf;
+}  
+.bottom{
+    position: fixed;
+    bottom: 0;
+}
+.top{
+    position: fixed;
+    top: 0;
+    z-index: 2;
+}
+.top, .bottom{
+    max-width: 640px;  
+    left: 50%;
+    z-index: 2;
+    transform: translateX(-50%);
+    &:active{
+        opacity: 0.8;
+    }
+}
+
+.body_two{
+    padding: 146/@bf 0;
+}

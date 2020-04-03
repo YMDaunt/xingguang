@@ -1,0 +1,17 @@
+<main id="app" v-cloak>
+    <div class="balance">
+        <div class="balance-num">{{balance}}</div>
+        <p class="balance-tip">金币余额</p>
+    </div>
+    <p class="choose-tip">请选择充值金额</p>
+    <ul class="recharge-list">
+        <li v-for="(item,index) in rechargeList" :key="index" @click="recharge(item.rmb)">
+            <span class="coin-logo"></span>
+            <span class="coin-num">{{item.coin}}金币</span>
+            <span class="rmb">￥ {{item.rmb}}</span>
+        </li>
+    </ul>
+    <p v-if="!newVersion"><a href="/dist/makeFriends/rechargeHistory.html" class="recharge-history">充值记录</a></p>
+    <p class="tips">在充值过程中遇到问题</p>
+    <p class="tips">请在App内【我的-在线客服】中联系客服</p>
+</main>

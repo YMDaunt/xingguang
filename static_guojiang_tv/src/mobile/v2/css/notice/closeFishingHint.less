@@ -1,0 +1,29 @@
+// ../../img/notice/closeFishingHint
+
+@activityName: 'notice/closeFishingHint';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+html,body, #app{
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    background: #fff;
+}
+img{display: inline-block;height: 100%;}
+.ios_img{
+    width:100%;
+}
+.close{
+    background: url(../../img/common/close.png) no-repeat top center;
+    background-size: 55/@bf 54/@bf;
+    display: inline-block;
+    width: 55/@bf;
+    height: 54/@bf;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    transform: scale(0.7);
+    &.android{
+        right: auto;
+        left: 25px;
+    }
+}

@@ -1,0 +1,36 @@
+<article id="app">
+    <span class="mask" @click="closeWebview()"></span>
+    <div class="banner" v-show="showBanner" v-cloak>
+        <!-- /* img path - "../../../../static_guojiang_tv/src/mobile/v2/img/noviceWelfare/fans" */ -->
+        <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/noviceWelfare/fans/bg.png')}" alt="background" class="bg">
+    
+        <div class="help">
+            <span>解锁5大粉丝特权</span>
+            <div class="help_icon" @click="goFansRule()">
+                <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/noviceWelfare/fans/help_icon.png')}" alt="">
+            </div>
+        </div>
+    
+        <div class="gift"></div>
+
+        <div class="btn_wrap" @click="unlock()">
+            <div class="btn">1元特惠解锁</div>
+        </div>
+    
+        <p class="tips">每名用户和每台设备最多只能购买三次哟</p>
+    </div>
+</article>
+<script>
+// 支付成功之后回调函数
+function payResultCallback(code,errMsg){
+    if(code){
+        // 标志订单支付成功，必须
+        hasUnpayOrder = 0;
+        
+        window.DO_NOT_CLOSE_WEBVIEW = true
+        layer.closeAll();
+        vm.goBuy();
+        vm.reportSucc();
+    }
+}
+</script>

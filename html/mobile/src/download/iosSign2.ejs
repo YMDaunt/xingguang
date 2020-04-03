@@ -1,0 +1,31 @@
+<div id="app" v-cloak>
+    <div class="qrcode_wrap">
+        <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/download/iosSign2/qrcode.png')}" alt="二维码" class="qrcode">
+    </div>
+
+    <span class="figure figure_1"></span>
+    <span class="figure figure_2"></span>
+
+    <p class="title">第一步：点击安装</p>
+    <span class="btn" id="install" @click="install">点击安装</span>
+
+    <p class="title">第二步：立即信任</p>
+    <span class="btn" id="trust" @click="trust">立即信任</span>
+
+    <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/download/iosSign2/1.jpg')}" alt="步骤" class="step">
+    <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/download/iosSign2/2.jpg')}" alt="步骤" class="step">
+
+    <div class="mask_wrap" v-show="showDownloadHint" @click="showDownloadHint = !showDownloadHint">
+        <span class="mask"></span>
+        <span class="hint"></span>
+    </div>
+</div>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '星光直播IOS下载',
+    content: '星光直播IOS企业签下载步骤',
+    link: location.href,
+    imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/common/logo_1.png")}' // eslint-disable-line
+})
+</script>

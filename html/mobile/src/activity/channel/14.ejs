@@ -1,0 +1,36 @@
+<main class="main_box" id="app" v-cloak>
+    <section>
+    	   	<img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/channel/14/1.jpg')}" class="fadeIn animated">
+    </section>
+	<section class="part-2">
+		<img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/channel/14/2.jpg')}" class="fadeIn animated">	
+		
+		<div class="btn_wrap">
+			<span class="flow_btn fadeIn animated" v-on:click="getFlow"></span>
+		</div>	
+		
+	</section>
+
+    <section>
+			<img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/channel/14/3.jpg')}" class="fadeIn animated">
+    </section>
+
+
+	<div class="dl_footer" v-bind:style="{display:activeDisplay}">
+	    <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/common/rq/logo.png')}" class="fl">
+	    <div class="desc fl">
+	        <h2>人气直播</h2>
+	        <p>不是所有人都能看的直播</p>
+	    </div>
+	    <a v-bind:href='downUrl'>立即下载</a>
+	</div>
+</main>
+<script>
+	var gjShareParam = JSON.stringify({
+        title: '人气直播充值送流量',
+        content: '人气送流量啦！！只要充值就可获得流量，还不快来看看',
+        link: location.href,
+        imgLink: ''
+    });
+</script>
+

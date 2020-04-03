@@ -1,0 +1,193 @@
+<main class="wrap" id="app" v-cloak>
+    <div class="cover" v-show="!canTab">
+        <div class="page-load">
+            <div class="load">
+                <div class="load-txt">{{jd}}%</div>
+                <div class="line" :style="'width:' + jd + '%'">
+                    <b></b>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="no-with" v-if="!isWith">
+        <div class="page-txt">
+            <div class="page-txt">
+                <p>很遗憾</p>
+                <p>星光没有参与你的2019</p>
+            </div>
+            <div class="page-txt">
+                <p>展望2020</p>
+                <p>{{who}}期待与你继续同行！</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div :class="[isMod? 'swiper-slide page-index swiper-no-swiping' : 'swiper-slide page-index']">
+                <img class="ani" :src="userImg" alt="" swiper-animate-effect="rotateIn" swiper-animate-duration="1.5s" swiper-animate-delay="0.5s" />
+                <h2>我和{{who}}的2019</h2>
+                <p class="ani" swiper-animate-effect="bounceInLeft" swiper-animate-duration="1s" swiper-animate-delay="0.5s">星光灿烂  感谢有你</p>
+                <div class="choose-id ani" v-if="canChoose" swiper-animate-effect="bounceInUp" swiper-animate-duration="1s" swiper-animate-delay="1.5s">
+                    <div @click="getMod()"></div>
+                    <div @click="getUser()"></div>
+                </div>
+            </div>
+            <div class="swiper-slide page1">
+                <div class="page-txt ani" v-if="chooseMod" swiper-animate-effect="bounceInLeft" swiper-animate-duration="1.5s" swiper-animate-delay="0.5s">
+                    <p>还记得<strong>{{mod.firstVideoPublish}}</strong></p>
+                    <p>那天,是你2019年第一次开播</p>
+                </div>
+                <div class="page-txt ani" v-if="chooseUser" swiper-animate-effect="bounceInLeft" swiper-animate-duration="1.5s" swiper-animate-delay="0.5s">
+                    <p>还记得<strong>{{user.firstLogin}}</strong></p>
+                    <p>那天,是你2019年第一次打开{{who}}</p>
+                </div>
+                <div class="page-txt ani" swiper-animate-effect="bounceInLeft" swiper-animate-duration="1.5s" swiper-animate-delay="2s">
+                    <p>我们的故事开始了</p>
+                    <p>转眼间2019也悄然过去</p>
+                    <p v-if="chooseMod">{{who}}已经和你相伴<strong>{{mod.activeDays}}</strong>天</p>
+                    <p v-if="chooseUser">{{who}}已经和你相伴<strong>{{user.activeDays}}</strong>天</p>
+                </div>
+            </div>
+            <div class="swiper-slide page2">
+                <div class="page-txt ani" v-if="chooseMod" swiper-animate-effect="bounceInDown" swiper-animate-duration="1.5s" swiper-animate-delay="0.5s">
+                    <p>这一年</p>
+                    <p>你一共直播<strong>{{mod.videoPublishTimes}}</strong>场</p>
+                    <p>其中<strong>{{mod.accompanyUserNickname}}</strong>陪伴你的时间最久</p>
+                </div>
+                <div class="page-txt ani" v-if="chooseUser" swiper-animate-effect="bounceInDown" swiper-animate-duration="1.5s" swiper-animate-delay="0.5s">
+                    <p><strong>{{user.accompanyModNickname}}</strong></p>
+                    <p>是相伴你在{{who}}最久的主播</p>
+                    <p>你们一起度过了<strong>{{user.accompanyModDays}}</strong>天</p>
+                </div>
+
+                <div class="page-txt ani" swiper-animate-effect="bounceInUp" swiper-animate-duration="1.5s" swiper-animate-delay="2s">
+                    <p>情之所至 一往而情深</p>
+                    <div class="user-info" v-if="chooseMod">
+                        <img :src="mod.accompanyUserHeadPic" alt="" />
+                        <span>{{mod.accompanyUserNickname}}</span>
+                    </div>
+                    <div class="user-info" v-if="chooseUser">
+                        <img :src="user.accompanyModHeadPic" alt="" />
+                        <span>{{user.accompanyModNickname}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide page3">
+                <div class="page-txt ani" v-if="chooseMod" swiper-animate-effect="bounceInLeft" swiper-animate-duration="1.5s" swiper-animate-delay="0.5s">
+                    <p>这一年</p>
+                    <p>你最喜欢在<strong>{{mod.videoPublishPeriod}}</strong>开播</p>
+                    <p>和大家聊聊天、唱唱歌</p>
+                </div>
+                <div class="page-txt ani" v-if="chooseUser" swiper-animate-effect="bounceInLeft" swiper-animate-duration="1.5s" swiper-animate-delay="0.5s">
+                    <p>这一年</p>
+                    <p>你最喜欢在<strong>{{user.activePeriod}}</strong>来到{{who}}直播</p>
+                    <p>和大家聊聊天、唱唱歌</p>
+                </div>
+
+                <div class="page-txt ani" v-if="chooseMod" swiper-animate-effect="bounceInLeft" swiper-animate-duration="1.5s" swiper-animate-delay="2s">
+                    <p>这一年</p>
+                    <p>你单场直播最长时间是<strong>{{mod.videoPublishLongestTime}}</strong>分钟</p>
+                    <p>简直是直播机器</p>
+                </div>
+            </div>
+            <div class="swiper-slide page4">
+                <div class="page-txt ani" v-if="chooseMod" swiper-animate-effect="flipInX" swiper-animate-duration="1s" swiper-animate-delay="0.5s">
+                    <p>这一年</p>
+                    <p>你的粉丝数达到了<strong>{{mod.fansNum}}</strong></p>
+                </div>
+                <div class="page-txt ani" v-if="chooseUser" swiper-animate-effect="flipInX" swiper-animate-duration="1s" swiper-animate-delay="0.5s">
+                    <p>你是<strong>{{user.favoriteModNickname}}</strong>的</p>
+                    <p>超级铁粉</p>
+                    <p>为TA送出<strong>{{user.costForFavoriteMod}}</strong>{{name}}心意</p>
+                </div>
+
+                <div class="page-txt ani" v-if="chooseMod" swiper-animate-effect="flipInY" swiper-animate-duration="1s" swiper-animate-delay="1.5s">
+                    <div class="user-info">
+                        <img :src="mod.biggestFanHeadPic" alt="" />
+                        <span>{{mod.biggestFanNickname}}</span>
+                    </div>
+                    <p>是你的超级铁粉</p>
+                    <p>为你送出<strong>{{mod.biggestFanCost}}</strong>{{name}}心意</p>
+                </div>
+                <div class="page-txt ani" v-if="chooseUser" swiper-animate-effect="flipInY" swiper-animate-duration="1s" swiper-animate-delay="1.5s">
+                    <div class="user-info">
+                        <img :src="user.favoriteModHeadPic" alt="" />
+                        <span>{{user.favoriteModNickname}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide page5">
+                <div class="page-txt ani" swiper-animate-effect="fadeIn" swiper-animate-duration="1s" swiper-animate-delay="0.5s">
+                    <p>这一年</p>
+                    <p v-if="chooseMod">你收到礼物最多的是</p>
+                    <p v-if="chooseUser">你送出礼物最多的是</p>
+                    <ul v-if="chooseMod">
+                        <li v-for="(item, index) in mod.mostReceivedGifts">
+                            <img :src="item.img" alt="" />
+                            <div class="gift">
+                                <span>{{item.giftName}}*</span>
+                                <strong>{{item.num}}</strong>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul v-if="chooseUser">
+                        <li v-for="(item, index) in user.mostSentGifts">
+                            <img :src="item.img" alt="" />
+                            <div class="gift">
+                                <span>{{item.giftName}}*</span>
+                                <strong>{{item.num}}</strong>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="page-txt ani" swiper-animate-effect="fadeInUpBig" swiper-animate-duration="1s" swiper-animate-delay="1.5s">
+                    <p v-if="chooseMod">收到的礼物价值<strong>{{mod.allReceivedCoin}}</strong>{{name}}</p>
+                    <p v-if="chooseUser">送出的礼物价值<strong>{{user.allCost}}</strong>{{name}}</p>
+                    <p v-if="chooseMod">打败了<strong>{{mod.beatPercent}}</strong>的主播</p>
+                    <p v-if="chooseUser">打败了<strong>{{user.beatPercent}}</strong>的用户</p>
+                    <p>堪称<strong>{{keyName}}</strong>！</p>
+                </div>
+            </div>
+            <div class="swiper-slide page6">
+                <div class="page-txt ani" swiper-animate-effect="zoomIn" swiper-animate-duration="1.5s" swiper-animate-delay="0.5s">
+                    <p>回顾2019</p>
+                    <p v-if="chooseMod">感谢这一年在镜头那头的你努力直播！</p>
+                    <p v-if="chooseUser">感谢这一年你的陪伴！</p>
+                </div>
+                <div class="page-txt ani" swiper-animate-effect="zoomIn" swiper-animate-duration="1.5s" swiper-animate-delay="2s">
+                    <p>展望2020</p>
+                    <p>{{who}}期待与你继续同行！</p>
+                </div>
+            </div>
+            <div class="swiper-slide page7">
+                <div class="key">
+                    <b :class="key + ' ani'" swiper-animate-effect="lightSpeedIn" swiper-animate-duration="1s" swiper-animate-delay="0.5s"></b>
+                    <span class="ani" swiper-animate-effect="flipInX" swiper-animate-duration="1s" swiper-animate-delay="1.5s">{{keyDesc}}</span>
+                    <div class="key-btn ani" swiper-animate-effect="rotateInUpLeft" swiper-animate-duration="1s" swiper-animate-delay="2.5s" @click="changeKey"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-btn" v-show="canNext && upBtn" @click="tabNext"></div>
+        <div class="page-btn-up" v-show="!upBtn" @click="tabIndex"></div>
+        <div class="music" v-show="canTab">
+            <div class="onplay" v-if="musicPlay" @click="stop"></div>
+            <div class="stop-play" v-else @click="start"></div>
+        </div>
+
+        <div class="voice">
+            <audio id="playMusic" controls="controls" loop src="https://static.guojiang.tv/mobile/v2/video/yearSummary2020.mp3">
+            </audio>
+        </div>
+    </div>
+</main>
+<script>
+    var gjShareParam = JSON.stringify({
+        title: '这一年，都发生了什么',
+        content: '快来康康，这一年“我们”之间的美好回忆吧~',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/new/withLive/share.jpg")}'
+    });
+</script>
+

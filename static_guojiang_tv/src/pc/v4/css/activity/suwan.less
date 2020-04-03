@@ -1,0 +1,342 @@
+// ../../img/activity/suwan
+
+@activityName: 'activity/suwan';
+@bs: 1px*10/6.8;
+@ipath: '../../img/activity/suwan';
+
+/* 定义颜色字体大小 S */
+
+/* 定义颜色字体大小 E */
+
+/* 定义全局基值 S */
+/* 定义全局基值 E */
+
+/* 定义可复用样式 S */
+.xg-container {
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+}
+
+.xg-content {
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    width: 1080/@bs;
+    transform: translateX(-50%);
+}
+/* 定义可复用样式 E */
+
+.getPic (@w, @h, @x, @y) {
+    background: url('@{ipath}/sprites.png') no-repeat;
+    background-size: 922/@bs 844/@bs;
+
+    display: inline-block;
+    width: (@w+10)/@bs;
+    height: (@h+10)/@bs;
+    background-position: (@x + 5)/@bs (@y + 5)/@bs;
+}
+
+.xg-btn {
+    cursor: pointer;
+}
+
+.btn-pause {
+    .getPic(89, 89, -259, -713);
+}
+
+.btn-play {
+    .getPic(89, 89, -150, -713);
+}
+
+.btn-goroom {
+    .getPic(232, 104, -602, -172);
+}
+
+.btn-attend {
+    .getPic(232, 104, -10, -416);
+}
+
+.btn-attended {
+    .getPic(232, 104, -350, -172);
+}
+
+.xg-title {
+    .getPic(560, 142, -350, -10);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0 auto;
+    position: relative;
+    top: 40/@bs;
+    z-index: 3;
+}
+
+.title-summary {
+    &:before {
+        content: '';
+        .getPic(300, 68, -582, -416);
+        position: relative;
+        top: 14/@bs;
+    }
+}
+
+.title-singer {
+    &:before {
+        content: '';
+        .getPic(300, 68, -262, -416);
+        position: relative;
+        top: 14/@bs;
+    }
+}
+
+.title-ques {
+    &:before {
+        content: '';
+        .getPic(300, 64, -183, -540);
+        position: relative;
+        top: 14/@bs;
+    }
+}
+
+/* 定义普通样式 S */
+.banner {
+    background-image: url('@{ipath}/banner.jpg');
+    height: 938px;
+}
+
+.summary {
+    background-image: url('@{ipath}/bg1.jpg');
+    height: 714px;
+}
+
+.singer {
+    background-image: url('@{ipath}/bg2.jpg');
+    height: 545px;
+}
+
+.questions {
+    background-image: url('@{ipath}/bg3.jpg');
+    height: 862px;
+}
+/* 定义普通样式 E */
+
+.banner {
+    .music {
+        position: relative;
+        width: 330/@bs;
+        height: 330/@bs;
+        margin: 870/@bs auto 0;
+
+        .xg-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .pic {
+        .getPic(320, 320, -10, -10);
+        animation: mPlay 16s linear infinite;
+        animation-play-state: paused;
+    }
+
+    .btns {
+        margin-top: 10/@bs;
+        display: flex;
+        justify-content: center;
+
+        .xg-btn {
+            margin: 0 20/@bs;
+        }
+    }
+}
+
+.desc-box {
+    width: 1030/@bs;
+    margin: 0 auto;
+    background: #eadac2;
+
+    &:before {
+        content: '';
+        display: block;
+        width: 1014/@bs;
+        height: 26/@bs;
+        margin: 0 auto;
+        position: relative;
+        top: -26/@bs;
+        background: #8a6c57;
+    }
+    &:after {
+        content: '';
+        display: block;
+        width: 1014/@bs;
+        height: 26/@bs;
+        margin: 0 auto;
+        position: relative;
+        bottom: -26/@bs;
+        background: #8a6c57;
+    }
+
+    .desc-content {
+        margin: 53/@bs auto 49/@bs;
+        width: 976/@bs;
+        background: url('@{ipath}/border_bg.png') repeat-y;
+        background-size: 100% auto;
+        position: relative;
+
+        &:before {
+            content: '';
+            display: block;
+            width: 976/@bs;
+            height: 53/@bs;
+            background: url('@{ipath}/border_top.png') no-repeat;
+            background-size: cover;
+            position: absolute;
+            top: -52/@bs;
+        }
+
+        &:after {
+            content: '';
+            display: block;
+            width: 976/@bs;
+            height: 49/@bs;
+            background: url('@{ipath}/border_bottom.png') no-repeat;
+            background-size: cover;
+            position: absolute;
+            bottom: -48/@bs;
+        }
+    }
+}
+
+.txt {
+    margin: 30/@bs;
+    font-size: 36/@bs;
+    color: #1e1b1b;
+}
+
+// .summary {
+//     .xg-title {
+//         margin: 0 auto;
+//         position: relative;
+//         top: 40/@bs;
+//         z-index: 3;
+//     }
+// }
+
+// .singer {
+//     .xg-title {
+//         margin: 0 auto;
+//         position: relative;
+//         top: 40/@bs;
+//         z-index: 3;
+//     }
+// }
+
+.questions {
+    .asker {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-left: 40/@bs;
+
+        .avatar {
+            
+        }
+
+        .pic {
+            .getPic(120, 121, -10, -713);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .name {
+            font-size: 30/@bs;
+            color: #8a6c57;
+            text-align: center;
+        }
+
+        .msg {
+            width: 560/@bs;
+            background: #8a6c57;
+            font-size: 36/@bs;
+            color: #ffffff;
+            padding: 20/@bs 30/@bs;
+            position: relative;
+            border-radius: 10/@bs;
+            margin-left: 30/@bs;
+            margin-top: -30/@bs;
+
+            &:before {
+                content: '';
+                display: block;
+                border-top: 20/@bs solid transparent;
+                border-bottom: 20/@bs solid transparent;
+                border-right: 24/@bs solid #8a6c57;
+                position: absolute;
+                top: 50%;
+                left: -22/@bs;
+                transform: translateY(-50%);
+            }
+        }
+    }
+
+    .replyer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-right: 40/@bs;
+
+        .avatar {
+            .getPic(153, 153, -10, -540);
+        }
+
+        .msg {
+            width: 560/@bs;
+            background: #e4841e;
+            font-size: 36/@bs;
+            color: #ffffff;
+            padding: 20/@bs 30/@bs;
+            position: relative;
+            border-radius: 10/@bs;
+            margin-right: 30/@bs;
+
+            &:before {
+                content: '';
+                display: block;
+                border-top: 20/@bs solid transparent;
+                border-bottom: 20/@bs solid transparent;
+                border-left: 24/@bs solid #e4841e;
+                position: absolute;
+                top: 50%;
+                right: -22/@bs;
+                transform: translateY(-50%);
+            }
+        }
+    }
+
+    .mar-btn-20 {
+        margin-bottom: 20/@bs;
+    }
+
+    .copyright {
+        .getPic(622, 46, -10, -350);
+        display: block;
+        margin: 120/@bs auto 0;
+    }
+}
+
+@keyframes mPlay {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

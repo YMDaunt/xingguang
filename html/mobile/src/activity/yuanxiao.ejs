@@ -1,0 +1,257 @@
+<main id="app" v-cloak>
+    <section class="banner"></section>
+    <section class="header"></section>
+    <div class="rules-btn" @click="showRules = !showRules"></div>
+    <section class="restrict">
+        <div class="title-bg">
+            <div class="title"></div>
+        </div>
+        <div class="gift-wrap">
+            <div class="gift gift1 fl">
+                <div class="gift-bg">
+                    <div class="gift-img"></div>
+                    <p class="gift-name">许愿天灯</p>
+                </div>
+                <p class="price">2999克拉/个</p>
+                <div class="button">
+                    <div class="preview-btn fl" @click="preview(751)">预览</div>
+                    <div class="purchase-btn-over fr" v-show="!isActivityTime">购买</div>
+                    <div class="purchase-btn fr" v-show="isActivityTime" @click="popUp(751)">购买</div>
+                </div>
+            </div>
+            <div class="gift gift2 fr">
+                <div class="gift-bg">
+                    <div class="gift-img"></div>
+                    <p class="gift-name">团团圆圆</p>
+                </div>
+                <p class="price">6666克拉/个</p>
+                <div class="button">
+                    <div class="preview-btn fl" @click="preview(752)">预览</div>
+                    <div class="purchase-btn-over fr" v-show="!isActivityTime">购买</div>
+                    <div class="purchase-btn fr" v-show="isActivityTime" @click="popUp(752)">购买</div>
+                </div>
+            </div>
+        </div>
+        <div class="flower">
+            <div class="left-flower"></div>
+            <div class="right-flower"></div>
+        </div>
+    </section>
+    <section class="mask" v-show="mask" @click="destory">
+        <div id="svgContainer" v-show="svgContainerBox" @click="destory"></div>
+    </section>
+    <section class="recommend">
+        <div class="title-bg">
+            <div class="title"></div>
+        </div>
+       <div class="recommend-box" v-show="showRecommend">
+            <ul class="recommend-mod" :class="{turnLeft:moveLeft}">
+                <li v-for="(item,index) in recommendList" :key="index">
+                    <div class="avatar-box">
+                        <img :src="item.head_pic_1" @click="inlive(item.rid)" class="avatar">
+                    </div>
+                    <p class="nickname">{{item.nickname}}</p>
+                    <p class="boom-times">今日炸房次数：{{item.times}}</p>
+                    <div class="follow-btn nofollow" v-show="!item.isLoved" @click="attention(item.id,index)">+ 关注</div>
+                    <div class="follow-btn following" v-show="item.isLoved">已关注</div>
+                </li>
+            </ul>
+            <div class="change" v-show="!showNoChange" @click="change" >换一批<span class="arrow">>>></span></div>
+            <div class="no-change" v-show="showNoChange">换一批 >>></div>
+        </div>
+        <p class="no-recommend" v-show="!showRecommend">还没有主播完成5次炸房~</p>
+        <div class="flower">
+            <div class="left-flower"></div>
+            <div class="right-flower"></div>
+        </div>
+    </section>
+    <section class="rank">
+        <div class="title-bg">
+            <div class="title"></div>
+        </div>
+        <ul class="tab">
+            <li class="tuan" :class="{'on': showList }" @click="showList = true"></li>
+            <li class="yuan" :class="{'on': !showList }" @click="showList = false"></li>
+        </ul>
+        <div class="tab-box">
+            <div class="mRank" :class="{'on':showList}">
+                <ul class="prev-list">
+                    <li :class="'no'+(index+1)" v-for="(item,index) in mRanks" :key="index" v-if="index < 3">
+                        <div class="avatar-wrap">
+                            <div class="crown"></div>
+                            <div class="live" v-if="item.is_playing == 1">LIVE</div>
+                            <div class="avatar-box">
+                                <img :src="item.head_pic_1" class="avatar" @click="inlive(item.rid)">
+                            </div>
+                            <div class="index">No.{{index+1}}</div>
+                        </div>
+                        <p class="info">
+                            <span class="nickname">{{item.nickname}}</span><span  :class="'level_icon fl m_level_icon_'+(item.level)"></span>
+                        </p>
+                        <div class="receive">收到 {{item.num}}</div>
+                        <div class="follow-btn following" v-show="item.is_attention">已关注</div>
+                        <div class="follow-btn nofollow" v-show="!item.is_attention" @click="attention(item.id,index,'list')">+ 关注</div>
+                    </li>
+                </ul>
+                <p class="line"></p>
+                <ul class="last-list m-last-list">
+                    <li v-for="(item,index) in mRanks" :key="index" v-if="index >= 3">
+                        <div class="index">{{index+1}}</div>
+                        <div class="avatar-box">
+                            <img :src="item.head_pic_1" class="avatar" @click="inlive(item.rid)">
+                        </div>
+                        <div class="live" v-if="item.is_playing == 1">LIVE</div>
+                        <div class="info">
+                            <span class="nickname fl">{{item.nickname}}</span><span :class="'level_icon fl m_level_icon_'+(item.level)"></span>
+                        </div>
+                        <div class="receive">收到 {{item.num}}</div>
+                    </li>
+                    <li class="no-more" v-show="noMoreM">没有更多数据啦！</li>
+                </ul>
+            </div>
+            <div class="uRank" :class="{'on':!showList}">
+                <ul class="prev-list">
+                    <li :class="'no'+(index+1)" v-for="(item,index) in uRanks" :key="index" v-if="index < 3">
+                        <div class="avatar-wrap">
+                            <div class="crown"></div>
+                            <div class="avatar-box">
+                                <img :src="item.head_pic_1" class="avatar">
+                            </div>
+                            <div class="index">No.{{index+1}}</div>
+                        </div>
+                        <p class="info">
+                            <span class="nickname">{{item.nickname}}</span><span  :class="'level_icon fl u_level_icon_'+(item.level)"></span>
+                        </p>
+                        <div class="receive">送出 {{item.num}}</div>
+                    </li>
+                </ul>
+                 <p class="line"></p>
+                <ul class="last-list u-last-list">
+                    <li v-for="(item,index) in uRanks" :key="index" v-if="index >= 3">
+                        <div class="index">{{index+1}}</div>
+                        <div class="avatar-box">
+                            <img :src="item.head_pic_1" class="avatar">
+                        </div>
+                        <div class="info">
+                            <span class="nickname fl">{{item.nickname}}</span><span :class="'level_icon fl u_level_icon_'+(item.level)"></span>
+                        </div>
+                        <div class="receive">送出 {{item.num}}</div>
+                    </li>
+                    <li class="no-more" v-show="noMoreU">没有更多数据啦！</li>
+                </ul>
+            </div>
+        </div>
+        <div class="flower">
+            <div class="left-flower"></div>
+            <div class="right-flower"></div>
+        </div>
+    </section>
+    <section class="footer">
+        <p>本活动最终解释权归星光直播所有</p>
+    </section>
+    <section class="purchase-box" v-show="showPurchase">
+        <div class="purchase">
+            <div class="close" @click="close"></div>
+            <div class="input">
+                <p class="purchase-title">购买个数</p>
+                <span class="subtraction" @click="subtraction">-</span>
+                <input type="number" v-model.number="purchaseNum">
+                <span class="addition" @click="addition">+</span>
+            </div>
+            <p class="total-price">价格：{{purchaseNum*price}}克拉</p>
+            <span class="purchase-btn-sure" @click="purchase">确认购买</span>
+            <div class="flower">
+                <div class="left-flower"></div>
+                <div class="right-flower"></div>
+            </div>
+        </div>
+    </section>
+    <section class="rules-box" v-show="showRules">
+        <div class="rules">
+            <div class="title-bg">
+                <div class="title"></div>
+            </div>
+            <div class="close" @click="showRules = !showRules"></div>
+            <div class="rules-content">
+                <ul>
+                    <li>
+                        1.活动时间：2018/03/01 12:00:00—03/05 23:59:59。
+                    </li>
+                    <li>
+                        2.此次活动分阶段炸房，每天前五次炸房送出指定数量的“小团圆”即可炸房，从第五次炸房后，每次炸房需送出3000个“小团圆”。
+                        <div class="times">
+                            <div class="times-bg"></div>
+                            <div class="times-num times1">第一轮
+                                <br>炸房</div>
+                            <div class="times-num times2">第二轮
+                                <br>炸房</div>
+                            <div class="times-num times3">第三轮
+                                <br>炸房</div>
+                            <div class="times-num times4">第四轮
+                                <br>炸房</div>
+                            <div class="times-num times5">第五轮及
+                                <br>以上炸房</div>
+                        </div>
+                    </li>
+                    <li>
+                        3.每天0点刷新进度条，0点后，直播间当前进度条炸完，再从第一次炸房（500个“小团圆”）开始炸房。
+                    </li>
+                    <li>
+                        4."甜蜜推荐"列表推荐当日完成五次炸房并在线的主播，推荐顺序随机，每日0点将清空前一日推荐列表，重新推荐当日完成五次炸房的主播。主播下播将自动从推荐列表下线。
+                    </li>
+                    <li>
+                        5.团团榜前5名主播可获得元宵节礼品，礼品将于活动结束后15个工作日内发放。
+                    </li>
+                    <li>
+                        6.本次活动最终解释权归星光直播所有。
+                    </li>
+                </ul>
+                <div class="award-title"></div>
+                <ul class="award-content">
+                    <li>
+                        <div class="award-img-bg">
+                            <div class="award-img-1"></div>
+                        </div>
+                        <p class="award-name">第一名
+                            <br>GoPro 防水运动摄像机</p>
+                    </li>
+                    <li>
+                        <div class="award-img-bg">
+                            <div class="award-img-2"></div>
+                        </div>
+                        <p class="award-name">第二名
+                            <br>飞利浦声波电动牙刷</p>
+                    </li>
+                    <li>
+                        <div class="award-img-bg">
+                            <div class="award-img-3"></div>
+                        </div>
+                        <p class="award-name">第三名
+                            <br>科莱丽声波电动洁面仪</p>
+                    </li>
+                    <li>
+                        <div class="award-img-bg">
+                            <div class="award-img-4"></div>
+                        </div>
+                        <p class="award-name">第四、五名
+                            <br>返利3%</p>
+                    </li>
+                </ul>
+                <p class="note1">注：返利数量=主播榜单收入*返利额度</p>
+                <p class="note2">返利金额为克拉（非收益），将于活动结束后15个工作日内发放到主播账户内。</p>
+            </div>
+            <div class="flower">
+                <div class="left-flower"></div>
+                <div class="right-flower"></div>
+            </div>
+        </div>
+    </section>
+</main>
+<script>
+    var gjShareParam = JSON.stringify({
+        title: '喜乐元宵',
+        content: '50块就能炸房，还有这种操作？',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/yuanxiao/share.jpg")}'
+    });
+</script>

@@ -1,0 +1,33 @@
+<div class="con-wrap" id="app" v-cloak>
+    <div class="wrap">
+        <div class="pic"></div>
+        <div class="buy-btn" @click="getLastCoin()"></div>
+        <div class="rule-txt">
+            <p>1.活动规则：即日起, 部分幸运用户将获得“1元壁咚主播”幸运专享特权；</p>
+            <p>2.获得幸运专享特权的用户, 只需1元即可购买壁咚礼物, 壁咚自己喜欢的主播, 每个用户仅限一次机会；</p>
+            <p>3.购买壁咚礼物成功后, 礼物将放至直播间-礼物-背包里；赠送壁咚礼物成功后直播间将播放礼物动画特效, 并增加100亲密度, 100经验值, 100贡献值；</p>
+            <p>4.活动最终解释权归平台所有。</p>
+        </div>
+    </div>
+    <!-- tost -->
+    <div class="tost" v-show="tostBox">{{tostText}}</div>
+</div>
+
+<script>
+    // 支付成功之后客给客户端回调回调函数
+    function payResultCallback(code,errMsg){
+        if(code){
+            hasUnpayOrder = 0;
+            layer.closeAll();
+            vm.buyBdGift();
+            vm.reportSucc();
+        }
+    }
+
+    var gjShareParam = JSON.stringify({
+        title: '新手福利',
+        content: '',
+        link: location.href + '?packageId=2' ,
+        imgLink: ''
+    });
+</script>

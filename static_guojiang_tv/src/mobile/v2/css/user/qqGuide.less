@@ -1,0 +1,227 @@
+// ../../img/user/qqGuide
+
+@activityName: 'qqGuide';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+@baseImgPath: '../../img/user/qqGuide';
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+body {
+    /*ios*/
+    -webkit-overflow-scrolling: touch;
+}
+.flex(){
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+// 顺序
+.flex-left(){
+    -webkit-box-align:flex-start;
+    -moz-align-items:flex-start;
+    -webkit-align-items:flex-start;
+    align-items: flex-start;
+}
+.spt {
+    background-image: url('../../img/user/@{activityName}/spt.png');
+    background-repeat: no-repeat;
+    background-size: 1200/@bf 1400/@bf;
+}
+
+.wrap {
+    height: 4774/@bf;
+    padding-top: 860/@bf;
+    background: url('../../img/user/qqGuide/bg.jpg');
+    background-size: 1080/@bf 4774/@bf;
+    background-repeat: no-repeat;
+}
+
+.gift{
+    position: relative;
+    width:1013/@bf;
+    height: 800/@bf;
+    margin: 0 auto;
+    p{
+        margin-top: -15/@bf;
+        text-align: center;
+        font-size: 34/@bf;
+        color:#f04915;
+        line-height: 42/@bf;
+    }
+    .top{
+        position: relative;
+        top:-30/@bf;
+    }
+    .gift-img {
+        width: 953/@bf;
+        height: 507/@bf;
+        margin: -90/@bf auto 0;
+        .spt;
+        background-position: -58/@bf -51/@bf;
+    }
+    .gift-list{
+        width:953/@bf;
+        margin: -90/@bf auto 0;
+        overflow: hidden;
+        li:nth-child(1){
+            float: left;
+            width: 50%;
+        }
+        li:nth-child(2){
+            float: right;
+            width: 50%;
+        }
+        .gift-name{
+            font-size:40/@bf;
+            color:#f04915;
+            margin-top:20/@bf;
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+    .get-btn{
+        width: 479/@bf;
+        height: 182/@bf;
+        margin: 25/@bf auto 10/@bf;
+        background: url('../../img/user/qqGuide/lq.gif');
+        background-size: 100% 100%;
+    }
+    .download-btn {
+        width: 479/@bf;
+        height: 182/@bf;
+        margin: -15/@bf auto 6/@bf;
+        background: url('../../img/user/qqGuide/xz.gif');
+        background-size: 100% 100%;
+    }
+}
+
+
+.hd-lc {
+    h3 {
+        width: 858/@bf;
+        height: 60/@bf;
+        margin: 0 auto 96/@bf;
+        .spt;
+        background-position: -32/@bf -676/@bf;
+    }
+    .hd-img {
+        position: relative;
+        width: 913/@bf;
+        height: 296/@bf;
+        margin: 0 auto;
+        .spt;
+        background-position: -66/@bf -970/@bf;
+    }
+}
+
+
+.video{
+    margin:120/@bf auto 160/@bf;
+    object-fit: fill;
+    width: 1013/@bf;
+    height: 580/@bf;
+    .title{
+        width: 921/@bf;
+        height: 60/@bf;
+        margin: 0 auto;
+        .spt;
+        background-position: -33/@bf -580/@bf;
+    }
+    video{
+        width:90%;
+        display: block;
+        margin: 58/@bf auto 0;
+    }
+}
+
+
+.about{
+    width: 1013/@bf;
+    // height: 1873/@bf;
+    margin:0 auto;
+    .title{
+        width: 703/@bf;
+        height: 60/@bf;
+        margin: 0 auto 44/@bf;
+        .spt;
+        background-position: -32/@bf -770/@bf;
+    }
+    p{
+        font-size:36/@bf;
+        color:#fff;
+        margin:0 40/@bf;
+        line-height: 60/@bf;
+    }
+    .swiper-container{
+        width:100%;
+        height: 640/@bf;
+        margin-top:50/@bf;
+        .swiper-slide{
+            width: 345/@bf;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        .slide1{
+            background-image:url('../../img/user/qqGuide/slide/1.jpg');
+        }
+        .slide2{
+            background-image:url('../../img/user/qqGuide/slide/2.jpg');
+        }
+        .slide3{
+            background-image:url('../../img/user/qqGuide/slide/3.jpg');
+        }
+        .slide4{
+            background-image:url('../../img/user/qqGuide/slide/4.jpg');
+        }
+        .slide5{
+            background-image:url('../../img/user/qqGuide/slide/5.jpg');
+        }
+    }
+}
+
+.desc {
+    width: 992/@bf;
+    margin: 74/@bf auto 0;
+    h3 {
+        width: 416/@bf;
+        height: 60/@bf;
+        margin: 0 auto 30/@bf;
+        .spt;
+        background-position: -36/@bf -861/@bf;
+    }
+    p {
+        padding-left: 10/@bf;
+        .flex;
+        .flex-left;
+        b {
+            width: 45/@bf;
+            height: 45/@bf;
+            margin-right: 10/@bf;
+            margin-top: 3/@bf;
+            .spt;
+            text-align: center;
+            line-height: 45/@bf;
+            font-size: 36/@bf;
+            color: #fb475c;
+            background-position: -1075/@bf -354/@bf;
+        }
+        span {
+            width: 930/@bf;
+            font-size: 36/@bf;
+            color: #fff;
+            line-height: 58/@bf;
+        }
+    }
+}
+

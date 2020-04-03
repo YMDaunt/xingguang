@@ -1,0 +1,490 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/pc/v4/img/activity/halloween2018" */ -->
+
+    <!-- banner -->
+    <div class="xg-container sec-banner">
+        <div class="xg-txt txt-banner"></div>
+    </div>
+
+    <!-- gifts -->
+    <div class="xg-container sec-gifts">
+        <div class="xg-content xg-wrap">
+            <div class="xg-title title-gifts"></div>
+            <p class="sub-txt">除了购买之外，还可以通过送出“万圣糖果”，爆出礼物碎片兑换获得哦~</p>
+            <div class="xg-row giftsbox">
+                <div class="gift">
+                    <div class="icon-sprite pic">
+                        <p class="txt">万圣限定</p>
+                        <div class="carema">
+                            <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/halloween2018/gift_party.png')}" alt="万圣大party">
+                        </div>
+                    </div>
+                    <p class="name">万圣大party</p>
+                    <p class="price">{{ page.gifts[0].price }}克拉/个</p>
+                    <div class="xg-row btns">
+                        <div class="xg-btn btn-preview" @click="preview(0)">预览</div>
+                        <div class="xg-btn btn-buy" @click="showBuyModal(0)">购买</div>
+                        <div class="xg-btn btn-exchange" @click="exchange(0)">兑换</div>
+                    </div>
+                </div>
+                <div class="gift">
+                    <div class="icon-sprite pic">
+                        <p class="txt">万圣限定</p>
+                        <div class="carema">
+                            <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/halloween2018/gift_ng.png')}" alt="南瓜礼盒">
+                        </div>
+                    </div>
+                    <p class="name">南瓜礼盒</p>
+                    <p class="price">{{ page.gifts[1].price }}克拉/个</p>
+                    <div class="xg-row btns">
+                        <div class="xg-btn btn-preview" @click="preview(1)">预览</div>
+                        <div class="xg-btn btn-buy" @click="showBuyModal(1)">购买</div>
+                        <div class="xg-btn btn-exchange" @click="exchange(1)">兑换</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- top9 -->
+    <div class="xg-container sec-tops">
+        <div class="xg-content xg-wrap">
+            <div class="xg-title title-tops"></div>
+            <p class="sub-txt">谁才是你心里的鬼灵精怪NO1?</p>
+            <ul class="top-list">
+                <p class="no-txt" v-show="top9.length === 0">快去送万圣糖果，为你心中的鬼灵精怪主播投票吧！</p>
+                <li class="top-i" v-for="(zhubo, index) in top9" :index="index">
+                    <div class="pic" @click="goroom(zhubo.id)">
+                        <img :src="zhubo.headPic" :alt="zhubo.nickname">
+                        <span class="icon-sprite bg"></span>
+                        <span class="icon-sprite rank">{{index+1}}</span>
+                        <span class="icon-live-s live" v-show="zhubo.isPlaying">LIVE</span>
+                    </div>
+                    <p class="line-fl nickname">{{ zhubo.nickname }}</p>
+                    <p class="line-fl voteval">票数：{{ zhubo.score }}</p>
+                    <div class="xg-btn btn-vote" @click="clickVote(zhubo)">投票</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- lists -->
+    <div class="xg-container sec-list">
+        <div class="xg-content xg-wrap">
+            <div class="xg-title title-list"></div>
+            <ul class="tab">
+                <li :class="['xg-btn sprite btn-witch tab-i', ui.tabType === 0 && 'active']" @click="changeTab(0)"></li>
+                <li :class="['xg-btn sprite btn-trick tab-i', ui.tabType === 1 && 'active']" @click="changeTab(1)"></li>
+            </ul>
+            <!-- 女巫榜 -->
+            <div class="list-box" v-show="ui.tabType === 0">
+                <ul class="sub-tab">
+                    <li :class="['sub-tab-i', ui.zhuboTabType === 1 && 'active', page.stage === 0 && 'disable']" @click="changeZhuboTab(1)">10.29</li>
+                    <li :class="['sub-tab-i', ui.zhuboTabType === 2 && 'active', 1 >= page.stage && 'disable']" @click="changeZhuboTab(2)">10.30</li>
+                    <li :class="['sub-tab-i', ui.zhuboTabType === 3 && 'active', 2 >= page.stage && 'disable']" @click="changeZhuboTab(3)">10.31</li>
+                    <li :class="['sub-tab-i sub-tab-main', ui.zhuboTabType === 0 && 'active']" @click="changeZhuboTab(0)">总榜</li>
+                </ul>
+                <div class="search">
+                    <div class="input">
+                        <span class="icon-sprite icon-search"></span>
+                        <input type="text" placeholder="输入ID查找" @input="searchInput" @click="inputFocus" :value="forms.searchId">
+                        <!-- <span class="result line-fl">{{ forms.searchResult }}</span> -->
+                    </div>
+                    <div class="xg-btn btn-search" @click="clickSearch">搜索</div>
+                    <!-- <div :class="['xg-btn btn-quickvote', forms.searchResultCanVote && 'active']" @click="quickVote">快速投票</div> -->
+                </div>
+                <div :class="['anim-wrap', ui.searchActive && 'active']">
+                    <div class="search-result">
+                        <div class="col-rank"></div>
+                        <div class="col-info">
+                            <div class="avatar">
+                                <img :src="forms.searchResult.headPic" alt="avatar" @click="goroom(forms.searchResult.mid)">
+                                <span class="icon-live-s live" v-show="forms.searchResult.isPlaying">LIVE</span>
+                            </div>
+                            <div class="vbox">
+                                <p class="nickname line-fl">{{ forms.searchResult.nickname }}</p>
+                                <p class="value line-fl">狂欢值：{{ forms.searchResult.score }}</p>
+                            </div>
+                        </div>
+                        <div class="col-value">
+                            <div class="xg-btn btn-vote" @click="clickVote2(forms.searchResult)">投票</div>
+                            <div class="value">票数：{{ forms.searchResult.voteScore }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sep"></div>
+                <xg-list ref="mDay1List" :class="['list-zhubo-d', ui.searchActive && 'with-search']" :type="2" :list="mDay1List.list" :skt-state="mDay1List.sktState" :skt-list="9" v-show="ui.zhuboTabType === 1"></xg-list>
+                <xg-list ref="mDay2List" :class="['list-zhubo-d', ui.searchActive && 'with-search']" :type="2" :list="mDay2List.list" :skt-state="mDay2List.sktState" :skt-list="9" v-show="ui.zhuboTabType === 2"></xg-list>
+                <xg-list ref="mDay3List" :class="['list-zhubo-d', ui.searchActive && 'with-search']" :type="2" :list="mDay3List.list" :skt-state="mDay3List.sktState" :skt-list="9" v-show="ui.zhuboTabType === 3"></xg-list>
+                <xg-list ref="mList" :class="['list-zhubo-m', !mList.myRank.rid && 'no-center', ui.searchActive && 'with-search']" :type="1" :list="mList.list" :skt-state="mList.sktState" :skt-list="9" v-show="ui.zhuboTabType === 0"></xg-list>
+                <div class="list-txt">当前只展示前100名主播</div>
+                <xg-meinfo v-if="ui.zhuboTabType === 0 && mList.myRank.rid" :type="1" :my-rank="mList.myRank"></xg-meinfo>
+            </div>
+            <!-- 用户榜 -->
+            <div class="list-box" v-show="ui.tabType === 1">
+                <!-- TODO:前三名 -->
+                <div class="list-top3">
+                    <div v-for="(user, index) in getTop3User" :key="index" class="top3-i">
+                        <template v-if="user.id">
+                            <div class="avatar">
+                                <span :class="'xg-icon icon-cown icon-cown-l-' + index"></span>
+                                <img :src="user.headPic" alt="avatar">
+                                <span :class="'xg-icon icon-badge icon-badge-l-' + index">{{ 'No.' + (index+1) }}</span>
+                            </div>
+                            <p class="nickname line-fl">{{ user.nickname }}</p>
+                            <p class="value line-fl">狂欢值：{{ user.score }}</p>
+                        </template>
+                    </div>
+                </div>
+                <div class="sep"></div>
+                <xg-list ref="userList" class="list-user" :list="userList.list.slice(3)" :skt-state="userList.sktState" :skt-list="6" :type="3"></xg-list>
+                <div class="list-txt">当前只展示前100名用户</div>
+                <xg-meinfo :type="2" :my-rank="userList.myRank"></xg-meinfo>
+            </div>
+        </div>
+    </div>
+
+    <!-- float btn -->
+    <div class="xg-sidebar">
+        <div class="xg-btn sprite btn-rules" @click="showModal(0)"></div>
+        <div class="xg-btn sprite btn-rewards" @click="showModal(1)"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="xg-modal" v-show="ui.modal">
+        <!-- <div class="xg-btn icon-sprite btn-close" @click="closeModal"></div> -->
+        <!-- 活动规则 -->
+        <div class="xg-modal-c xg-modal-bg modal-rules" v-show="ui.modalType === 0">
+            <div class="xg-btn icon-sprite btn-close" @click="closeModal"></div>
+            <div class="xg-modal-bg-c">
+                <div class="xg-title title-rules"></div>
+                <p class="rule-i"><span class="icon-sprite rank">1</span>活动时间：<span class="color-orange">10.29 12:00:00-10.31 23:59:59。</span></p>
+                <p class="rule-i"><span class="icon-sprite rank">2</span>活动礼物：</p>
+                <ul class="rule-gifts">
+                    <li class="icon-sprite gift">
+                        <div class="xg-title title-candy"></div>
+                        <div class="pic">
+                            <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/halloween2018/gift_candy.png')}" alt="万圣糖果">
+                        </div>
+                        <div class="desc">
+                            <p class="value">=10克拉</p>
+                            <p class="value">=10狂欢值</p>
+                        </div>
+                    </li>
+                    <li class="icon-sprite gift">
+                        <div class="xg-title title-party"></div>
+                        <div class="pic">
+                            <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/halloween2018/gift_party.png')}" alt="万圣大party">
+                        </div>
+                        <div class="desc">
+                            <p class="value">={{ page.gifts[0].price }}克拉</p>
+                            <p class="value">={{ page.gifts[0].price }}狂欢值</p>
+                        </div>
+                    </li>
+                    <li class="icon-sprite gift">
+                        <div class="xg-title title-pumpkin"></div>
+                        <div class="pic">
+                            <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/halloween2018/gift_ng.png')}" alt="南瓜礼盒">
+                        </div>
+                        <div class="desc">
+                            <p class="value">={{ page.gifts[1].price }}克拉</p>
+                            <p class="value">={{ page.gifts[1].price }}狂欢值</p>
+                        </div>
+                    </li>
+                </ul>
+                <p class="rule-i"><span class="icon-sprite rank">3</span>玩法介绍：</p>
+                <p class="rule-i"><span class="color-orange">玩法一：谁是万圣女王</span></p>
+                <p class="rule-i">1.每日收到活动礼物第一名主播次日成为万圣女王，登上活动广告位，生效期：次日14:00:00-23:59:59。</p>
+                <p class="rule-i">注：活动最后一日的的万圣女王，生效日期为11月1日14:00:00-23:59:59。</p>
+                <p class="rule-i">注：运营会在次日和主播联系，若主播未及时回复，则视为自动放弃登上活动广告位奖励。</p>
+                <p class="rule-pic"><img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/halloween2018/g_banner.png')}" alt="banner"></p>
+                <p class="rule-i">2.每日收到活动礼物前十名主播奖励不同数量的开播全站飘屏,次日首次开播开始生效。</p>
+                <p class="rule-i"><span class="color-orange">玩法二：妖颜惑众</span></p>
+                <p class="rule-i">1.每送出1个万圣糖果，即可获得1张票。用户可投票pick心中最鬼灵精怪的主播。</p>
+                <p class="rule-i">2.票数第一名的主播奖励开屏24h。</p>
+                <p class="rule-i"><span class="color-orange">玩法三：送礼爆奖品</span></p>
+                <p class="rule-i">1.用户送出万圣糖果，即有机会爆出以下奖品，赠送中奖特效。</p>
+                <div class="rule-buff">
+                    <!-- TODO -->
+                    <div class="rule-buff-1">
+                        <div class="pic">
+                            <span class="icon-sprite icon-diamond"></span>
+                            <span class="num">X50</span>
+                        </div>
+                        <div class="val">50克拉</div>
+                    </div>
+                    <div class="rule-buff-2">
+                        <div class="pic">
+                            <span class="icon-sprite icon-candy"></span>
+                            <span class="num">X1</span>
+                        </div>
+                        <div class="val">万圣糖果X1</div>
+                    </div>
+                    <div class="rule-buff-3">
+                        <div class="pic">
+                            <span class="icon-sprite icon-candy"></span>
+                            <span class="num">X10</span>
+                        </div>
+                        <div class="val">万圣糖果礼包</div>
+                        <div class="tips">(万圣糖果X10)</div>
+                    </div>
+                    <div class="rule-buff-4">
+                        <div class="pic">
+                            <span class="icon-sprite icon-diamond"></span>
+                            <span class="num">X30</span>
+                        </div>
+                        <div class="val">30克拉</div>
+                    </div>
+                    <div class="rule-buff-5">
+                        <div class="pic">
+                            <span class="icon-sprite icon-ticket"></span>
+                            <span class="num">X10</span>
+                        </div>
+                        <div class="val">选票X10</div>
+                    </div>
+                    <div class="rule-buff-6">
+                        <div class="pic">
+                            <span class="icon-sprite icon-seg-1"></span>
+                            <span class="num">X1</span>
+                        </div>
+                        <div class="val">万圣大party碎片</div>
+                        <div class="tips">（{{ meInfos.segsTarget[0] }}个万圣大party礼物碎片，<br/>即可兑换一个万圣大party礼物）</div>
+                    </div>
+                    <div class="rule-buff-7">
+                        <div class="pic">
+                            <span class="icon-sprite icon-seg-2"></span>
+                            <span class="num">X1</span>
+                        </div>
+                        <div class="val">南瓜礼盒碎片</div>
+                        <div class="tips">（{{ meInfos.segsTarget[1] }}个南瓜礼盒礼物碎片，<br/>即可兑换一个南瓜礼盒礼物）</div>
+                    </div>
+                </div>
+                <p class="rule-i">2．奖品发放说明：</p>
+                <p class="rule-i">1）克拉在活动页面-我的奖品显示，直接放入账户；</p>
+                <p class="rule-i">2）碎片在活动页面-我的奖品显示，集齐指定数量的碎片，即可兑换礼物，需要在活动期间内进行兑换；</p>
+                <p class="rule-i">3）选票在活动页面-我的奖品显示，可用于pick心中最鬼灵精怪的主播。</p>
+                <div class="xg-title title-rewards"></div>
+                <ul class="rule-rewards">
+                    <li class="rewards-i">
+                        <div class="pic">
+                            <div class="rewards-sprite rewards-1"></div>
+                        </div>
+                        <div class="desc">
+                            <p class="xg-title txt-first">女巫榜第一名</p>
+                            <p class="xg-title txt-first-g label">海蓝之谜修护眼霜</p>
+                        </div>
+                    </li>
+                    <li class="rewards-i">
+                        <div class="pic pic-scale">
+                            <div class="rewards-sprite rewards-2"></div>
+                        </div>
+                        <p class="xg-title txt-second">女巫榜第二名</p>
+                        <p class="xg-title txt-second-g label">海蓝之谜修护精粹液</p>
+                    </li>
+                    <li class="rewards-i">
+                        <div class="pic pic-scale">
+                            <div class="rewards-sprite rewards-3"></div>
+                        </div>
+                        <p class="xg-title txt-third">女巫榜第三名</p>
+                        <p class="xg-title txt-third-g label">怡丽丝尔优悦活颜水乳套装</p>
+                    </li>
+                    <li class="rewards-i">
+                        <div class="pic pic-scale">
+                            <div class="rewards-sprite rewards-4"></div>
+                        </div>
+                        <p class="xg-title txt-ff">女巫榜第四-五名</p>
+                        <p class="xg-title txt-ff-g label">HABA鲨烷精纯套装</p>
+                    </li>
+                    <li class="rewards-i">
+                        <div class="pic pic-scale">
+                            <div class="rewards-sprite rewards-5"></div>
+                        </div>
+                        <p class="xg-title txt-sixe">女巫榜第六-八名</p>
+                        <p class="xg-title txt-sixe-g label">量版怡丽丝尔樱花面膜</p>
+                    </li>
+                </ul>
+                <p class="rule-tips">注：礼品将于活动结束后15个工作日内发放。</p>
+            </div>
+        </div>
+        <!-- 我的奖励 -->
+        <div class="xg-modal-c xg-modal-bg modal-rewards" v-show="ui.modalType === 1">
+            <div class="xg-btn icon-sprite btn-close" @click="closeModal"></div>
+            <div class="row-header">
+                <div class="col-time">时间</div>
+                <div class="col-value">爆出奖品</div>
+            </div>
+            <div class="xg-modal-bg-c" ref="myawards">
+                <div class="my-rewards">
+                    <div class="row-body">
+                        <div class="row-value" v-for="(awards, index) in myAwards.list" :key="index">
+                            <div class="col-time">{{ awards.time }}</div>
+                            <div class="col-value">{{ awards.awardName }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div v-show="myAwards.list.length === 0" class="no-data">送出万圣糖果，就能爆出好礼哦！</div>
+            </div>
+            <div class="float-box">
+                <div class="sep"></div>
+                <div class="progress-box">
+                    <span class="label">万圣节大party碎片（{{ meInfos.segsTarget[0] }}个万圣节大party礼物碎片，即可兑换一个万圣节大party礼物）</span>
+                    <span class="progress">
+                        <b class="purple" :style="'width:' + meInfos.segs[0]/meInfos.segsTarget[0]*100 + '%;'"></b>
+                        <i class="purple-v">{{ meInfos.segs[0] + '/' + meInfos.segsTarget[0] }}</i>
+                    </span>
+                </div>
+                <div class="progress-box">
+                    <span class="label">南瓜礼盒碎片（{{ meInfos.segsTarget[1] }}个南瓜礼盒礼物碎片，即可兑换一个南瓜礼盒礼物）</span>
+                    <span class="progress">
+                        <b class="orange" :style="'width:' + meInfos.segs[1]/meInfos.segsTarget[1]*100 + '%;'"></b>
+                        <i class="orange-v">{{ meInfos.segs[1] + '/' + meInfos.segsTarget[1] }}</i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- 购买 -->
+        <div class="xg-modal-c modal-buy" v-show="ui.modalType === 2">
+            <div class="xg-btn icon-sprite btn-close" @click="closeModal"></div>
+            <p class="title-buy">购买数量</p>
+            <div class="input-box">
+                <span class="label xg-btn sprite btn-minus" @click="calcBuyNum(-1)"></span>
+                <input type="text" @input="inputBuy" @click="inputFocus" :value="forms.buyInput">
+                <span class="label xg-btn sprite btn-add" @click="calcBuyNum(1)"></span>
+            </div>
+            <div class="input-price">价格：{{ forms.buyPrice }}克拉</div>
+            <div class="xg-btn btn-buy2" @click="buyGift">购买</div>
+        </div>
+        <!-- 余额不足 -->
+        <div class="xg-modal-c modal-recharge" v-show="ui.modalType === 3">
+            <div class="xg-btn icon-sprite btn-close" @click="closeModal"></div>
+            <div class="modal-txt">余额不足，快去充值吧！</div>
+            <div class="btns">
+                <div class="xg-btn btn-cancel" @click="cancelCharge">不了</div>
+                <div class="xg-btn btn-recharge" @click="goCharge">充值</div>
+            </div>
+        </div>
+        <!-- 为TA投票 -->
+        <div class="xg-modal-c modal-vote" v-show="ui.modalType === 4">
+            <div class="xg-btn icon-sprite btn-close" @click="closeModal"></div>
+            <div class="avatar">
+                <p class="modal-title">为TA投票</p>
+                <div class="pic">
+                    <img :src="forms.voteUserAvatar" alt="avatar">
+                    <span class="icon-sprite bg"></span>
+                    <span class="icon-live-s live" v-show="forms.votePlaying">LIVE</span>
+                </div>
+            </div>
+            <div class="oprations">
+                <div class="input-box">
+                    <span class="label xg-btn sprite btn-minus" @click="calcVote(-1)"></span>
+                    <input type="text" @input="inputVote" @click="inputFocus" :value="forms.voteInput">
+                    <span class="label xg-btn sprite btn-add" @click="calcVote(1)"></span>
+                </div>
+                <div class="calc-result">还可投{{ meInfos.tickets }}票</div>
+                <div class="xg-btn btn-vote2" @click="vote">投票</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- toast -->
+    <div class="xg-layer" v-show="ui.toast">
+        <div class="xg-toast">{{ ui.toastMsg }}</div>
+    </div>
+
+    <!-- 动画效果 -->
+    <div class="svg-layer" v-show="ui.svgShow" @click="stopSvg">
+        <div class="svg-container"></div>
+    </div>
+</div>
+
+<script type="text/template" id="xg-list">
+    <!-- prop: type:1 主播榜总榜 type:2 主播榜日榜 type:3 用户榜 -->
+    <!-- prop: list:榜单数据 -->
+    <!-- prop: skt-state:榜单状态 -->
+    <!-- prop: page:是否分页 -->
+    <div>
+        <div class="list-h" v-if="type===2 || type===3">
+            <span class="col-rank">排名</span>
+            <template v-if="type===2"><span class="col-info">主播</span></template>
+            <template v-if="type===3"><span class="col-info">用户</span></template>
+            <span class="col-value">狂欢值</span>
+        </div>
+        <ul class="list" ref="list" v-skt :skt-state="sktState" :skt-list="sktList">
+            <li class="list-i" v-for="(item, index) in list" :index="index">
+                <div class="col-rank" need-skt>{{ type === 3 ? (index + 4) : (index + 1) }}</div>
+                <div class="col-info">
+                    <div class="avatar" need-skt>
+                        <template v-if="type === 1">
+                            <span :class="['xg-icon icon-cown', [0,1,2].indexOf(index) !== -1 && ('icon-cown-' + index)]"></span>
+                            <img :src="item.headPic" alt="avatar" @click="goroom(item.id)">
+                            <span :class="['icon-live-s live', [0,1,2].indexOf(index) !== -1 && 'live-m']" v-show="item.isPlaying">LIVE</span>
+                            <span :class="'xg-icon icon-badge icon-badge-' + index" v-show="[0, 1, 2].indexOf(index) !== -1">{{ 'No.' + (index + 1) }}</span>
+                        </template>
+                        <template v-if="type === 2">
+                            <img :src="item.headPic" alt="avatar" @click="goroom(item.id)">
+                            <span :class="['icon-live-s live', [0,1,2].indexOf(index) !== -1 && 'live-m']" v-show="item.isPlaying">LIVE</span>
+                            <span :class="'xg-icon icon-badge icon-badge-' + index" v-show="[0, 1, 2].indexOf(index) !== -1">{{ 'No.' + (index + 1) }}</span>
+                        </template>
+                        <template v-if="type === 3">
+                            <img :src="item.headPic" alt="avatar">
+                        </template>
+                    </div>
+                    <div class="vbox">
+                        <p class="nickname line-fl" need-skt>{{ item.nickname }}</p>
+                        <template v-if="type===1">
+                            <p class="value line-fl">狂欢值：{{ item.score }}</p>
+                        </template>
+                        <template v-if="type===2">
+                            <p class="value line-fl">{{ index | daylistTxt }}</p>
+                        </template>
+                    </div>
+                </div>
+                <div class="col-value">
+                    <template v-if="type===1">
+                        <div class="xg-btn btn-vote" @click="clickVote(item)">投票</div>
+                        <div class="value" need-skt>票数：{{ item.ticket }}</div>        
+                    </template>
+                    <template v-if="type===2 || type===3">
+                        <div class="value" need-skt>{{ item.score }}</div>
+                    </template>
+                </div>
+            </li>
+        </ul>
+    </div>
+</script>
+
+<script type="text/template" id="xg-meinfo">
+    <!-- props:type===1 主播 type===2 用户 -->
+    <!-- props:myRank myRank -->
+    <div class="myinfos">
+        <div class="sep"></div>
+        <div class="xg-row">
+            <div class="avatar">
+                <div class="pic">
+                    <img :src="myRank.headPic" alt="avatar" @click="type === 1 && goroom(myRank.uid)">
+                    <span class="icon-live-s live" v-show="type === 1 && myRank.isPlaying">LIVE</span>
+                </div>
+                <p class="nickname line-fl">{{ myRank.nickName }}</p>
+            </div>
+            <div class="desc" v-if="myRank.pairInfos">
+                <div class="desc-i">
+                    <p class="label">{{ myRank.pairInfos[0].name }}</p>
+                    <p class="value line-fl">{{ myRank.pairInfos[0].value }}</p>
+                </div>
+                <div class="desc-i">
+                    <p class="label">{{ myRank.pairInfos[2].name }}</p>
+                    <p class="value line-fl">{{ myRank.pairInfos[2].value }}</p>
+                </div>
+                <div class="desc-i">
+                    <p class="label">{{ myRank.pairInfos[1].name }}</p>
+                    <p class="value line-fl">{{ myRank.pairInfos[1].value }}</p>
+                </div>
+                <div class="desc-i">
+                    <p class="label">{{ myRank.pairInfos[3].name }}</p>
+                    <p class="value line-fl">{{ myRank.pairInfos[3].value }}</p>
+                </div>
+            </div>
+        </div>
+        <!-- <div v-else>TODO: 占位元素</div> -->
+    </div>
+</script>

@@ -1,0 +1,443 @@
+@activityName: "laosiji";
+@bf: 108rem;
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+html,
+body {
+    height: 100%;
+    background-color: transparent;
+}
+.bgms(@imgName,@width,@height) {
+    background-image: url("../../img/activity/@{activityName}/@{imgName}");
+    background-size: @width @height;
+}
+.sprite {
+    background-image: url("../../img/activity/@{activityName}/css_sprites.png");
+    background-repeat: no-repeat;
+    background-size: 1346 / @bf 802 / @bf;
+}
+
+/***************common end************/
+#app {
+    position: relative;
+    height: 100%;
+}
+.nothing {
+    width: 100%;
+    height: 100%;
+}
+.box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 978 / @bf;
+    width: 1080 / @bf;
+    border-radius: 30 / @bf 30 / @bf 0 0;
+    .bgms("box-bg.jpg", 1080 / @bf, 978 / @bf);
+    .current {
+        display: block;
+    }
+}
+.tab {
+    overflow: hidden;
+    li {
+        float: left;
+        width: 33%;
+        height: 116 / @bf;
+        line-height: 116 / @bf;
+        text-align: center;
+        font-size: 42 / @bf;
+        color: #fff;
+    }
+    .active {
+        position: relative;
+        color: #ffff00;
+        .underline {
+            position: absolute;
+            left: 50%;
+            bottom: 20 / @bf;
+            transform: translateX(-50%);
+            display: block;
+            width: 80 / @bf;
+            height: 2 / @bf;
+            background-color: #fff000;
+        }
+    }
+}
+.buy-ticket {
+    display: none;
+    position: relative;
+    overflow: hidden;
+    .buy-ticket-bg {
+        width: 824 / @bf;
+        height: 290 / @bf;
+        margin: 30 / @bf auto 0;
+        .sprite;
+        background-position: -10 / @bf -10 / @bf;
+    }
+    .new {
+        position: relative;
+        width: 610 / @bf;
+        height: 110 / @bf;
+        margin: 20 / @bf auto 30 / @bf;
+        color: #e53e4d;
+        font-size: 45 / @bf;
+        font-weight: bold;
+        text-align: center;
+        line-height: 110 / @bf;
+        border-radius: 55 / @bf;
+        background-color: #fff349;
+        box-shadow: 0 10 / @bf 0 #e7a02f, 0 5 / @bf 0 rgba(0, 0, 0, 0.5);
+        em {
+            position: absolute;
+            top: -50 / @bf;
+            left: 362 / @bf;
+            font-size: 45 / @bf;
+            color: #0068b7;
+            font-style: normal;
+            font-weight: bold;
+            -webkit-text-stroke: 3px #fff;
+        }
+        .special {
+            position: absolute;
+            top: -50 / @bf;
+            left: 362 / @bf;
+            font-size: 45 / @bf;
+            color: #0068b7;
+            font-style: normal;
+            font-weight: bold;
+            -webkit-text-stroke: 0 #fff;
+        }
+        .del {
+            position: absolute;
+            top: 50 / @bf;
+            left: 360 / @bf;
+            width: 70 / @bf;
+            height: 5 / @bf;
+            background-color: #e53e4d;
+            transform: rotate(30deg);
+        }
+        .last-num {
+            position: absolute;
+            top: -25 / @bf;
+            right: 5 / @bf;
+            padding: 0 15 / @bf;
+            height: 50 / @bf;
+            font-size: 30 / @bf;
+            font-weight: normal;
+            line-height: 50 / @bf;
+            border-radius: 25 / @bf;
+            border: 1px solid #fff;
+            color: #fff;
+            background-color: #ff4b4b;
+        }
+    }
+    .first {
+        position: relative;
+        width: 610 / @bf;
+        height: 110 / @bf;
+        margin: 30 / @bf auto;
+        color: #858485;
+        font-size: 45 / @bf;
+        font-weight: bold;
+        text-align: center;
+        line-height: 110 / @bf;
+        border-radius: 55 / @bf;
+        background-color: #dcdcdc;
+        box-shadow: 0 10 / @bf 0 #a5a5a5, 0 5 / @bf 0 rgba(0, 0, 0, 0.5);
+        .tips {
+            position: absolute;
+            top: -15 / @bf;
+            right: 5 / @bf;
+            padding: 0 15 / @bf;
+            height: 50 / @bf;
+            font-size: 30 / @bf;
+            font-weight: normal;
+            line-height: 50 / @bf;
+            border-radius: 25 / @bf;
+            border: 1px solid #fff;
+            color: #fff;
+            background-color: #ff4b4b;
+        }
+    }
+    .active {
+        color: #e53e4d;
+        background-color: #fff349;
+        box-shadow: 0 10 / @bf 0 #e7a02f, 0 5 / @bf 0 rgba(0, 0, 0, 0.5);
+    }
+    .active:active {
+        color: #e53e4d;
+        background-color: #fff349;
+        box-shadow: 0 10 / @bf 0 #e7a02f, 0 5 / @bf 0 rgba(0, 0, 0, 0.5);
+    }
+}
+.rules-btn,
+.back {
+    position: absolute;
+    top: 45 / @bf;
+    left: 35 / @bf;
+    width: 54 / @bf;
+    height: 54 / @bf;
+    .sprite;
+    background-position: -1216 / @bf -427 / @bf;
+}
+.my-ticket-btn,
+.buy-ticket-btn {
+    position: absolute;
+    top: 50 / @bf;
+    right: 35 / @bf;
+    font-size: 40 / @bf;
+    color: #fff;
+}
+
+.result {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30 / @bf 30 / @bf 0 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.lucky-box {
+    position: relative;
+    width: 830 / @bf;
+    height: 507 / @bf;
+    padding-top: 1px;
+    background: linear-gradient(to bottom, #e400a3, #020028);
+    border-radius: 10 / @bf;
+    .title {
+        position: absolute;
+        top: -115 / @bf;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 379 / @bf;
+        height: 226 / @bf;
+        .sprite;
+        background-position: -10 / @bf -566 / @bf;
+        // .bgms("lucky.png", 379 / @bf, 226 / @bf);
+    }
+    p {
+        color: #fff;
+        text-align: center;
+        width: 690 / @bf;
+        margin: 120 / @bf auto 80 / @bf;
+        font-size: 42 / @bf;
+    }
+}
+.nolucky-box {
+    position: relative;
+    width: 830 / @bf;
+    height: 507 / @bf;
+    padding-top: 1px;
+    background-color: #7d7d7d;
+    border-radius: 10 / @bf;
+    .title {
+        position: absolute;
+        top: -115 / @bf;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 437 / @bf;
+        height: 226 / @bf;
+        .sprite;
+        background-position: -10 / @bf -320 / @bf;
+        // .bgms("nolucky.png", 437 / @bf, 226 / @bf);
+    }
+    p {
+        color: #fff;
+        text-align: center;
+        width: 690 / @bf;
+        margin: 120 / @bf auto 80 / @bf;
+        font-size: 42 / @bf;
+    }
+}
+.sure-btn {
+    width: 610 / @bf;
+    height: 110 / @bf;
+    margin: 30 / @bf auto;
+    font-size: 45 / @bf;
+    font-weight: bold;
+    text-align: center;
+    line-height: 110 / @bf;
+    border-radius: 55 / @bf;
+    color: #e53e4d;
+    background-color: #fff349;
+    box-shadow: 0 10 / @bf 0 #e7a02f, 0 5 / @bf 0 rgba(0, 0, 0, 0.5);
+}
+
+.statement {
+    margin: 0 auto 30 / @bf;
+    color: #fff;
+    font-size: 33 / @bf;
+    width: 900 / @bf;
+    text-align: center;
+    p {
+        line-height: 60 / @bf;
+    }
+}
+.special {
+    color: #ffff69;
+}
+
+.rules {
+    position: relative;
+    overflow: hidden;
+    .back {
+        .sprite;
+        background-position: -1216 / @bf -353 / @bf;
+    }
+    .rules-title {
+        width: 482 / @bf;
+        height: 148 / @bf;
+        margin: 30 / @bf auto 0;
+        .sprite;
+        background-position: -854 / @bf -10 / @bf;
+    }
+    .rules-content {
+        width: 1000 / @bf;
+        padding: 20 / @bf;
+        margin: 0 auto;
+        border-radius: 10 / @bf 10 / @bf 0 0;
+        background-image: linear-gradient(
+            to bottom,
+            #e400a3,
+            rgba(2, 0, 40, 0.6)
+        );
+        p {
+            font-size: 33 / @bf;
+            color: #fff;
+            line-height: 50 / @bf;
+            margin-bottom: 10 / @bf;
+        }
+        p:last-child {
+            margin: 0;
+        }
+    }
+}
+
+.my-ticket {
+    display: none;
+    position: relative;
+    overflow: hidden;
+    .my-ticket-title {
+        width: 411 / @bf;
+        height: 155 / @bf;
+        margin: 30 / @bf auto 10 / @bf;
+        .sprite;
+        background-position: -854 / @bf -178 / @bf;
+    }
+    .ticket-detail {
+        width: 990 / @bf;
+        height: 619 / @bf;
+        margin: 0 auto;
+        border-radius: 10 / @bf 10 / @bf 0 0;
+        background-image: linear-gradient(
+            to bottom,
+            #e400a3,
+            rgba(2, 0, 40, 0.6)
+        );
+        overflow: hidden;
+        p {
+            text-align: center;
+            font-size: 42 / @bf;
+            color: #fff;
+        }
+    }
+    .no-ticket {
+        text-align: center;
+        color: #fff;
+        font-size: 42 / @bf;
+        margin: 200 / @bf auto 0;
+    }
+    .ticket-box {
+        width: 500 / @bf;
+        margin: 117 / @bf auto 130 / @bf;
+        overflow: hidden;
+        .ticket {
+            width: 340 / @bf;
+            height: 181 / @bf;
+            .sprite;
+            background-position: -855 / @bf -354 / @bf;
+        }
+        .ticket-num {
+            font-size: 66 / @bf;
+            color: #fff;
+            height: 183 / @bf;
+            line-height: 183 / @bf;
+        }
+    }
+}
+
+.lucky-list {
+    display: none;
+    .lucky-title {
+        margin: 13 / @bf auto;
+        width: 395 / @bf;
+        height: 170 / @bf;
+        .bgms("lucky.png", 395 / @bf, 170 / @bf);
+    }
+}
+.lucky-list-box {
+    padding:30/@bf 40/@bf;
+    width: 990 / @bf;
+    margin: 0 auto;
+    height: 619 / @bf;
+    overflow-y: auto;
+    border-radius: 10 / @bf 10 / @bf 0 0;
+    background-image: linear-gradient(to bottom, #e400a3, rgba(2, 0, 40, 0.6));
+    -webkit-overflow-scrolling: touch;
+    li{
+        overflow: hidden;
+        margin:0 auto 40/@bf;
+    }
+    .avatar{
+        float: left;
+        width: 108/@bf;
+        height: 108/@bf;
+        margin-right: 45/@bf;
+        border-radius: 50%;
+        overflow: hidden;
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .name{
+        height: 108/@bf;
+        line-height: 108/@bf;
+        width:350/@bf;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        float: left;
+        color: #fff;
+        font-size: 42/@bf;
+    }
+    .time{
+        height: 108/@bf;
+        line-height: 108/@bf;
+        float: right;
+        // margin-left:50/@bf;
+        color:#fff;
+        font-size:36/@bf;
+    }
+    p{
+        text-align: center;
+        color: #fff;
+        font-size: 42 / @bf;
+        margin: 200 / @bf auto 0;
+    }
+
+}

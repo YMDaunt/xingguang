@@ -1,0 +1,113 @@
+<div id="app" v-cloak>
+    <div class="gift-box">
+        <div class="coin"></div>
+        <div class="bg-box"></div>
+        <div class="close-btn" @click="closeDoc"></div>
+        <div class="rules-btn" @click="showRules = !showRules"></div>
+        <div class="title" :class="{rulesTitle:showRules}"></div>
+        <div v-if="!showResult">
+            <div v-show="!showRules">
+                <p class="tips">您已领取幸运宝箱一个
+                    <br/>开启即可获得以下礼物中的任意一种：</p>
+                <ul class="gifts">
+                    <li v-for="(item,index) in gifts" :class="['gift-item','item-'+(index+1)]" :key='index'>
+                        <div class="gift-pic">
+                            <div class="img"></div>
+                            <span v-if="item.num == 1" class="num1"></span>
+                            <span v-else-if="item.num == 6" class="num6"></span>
+                        </div>
+                        <p class="gift-price">价值{{item.price}}{{unit}}</p>
+                        <p class="gift-name">{{item.name}}</p>
+                    </li>
+                </ul>
+                <div class="open-btn" @click="open">1元/100{{unit}}立即开启</div>
+            </div>
+            <div v-show="showRules">
+                <ul class="rules">
+                    <li>
+                        ①幸运礼盒为自动领取，开启成功后，您将随机抽得三种礼物中的任意一种；
+                    </li>
+                    <!-- <li>
+                        ②幸运大转盘抽奖券1张请至[直播间-游戏-转盘]中使用；
+                    </li> -->
+                    <li>
+                        ②{{unit}}随机礼包会自动发放至您的账户；
+                    </li>
+                    <li>
+                        ③价值999{{unit}}的礼物会自动放至您的背包中；
+                    </li>
+                    <li>
+                        ④价值29{{unit}}的礼物会自动发放至您的背包中，此礼物主播不参与分成；
+                    </li>
+                    <li>
+                        ⑤活动最终解释权归官方运营团队所有。
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div v-else>
+            <div v-show="!showRules" class="prize">
+                <p class="result-title">恭喜您获得：</p>
+                <div v-if="openMsg.resultPlan == 1" class="gift-1">
+                    <div class="gift-pic">
+                        <div class="img"></div>
+                        <span class="lucky"></span>
+                        <span class="num1"></span>
+                    </div>
+                    <p class="gift-price">价值{{gifts[0].price}}{{unit}}</p>
+                    <p class="gift-name">{{gifts[0].name}}</p>
+                    <p class="text">请前往[直播间-游戏-转盘]中使用</p>
+                </div>
+                <div v-else-if="openMsg.resultPlan == 2" class="gift-2">
+                    <div class="gift-pic">
+                        <div class="img"></div>
+                        <span class="num1"></span>
+                    </div>
+                    <p class="gift-price">价值{{gifts[1].price}}{{unit}}</p>
+                    <p class="gift-name">{{gifts[1].name}}</p>
+                    <p class="text">请前往[我的背包]查看</p>
+                </div>
+                <div v-else-if="openMsg.resultPlan == 3" class="gift-3">
+                    <div class="gift-pic">
+                        <div class="img"></div>
+                    </div>
+                    <p class="gift-price">价值{{openMsg.num}}{{unit}}</p>
+                    <p class="gift-name">{{gifts[2].name}}</p>
+                    <p class="text">请前往[我的余额]查看</p>
+                </div>
+                <div v-else class="gift-4">
+                    <div class="gift-pic">
+                        <div class="img"></div>
+                        <span class="num6"></span>
+                    </div>
+                    <p class="gift-price">价值{{gifts[3].price}}{{unit}}</p>
+                    <p class="gift-name">{{gifts[3].name}}</p>
+                    <p class="text">请前往[我的背包]查看</p>
+                </div>
+                <div class="open-btn" @click="closeDoc">确定</div>
+            </div>
+            <div v-show="showRules">
+                <ul class="rules">
+                    <li>
+                        ①幸运礼盒为自动领取，开启成功后，您将随机抽得四种礼物中的任意一种；
+                    </li>
+                    <li>
+                        ②幸运大转盘抽奖券1张请至[直播间-游戏-转盘]中使用；
+                    </li>
+                    <li>
+                        ③{{unit}}随机礼包会自动发放至您的账户；
+                    </li>
+                    <li>
+                        ④价值999{{unit}}的礼物会自动放至您的背包中；
+                    </li>
+                    <li>
+                        ⑤价值29{{unit}}的礼物会自动发放至您的背包中，此礼物主播不参与分成；
+                    </li>
+                    <li>
+                        ⑥活动最终解释权归官方运营团队所有。
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,147 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/tangbao" */ -->
+    <div class="banner"></div>
+
+    <div class="section gifts">
+        <div class="content">
+            <div class="title"></div>
+            <div class="gifts-pic">
+                <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/tangbao/avatar_400.png')}" alt="礼物图" />
+            </div>
+            <p class="gifts-info">
+                <span class="name">虎宝</span>
+                <span class="price">10克拉/个</span>
+            </p>
+            <button class="button go-room" @click="goToRoom"></button>
+        </div>
+    </div>
+
+    <div class="section questions">
+        <div class="content">
+            <div class="title"></div>
+            <div class="qlist">
+                <div class="item question">
+                    <div class="avatar">
+                        <span class="pic"><img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/tangbao/avatar_ask.png')}" alt="星光小编"></span>
+                        <span class="name">星光小编</span>
+                    </div>
+                    <span class="word">生活中你是个什么样的人？</span>
+                </div>
+                <div class="item answer">
+                    <div class="avatar">
+                        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/tangbao/avatar_star.png')}" alt="糖宝女王">
+                    </div>
+                    <span class="word">比较随心，性格开朗，比较二</span>
+                </div>
+                <div class="item question">
+                    <div class="avatar">
+                        <span class="pic"><img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/tangbao/avatar_ask.png')}" alt="星光小编"></span>
+                        <span class="name">星光小编</span>
+                    </div>
+                    <span class="word">平时除了直播，还喜欢做些什么呢？</span>
+                </div>
+                <div class="item answer">
+                    <div class="avatar">
+                        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/tangbao/avatar_star.png')}" alt="糖宝女王">
+                    </div>
+                    <span class="word">看电子书，瑜伽</span>
+                </div>
+                <div class="item question">
+                    <div class="avatar">
+                        <span class="pic"><img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/tangbao/avatar_ask.png')}" alt="星光小编"></span>
+                        <span class="name">星光小编</span>
+                    </div>
+                    <span class="word">有什么想对粉丝说的？</span>
+                </div>
+                <div class="item answer">
+                    <div class="avatar">
+                        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/tangbao/avatar_star.png')}" alt="糖宝女王">
+                    </div>
+                    <span class="word">有大家陪伴我才开心，有大家陪伴我才有安全感，感谢缘分相遇，愿大家可以一起走很远很远~</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section billboard">
+        <div class="content">
+            <div class="title"></div>
+            <div class="cowns-list">
+                <div class="throne second" v-if="listThrone[1]">
+                    <div class="cown"></div>
+                    <div class="avatar">
+                        <img :src="listThrone[1].head_pic_1" :alt="listThrone[1].nickname">
+                    </div>
+                    <div class="badge">No.2</div>
+                </div>
+                <div class="throne first" v-if="listThrone[0]">
+                    <div class="cown"></div>
+                    <div class="avatar">
+                        <img :src="listThrone[0].head_pic_1" :alt="listThrone[0].nickname">
+                    </div>
+                    <div class="badge">No.1</div>
+                </div>
+                <div class="throne third"  v-if="listThrone[2]">
+                    <div class="cown"></div>
+                    <div class="avatar">
+                        <img :src="listThrone[2].head_pic_1" :alt="listThrone[2].nickname">
+                    </div>
+                    <div class="badge">No.3</div>
+                </div>
+            </div>
+            <div class="cowns-info-list">
+                <div class="info second" v-if="listThrone[1]">
+                    <p class="nickname">{{ listThrone[1].nickname }}</p>
+                    <p class="contribute">贡献值 {{ listThrone[1].num }}</p>
+                </div>
+                <div class="info first"  v-if="listThrone[0]">
+                    <p class="nickname">{{ listThrone[0].nickname }}</p>
+                    <p class="contribute">贡献值 {{ listThrone[0].num }}</p>
+                </div>
+                <div class="info third" v-if="listThrone[2]">
+                    <p class="nickname">{{ listThrone[2].nickname }}</p>
+                    <p class="contribute">贡献值 {{ listThrone[2].num }}</p>
+                </div>
+            </div>
+            <div class="bill-list scrollbar">
+                <div class="bill-item" v-for="(bitem, bind) in listLefed" :key="bind">
+                    <span class="i-index">{{ bind + 4 }}</span>
+                    <span class="i-avatar">
+                        <img :src="bitem.head_pic_1" :alt="bitem.nickname">
+                    </span>
+                    <span class="i-nickname">{{ bitem.nickname }}</span>
+                    <span class="i-contribute">贡献值 {{ bitem.num }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section rules">
+        <div class="content">
+            <div class="title"></div>
+            <div class="rule-info">
+                <p class="desc">1.活动时间：2018/07/18  12:00:00 -- 07/22 23:59:59。</p>
+                <p class="desc">2.活动期间内，在招人稀罕的糖宝的直播间内，每送满3000个活动礼物——虎宝，即可炸出守护红包，快来抢克拉吧！</p>
+            </div>
+        </div>
+        <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+    </div>
+
+    <div class="gift-left-sider"></div>
+    <div class="gift-right-sider"></div>
+    <div class="qs-right-sider"></div>
+    <div class="list-left-sider"></div>
+    <div class="rule-right-sider"></div>
+    <div class="rule-left-sider"></div>
+
+    <div class="footer"></div>
+</div>
+
+<script>
+    var gjShareParam = JSON.stringify({
+        title: '星光女神',
+        content: '女神驾到，霸气全开！',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/tangbao/share.png")}'
+    });
+</script>

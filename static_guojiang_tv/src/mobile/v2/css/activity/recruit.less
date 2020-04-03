@@ -1,0 +1,293 @@
+@imgUrl:"../../img/activity/recruit/";
+@bf:108rem;
+/*背景图居中覆盖*/
+.bCover(@url){
+	background-image: url('@{imgUrl}@{url}');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+/*背景图居中contain*/
+.bContain(@url){
+	background-image: url('@{imgUrl}@{url}');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+}
+/*背景图填满100%*/
+.bfill(@url){
+	background-image: url('@{imgUrl}@{url}');
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-position: center;
+}
+/*背景图Y轴复制*/
+.backgroundRepeat(@url){
+	background-image: url('@{imgUrl}@{url}');
+	background-repeat: repeat;
+	background-size: contain;
+}
+/*flex布局*/
+.flex(){
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+/*左对齐*/
+.flex-justify-left(){
+    -webkit-box-pack:start;
+    -moz-justify-content:flex-start;
+    -webkit-justify-content:flex-start;
+    justify-content: flex-start;
+}
+/*右对齐*/
+.flex-justify-right(){
+    -webkit-box-pack:end;
+    -moz-justify-content:flex-end;
+    -webkit-justify-content:flex-end;
+    justify-content: flex-end;
+}
+/*两端对齐*/
+.flex-justify-between(){
+    -webkit-box-pack:justify;
+    -moz-justify-content:space-between;
+    -webkit-justify-content:space-between;
+    justify-content: space-between;
+}
+/*居中对齐*/
+.flex-justify-center(){
+    -webkit-box-pack:center;
+    -moz-justify-content:center;
+    -webkit-justify-content:center;
+    justify-content: center;
+}
+/*平均分布*/
+.flex-justify-around(){
+    -webkit-box-pack:justify;
+    -moz-justify-content:space-around;
+    -webkit-justify-content:space-around;
+    justify-content: space-around;
+}
+/*上下居中*/
+.flex-align(){
+    -webkit-box-align:center;
+    -moz-align-items:center;
+    -webkit-align-items:center;
+    align-items: center;
+}
+/*从左到右排列*/
+.flex-orient-row(){
+    -webkit-box-direction:normal;
+    -webkit-box-orient:horizontal;
+    -moz-flex-direction:row;
+    -webkit-flex-direction:row;
+    flex-direction: row;
+}
+/*从上到下排列*/
+.flex-orient-col(){
+    -webkit-box-direction:normal;
+    -webkit-box-orient:vertical;
+    -moz-flex-direction:column;
+    -webkit-flex-direction:column;
+    flex-direction: column;
+}
+/*子元素伸缩数*/
+.flex-item(@num){
+    -webkit-box-flex:@num;
+    -moz-box-flex:@num;
+    -webkit-flex:@num;
+    -ms-flex:@num;
+    flex: @num;
+}
+.transformCenter(){
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	-webkit-transform: translate(-50%,-50%);
+	-moz-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+}
+/*.backgroundRepeat("bg.jpg");*/
+/*font-family: "微软雅黑","黑体",sans-serif;*/
+a{
+	text-decoration: none;
+}
+body{
+	-webkit-tap-highlight-color:transparent;
+}
+ul{
+	list-style: none;
+}
+em{
+	display: inline;
+	font-style: normal;
+}
+header,article{
+	display: block;
+	border:none;
+}
+.clearfix::after{
+	content: "";
+	clear: both;
+	display: block;
+}
+.sprite{
+    background: url("@{imgUrl}sprite.png") no-repeat;
+    background-size: 622/@bf 725/@bf;
+}
+.wrapper{
+    padding-bottom: 1px;
+    background-color: #53cbc7;
+}
+.banner{
+    display: block;
+    height: 587/@bf;
+    .bfill("banner.jpg");
+}
+.container{
+    width: 1020/@bf;
+    margin: 55/@bf auto 268/@bf;
+    &>*{
+        border-radius: 5/@bf;
+        background-color: #2dabac;
+        color: #fff;
+    }
+}
+.act-intro{
+    padding-top: 54/@bf;
+    padding-bottom: 70/@bf;
+}
+.act-intro-head{
+    position: relative;
+    color: #ffea00;
+    margin: 0 auto;
+    margin-bottom: 30/@bf;
+    text-align: center;
+    font-size: 14px;
+    span{
+        position: relative;
+    }
+    &>span::after{
+        content: "";
+        position: absolute;
+        top: 16/@bf;
+        left: 100%;
+        width: 67/@bf;
+        height: 18/@bf;
+        background: url("@{imgUrl}sprite.png") no-repeat;
+        background-size: 622/@bf 725/@bf;
+        background-position: -28/@bf -630/@bf;
+    }
+    &>span::before{
+        content: "";
+        position: absolute;
+        top: 16/@bf;
+        right: 102%;
+        width: 67/@bf;
+        height: 18/@bf;
+        background: url("@{imgUrl}sprite.png") no-repeat;
+        background-size: 622/@bf 725/@bf;
+        background-position: -28/@bf -630/@bf;
+    }
+}
+.act-font{
+    color: #fff;
+    font-size: 12px;
+    text-align: left;
+    line-height: 2;
+    margin: 0 38/@bf;
+    em{
+        color: #ffea00;
+    }
+}
+.act-content{
+    margin-top: 100/@bf;
+    padding: 77/@bf 0 96/@bf;
+}
+.act-1-head{
+    width: 536/@bf;
+    height: 116/@bf;
+    margin: 0 auto;
+    background-position: -13/@bf -15/@bf;
+}
+.act-1-time{
+    text-align: center;
+    font-size: 14px;
+    line-height: 1;
+    font-weight: bold;
+    margin: 70/@bf 0 90/@bf;
+}
+.act-2-head{
+    width: 567/@bf;
+    height: 116/@bf;
+    margin: 0 auto;
+    background-position: -13/@bf -177/@bf;
+}
+.act-2-content{
+    margin-top: 45/@bf;
+}
+.act-3-head {
+    margin: 85/@bf auto 0;
+    width: 556/@bf;
+    height: 115/@bf;
+    background-position: -13/@bf -325/@bf;
+}
+.act-3-step{
+    margin-top:40/@bf;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+.act-3-content{
+    margin-top: 20/@bf;
+}
+.act-4-head {
+    margin: 93/@bf auto 0;
+    width: 566/@bf;
+    height: 115/@bf;
+    background-position: -8/@bf -486/@bf;
+}
+.act-4-content{
+    margin-top: 75/@bf;
+}
+.act-foot{
+    padding-top: 1px;
+    margin-top: 104/@bf;
+    padding-bottom: 100/@bf;
+}
+
+.act-foot-head{
+    position: relative;
+    color: #ffea00;
+    margin: 59/@bf auto 30/@bf;
+    text-align: center;
+    font-size: 14px;
+    span{
+        position: relative;
+    }
+    &>span::after{
+        content: "";
+        position: absolute;
+        top: 16/@bf;
+        left: 105%;
+        width: 67/@bf;
+        height: 18/@bf;
+        background: url("@{imgUrl}sprite.png") no-repeat;
+        background-size: 622/@bf 725/@bf;
+        background-position: -28/@bf -630/@bf;
+    }
+    &>span::before{
+        content: "";
+        position: absolute;
+        top: 16/@bf;
+        right: 105%;
+        width: 67/@bf;
+        height: 18/@bf;
+        background: url("@{imgUrl}sprite.png") no-repeat;
+        background-size: 622/@bf 725/@bf;
+        background-position: -28/@bf -630/@bf;
+    }
+}

@@ -1,0 +1,96 @@
+// ../../img/download/iosSign2
+
+@activityName: 'download/iosSign2';
+@baseImgPath: '../../img/download/iosSign2';
+
+@bf: 108rem;
+
+body{
+    background: #f5f5f5;
+    padding-top: 80/@bf;
+}
+
+.qrcode_wrap{
+    width: 292/@bf;
+    height: 292/@bf;
+    margin: 0 auto 45/@bf;
+    border: 1px solid #ff0071;
+    border-radius: 5px;
+    img{
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+    }
+}
+
+.figure{
+    position: absolute;
+    display: block;
+    top: 0;
+    &.figure_1{
+        left: 0;
+        transform: rotateY(180deg);
+    }
+    &.figure_2{
+        right: 0;
+    }
+    width: 172/@bf;
+    height: 533/@bf;
+    background: url('@{baseImgPath}/figure.png') no-repeat top center;
+    background-size: 172/@bf 533/@bf;
+}
+
+.title{
+    font-size: 10px;
+    color: #666666;
+    text-align: center;
+    padding-bottom: 2px;
+}
+.btn{
+    display: block;
+    margin: 0 auto 20/@bf;
+    width: 238/@bf;
+    height: 82/@bf;
+    background: url('@{baseImgPath}/btn.png') no-repeat top center;
+    background-size: 238/@bf 82/@bf;
+    text-align: center;
+    line-height: 82/@bf;
+    font-size: 12px;
+    color:#ffffff;
+}
+#trust{
+    margin-bottom: 55/@bf;
+}
+
+.step{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.mask_wrap{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    .mask{
+        background: rgba(0, 0, 0, 0.6);
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+    }
+    .hint{
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 516/@bf;
+        height: 390/@bf;
+        background: url('@{baseImgPath}/download_hint.png') no-repeat top center;
+        background-size: 516/@bf 390/@bf;
+    }
+}

@@ -1,0 +1,430 @@
+<div class="wrapper" id="app" v-cloak>
+    <div class="wrap">
+        <section class="card">
+            <div class="use-btn" @click="useCard()"></div>
+            <div class="car-num" v-if="myModMes">目前拥有：{{cardNum}}张</div>
+        </section>
+
+        <!-- 活动榜单 -->
+        <section class="rank">
+            <div class="title">
+                <div :class="{'choose': !chooseNew}" @click="firTab('1')"></div>
+                <div :class="{'choose': chooseNew}" @click="firTab('2')"></div>
+            </div>
+            <div class="box-cover">
+                <div class="com-box">
+                    <!-- 周星 -->
+                    <div class="rank-out com-con rank-zx" v-show="!chooseNew">
+                        <div class="act-gifts">
+                            <ul>
+                                <li v-for="(item, index) in giftArrNow" :class="{'big': tabArr1[index]}" @click="tabThree('1', index)">
+                                    <div class="img-area">
+                                        <div class="img-area-inner">
+                                            <img :src="item.img" alt="" />
+                                        </div>
+                                    </div>
+                                    <div class="gift-name">{{item.name}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="day-rank">
+                            <ul class="day-tit">
+                                <li :class="{'day-choose': index+1 == chooseDayZx}" v-for="(item, index) in dayNew" @click="chooseDay(index, '0')">{{item}} <b></b></li>
+                            </ul>
+
+                            <ul class="com-ul">
+                                <li v-for="(item, index) in zxArr.rank">
+                                    <div class="star-img" v-if="item != null">
+                                        <img :src="item.headPic" alt="" v-bind:data-rid="item.id" @click="inlive($event)" />
+                                        <b v-if="item.isPlaying"></b>
+                                        <span></span>
+                                        <div class="bz"></div>
+                                    </div>
+                                    <div class="star-img" v-else>
+                                        <div class="no-img"></div>
+                                        <span></span>
+                                        <div class="bz"></div>
+                                    </div>
+                                    <p v-if="item != null">{{item.nickname}}</p>
+                                    <strong v-if="item != null">积分:{{item.score}}</strong>
+                                    <strong v-else>--</strong>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 个人 -->
+                        <div class="mine my-mod" v-if="zxArr.myRankInfo">
+                            <div class="mine-out">
+                                <div class="mine-img-area">
+                                    <div class="mine-img">
+                                        <img :src="zxArr.myRankInfo.headPic" alt="" />
+                                        <b v-if="zxArr.myRankInfo.isPlaying"></b>
+                                    </div>
+                                    <p>{{zxArr.myRankInfo.nickName}}</p>
+                                </div>
+                                <div class="mine-mes" v-if="zxArr.myRankInfo.pairInfos != undefined">
+                                    <span>{{zxArr.myRankInfo.pairInfos[0].name}}</span>
+                                    <strong>{{zxArr.myRankInfo.pairInfos[0].value}}</strong>
+                                    <span>{{zxArr.myRankInfo.pairInfos[1].name}}</span>
+                                    <strong>{{zxArr.myRankInfo.pairInfos[1].value}}</strong>
+                                </div>
+                                <div class="mine-mes" v-if="zxArr.myRankInfo.pairInfos != undefined">
+                                    <span>{{zxArr.myRankInfo.pairInfos[2].name}}</span>
+                                    <strong>{{zxArr.myRankInfo.pairInfos[2].value}}</strong>
+                                    <span>{{zxArr.myRankInfo.pairInfos[3].name}}</span>
+                                    <strong>{{zxArr.myRankInfo.pairInfos[3].value}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 新星 -->
+                    <div class="rank-out com-con rank-new" v-show="chooseNew">
+                        <div class="day-rank">
+                            <ul class="day-tit">
+                                <li :class="{'day-choose': index+1 == chooseDayNew}" v-for="(item, index) in dayNew" @click="chooseDay(index, '1')">{{item}} <b></b></li>
+                            </ul>
+
+                            <ul class="com-ul">
+                                <li v-for="(item, index) in newArr.rank">
+                                    <div class="star-img" v-if="item != null">
+                                        <img :src="item.headPic" alt="" v-bind:data-rid="item.id" @click="inlive($event)" />
+                                        <b v-if="item.isPlaying"></b>
+                                        <span></span>
+                                        <div class="bz"></div>
+                                    </div>
+                                    <div class="star-img" v-else>
+                                        <div class="no-img"></div>
+                                        <span></span>
+                                        <div class="bz"></div>
+                                    </div>
+                                    <p v-if="item != null">{{item.nickname}}</p>
+                                    <strong v-if="item != null">积分:{{item.score}}</strong>
+                                    <strong v-else>--</strong>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 个人 -->
+                        <div class="mine my-mod" v-if="newArr.myRankInfo">
+                            <div class="mine-out">
+                                <div class="mine-img-area">
+                                    <div class="mine-img">
+                                        <img :src="newArr.myRankInfo.headPic"  alt="" />
+                                        <b v-if="newArr.myRankInfo.isPlaying" ></b>
+                                    </div>
+                                    <p>{{newArr.myRankInfo.nickName}}</p>
+                                </div>
+                                <div class="mine-mes" v-if="newArr.myRankInfo.pairInfos != undefined">
+                                    <span>{{newArr.myRankInfo.pairInfos[0].name}}</span>
+                                    <strong>{{newArr.myRankInfo.pairInfos[0].value}}</strong>
+                                    <span>{{newArr.myRankInfo.pairInfos[1].name}}</span>
+                                    <strong>{{newArr.myRankInfo.pairInfos[1].value}}</strong>
+                                </div>
+                                <div class="mine-mes" v-if="newArr.myRankInfo.pairInfos != undefined">
+                                    <span>{{newArr.myRankInfo.pairInfos[2].name}}</span>
+                                    <strong>{{newArr.myRankInfo.pairInfos[2].value}}</strong>
+                                    <span>{{newArr.myRankInfo.pairInfos[3].name}}</span>
+                                    <strong>{{newArr.myRankInfo.pairInfos[3].value}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 护星榜单 -->
+        <h2 class="hx-tit"></h2>
+        <section class="hx-rank">
+            <div class="box-cover">
+                <div class="com-box">
+                    <div class="rank-out com-con">
+                        <div class="act-gifts">
+                            <ul>
+                                <li v-for="(item, index) in giftArrNow" :class="{'big': tabArr2[index]}" @click="tabThree('2', index)">
+                                    <div class="img-area">
+                                        <div class="img-area-inner">
+                                            <img :src="item.img" alt="" />
+                                        </div>
+                                    </div>
+                                    <div class="gift-name">{{item.name}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="day-rank">
+                            <ul class="com-ul">
+                                <li v-for="(item, index) in hxArr.rank">
+                                    <div class="star-img" v-if="item != null">
+                                        <img :src="item.headPic" alt="" />
+                                        <span></span>
+                                        <div class="bz"></div>
+                                    </div>
+                                    <div class="star-img" v-else>
+                                        <div class="no-img"></div>
+                                        <span></span>
+                                        <div class="bz"></div>
+                                    </div>
+                                    <p v-if="item != null">{{item.nickname}}</p>
+                                    <strong v-if="item != null">积分:{{item.score}}</strong>
+                                    <strong v-else>--</strong>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 个人 -->
+                        <div class="mine my-mod" v-if="hxArr.myRankInfo">
+                            <div class="mine-out">
+                                <div class="mine-img-area">
+                                    <div class="mine-img">
+                                        <img :src="hxArr.myRankInfo.headPic" v-bind:data-rid="hxArr.myRankInfo.rid" @click="inlive($event)" alt="" />
+                                        <b v-if="hxArr.myRankInfo.isPlaying" v-bind:data-rid="hxArr.myRankInfo.rid" @click="inlive($event)"></b>
+                                    </div>
+                                    <p>{{hxArr.myRankInfo.nickName}}</p>
+                                </div>
+                                <div class="mine-mes" v-if="hxArr.myRankInfo.pairInfos != undefined">
+                                    <span>{{hxArr.myRankInfo.pairInfos[0].name}}</span>
+                                    <strong>{{hxArr.myRankInfo.pairInfos[0].value}}</strong>
+                                    <span>{{hxArr.myRankInfo.pairInfos[1].name}}</span>
+                                    <strong>{{hxArr.myRankInfo.pairInfos[1].value}}</strong>
+                                </div>
+                                <div class="mine-mes" v-if="hxArr.myRankInfo.pairInfos != undefined">
+                                    <span>{{hxArr.myRankInfo.pairInfos[2].name}}</span>
+                                    <strong>{{hxArr.myRankInfo.pairInfos[2].value}}</strong>
+                                    <span>{{hxArr.myRankInfo.pairInfos[3].name}}</span>
+                                    <strong>{{hxArr.myRankInfo.pairInfos[3].value}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 上周榜单 -->
+        <h2 class="last-tit" v-show="showLast"></h2>
+        <section class="last-rank" v-show="showLast">
+            <div class="box-cover">
+                <div class="com-box">
+                    <div class="rank-out com-con">
+                        <div class="type-tit">
+                            <div :class="{'type-choose': index == lastId}" v-for="(item, index) in last" @click="lastTab(index)">{{item}} <b></b></div>
+                        </div>
+                        <div class="act-gifts" v-show="showStarTab">
+                            <ul>
+                                <li v-for="(item, index) in giftArrLast" :class="{'big': tabArr3[index]}" @click="tabThree('3', index)">
+                                    <div class="img-area">
+                                        <div class="img-area-inner">
+                                            <img :src="item.img" alt="" />
+                                        </div>
+                                    </div>
+                                    <div class="gift-name">{{item.name}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="day-rank">
+                            <ul class="com-ul">
+                                <li v-for="(item, index) in lastArr">
+                                    <div class="star-img" v-if="item != null">
+                                        <img :src="item.headPic" alt="" />
+                                        <span></span>
+                                        <div class="bz"></div>
+                                    </div>
+                                    <div class="star-img" v-else>
+                                        <div class="no-img"></div>
+                                        <span></span>
+                                        <div class="bz"></div>
+                                    </div>
+                                    <p v-if="item != null">{{item.nickname}}</p>
+                                    <strong v-if="item != null">积分:{{item.score}}</strong>
+                                    <strong v-else>--</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>  
+
+        <!-- 历史最强 -->
+        <h2 class="best-tit"></h2>
+        <section class="best">
+            <div class="box-cover">
+                <div class="com-box">
+                    <div class="best-mes">
+                        <div v-if="bestMod">
+                            <div class="best-bg">
+                                <img :src="bestMod.headPic" v-bind:data-rid="bestMod.mid" @click="inlive($event)"  alt="" />
+                                <strong v-bind:data-rid="bestMod.mid" @click="inlive($event)"></strong> 
+                            </div>
+                            <div class="best-info">
+                                <p>{{bestMod.nickname}}</p>
+                                <span>积分: {{bestMod.score}}</span>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <div class="best-bg">
+                                <b></b>
+                            </div>
+                            <div class="best-info">
+                                <p>虚位以待</p>
+                                <span>积分: --</span>
+                            </div>
+                        </div>
+
+                        <div v-if="bestUser">
+                            <div class="best-bg">
+                                <img :src="bestUser.headPic"  alt="" />
+                                <strong></strong> 
+                            </div>
+                            <div class="best-info">
+                                <p>{{bestUser.nickname}}</p>
+                                <span>积分: {{bestUser.score}}</span>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <div class="best-bg">
+                                <b></b> 
+                            </div>
+                            <div class="best-info">
+
+                                <p>虚位以待</p>
+                                <span>积分: --</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="best-tip">
+                        注：主播/用户收到/送出单个周星礼物的积分超过当前的最高纪录，即可成为最强周星/护星！（数据每周日24:00更新，仅统计2019年12月23日12:00之后的数据）
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="rule-btn" @click="showRule"></div>
+
+        <div class="copyright"></div>
+
+        <!-- 规则 -->
+        <div class="posi rule" v-show="ruleBox">
+            <div class="rule-out box-cover">
+                <div class="rule-inner">
+                    <div class="close-btn" @click="ruleBox = false"></div>
+                    <h2 class="rule-tit"></h2>
+                    <div class="rule-con">
+                        <ul class="rule-scroll">
+                            <li>
+                                <p>1.<strong>活动时间：</strong>每周一12:00:00 -- 每周日23:59:59。</p>
+                                <p>2.<strong>活动玩法：</strong>活动期间，从线上挑选三款礼物作为周星礼物，收到对应活动礼物积分最多的主播，即为该礼物周星。（积分相同时，按先到先得排序）</p>
+                                <p>3. 新星主播为本周首次收到周星礼物时星光值 &lt 800w的主播，周星主播为每周首次收到周星礼物时星光值 ≥ 800w的主播，新星主播计分规则为收取所有周星礼物，1克拉 = 1积分，周星主播则区分不同的周星礼物，1克拉 = 1积分。</p>
+                                <p>4.<strong>周星新玩法</strong></p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;4.1.<strong> 加成卡说明：</strong> 新星日榜前三名以及周星每个礼物日榜前三名均可获得一张1.2倍加成卡，日榜开启时间为周一12:00:00至周五23:59:59，加成卡即时下发，每个主播每周限得6张。</p>
+                                <p> &nbsp;&nbsp;&nbsp;&nbsp;4.2.<strong> 加成卡获取：</strong>主播使用加成卡，直播间即时开启10分钟收/送礼积分加成，用户送出一个周星礼物，主播榜单与护星榜单均记录1.2个周星礼物积分。加成卡仅周末使用，每周日23:00:00会清空剩余未使用的加成卡。</p>
+                                <p>5.<strong>礼物冠名：</strong>本周收取某个礼物最多的主播（仅限周星主播）与送出某个礼物最多的用户可冠名下周周星礼物。</p>
+                                <p>6.<strong>温馨提示：</strong> 活动临近结束时送礼量大，服务器会有一定程度的延迟，请提前10秒冲榜，以免成绩未记录榜单。若发生因服务器延迟，造成成绩未记录榜单情况，平台不予补偿，请谅解！</p>
+                                <p><span>注：违规或不当竞争的主播，平台有权取消其活动成绩。</span></p>
+                            </li>
+                            <li>
+                                <h2 class="reward-tit"></h2>
+                                <div class="table">
+                                    <div class="item">
+                                        <span>排名</span>
+                                        <span>新星榜</span>
+                                        <span>周星榜</span>
+                                        <span>护星榜</span>
+                                    </div>
+                                    <div class="item">
+                                        <span>第一名</span>
+                                        <span>
+                                            <p> 
+                                                广告位推广 
+                                                <br />30000克拉
+                                                <br />开播飘屏*7天
+                                            </p>
+                                        </span>
+                                        <span>
+                                            <p>
+                                                礼物冠名
+                                                <br />40000克拉
+                                                <br />开播飘屏*7天
+                                            </p>
+                                        </span>
+                                        <span>
+                                            <p>
+                                                礼物冠名
+                                                <br />40000克拉
+                                                <br />上头条*15
+                                            </p>
+                                        </span>
+                                    </div>
+                                    <div class="item">
+                                        <span>第二名</span>
+                                        <span>
+                                            <p>广告位推广<br />
+                                            20000克拉</p>
+                                        </span>
+                                        <span><p>30000克拉</p></span>
+                                        <span>
+                                            <p>
+                                                30000克拉
+                                                <br />上头条*12
+                                            </p>
+                                        </span>
+                                    </div>
+                                    <div class="item">
+                                        <span>第三名</span>
+                                        <span>
+                                            <p>广告位推广<br />
+                                            15000克拉</p>
+                                        </span>
+                                        <span><p>20000克拉</p></span>
+                                        <span>
+                                            <p>
+                                                20000克拉
+                                                <br />上头条*10 
+                                            </p>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p><span>注：</span></p>
+                                <p><span>1.  新星前三名奖励的广告位为联合推广，时间为每周四12:00:00- 下周一23:59:59，若主播活动期间开播有效时长＜3 小时，则取消其广告位推广及飘屏奖励。</span></p>
+                                <p><span>2.  开播飘屏奖励有效期一周，每日首次开播发放，不可重复领取，其他奖励可重复领取。若主播同时获得多个活动的飘屏奖励，则按照获得的时间先后触发。</span></p>
+                                <p><span>3.  “上头条”奖励于活动结束时即时下发，克拉奖励于活动结束的五个工作日内下发。 </span></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- tost -->
+        <div class="tost" v-show="tostBox">{{tostText}}</div>
+
+        <!-- 使用 -->
+        <div class="posi use-posi" v-show="useBox">
+            <div class="use-box">
+                <div class="close-btn" @click="useBox = false"></div>
+                <div class="use-val">
+                    <span>本次使用</span>
+                    <input type="text" v-model="useNum"  @input="valueNum($event)" />
+                    <span>张</span>
+                </div>
+                <div class="use-btns">
+                    <div @click="sureUse()"></div>
+                    <div @click="useBox = false"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '周星大作战',
+        content: '新星之火，可以燎原，周星大改版，更多周星名额、奖励等你来抢',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/weekstar/queen10/share.png")}'
+    });
+</script>

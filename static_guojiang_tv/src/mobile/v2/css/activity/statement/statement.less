@@ -1,0 +1,81 @@
+// ../../../img/activity/statement/statement
+
+@activityName: 'activity/statement/statement';
+@baseSize: 108rem; // 1080px -> fontSize -> 108px
+@baseImgPath: '../../../img/activity/statement/statement';
+
+/* 定义颜色字体大小 S */
+
+/* 定义颜色字体大小 E */
+
+#app {
+    background: #f9f9f8;
+}
+
+/* 定义可复用样式 S */
+.xg-container {
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 1080 / @baseSize;
+}
+
+.xg-content {
+    margin: 40 / @baseSize;
+    background: #fff;
+    box-shadow: 0px 0px 40/@baseSize 0px rgba(100, 100, 100, 0.4);
+    padding: 40/@baseSize 30/@baseSize;
+}
+/* 定义可复用样式 E */
+
+/* 定义普通样式 S */
+.banner {
+    background-image: url('@{baseImgPath}/banner.jpg');
+    height: 557 / @baseSize;
+}
+
+.phrase {
+    font-size: 36/@baseSize;
+    color: #2a2a2a;
+    line-height: 66/@baseSize;
+}
+
+.txt-bold {
+    font-weight: bold;
+}
+
+.txt-right {
+    text-align: right;
+}
+
+.sec-martop {
+    margin-top: 60/@baseSize;
+}
+
+.footer {
+    background-image: url('@{baseImgPath}/footer.jpg');
+    height: 195 / @baseSize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .btn-go {
+        width: 528/@baseSize;
+        height: 120/@baseSize;
+        background: #da500e;
+        cursor: pointer;
+        font-size: 42/@baseSize;
+        color: #fff;
+        position: relative;
+        top: -20/@baseSize;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:active {
+            background: #ae400b;
+        }
+    }
+}
+/* 定义普通样式 E */

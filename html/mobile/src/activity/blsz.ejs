@@ -1,0 +1,510 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="ban"></div> 
+    <div class="wrap">
+        <section class="world-title"></section>
+
+        <!-- 冰爽限定 -->
+        <section class="gift-goods">
+            <div class="common-tit">
+                <span></span>
+            </div>
+            <div class="buy-gift">
+                <ul class="clearfix">
+                    <li class="sea">
+                        <span></span>
+                        <div class="btns">
+                            <div class="pre-view" @click="doSeaSvg()"></div>
+                            <div data-id="570" data-value="2999" class="buy" v-if="canBuy" @click="buy($event)"></div>
+                            <div v-else class="cant-buy"></div>
+                        </div>
+                    </li>
+                    <li class="gan">
+                        <span></span>
+                        <div class="btns">
+                            <div class="pre-view" @click="doGanSvg()"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>  
+
+        <!-- 商场 -->
+        <section class="market">
+            <div class="common-tit">
+                <span></span>
+            </div>
+            <div v-if="isMod" class="my-change" @click="showMyChnage()"></div>
+            <div v-else class="cant-my-change" ></div>
+            <p class="only">仅限主播兑换哦！</p>
+            <ul class="goods-change clearfix">
+                <li>
+                    <strong>全站开播通知</strong>
+                    <b class="g1"></b>
+                    <span>开播全站飘屏*2</span>
+                    <div class="price">5个碎片</div>
+                    <div v-if="canChange" @click="changeGift($event)" class="btn-change" data-giftname="全站开播通知" data-giftnum="5" data-giftid="1"></div>
+                    <div v-else class="btn-cantchange"></div>
+                </li>
+                <li>
+                    <strong>夏日清凉礼包</strong> 
+                    <b class="g2"></b>
+                    <span>比基尼*20&nbsp;&nbsp;&nbsp;清凉特饮*20 <br />啤酒*20</span>
+                    <div class="price">10个碎片</div>
+                    <div v-if="canChange" @click="changeGift($event)" class="btn-change" data-giftname="夏日清凉礼包" data-giftnum="10" data-giftid="2"></div>
+                    <div v-else class="btn-cantchange"></div>
+                </li>
+                <li>
+                    <strong>夏日经典礼包</strong>
+                    <b class="g3"></b>
+                    <span>大西瓜*100&nbsp;&nbsp;&nbsp;啤酒*200</span>
+                    <div class="price">20个碎片</div>
+                    <div v-if="canChange" @click="changeGift($event)" class="btn-change" data-giftname="夏日经典礼包" data-giftnum="20" data-giftid="3"></div>
+                    <div v-else class="btn-cantchange"></div>
+                </li>
+                <li>
+                    <strong>夏日豪华礼包</strong>
+                    <b class="g4"></b>
+                    <span>大西瓜*600&nbsp;&nbsp;&nbsp;夏日海滩*3</span>
+                    <div class="price">40个碎片</div>
+                    <div v-if="canChange" @click="changeGift($event)" class="btn-change" data-giftname="夏日豪华礼包" data-giftnum="40" data-giftid="4"></div>
+                    <div v-else class="btn-cantchange"></div>
+                </li>
+                <li>
+                    <strong>夏日钻石礼包</strong>
+                    <b class="g4"></b>
+                    <span>大西瓜*1100&nbsp;&nbsp;&nbsp;夏日海滩*4</span>
+                    <div class="price">60个碎片</div>
+                    <div v-if="canChange" @click="changeGift($event)" class="btn-change" data-giftname="夏日钻石礼包" data-giftnum="60" data-giftid="5"></div>
+                    <div v-else class="btn-cantchange"></div>
+                </li>
+                <li>
+                    <strong>夏日至尊礼包</strong>
+                    <b class="g5"></b>
+                    <span>App端banner*12h<br /> 夏日海滩*4</span>
+                    <div class="price">80个碎片</div>
+                    <div v-if="canChange" @click="changeGift($event)" class="btn-change" data-giftname="夏日至尊礼包" data-giftnum="80" data-giftid="6"></div>
+                    <div v-else class="btn-cantchange"></div>
+                </li>
+            </ul>
+            <p>*注：兑换成功，礼物会立即下发至背包；<br />banner奖励，在活动结束后，运营会主动联系兑换主播，统一安排。</p>
+        </section>
+
+        <!-- 榜单 -->
+        <section class="ranks">
+            <div class="common-tit">
+                <span></span>
+            </div>
+            <div class="tab-tit">
+                <div :class="{'choose': tabCon}" @click="tab('choose')">
+                    <b></b>
+                </div>
+                <div :class="{'choose': !tabCon}" @click="tab('')">
+                    <b></b>
+                </div>
+            </div>
+            <div class="tab-box-out">
+                <!-- 主播 -->
+                <div class="mod-rank-out" v-show="tabCon">
+                    <div class="tab-box">
+                        <!-- 第二级切换 -->
+                        <div class="sec-tit">
+                            <div :class="[secChoose == 'newbie' ? 'sec-choose': '']" @click="modChoose('newbie')"><b></b></div>
+                            <div :class="[secChoose == 'new_star' ? 'sec-choose': '']" @click="modChoose('new_star')"><b></b> </div>
+                            <div :class="[secChoose == 'super_star' ? 'sec-choose': '']" @click="modChoose('super_star')"><b></b> </div>
+                        </div>
+
+                        <!-- 第三级切换 -->
+                        <div class="thi-tit">
+                            <div v-for="(item, index) in dayArr" :class="{'':item.status==-1,'thi-choose':item.status==0,'thi-cantchoose':item.status==1}" v-bind:data-status="item.status" v-bind:data-day="item.date" @click="dayChoose($event)">
+                                {{item.name}}
+                                <b></b>
+                            </div>
+                            <div id="allRank" :class="{'thi-choose' : isPass}" data-status="2" data-day="all" @click="dayChoose($event)">
+                                总榜
+                                <b></b>
+                            </div>
+                        </div>
+
+                        <div class="jg-line"></div>
+
+                        <div class="rank-tit clearfix">
+                            <div>排名</div>
+                            <div>主播</div>
+                            <div>凉爽值</div>
+                        </div>
+                        
+                        <!-- 滚动区域 -->
+                        <div class="rank-list mods">
+                            <ul class="other-mod">
+                                <li class="clearfix" v-for="(item, index) in modArr">
+                                    <div class="rank-num">{{index+1}}</div>
+                                    <div class="rank-img">
+                                        <img :src="item.headPic" alt="" v-bind:data-rid="item.rid" @click="inlive($event)" />
+                                        <strong v-if="index < 3"></strong>
+                                        <span v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></span>
+                                        <b v-if="index < 3"></b>
+                                    </div>
+                                    <div class="rank-mes">
+                                        <div class="rank-name">
+                                            <strong v-if="dataDay != 'all'" :class="[index < 5 ? '': 'only-name']" >{{item.nickname}}</strong>
+                                            <strong v-else class="only-name">{{item.nickname}}</strong>
+                                            <b v-if="dataDay != 'all'" :class="[index < 5 ? 'level_icon m_level_icon_' + item.level : 'max-dis level_icon m_level_icon_' + item.level]"></b>
+                                            <b v-else class="max-dis" :class="'level_icon m_level_icon_' + item.level"></b>
+                                        </div>
+                                        <div class="rank-get" v-if="dataDay != 'all'">{{mesArr[index]}}</div>
+                                    </div>
+                                    <div class="rank-mark">{{item.score}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="jg-line" v-show="uid" v-if="uid && myModArr != null"></div>
+
+                        <!-- 我的主播排名 -->
+                        <div class="my-rank my-mod-rank" v-if="uid && myModArr != null">
+                            <div class="my-mes clearfix">
+                                <div class="my-num">{{myModArr.rank}}</div>
+                                <div class="my-img">
+                                    <img v-if="myModArr.rid != null" :src="myModArr.headPic" alt="" v-bind:data-rid="myModArr.rid" @click="inlive($event)" />
+                                    <img v-else :src="myModArr.headPic" v-bind:data-rid="myModArr.rid" @click="inlive($event)"/>
+                                    <b v-if="myModArr.isPlaying" v-bind:data-rid="myModArr.rid" @click="inlive($event)" ></b>
+                                </div>
+                                <div class="my-mark">凉爽值: {{myModArr.score}}</div>
+                            </div>
+                            <div class="my-name clearfix">
+                                <div class="nickname">
+                                    <strong>{{myModArr.nickName}}</strong>
+                                    <b :class="'level_icon m_level_icon_' + myModArr.level"></b>
+                                </div>
+                                <div class="distance">{{myModArr.rankComment}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 用户 -->
+                <div class="user-rank-out" v-show="!tabCon">
+                    <div class="tab-box">
+                        <div class="top-three">
+                            <ul>
+                                <li v-for="(item,index) in userArr" v-if="index < 3">
+                                    <div class="img-area">
+                                        <img :src="item.headPic" />
+                                        <b></b>
+                                        <em></em>
+                                    </div>
+                                    <div class="mes-area">
+                                        <div>
+                                            <strong>{{item.nickname}}</strong>
+                                            <b :class="'level_icon u_level_icon_' + item.level"></b>
+                                        </div>
+                                        <span>贡献值 {{item.score}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="jg-line"></div>
+                        
+                        <div class="rank-tit clearfix">
+                            <div>用户名</div>
+                            <div>主播</div>
+                            <div>凉爽值</div>
+                        </div>
+
+                        <!-- 滚动区域 -->
+                        <div class="rank-list users">
+                            <ul class="other-user">
+                                <li class="clearfix" v-for="(item,index) in userArr" v-if="index >= 3">
+                                    <div class="rank-num">{{index+1}}</div>
+                                    <div class="rank-img">
+                                        <img :src="item.headPic" alt="" />
+                                    </div>
+                                    <div class="rank-mes">
+                                        <div class="rank-name">
+                                            <strong class="only-name">{{item.nickname}}</strong>
+                                            <b class="max-dis" :class="'level_icon u_level_icon_' + item.level"></b>
+                                        </div>
+                                    </div>
+                                    <div class="rank-mark">{{item.score}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="jg-line" v-show="uid"></div>
+                        
+                        <!-- 我的用户排名 -->
+                        <div class="my-rank my-user-rank" v-show="uid">
+                            <div class="my-mes clearfix">
+                                <div class="my-num">{{myUserArr.rank}}</div>
+                                <div class="my-img">
+                                    <img :src="myUserArr.headPic" alt="" />
+                                </div>
+                                <div class="my-mark">贡献值: {{myUserArr.score}}</div>
+                            </div>
+                            <div class="my-name clearfix">
+                                <div class="nickname">
+                                    <strong>{{myUserArr.nickName}}</strong>
+                                    <b :class="'level_icon u_level_icon_' + myUserArr.level"></b>
+                                </div>
+                                <div class="distance">{{myUserArr.rankComment}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="copyright"></div>
+
+        <div class="rule-btn" @click="ruleShow = ! ruleShow"></div>
+
+        <a href="/rechargeApp" ></a>
+
+        <!-- 规则弹窗 -->
+        <div class="posi rules" v-show="ruleShow">
+            <div class="rule-out">
+                <b class="close-btn" @click="ruleShow = !ruleShow"></b>
+                <div class="rule-con">
+                    <div class="rule-cover">
+                        <div class="common-tit rule-title">
+                            <span></span>
+                        </div>
+                        <ul>
+                            <li>
+                                <p>1.活动时间：<b>8月23日  12:00:00-8月28日  23:59:59</b></p>
+                            </li>
+                            <li>
+                                <p>2.活动礼物：</p>
+                                <b class="activity-gift"></b>
+                            </li>
+                            <li>
+                                <p>3.主播榜单划分为新秀（1级~10级）  新星（11级~20级）  巨星（21级及以上） </p>
+                            </li>
+                            <li>
+                                <p>4.在直播间一次性送出666个“大西瓜”即可触发水枪特效</p>
+                            </li>
+                            <li>
+                                <p>5.主播凉爽值每达到30000，即可获得1个夏日碎片。8月29日23:59:59之前，可以用碎片兑换碎片商店中的奖励</p>
+                            </li>
+                            <li>
+                                <div class="common-lable">
+                                    <div class="per">
+                                        <strong>碎片数量</strong>
+                                        <strong>可兑换奖励</strong>
+                                    </div>
+                                    <div class="per">
+                                        <strong>5</strong>
+                                        <strong>开播全站飘屏*2</strong>
+                                    </div>
+                                    <div class="per">
+                                        <strong>10</strong>
+                                        <strong>比基尼*20&nbsp;&nbsp;&nbsp;清凉特饮*20&nbsp;&nbsp;&nbsp;啤酒*20</strong>
+                                    </div>
+                                    <div class="per">
+                                        <strong>20</strong>
+                                        <strong>大西瓜*100&nbsp;&nbsp;&nbsp;啤酒*200</strong>
+                                    </div>
+                                    <div class="per">
+                                        <strong>40</strong>
+                                        <strong>大西瓜*100&nbsp;&nbsp;&nbsp;啤酒*200</strong>
+                                    </div>
+                                    <div class="per">
+                                        <strong>60</strong>
+                                        <strong>大西瓜*1100&nbsp;&nbsp;&nbsp;夏日海滩*4</strong>
+                                    </div>
+                                    <div class="per">
+                                        <strong>80</strong>
+                                        <strong>App端banner*12h&nbsp;&nbsp;&nbsp;夏日海滩*4</strong>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>6.每日新秀榜、新星榜和巨星榜排名前五名主播将获得不同数量夏日碎片奖励，每日24点整结算</p>
+                            </li>
+                            <li>
+                                <p>7.加速争夺赛（8.24 00:00:00-8.28 23:59:59）</p>
+                                <p>1）主播每小时总榜排名上升1个名次将获得“初级加速”，下小时前5分钟开启1.2倍buff加成</p>
+                                <p>2）主播每小时总榜排名上升≥2个名次将获得“高级加速”，下小时前10分钟开启1.2倍buff加成</p>
+                                <p>3）若主播总榜排名第一，直至本小时结束，还是第一名，则下小时前10分钟开启1.2倍buff加成</p>
+                                <p>4）主播每小时总榜排名上升会立即在本直播间飘屏通知<br />例如：主播收到价值1000凉爽值礼物，则实际统计为1200凉爽值。但是加成部分（200凉爽值）主播无分成</p>
+                            </li>
+                        </ul>
+                        <div class="common-tit">
+                            <span></span>
+                        </div>
+                        <div class="common-lable">
+                            <div class="per">
+                                <strong>巨星榜</strong>
+                                <strong>奖励</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第一名</strong>
+                                <strong>350000克拉</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第二名</strong>
+                                <strong>300000克拉</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第三名</strong>
+                                <strong>150000克拉</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第四名</strong>
+                                <strong>100000克拉</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第五名</strong>
+                                <strong>100000克拉</strong>
+                            </div>
+                        </div>
+                        <div class="common-lable">
+                            <div class="per">
+                                <strong>新星榜</strong>
+                                <strong>奖励</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第一名</strong>
+                                <strong>300000克拉</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第二名</strong>
+                                <strong>200000克拉</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第三名</strong>
+                                <strong>100000克拉</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第四名</strong>
+                                <strong>80000克拉</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第五名</strong>
+                                <strong>80000克拉</strong>
+                            </div>
+                        </div>
+                        <div class="common-lable">
+                            <div class="per">
+                                <strong>新秀榜</strong>
+                                <strong>奖励</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第一名</strong>
+                                <strong>100000克拉</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第二名</strong>
+                                <strong>80000克拉</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第三名</strong>
+                                <strong>60000克拉</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第四名</strong>
+                                <strong>40000克拉</strong>
+                            </div>
+                            <div class="per">
+                                <strong>第五名</strong>
+                                <strong>40000克拉</strong>
+                            </div>
+                        </div>
+                        <p>注：克拉奖励在活动结束的7个工作日内下发至个人账户。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 购买 -->
+        <div class="posi buybox" v-show="buyBox">
+            <div>
+                <b class="close-btn" @click="buyBox= !buyBox"></b>
+                <div class="buy-cover">
+                    <h3>购买个数</h3>
+                    <div class="buy-num">
+                        <div class="dev" @click="dev()"></div>
+                        <input id="totalMoney" maxlength="8" value="1" @input="inputNumber()" />
+                        <div class="add" @click="add()"></div>
+                    </div>
+                    <strong>价格: {{buyTotal}}克拉</strong>
+                    <div class="sure-buy" @click="sureBuy()" v-bind:data-id="goodId"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 兑换弹窗 -->
+        <div class="posi changebox" v-show="changeBox">
+            <div class="sure-change">
+                <b class="close-btn" @click="changeBox = !changeBox"></b>
+                <div class="change-tips">
+                    <p>小主，确定要消耗<strong>{{changeNeed}}</strong>个碎片，兑换<strong>{{changeName}}</strong>吗？</p>
+                    <div class="clearfix">
+                        <div class="not-change" @click="changeBox = !changeBox"></div>
+                        <div class="do-change" @click="sureChange()"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 余额不足 -->
+        <div class="posi ye" v-show="yeBox">
+            <div class="no-enough">
+                <b class="close-btn" @click="yeBox = !yeBox"></b>
+                <div class="not-enough-tips">
+                    <p>余额不足，快去充值吧!</p>
+                    <div class="clearfix">
+                        <div class="not-cz" @click="yeBox = !yeBox"></div>
+                        <div class="do-cz" @click="charge()"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 记录 -->
+        <div class="posi code" v-show="codeBox">
+            <div class="change-code">
+                <b class="close-btn" @click="codeBox = !codeBox"></b>
+                <div class="change-con">
+                    <div class="change-list">
+                        <div class="change-tit">
+                            <span>时间</span>
+                            <span>兑换详情</span>
+                            <span>消耗碎片</span>
+                        </div>
+                        <div class="list-cover">
+                            <ul>
+                                <li v-for="(item, index) in myChangeArr">
+                                    <span>{{item.time}}</span>
+                                    <span>{{item.gift}}</span>
+                                    <span>{{item.price}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="jg-line"></div>
+
+                    <!-- 碎片统计 -->
+                    <div class="suipian-tj">
+                        <p>你一共获得{{totalSp}}个碎片</p>
+                        <p>你已经消耗{{usedSp}}个碎片</p>
+                        <p>你还剩{{coinSp}}个碎片</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 文案提示 -->
+        <div class="tost" v-show="tostBox">{{tostText}}</div>
+        <!-- svg -->
+        <div class="posi svg-con" v-show="svgPlayer" @click="removeSvg">
+        </div>
+    </div>
+</main>
+
+<script>
+    var gjShareParam = JSON.stringify({
+        title: '捍卫小仙女的盛夏！',
+        content: '盛夏送清爽，一起吹吹风！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/blsz/share.png")}'
+    });
+</script>

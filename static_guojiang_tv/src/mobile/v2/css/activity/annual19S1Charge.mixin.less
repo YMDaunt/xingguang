@@ -1,0 +1,284 @@
+/* 定义全局基值 S */
+#app {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    background: #20110f;
+}
+/* 定义全局基值 E */
+
+/* 定义可复用样式 S */
+.fl-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fl-ver {
+    display: flex;
+    align-items: center;
+}
+.txt-of {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+/* 定义可复用样式 E */
+
+/* 定义普通样式 S */
+.getSpritePad (@w, @h, @posx, @posy, @pad) {
+    background-position: (@posx + @pad)/@bf (@posy + @pad)/@bf;
+    width: (@w + @pad*2)/@bf;
+    height: (@h + @pad*2)/@bf;
+}
+.getSprite (@w, @h, @posx, @posy) {
+    .getSpritePad(@w, @h, @posx, @posy, 5);
+}
+
+
+.SET_G_SPRITE () {
+    .g-s {
+        background: url('@{imgUrl}/gift.png') no-repeat;
+        background-size: 909/@bf 727/@bf;
+        font-size: 0px;
+        display: block;
+    }
+
+    .g-checked {
+        .getSprite(230, 230, -10, -10);
+    }
+    .g-common {
+        .getSprite(230, 230, -260, -10);
+    }
+    .g-lh {
+        .getSprite(199, 129, -10, -422);
+    }
+    .g-ndp-x3 {
+        .getSprite(186, 142, -510, -172);
+    }
+    .g-ndp-x5 {
+        .getSprite(188, 142, -510, -10);
+    }
+    .g-ndp-x30 {
+        .getSprite(214, 142, -10, -260);
+    }
+    .g-ndp-x66 {
+        .getSprite(214, 142, -244, -260);
+    }
+    .g-rocket {
+        .getSprite(181, 136, -718, -10);
+    }
+    .g-zlp-x1 {
+        .getSprite(206, 122, -229, -422);
+    }
+    .g-zlp-x30 {
+        .getSprite(161, 146, -718, -166);
+    }
+    .g-zlp-x188 {
+        .getSprite(161, 146, -718, -332);
+    }
+    .g-zlp-x1000 {
+        .getSprite(161, 146, -10, -571);
+    }
+}
+
+.SET_BTN_SPRITE () {
+    .btn-s {
+        background: url('@{imgUrl}/btns.png') no-repeat;
+        background-size: 1040/@bf 702/@bf;
+        font-size: 0px;
+        display: block;
+    }
+
+    .btn-lot {
+        .getSprite(500, 212, -10, -10);
+    }
+    .btn-loting {
+        .getSprite(500, 212, -10, -242);
+    }
+    .btn-lot-d {
+        .getSprite(500, 212, -530, -10);
+    }
+    .btn-charge {
+        .getSprite(261, 218, -10, -474);
+    }
+}
+
+.SET_PIC_SPRITE () {
+    .pic-s {
+        background: url('@{imgUrl}/pic.png') no-repeat;
+        background-size: 2046/@bf 845/@bf;
+        font-size: 0px;
+        display: block;
+    }
+
+    .sec-h2 {
+        .getSprite(795, 184, -10, -651);
+    }
+    .boardbox {
+        .getSprite(1029, 442, -1007, -10);
+    }
+    .charge-pic {
+        .getSprite(977, 621, -10, -10);
+    }
+    .sec-h1 {
+        .getSprite(795, 184, -825, -651);
+    }
+}
+
+.SET_G_SPRITE();
+.SET_BTN_SPRITE();
+.SET_PIC_SPRITE();
+
+/* 页面内容 */
+.page-content {
+    position: relative;
+    z-index: 2;
+}
+
+.floater {
+    position: fixed;
+    right: 0px;
+    bottom: 28%;
+    z-index: 9;
+}
+
+.banner {
+    height: 803/@bf;
+}
+
+.sec-charge {
+    // height: 1880/@bf;
+}
+
+.state-i {
+    margin: 20/@bf 50/@bf 30/@bf;
+    font-size: 36/@bf;
+    color: #ffe476;
+    
+    &.flex {
+        display: flex;
+
+        .value {
+            flex: 1;
+        }
+    }
+}
+
+.charge-pic {
+    margin: 0 auto 40/@bf;
+}
+
+.sec-lot {
+    // height: 700/@bf;
+}
+
+.lot-box {
+    width: 1012/@bf;
+    height: 760/@bf;
+    background: url('@{imgUrl}/lotbox.jpg') no-repeat;
+    background-size: cover;
+    margin: 60/@bf auto 0;
+    padding: 16/@bf 10/@bf;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    position: relative;
+
+    .lottery {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -48%);
+    }
+}
+
+.boardbox {
+    margin: 60/@bf auto 40/@bf;
+    padding-top: 115/@bf;
+    box-sizing: border-box;
+}
+
+.board-inner {
+    width: 980/@bf;
+    height: 300/@bf;
+    margin: 0 auto;
+    overflow: hidden;
+
+    .board-list {
+    }
+
+    .board-i {
+        color: #ffe476;
+        font-size: 36/@bf;
+        text-align: center;
+        line-height: 78/@bf;
+    }
+}
+
+.tips {
+    height: 420/@bf;
+}
+
+.lot-i {
+    display: flex;
+
+    &:nth-child(5) {
+        margin-right: 490/@bf;
+    }
+
+    .g-ndp-x66,
+    .g-zlp-x1,
+    .g-ndp-x3,
+    .g-ndp-x5,
+    .g-ndp-x30,
+    .g-rocket {
+        position: relative;
+        left: -5%;
+    }
+
+    .g-zlp-lh,
+    .g-zlp-x30,
+    .g-zlp-x188,
+    .g-zlp-x1000 {
+        position: relative;
+        top: -5%;
+    }
+}
+
+.btn-lot {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    &:active {
+        opacity: 0.8;
+    }
+}
+
+.toast-container {
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 20;
+
+    .toast-msg {
+        position: fixed;
+        z-index: 20;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 16/@bf 26/@bf;
+        font-size: 38/@bf;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 12/@bf;
+        max-width: 70%;
+
+        &.tips {
+            width: 70%;
+        }
+    }
+}

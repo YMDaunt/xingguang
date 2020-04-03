@@ -1,0 +1,240 @@
+<div id="app" v-cloak>
+    <!-- 星光年货节 2019/01/22 - 01/26 -->
+    <!-- /* img path - "../../../../static_guojiang_tv/src/mobile/v2/img/activity/SFStocking" */ -->
+    <bg-layout :bgs="[0, 1]">
+        <div class="banner">
+            <p class="txt">年关将近，星光主播化身俏皮店主，给大家准备了年货礼包。快去直播间购买吧！到底哪位主播才是本届的带货女王呢，我们拭目以待！</p>
+        </div>
+
+        <div class="tab-h">
+            <div :class="['sprite tab-h-i', currTab === 0 ? 'btn-time-a' : 'btn-time']" @click="changeTab(0)">秒杀榜</div>
+            <div :class="['sprite tab-h-i', currTab === 1 ? 'btn-zb-a' : 'btn-zb']" @click="changeTab(1)">俏皮店主榜</div>
+            <div :class="['sprite tab-h-i', currTab === 2 ? 'btn-user-a' : 'btn-user']" @click="changeTab(2)">扫货达人榜</div>
+        </div>
+        <div class="tab-c">
+            <!-- 秒杀榜内容 小时榜-->
+            <div :class="['tab-c-i tab-time', !hoursList.meCenter && 'without-me']" v-show="currTab === 0">
+                <div class="timecount-holder" v-show="stage > 1">本环节已结束！</div>
+                <div class="sprite txt-timecount timecount" v-show="stage < 2">
+                    <span class="mins" ref="mins">--</span>
+                    <span class="secs" ref="secs">--</span>
+                </div>
+                <div class="top-couple" v-if="stage < 2">
+                    <p class="value">买买值：{{ hoursList.tops.mod.score || '--' }}</p>
+                    <div class="infos">
+                        <div class="zhubo">
+                            <div class="avatar" @click="goRoom(hoursList.tops.mod)">
+                                <span v-if="!hoursList.tops.mod.rid" class="placeholder"></span>
+                                <img v-else :src="hoursList.tops.mod.headPic" alt="主播头像">
+                            </div>
+                            <span class="live" v-if="hoursList.tops.mod.isPlaying">Live</span>
+                            <p class="name">
+                                <span class="txt-name-l nick txt-of">{{ hoursList.tops.mod.rid ? hoursList.tops.mod.nickname : '虚位以待' }}</span>
+                                <span v-if="hoursList.tops" :class="'level_icon m_level_icon_' + hoursList.tops.mod.moderatorLevel"></span>
+                            </p>
+                        </div>
+                        <div class="sprite icon-love"></div>
+                        <div class="user">
+                            <div class="avatar">
+                                <span v-if="!hoursList.tops.user.uid" class="placeholder"></span>
+                                <img v-else :src="hoursList.tops.user.headPic" alt="用户头像">
+                            </div>
+                            <span class="badge">扫货达人</span>
+                            <p class="name">
+                                <span class="txt-name-l nick txt-of">{{ hoursList.tops.user.uid ? hoursList.tops.user.nickname : '虚位以待' }}</span>
+                                <span v-if="hoursList.tops.user.uid" :class="'level_icon u_level_icon_' + hoursList.tops.user.level"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="me-center" v-if="stage < 2 && isModerator">
+                    <div class="infos">
+                        <div class="avatar" @click="goRoom(hoursList.meCenter)"><img :src="hoursList.meCenter.headPic" alt="我的头像"></div>
+                        <span class="live" v-if="hoursList.meCenter.isPlaying">Live</span>
+                    </div>
+                    <div class="desc">
+                        <p class="name">
+                            <span class="txt-name-l nick txt-of">{{ hoursList.meCenter.nickname }}</span>
+                            <span :class="'level_icon m_level_icon_' + hoursList.meCenter.moderatorLevel"></span>
+                        </p>
+                        <p class="txt-name-m-2 status txt-of">{{ hoursList.meCenter.comment }}</p>
+                    </div>
+                </div>
+                <!-- 秒杀榜历史 -->
+                <p class="sprite txt-lsdyr">历史代言人</p>
+                <p class="sprite txt-lsdyr2">仅显示最新的12个时段代言人</p>
+                <p class="sep"></p>
+                <div class="grid-list rank-history">
+                    <p v-if="hoursList.topHistory.length === 0" class="txt-holder">还未产生带货女王！<br/>快去直播间支持你喜欢的店主主播吧！</p>
+                    <div class="grid-list-i" v-for="(item, ind) in hoursList.topHistory" :key="'_his_' + ind">
+                        <div class="avatar" @click="goRoom(item)"><img :src="item.headPic" alt="我是主播头像"></div>
+                        <span v-if="item.isPlaying" class="live">Live</span>
+                        <p class="name">
+                            <span class="txt-name-m-2 nick txt-of">{{ item.nickname }}</span>
+                            <span :class="'level_icon m_level_icon_' + item.moderatorLevel"></span>
+                        </p>
+                        <p class="time">{{ item.time }}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 俏皮店主榜内容 主播榜 -->
+            <div :class="['tab-c-i tab-rank', [0, 'tab-zhubo', 'tab-user'][currTab]]" v-show="currTab === 1 || currTab === 2">
+                <ul class="cowns-rank">
+                    <li :class="['cowns-rank-i', 'cowns-rank-' + index]" v-for="(item, index) in currRank.list.slice(0, 3)" :key="currRank.type + index">
+                        <div class="head">
+                            <img :src="item.headPic" :alt="item.nickname" @click="currTab === 1 && goRoom(item)">
+                            <span v-if="currTab === 1" class="live" v-show="item.isPlaying">LIVE</span>
+                        </div>
+                        <p class="name">
+                            <span class="txt-name-m txt-of nick">{{ item.nickname }}</span>
+                            <span :class="['level_icon', (currTab === 1 ? 'm_level_icon_' : 'u_level_icon_') + item.level]"></span>
+                        </p>
+                        <p class="txt-of val">买买值：{{ item.score }}</p>
+                        <div v-if="currTab === 1" :class="['sprite btn-atte', item.isLoved && 'disabled']" @click="attention(item, index)">+关注</div>
+                    </li>
+                </ul>
+                <p class="sep"></p>
+                <div class="theader-rank">
+                    <div class="th-rank-i td-1">排名</div>
+                    <div class="th-rank-i td-2">昵称</div>
+                    <div class="th-rank-i td-3">买买值</div>
+                </div>
+                <ul :class="['tables-rank', !currRank.meCenter && 'higher']" ref="scroller">
+                    <li class="tables-rank-i" v-for="(item, index) in currRank.list.slice(3)" :key="currRank.type + index">
+                        <span class="td-1 index">{{ index + 4 }}</span>
+                        <div class="td-2 information">
+                            <div class="avatar" @click="currTab === 1 && goRoom(item)"><img :src="item.headPic" :alt="item.nickname"></div>
+                            <span v-if="currTab === 1" class="live" v-show="item.isPlaying">LIVE</span>
+                            <p class="name">
+                                <span class="txt-name-m txt-of nick">{{ item.nickname }}</span>
+                                <span :class="['level_icon', (currTab === 1 ? 'm_level_icon_' : 'u_level_icon_') + item.level]"></span>
+                            </p>
+                        </div>
+                        <span class="td-3 val txt-of">{{ item.score }}</span>
+                    </li>
+                </ul>
+                <p class="rank-tips">{{ currTab === 1 ? '仅展示前100名的店主主播' : '仅展示前100名的扫货达人' }}</p>
+                <p class="sep" v-show="currRank.meCenter"></p>
+                <me-center v-if="currRank.meCenter" :status="currRank.meCenter" :type="currRank.type" @goroom="goRoom" />
+            </div>
+        </div>
+
+        <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+    </bg-layout>
+
+    <div class="sprite btn-rules" @click="showLayer">活动规则</div>
+
+    <div class="layer" v-show="layerStatue">
+        <div class="layer-close sprite btn-close" @click="closeLayer"></div>
+        <div class="layer-content">
+            <div class="scroller-content">
+                <p class="sprite txt-rules">活动规则</p>
+                <p class="rule-i">1. 活动时间：2019/01/22 12:00:00—01/26 23:59:59。</p>
+                <p class="rule-i">2. 活动礼物：</p>
+                <div class="gift-i">
+                    <div class="sprite badge-nhlb"></div>
+                    <div class="gift-row">
+                        <div class="sprite icon-lb pic"></div>
+                        <div class="gift-val">
+                            <p class="val">=10克拉</p>
+                            <p class="val">=1买买值</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="rule-i">3. 此次活动分阶段炸房，每天前五次炸房送出指定数量的“年货礼包”即可炸房，从第六次炸房起，每次炸房需送出3000个“年货礼包”。炸房可触发全站飘屏，由补满进度条的用户冠名。点击飘屏可有机会抢到活动礼物-年货礼包。</div>
+                <div class="rule-tips">注：抢到的年货礼包，会放入背包。需在01/27 23:59:59前送出，逾期失效，请及时送出！</div>
+                <div class="rule-progress">
+                    <div class="rule-p-i">
+                        <div class="gbox">
+                            <div class="sprite icon-lb pic"></div>
+                            <div class="count">x500个</div>
+                        </div>
+                        <p class="name">第一轮<br/>炸房</p>
+                    </div>
+                    <div class="rule-p-i">
+                        <div class="gbox">
+                            <div class="sprite icon-lb pic"></div>
+                            <div class="count">x1000个</div>
+                        </div>
+                        <p class="name">第二轮<br/>炸房</p>
+                    </div>
+                    <div class="rule-p-i">
+                        <div class="gbox">
+                            <div class="sprite icon-lb pic"></div>
+                            <div class="count">x1500个</div>
+                        </div>
+                        <p class="name">第三轮<br/>炸房</p>
+                    </div>
+                    <div class="rule-p-i">
+                        <div class="gbox">
+                            <div class="sprite icon-lb pic"></div>
+                            <div class="count">x2000个</div>
+                        </div>
+                        <p class="name">第四轮<br/>炸房</p>
+                    </div>
+                    <div class="rule-p-i">
+                        <div class="gbox">
+                            <div class="sprite icon-lb pic"></div>
+                            <div class="count">x3000个</div>
+                        </div>
+                        <p class="name">第五轮及<br/>以上炸房</p>
+                    </div>
+                </div>
+                <div class="rule-i">4. 每天0点刷新炸房次数，所有直播间当前进度条炸房后，从第一次炸房（500个“年货礼包”）开始炸房。</div>
+                <div class="rule-i">5. 主播粉丝团的用户送给该主播年货礼包，活动榜单的买买值翻倍计算！</div>
+                <div class="rule-i">6. 秒杀榜按照主播每小时的买买值排名。每小时买买值最高的主播，代言下个时段的年货礼包。如下图所示，统计时间截止至活动最后一日的 22:59:59。</div>
+                <p class="sprite pic-syt rule-pic">带货女王：你的名字</p>
+                <div class="rule-i">7. 俏皮店主榜前5名主播可获得克拉奖励，将于活动结束的5个工作日内发放。</div>
+                <div class="rule-i">8. 所有排名有相同成绩，按照先到先得排名。</div>
+                <div class="rule-table">
+                    <div class="rule-tr">
+                        <div class="icon-ccown sprite ccown-no1"></div>
+                        <div class="rule-td td-name">店主榜第一名</div>
+                        <div class="rule-td td-val">x350000</div>
+                    </div>
+                    <div class="rule-tr">
+                        <div class="icon-ccown sprite ccown-no2"></div>
+                        <div class="rule-td td-name">店主榜第二名</div>
+                        <div class="rule-td td-val">x250000</div>
+                    </div>
+                    <div class="rule-tr">
+                        <div class="icon-ccown sprite ccown-no3"></div>
+                        <div class="rule-td td-name">店主榜第三名</div>
+                        <div class="rule-td td-val">x150000</div>
+                    </div>
+                    <div class="rule-tr">
+                        <div class="icon-ccown sprite ccown-no45"></div>
+                        <div class="rule-td td-name td-name-scale">店主榜第四、五名</div>
+                        <div class="rule-td td-val">x100000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" v-show="toast">{{ toastMsg }}</div>
+</div>
+
+<script>
+(function adaptation () {
+    let href = window.location
+    if (/Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone|SymbianOS/i.test(navigator.userAgent)) {
+        if (href.host.indexOf('www') >= 0) {
+            window.location.href = '//m.tuho.tv/dist' + href.pathname
+        }
+    } else {
+        if (href.host.indexOf('www') < 0) {
+            window.location.href = '//www.tuho.tv' + href.pathname.replace('/dist', '')
+        }
+    }
+}())
+</script>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '星光年货节',
+    content: '年关将近，星光主播化身俏皮店主，给大家准备了年货礼包。快去直播间购买吧！到底哪位主播才是本届的带货女王呢，我们拭目以待！',
+    link: location.href,
+    imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/SFStocking/share.jpg")}'
+})
+</script>

@@ -1,0 +1,426 @@
+@activityName: 'matching';
+@bf: 108rem;
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.border-radius (@radius : 50%){
+   border-radius:  @radius;
+   -webkit-border-radius:  @radius;
+   -o-border-radius:  @radius;
+   -moz-border-radius:  @radius;
+   -ms-border-radius:  @radius;
+}
+body {
+    /*ios*/
+    -webkit-overflow-scrolling: touch;
+    background-color: #f5f5f5;
+}
+
+/***************common end************/
+.ic_total{font-size:15px;color:#666;padding:50/@bf 0 50/@bf 0;text-align: center;}
+.ic_content{
+    width:943/@bf;margin:0 auto;text-align: center;padding:50/@bf 30/@bf 0;box-shadow:0 0 13px 5px #e0e0e0;background:#fff;.border-radius(16/@bf);
+    .ic_title{font-size:15px;color:#333;padding-top: 60/@bf;    padding-left: 40/@bf;}
+    .ic_remained{font-size: 40px;color:#333333;padding:70/@bf 0 70/@bf;border-bottom: 1px dashed #dcdcdc;}
+    .ic_t_remained{font-size:40px;color:#7e28ff;padding-top:70/@bf;}
+    .go_exchange_pp{width: 800/@bf;height: 136/@bf;background: #7e28ff;.border-radius(70/@bf);line-height: 136/@bf;font-size:16px;color:#ffffff;box-shadow: 0 0 21/@bf #7e28ff;margin:120/@bf 0 109/@bf;display: inline-block;
+        &:active{background: #7e28ff;}
+    }
+}
+.ic_func{
+    padding: 87/@bf 0 0 140/@bf;
+    span{width: 380/@bf;height: 110/@bf;text-align: center;line-height: 110/@bf;font-size: 16px;color:#7e28ff;border:1px solid #7e28ff;.border-radius(52/@bf);margin-right: 40/@bf;display: inline-block;
+        &:active{background: #fff;}
+    }
+}
+.withdraw_wrap{
+    width:645/@bf;margin:197/@bf auto 60/@bf;position:relative;text-align: center;
+    .withdraw_list{position:absolute;left:0px;bottom:0px;}
+    .withdraw_info{position:absolute;right:0px;bottom:0px;}
+    .withdraw_s_nav{font-size:12px;color:#666666;display:block;}
+    a:active{color:#666;}
+}
+.ic_hint{
+    font-size: 12px;
+    height:65/@bf;
+    line-height: 50/@bf;
+    color: #909090;
+    text-align: center;
+    padding-top:15px;
+}
+
+// 兑换金币
+.s_1{
+    .header{
+        background: #fff;margin-bottom: 8/@bf;
+        ul{
+            li{float:left;width: 50%;text-align: center;padding: 55/@bf 0 60/@bf;position: relative;
+                .line{position: absolute;height: 90/@bf;width: 1px;background:#e6e6e6;top:90/@bf;right:0;}
+                p{font-size: 12px;color:#666;
+                    &:nth-child(2){color:#333;font-size: 23px;
+                        font-weight: bold;
+                        padding-top:25/@bf;}
+                }
+            }
+        }
+    }
+    .exchange_ul{
+        margin-top:30/@bf;
+        li{
+            padding-left: 60/@bf;width: 100%;background: #fff;
+            &:active{background: rgba(255,255,255,0.6);}
+            .li_wrap{
+                display: flex; align-content:center;
+                position: relative;padding: 50/@bf 0;
+                .p_icon{display: inline-block;width: 60/@bf;height: 60/@bf;   background-image: url('../../img/makeFriends/recharge/coin.png');
+                background-size: 60/@bf 60/@bf;}
+                .p_num{font-size:18px;color:#333333;padding: 0 30/@bf 0 20/@bf;    padding-top: 3px;}
+                .buy{width: 246/@bf;height: 78/@bf;text-align: center;line-height: 78/@bf;font-size: 14px;color:#ffffff;.border-radius(45/@bf);position: absolute;top:43/@bf;right: 50/@bf;background: #7e28ff;    border: none;
+                }
+            }
+        }
+    }
+
+
+
+}
+
+//历史记录
+.nav_li{
+    li{width: 50%;float:left;font-size: 15px;color:#999999;text-align: center;line-height: 113/@bf;height: 113/@bf;border-bottom: 1px solid #e6e6e6;background: #fff;
+        a{    display: block;}
+        &.active{color:#7e28ff;position: relative;
+            &::after{
+                border-bottom: 19/@bf solid #7e28ff;border-right: 17/@bf solid transparent;border-left: 17/@bf solid transparent;position: absolute;bottom: 0;left:50%;margin-left: -8/@bf;content:'';
+            }
+        }
+    }
+}
+.wl_content{
+    background:#f9f9f9;
+    .wl_title{color:#b4b4b4;font-size:15px;text-align: center;padding-top:85/@bf;}
+    .wl_num{font-size:40px;color:#7e28ff;text-align: center;padding:40/@bf 0 100/@bf 0;}
+
+    ul{
+        li, li.detail_li{padding:40/@bf 35/@bf 35/@bf 40/@bf;border-bottom: 1px solid #e6e6e6;background: #fff;
+             a{display:block;}
+            p:nth-child(1){color:#333;font-size:13px;padding-bottom: 20/@bf;}
+            p:nth-child(2){color:#999999;font-size:10px;}
+            span.add{color:#7e28ff;}
+        }
+    }
+
+    .income_screen_wrap{
+        background: #fff;
+        padding:60/@bf 40/@bf 20/@bf 40/@bf;
+        .income_screen_div{
+            height: 70/@bf;
+            line-height:70/@bf;
+            font-size: 20px;
+            .screen_btn{
+              color:#999999;
+              margin-right:20/@bf;
+              position: relative;
+            }
+        }
+        .screen_ul{
+            position: absolute;
+            top:110/@bf;
+            right: -20/@bf;
+            background: rgba(0,0,0,0.6);
+            padding:0 40/@bf;
+            border-radius: 15/@bf;
+            .triangleUp{
+                position: absolute;
+                top:-24/@bf;
+                right: 20/@bf;
+                width: 0;
+                height: 0;
+                border-left: 20/@bf solid transparent;
+                border-right: 20/@bf solid transparent;
+                border-bottom: 28/@bf solid rgba(0,0,0,0.6);
+            }
+            .screen_li{
+                width: 200/@bf;
+                height: 140/@bf;
+                line-height: 140/@bf;
+                color:#fff;
+                text-align: center;
+                border-bottom: 1px solid #7b7b7b;
+            }
+        }
+        .triangle{
+            display: inline-block;
+            margin-left: 10/@bf;
+            width: 0;
+            height: 0;
+            border-left: 20/@bf solid transparent;
+            border-right: 20/@bf solid transparent;
+            border-bottom: 28/@bf solid #666666;
+        }
+        .screen_btn.active .triangle{
+            transform:rotate(180deg);
+            -ms-transform:rotate(180deg); /* IE 9 */
+            -moz-transform:rotate(180deg); /* Firefox */
+            -webkit-transform:rotate(180deg); /* Safari and Chrome */
+            -o-transform:rotate(180deg); /* Opera */
+            transition: all .1s linear;
+        }
+        .income_screen_p{
+            color:#999999;
+            height: 160/@bf;
+            line-height: 160/@bf;
+            border-bottom:1px solid #e6e6e6;
+        }
+
+    }
+
+}
+
+.info{
+    padding-top:38/@bf;
+    h3{font-size:12px;color:#7e28ff;padding:0 0 28/@bf 23/@bf;line-height: 16px;}
+    p{color:#333333;font-size:13px;padding-bottom: 54/@bf;padding-left:23/@bf;}
+}
+
+
+//提现填单
+.wd_avatar{width:210/@bf;height:210/@bf;.border-radius(100%);display:block;margin:150/@bf auto 0;}
+.wd_nickname{font-size:14px;color:#333333;text-align: center;padding:50/@bf 0 55/@bf;}
+.wd_input{
+    padding-left:30/@bf;background:#fff;height:172/@bf;line-height: 172/@bf;
+    label{font-size:14px;color:#333333;float:left;position:relative;top:4px;  height: 100%;white-space: nowrap}
+    input[name="wd_num"]{font-size:20px;color:#7e28ff;background: none;display:inline-block;float:left;width:120px;
+    }
+}
+.wd_submit{font-size:16px;color:#ffffff;width:750/@bf;padding:40/@bf 0;text-align: center;background:#7e28ff;.border-radius(100px);margin:115/@bf auto 0;display:block;
+    &:active{background:#d60360;color:#c2c2c2;}
+}
+.wd_desc{font-size:14px;color:#999999;font-size:10px;margin:60/@bf 0 0 30/@bf;
+    p{line-height: 45/@bf;
+        b{color:#7e28ff;}
+    }
+    h2{color:#7e28ff;font-size:12px;padding-bottom: 15/@bf;}
+}
+
+//提现成功
+.wr_logo{width:210/@bf;height:210/@bf;margin:150/@bf auto 50/@bf;display:block;}
+.wr_p1{font-size:14px;color:#666666;text-align: center;}
+.wr_p2{font-size:14px;color:#b4b4b4;text-align: center;padding:20/@bf 0 40/@bf;
+    span{color:#333;}
+}
+.wr_num{font-size:20px;color:#7e28ff;text-align: center;}
+.wr_submit{font-size:16px;color:#ffffff;width:750/@bf;padding:40/@bf 0;text-align: center;background:#7e28ff;.border-radius(20px);margin:90/@bf auto 25/@bf;display:block;
+    &:active{background:#d60360;color:#c2c2c2;}
+}
+.wr_p3{font-size:12px;color:#b4b4b4;text-align: center;}
+
+//提现详情
+.wdl_title{background:#fff;height:265/@bf;width:100%;padding:40/@bf 60/@bf 0;
+    p{font-size:14px;color:#333333;padding-bottom: 40/@bf;
+        &:nth-child(2){font-size:30px;color:#7e28ff;}
+    }
+}
+.wdl_h2_wrap{margin-top:30/@bf;background:#fff;padding-left: 72/@bf;}
+.wdl_h2{padding:40/@bf 0 40/@bf;border-bottom: 1px solid #e6e6e6;font-size:14px;color:#000;}
+.wdl_ul{background:#fff;padding-left:177/@bf;position:relative;
+    li{padding:35/@bf 0 75/@bf;border-bottom: 1px solid #e6e6e6;position:relative;
+
+        p:nth-child(1){font-size:13px;color:#666666;padding-bottom: 20/@bf;}
+        p:nth-child(2){font-size:10px;color:#b4b4b4;}
+
+        .wdl_circle{width:20/@bf;height:20/@bf;.border-radius(100%);background:#e6e6e6;position:absolute;top:50/@bf;left:-90/@bf;display:inline-block;
+            &.active{background:#7e28ff;}
+        }
+        .wdl_success{background:url('http://static.guojiang.tv/mobile/img/income/success.png') no-repeat;background-size:44/@bf 44/@bf;width:44/@bf;height:44/@bf;position:absolute;top:42/@bf;left:-105/@bf;}
+        .wdl_refuse{background:url('http://static.guojiang.tv/mobile/img/income/refuse.png') no-repeat;background-size:44/@bf 44/@bf;width:44/@bf;height:44/@bf;position:absolute;top:42/@bf;left:-105/@bf;}
+        .wdl_fail{background:url('http://static.guojiang.tv/mobile/img/income/fail.png') no-repeat;background-size:44/@bf 44/@bf;width:44/@bf;height:44/@bf;position:absolute;top:42/@bf;left:-105/@bf;}
+
+        &:nth-child(1){height:440/@bf;border-left:1px solid #e6e6e6;position:absolute;left:95/@bf;top:50/@bf;}
+    }
+}
+.wdl_more{margin-bottom: 100px;}
+
+//微信绑定
+.bind_wrap{
+    padding-top:280/@bf;
+    p{
+        font-size:20px;color:#333333;padding:0 200/@bf 0 160/@bf;
+        &:nth-child(1){margin-bottom: 40/@bf;}
+        &.type{color:#666666;font-size:15px; line-height: 32px;}
+    }
+    img{width:760/@bf;display:block;margin:10px auto;}
+    .ic_btn{margin-top:460/@bf;}
+    .bind_oa{margin-top:115/@bf;}
+}
+.bind_oa_wrap{padding-top: 180/@bf;padding-bottom: 30px;}
+.ic_btn{width:750/@bf;padding:40/@bf 0;.border-radius(50px);font-size:16px;display:block;margin:0 auto;text-align: center;background:#7e28ff;color:#fff;
+        &:active{background:rgba(218, 80, 14, 0.6);}
+        &.ic_withdraw_large{background:none;color:#333333;border:1px solid #b4b4b4;margin-top: 30/@bf;
+            &:active{background:#f0f0f0;}
+        }
+    }
+
+//账单list
+.no_incomeD_hint{font-size:14px;color:#333;text-align: center;margin-top:50%;}
+
+.wd_input{
+    position:relative;margin-top:36/@bf;
+    label{width:355/@bf;text-align: left;top:0px;}
+    input{width:660/@bf;font-size:14px;color:#333;height:172/@bf;float:left; padding-left: 5px;}
+    input::-webkit-placeholder{color:#b4b4b4;}
+    .input_close_icon{
+        position: absolute;right: 30/@bf;top:66/@bf;
+    }
+}
+//账单detail
+.id_article{    height: 100%;background: #fff;}
+.id_list{
+    padding:0 50/@bf 45/@bf;
+    &:nth-child(1){padding:85/@bf 50/@bf;
+        span:nth-child(1){position: relative;top:30/@bf;}
+        span:nth-child(2){font-size: 30px;color:#7e28ff;}
+    }
+    span{font-size: 14px;color:#666666;
+        &:nth-child(2){color:#333333;}
+    }
+}
+.id_line{width: 100%;border-top:1px solid #e6e6e6;height: 1px;padding-bottom: 80/@bf;display: block;}
+
+//大额提现
+.wflg{
+    .input_desc{font-size:12px;color:#666666;padding:36/@bf 0 0 30/@bf;
+        span{color:#7e28ff;}
+    }
+    small{font-size:12px;color:#b4b4b4;text-align: left; padding:30/@bf;display:block; }
+    .wd_input:nth-child(3), .wd_input:nth-child(5), .wd_input:nth-child(7){
+        input{width:100%;}
+    }
+    .alipay_close_icon{ right: 125/@bf;}
+}
+button.wd_submit{border:none;}
+button.wd_submit[disabled="disabled"]{background:#ff9ec9;color:#fff;}
+// .arrow_icon{
+//     width: 112/@bf;height: 100%;
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+//     transform: rotate(180deg);
+//     -webkit-transform: rotate(180deg);
+//     i{
+//         background: url(../img/income/arrow.png) no-repeat top center;
+//         background-size: 33/@bf 18/@bf;
+//         background-position: 0 0;
+//         width: 33/@bf;
+//         height: 18/@bf;
+//         display: block;
+//         top: 82/@bf;
+//         right: 42/@bf;
+//         position: absolute;
+
+//     }
+//     &.on{
+//         transform: rotate(360deg);
+//         -webkit-transform: rotate(360deg);
+//     }
+// }
+.alipay_history{
+    padding-left: 45/@bf;
+    z-index: 1;
+    background: #fff;
+    width: 100%;
+    height: auto;
+    position: absolute;top: 172/@bf;left:0;
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+    li{
+        height: 172/@bf;width: 100%;
+        line-height: 172/@bf;
+        border-bottom: 1px solid #e6e6e6;
+        font-size:13px; color:#7e28ff;
+        position: relative;
+        &:active{
+            background: #f1f1f1;
+        }
+        .remove{
+            position: absolute;
+            top: 0;right: 50/@bf;
+        }
+        &:nth-last-child(1){
+            border-bottom: none;
+        }
+    }
+}
+//身份验证
+.auc_input{
+    margin-top: 0;position:relative;
+    input{border-bottom: 1px solid #e6e6e6;width:100%;}
+    .input_close_icon{position:absolute;top:65/@bf;right:30/@bf;}
+    .phone_wrap{
+        width: 100%; height: 100%;border-bottom: 1px solid #e6e6e6;
+        .input_close_icon{right:330/@bf;}
+        input{width: 705/@bf;}
+    }
+    .auth_code{font-size: 14px;color:#ffffff;text-align: center;width: 240/@bf;height: 108/@bf;.border-radius(50/@bf);background: #7e28ff;border:none;line-height: 108/@bf;right:45/@bf;position: absolute;top:30/@bf;
+        &.readonly{background: #dcdcdc;}
+        &:active{background: #ae400b;}
+    }
+}
+#geePhoneCaptchaWrap {
+    margin: 0 auto;
+    width: 300px;
+    padding: 20px 0;
+}
+.auc_hint{font-size:10px;color:#c7a36a;background:#fee8b3;width:100%;padding:40/@bf 10px;}
+.auc_img_wrap{
+   width:850/@bf;margin:0 auto;padding-top:45/@bf;
+    .auc_s_box, .auc_eg img{width:360/@bf;height:240/@bf;.border-radius(16/@bf);display:block;}
+    li{
+        width:360/@bf;float:left;
+        &:nth-child(1){margin-right:100/@bf;}
+        .desc{color:#dcdcdc;font-size:13px;text-align: center;padding-top:30/@bf;}
+        .auc_s_box{border:1px dashed #dcdcdc;position:relative;text-align: center;
+            .add_icon{color:#dcdcdc;font-size:85px;line-height: 1;}
+            &:active{background:#f0f0f0;}
+            .input_close_icon{position:absolute;top:-5px;right:-5px;}
+            input{width:100%;height:100%;opacity:0;position:absolute;top:0;left:0;}
+            #previewImg{width:100%;height:100%;position:absolute;top:0;left:0;}
+        }
+    }
+
+}
+@media only screen and (max-width: 320px){
+    .auc_img_wrap li .auc_s_box .add_icon{ line-height: 0.7;}
+    //.auc_input .input_close_icon{top:20/@bf;}
+}
+@media only screen and (max-width: 375px){
+    .auc_img_wrap li .auc_s_box .add_icon{ line-height: 0.75;}
+    //.auc_input .input_close_icon{top:25/@bf;}
+}
+.input_close_icon{background:url(http://static.guojiang.tv/mobile/img/common/close_icon.png?v=0629) no-repeat -55/@bf 0;background-size:100/@bf 40/@bf;width: 45/@bf;height: 40/@bf;
+    &:active{background-position: 5/@bf 0 ;}
+}
+.wr_p1 a{color:#7e28ff;font-size:14px;text-decoration:underline; }
+.zoom_in_img{position:fixed;top:0px;left:0px;right:0px;bottom:0px;z-index:9999;
+    .mask{background:rgba(0,0,0,0.6);position:fixed;top:0px;left:0px;right:0px;bottom:0px;}
+    img{width:100%;top:50%;position:absolute;}
+    .close{background:url(http://static.guojiang.tv/mobile/img/common/close_icon.png?v=0629) no-repeat -60px 0;width: 40px;height: 40px;transform:scale(1.3);-webkit-transform:scale(1.3);position:absolute;top:10px;right:10px;    font-style: normal;
+        &:active{background-position: 0 0 ;}
+    }
+}
+//ios审核模式下禁用
+.deprecated{
+    margin: 800/@bf auto;
+    font-size: 18px;
+    text-align: center;
+}
+
+

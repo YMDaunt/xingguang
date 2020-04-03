@@ -1,0 +1,576 @@
+<div class="page-content">
+    <p class="banner-pic"></p>
+    <p class="banner-txt txt-sprite txt-banner"></p>
+
+    <!-- 花神殿 -->
+    <h3 class="section-title pic-sprite txt-hsd">花神殿</h3>
+    <div class="flora-list fl-box">
+        <div
+            v-for="(ms, mi) in starsInd"
+            :key="'star_' + mi"
+            :class="'flora-item flora-item-' + mi">
+            <div :class="['flora-title txt-sprite', ms.t]">{{ ms.name }}</div>
+
+            <template v-if="stars && stars[mi]">
+                <div :class="['flora-avatar f-sprite', ms.c]">
+                    <img :src="stars[mi].headPic" :alt="ms.name" @click="goRoom(stars[mi])">
+                </div>
+                <div class="flora-name txt-of">{{ stars[mi].nickname }}</div>
+            </template>
+            <template v-else>
+                <div :class="['flora-avatar f-sprite', ms.c]">
+                    <span class="btn-sprite avatar-holder"></span>
+                </div>
+                <div class="txt-sprite txt-holder">虚位以待</div>
+            </template>
+        </div>
+    </div>
+
+    <div class="pic-sprite deco-sep"></div>
+
+    <!-- progress 进程toggle -->
+    <div class="fl-box stager">
+        <div :class="['stager-i', showStage === 0 && 'active']">
+            <div class="btn stager-btn fl-box" @click="changeStage(0)">
+                <span :class="['stager-txt txt-sprite', showStage === 0 ? 'txt-rwzz-a' : 'txt-rwzz']">入围之战</span>
+            </div>
+            <p :class="['label stager-time txt-sprite', showStage === 0 ? 'txt-time-1-a' : 'txt-time-1']">4.16 - 4.17</p>
+            <p :class="['label stager-name txt-sprite', showStage === 0 ? 'txt-x60-a' : 'txt-x60']">X进60</p>
+        </div>
+        <div :class="['stager-i', showStage === 1 && 'active']">
+            <div class="btn stager-btn fl-box" @click="changeStage(1)">
+                <span :class="['stager-txt txt-sprite', showStage === 1 ? 'txt-hszz-a' : 'txt-hszz']">花神之争</span>
+            </div>
+            <p :class="['label stager-time txt-sprite', showStage === 1 ? 'txt-time-2-a' : 'txt-time-2']">4.18 - 4.20</p>
+            <p :class="['label stager-time txt-sprite', showStage === 1 ? 'txt-wwhs-a' : 'txt-wwhs']">5位花神</p>
+        </div>
+    </div>
+
+    <!-- tab stage1 -->
+    <div v-if="showStage === 0" class="fl-box rank-tab rank-tab-stage1">
+        <div :class="['tab-i btn', rankTab === 'day' && 'active']" @click="changeTab('day')">
+            <span :class="['txt-sprite', rankTab === 'day' ? 'txt-tab-day-a' : 'txt-tab-day']">日榜</span>
+        </div>
+        <div :class="['tab-i btn', rankTab === 'mod' && 'active']" @click="changeTab('mod')">
+            <span :class="['txt-sprite', rankTab === 'mod' ? 'txt-tab-rw-a' : 'txt-tab-rw']">入围榜</span>
+        </div>
+        <div :class="['tab-i btn', rankTab === 'user' && 'active']" @click="changeTab('user')">
+            <span :class="['txt-sprite', rankTab === 'user' ? 'txt-tab-user2-a' : 'txt-tab-user2']">守护榜</span>
+        </div>
+    </div>
+    <!-- tab stage2 -->
+    <div v-if="showStage === 1" class="fl-box rank-tab rank-tab-stage2">
+        <div :class="['tab-i btn', rankTab === 'mod' && 'active']" @click="changeTab('mod')">
+            <span :class="['txt-sprite', rankTab === 'mod' ? 'txt-tab-hsb-a' : 'txt-tab-hsb']">花神榜</span>
+        </div>
+        <div :class="['tab-i btn', rankTab === 'user' && 'active']" @click="changeTab('user')">
+            <span :class="['txt-sprite', rankTab === 'user' ? 'txt-tab-user-a' : 'txt-tab-user']">守护榜</span>
+        </div>
+    </div>
+
+    <!-- ranks 榜单内容 -->
+    <div class="rank rank-content">
+        <!-- 二级 subTab stage1 -->
+        <div v-if="showStage === 0 && rankTab === 'day'" class="fl-box rank-stab">
+            <div :class="['tab-i btn btn-sprite', timeTab === 1 ? 'tab-time16-a' : 'tab-time16']" @click="changeTime(1)">4月16日</div>
+            <div :class="['tab-i btn btn-sprite', stage < 2 ? 'tab-time17-d' : timeTab === 2 ? 'tab-time17-a' : 'tab-time17']" @click="changeTime(2)">4月17日</div>
+        </div>
+        <!-- 二级 subTab stage2 -->
+        <div v-if="showStage === 1 && rankTab === 'mod'" class="fl-box tab-timeline">
+            <div :class="['tab-i btn', timeTab === 3 && 'active']" @click="changeTime(3)">
+                <p class="date">4.18</p>
+                <p class="desc">12进7</p>
+            </div>
+            <div :class="['tab-i btn', timeTab === 4 && 'active']" @click="changeTime(4)">
+                <p class="date">4.19</p>
+                <p class="desc">7进3</p>
+            </div>
+            <div :class="['tab-i btn', timeTab === 5 && 'active']" @click="changeTime(5)">
+                <p class="date">4.20</p>
+                <p class="desc">花神之争</p>
+            </div>
+        </div>
+        <!-- 三级 subTab stage2 -->
+        <div v-if="showStage === 1 && rankTab === 'mod'" class="fl-box tab-route">
+            <div :class="['tab-i btn', routeTab === 1 && 'active']" @click="changeRoute(1)">桃花花神</div>
+            <div :class="['tab-i btn', routeTab === 2 && 'active']" @click="changeRoute(2)">牡丹花神</div>
+            <div :class="['tab-i btn', routeTab === 3 && 'active']" @click="changeRoute(3)">莲花花神</div>
+            <div :class="['tab-i btn', routeTab === 4 && 'active']" @click="changeRoute(4)">梅花花神</div>
+            <div :class="['tab-i btn', routeTab === 5 && 'active']" @click="changeRoute(5)">梨花花神</div>
+        </div>
+
+        <div class="fl-box rank-listh">
+            <div class="rank-cell rank-cell-1">
+                <span class="txt-sprite txt-r-1"></span>
+            </div>
+            <div class="rank-cell rank-cell-2">
+                <span :class="['txt-sprite', currRankType !== 'user' ? 'txt-r-mod' : 'txt-r-user']"></span>
+            </div>
+            <div class="rank-cell rank-cell-3">
+                <span :class="['txt-sprite', currRankType !== 'user' ? 'txt-r-val2' : 'txt-r-val']"></span>
+            </div>
+        </div>
+        <!-- 榜单列表 -->
+        <component
+            ref="rank-scroller"
+            :class="['rank-listc', currRank.type]"
+            :is="scroller"
+            :right="6"
+            :thumb-color="'#cbb2e3'">
+            <!-- rank item -->
+            <template
+                v-for="(item, ind) in currRankList">
+                <div
+                    :class="['fl-box rank-row', !item && 'holder-row']"
+                    :key="currRank.type + '-i-' + ind">
+                    <div class="fl-box rank-cell rank-cell-1">
+                        <span v-for="(n, nindex) in (ind + 1 + '').split('')" :class="['rank-index txt-sprite', (ind > 2 ? 'num-' : 'n-') + n]"></span>
+                    </div>
+                    <template v-if="item">
+                        <div class="fl-ver rank-cell rank-cell-2">
+                            <div class="headpic" @click="currRank.type !== 'user' && goRoom(item)">
+                                <img
+                                    :src="item.headPic"
+                                    :alt="item.nickname"
+                                    class="avatar">
+                                <span v-if="item.isPlaying" class="btn-sprite icon-live">Live</span>
+                            </div>
+                            <p class="fl-ver name">
+                                <span class="txt-of nickname">{{ item.nickname || '虚位以待' }}</span>
+                                <span :class="['level_icon', (currRank.type === 'user' ? 'u_level_icon_' : 'm_level_icon_') + item.level]"></span>
+                            </p>
+                        </div>
+                        <div class="rank-cell rank-cell-3 rank-val txt-of">{{ item.score || '—' }}</div>
+                    </template>
+                    <template v-else>
+                        <div class="fl-ver rank-cell rank-cell-2">
+                            <div class="headpic-holder">
+                                <div class="btn-sprite avatar-holder2"></div>
+                            </div>
+                            <p class="fl-ver name">
+                                <span class="nickname-holder">虚位以待</span>
+                            </p>
+                        </div>
+                        <div class="rank-cell rank-cell-3 rank-val txt-of">—</div>
+                    </template>
+                </div>
+                <p v-if="showStage === 0 && rankTab === 'day' && ind < 5" class="rank-row-status">当日结算时奖励<span class="txt-bl">{{ 50 - ind*10 }}</span>花神碎片</p>
+                <p v-if="showStage === 0 && rankTab === 'mod' && ind === 59" class="rank-row-status notop">4月17日 23:59:59结算时，<span class="txt-bl">前60名</span>晋级花神之争</p>
+                <p v-if="showStage === 1 && rankTab === 'mod' && timeTab === 3 && ind <= 6" class="rank-row-status">18日结算时奖励<span class="txt-bl">{{ [50, 40, 30, 20, 10, 10, 10][ind] }}</span>花神碎片</p>
+                <p v-if="showStage === 1 && rankTab === 'mod' && timeTab === 3 && ind === 6" class="rank-row-sep"><span class="sep-txt">18日23:59:59结算时<br/>前7名晋级</span></p>
+                <p v-if="showStage === 1 && rankTab === 'mod' && timeTab === 4 && ind <= 2" class="rank-row-status">19日结算时奖励<span class="txt-bl">{{ [50, 40, 30][ind] }}</span>花神碎片</p>
+                <p v-if="showStage === 1 && rankTab === 'mod' && timeTab === 4 && ind === 2" class="rank-row-sep"><span class="sep-txt">19日23:59:59结算时<br/>前3名晋级</span></p>
+                <p v-if="showStage === 1 && rankTab === 'mod' && timeTab === 5 && ind === 0" class="rank-row-status">20日结算时奖励<span class="txt-bl">50</span>花神碎片</p>
+                <p v-if="showStage === 1 && rankTab === 'mod' && timeTab === 5 && ind === 0" class="rank-row-sep">
+                    <span class="sep-txt">20日23:59:59结算时<br/>该主播为{{ ['桃花', '牡丹', '莲花', '梅花', '梨花'][routeTab - 1] }}花神</span>
+                </p>
+            </template>
+        </component>
+        <div v-if="showStage === 0 && rankTab === 'user'" class="rank-tips">仅展示前100位用户</div>
+        <div v-if="showStage === 0 && (rankTab === 'day' || rankTab === 'mod')" class="rank-tips">仅展示前100位主播</div>
+        <!-- 榜单个人中心 -->
+        <div class="fl-box rank-center" v-if="currRank.meCenter">
+            <div class="intro">
+                <div :class="['headpic', currRank.type === 'user' && 'no-deco']" @click="currRank.type !== 'user' && goRoom(currRank.meCenter)">
+                    <img
+                        :src="currRank.meCenter.headPic"
+                        :alt="currRank.meCenter.nickName"
+                        class="avatar">
+                    <span v-if="currRank.meCenter.isPlaying" class="btn-sprite icon-live">Live</span>
+                </div>
+                <p class="fl-box name">
+                    <span class="txt-of nickname">{{ currRank.meCenter.nickName }}</span>
+                    <span :class="['level_icon', (currRank.type === 'user' ? 'u_level_icon_' : 'm_level_icon_') + currRank.meCenter.level]"></span>
+                </p>
+            </div>
+            <div class="fl-box me-status">
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[0].name }}</h5>
+                    <p>{{ currRank.meCenter.pairInfos[0].value }}</p>
+                </div>
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[2].name }}</h5>
+                    <p>{{ currRank.meCenter.pairInfos[2].value }}</p>
+                </div>
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[1].name }}</h5>
+                    <p>{{ currRank.meCenter.pairInfos[1].value }}</p>
+                </div>
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[3].name }}</h5>
+                    <p>{{ currRank.meCenter.pairInfos[3].value }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- copyright -->
+    <p class="copyright txt-sprite txt-copy">本活动最终解释权归平台运营团队所有</p>
+</div>
+
+<!-- floater -->
+<div class="floater">
+    <div class="btn btn-sprite btn-draw" @click="toggleSeg">碎片兑换</div>
+    <div class="btn btn-sprite btn-rules" @click="toggleRule">活动规则</div>
+</div>
+
+<!-- rules -->
+<div class="layer layer-rules" v-show="ruleState" @click="capClick">
+    <div class="layer-inner">
+        <div class="btn btn-sprite btn-close" @click="toggleRule"></div>
+        <div class="fl-box rule-tab">
+            <div :class="['rule-tab-i btn-sprite btn', ruleTab === 0 ? 'tab-r-1-a' : 'tab-r-1']" @click="changeRuleTab(0)"></div>
+            <div :class="['rule-tab-i btn-sprite btn', ruleTab === 1 ? 'tab-r-2-a' : 'tab-r-2']" @click="changeRuleTab(1)"></div>
+            <div :class="['rule-tab-i btn-sprite btn', ruleTab === 2 ? 'tab-r-3-a' : 'tab-r-3']" @click="changeRuleTab(2)"></div>
+        </div>
+        <component
+            ref="rules-scroller"
+            class="layer-content"
+            :is="scroller"
+            :right="4"
+            :thumb-color="'#cbb2e3'">
+            <div v-if="ruleTab !== 2" class="txt-sprite rule-txt-hdlw rule-title">活动礼物</div>
+            <div v-if="ruleTab !== 2" class="gifts-box fl-box">
+                <div class="fl-box gifts-i">
+                    <div class="gifts-name btn-sprite label-g-hjl">花精灵</div>
+                    <div class="gifts-pic fl-box">
+                        <span class="g-sprite gift-flora"></span>
+                    </div>
+                    <div class="gifts-desc">
+                        <p>=10克拉</p>
+                        <p>=10花神值</p>
+                        <p>=10守护值</p>
+                    </div>
+                </div>
+                <div class="fl-box gifts-i">
+                    <div class="gifts-name btn-sprite label-g-mlhk">梦里花开</div>
+                    <div class="gifts-pic">
+                        <span class="g-sprite gift-mlhk"></span>
+                    </div>
+                    <div class="gifts-desc">
+                        <p>=9999克拉</p>
+                        <p>=9999花神值</p>
+                        <p>=9999守护值</p>
+                    </div>
+                </div>
+                <div class="fl-box gifts-i gifts-pb">
+                    <div class="gifts-name btn-sprite label-g-hssz">护花使者</div>
+                    <div class="gifts-pic fl-box">
+                        <span class="g-sprite gift-hhsz"></span>
+                    </div>
+                    <div class="gifts-desc">
+                        <p>=10克拉</p>
+                        <p>=10花神值</p>
+                        <p>=10守护值</p>
+                    </div>
+                    <div class="gifts-tip">*守护碎片兑换可得</div>
+                </div>
+            </div>
+
+            <!-- 入围之战 -->
+            <template v-if="ruleTab === 0">
+                <div class="txt-sprite rule-txt-rwzz rule-title">入围之战</div>
+                <p class="rule-h"><span class="txt-bold">参赛时间：</span>4.16 12:00:00 - 4.17 23:59:59。</p>
+                <p class="rule-h"><span class="txt-bold">参赛范围：</span>平台所有主播无需报名，即可参赛。</p>
+                <p class="rule-h"><span class="txt-bold">赛制说明：</span>按主播累计花神值排名，晋级前60名主播。若花神值相同，则按先到先得排名。</p>
+
+                <p class="rule-s-t">主播玩法</p>
+                <p class="rule-i"><span class="txt-index">1. </span>每日花神值前五名主播奖励花神碎片。</p>
+                <div class="rule-table rule-table-1">
+                    <div class="fl-box th">
+                        <div class="td tcell-1">日榜名次</div>
+                        <div class="td tcell-2">1</div>
+                        <div class="td tcell-3">2</div>
+                        <div class="td tcell-4">3</div>
+                        <div class="td tcell-5">4</div>
+                        <div class="td tcell-6">5</div>
+                    </div>
+                    <div class="fl-box tr">
+                        <div class="td tcell-1">花神碎片</div>
+                        <div class="td tcell-2">50</div>
+                        <div class="td tcell-3">40</div>
+                        <div class="td tcell-4">30</div>
+                        <div class="td tcell-5">20</div>
+                        <div class="td tcell-6">10</div>
+                    </div>
+                </div>
+                <p class="rule-i"><span class="txt-index">2. </span>活动期间，主播花神值每累计10000，即可获得10个花神碎片。<span class="rule-link btn" @click="toggleSeg">碎片可用于兑换丰厚奖品>>></span></p>
+                <p class="rule-s-t">用户玩法</p>
+                <p class="rule-i">活动期间，用户守护值每累计10000，即可获得10个守护碎片。<span class="rule-link btn" @click="toggleSeg">碎片可用于兑换丰厚奖品>>></span></p>
+                <p class="rule-s-t">榜单说明</p>
+                <p class="rule-i">入围赛榜为主播榜，入围赛结束后。榜单花神值不累计至花神之争；守护榜为用户榜，榜单守护值累计至花神之争。</p>
+            </template>
+
+            <!-- 花神之争 -->
+            <template v-if="ruleTab === 1">
+                <div class="txt-sprite rule-txt-hszz rule-title">花神之争</div>
+                <p class="rule-h"><span class="txt-bold">参赛时间：</span>4.18 00:00:00 - 4.20 23:59:59。</p>
+                <p class="rule-h"><span class="txt-bold">参赛范围：</span>入围之战晋级的60位主播。</p>
+                <p class="rule-h"><span class="txt-bold">赛制说明：</span>进入花神之争的60位主播，按照入围赛的排名进行S形分组，分成5组，每组12 人，争夺5个花神之位，具体如下表所示：</p>
+                <div class="rule-table rule-table-2">
+                    <div class="fl-box th">
+                        <div class="td tcell-1">花神之位</div>
+                        <div class="td tcell-2">桃花花神</div>
+                        <div class="td tcell-3">牡丹花神</div>
+                        <div class="td tcell-4">莲花花神</div>
+                        <div class="td tcell-5">梅花花神</div>
+                        <div class="td tcell-6">梨花花神</div>
+                    </div>
+                    <div class="fl-box tr">
+                        <div class="td tcell-1 fl-box">入围赛排名</div>
+                        <div class="td tcell-o">
+                            <div v-for="n, ni in 12" class="fl-box tr">
+                                <div class="td tcell-2">{{ n%2 === 1 ? (n-1)*5 + 1 : n*5 }}</div>
+                                <div class="td tcell-3">{{ n%2 === 1 ? (n-1)*5 + 2 : n*5 - 1 }}</div>
+                                <div class="td tcell-4">{{ n%2 === 1 ? (n-1)*5 + 3 : n*5 - 2 }}</div>
+                                <div class="td tcell-5">{{ n%2 === 1 ? (n-1)*5 + 4 : n*5 - 3 }}</div>
+                                <div class="td tcell-6">{{ n%2 === 1 ? (n-1)*5 + 5 : n*5 - 4 }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="rule-i">赛事安排：五个花神赛道比赛同时进行，最终决出第一名主播为该赛道花神。若花神值相同，按照先到先到排名。</p>
+                <div class="rule-win">
+                    <div class="rule-win-i fl-box">
+                        <span class="rule-win-label">12进7</span>
+                        <span class="rule-win-sep">&lt;&lt;</span>
+                        <span class="rule-win-time">4月18日 00:00:00 - 4月18日23:59:59</span>
+                    </div>
+                    <div class="rule-win-i fl-box">
+                        <span class="rule-win-label">7进3</span>
+                        <span class="rule-win-sep">&lt;&lt;</span>
+                        <span class="rule-win-time">4月19日 00:00:00 - 4月19日23:59:59</span>
+                    </div>
+                    <div class="rule-win-i fl-box">
+                        <span class="rule-win-label">花神之争</span>
+                        <span class="rule-win-sep">&lt;&lt;</span>
+                        <span class="rule-win-time">4月20日 00:00:00 - 4月20日23:59:59</span>
+                    </div>
+                </div>
+                <p class="rule-s-t">主播玩法</p>
+                <p class="rule-i"><span class="txt-index">1. </span>每天比赛结束后，花神值清零，各个花神赛道未淘汰的主播将奖励花神碎片<span class="btn-sprite icon-qs" @click="showTToast"></span>。</p>
+                <p class="rule-i"><span class="txt-index">2. </span>活动期间，主播花神值每累计10000，即可获得10个花神碎片。<span class="rule-link btn" @click="toggleSeg">碎片可用于兑换丰厚奖品>>></span></p>
+                <p class="rule-s-t">用户玩法</p>
+                <p class="rule-i">活动期间，用户守护值每累计10000，即可获得10个守护碎片。<span class="rule-link btn" @click="toggleSeg">碎片可用于兑换丰厚奖品>>></span></p>
+                <p class="rule-s-t">榜单说明</p>
+                <p class="rule-i">花神榜为主播榜，每个赛道每次晋级到下一阶段的主播花神值不累计；守护榜为用户榜，榜单为整场活动期间的累计守护值。</p>
+            </template>
+
+            <!-- 活动奖励 -->
+            <template v-if="ruleTab === 2">
+                <div class="txt-sprite rule-mod-rw rule-title">主播奖励</div>
+                <div class="txt-sprite rule-mod-rwinfo rule-desc">各个赛道的花神和赛道的二、三名获得奖励</div>
+                <div class="rule-table rule-table-3">
+                    <div class="fl-box th">
+                        <div class="td tcell-1">花神名次</div>
+                        <div class="td tcell-2">奖励</div>
+                    </div>
+                    <div class="fl-box tr">
+                        <div class="td tcell-1">各个赛道花神</div>
+                        <div class="td tcell-2">300000克拉、2日花神开屏、<br/><span class="g-sprite badge-hs"></span>花神推荐标签7日</div>
+                    </div>
+                    <div class="fl-box tr">
+                        <div class="td tcell-1">第二名</div>
+                        <div class="td tcell-2">60000克拉</div>
+                    </div>
+                    <div class="fl-box tr">
+                        <div class="td tcell-1">第三名</div>
+                        <div class="td tcell-2">40000克拉</div>
+                    </div>
+                </div>
+                <div class="txt-sprite rule-user-rw rule-title">主播奖励</div>
+                <div class="txt-sprite rule-user-rwinfo rule-desc">守护榜前五名用户获得奖励</div>
+                <div class="rule-table rule-table-4">
+                    <div class="fl-box th">
+                        <div class="td tcell-1">守护榜</div>
+                        <div class="td tcell-2">奖励</div>
+                    </div>
+                    <div class="fl-box tr">
+                        <div class="td tcell-1">第一名</div>
+                        <div class="td tcell-2">150000克拉、30个上头条、<br/><span class="g-sprite badge-sh"></span>花神守护勋章*7日</div>
+                    </div>
+                    <div class="fl-box tr">
+                        <div class="td tcell-1">第二名</div>
+                        <div class="td tcell-2">100000克拉、20个上头条、<br/><span class="g-sprite badge-sh"></span>花神守护勋章*7日</div>
+                    </div>
+                    <div class="fl-box tr">
+                        <div class="td tcell-1">第三名</div>
+                        <div class="td tcell-2">80000克拉、10个上头条、<br/><span class="g-sprite badge-sh"></span>花神守护勋章*7日</div>
+                    </div>
+                    <div class="fl-box tr">
+                        <div class="td tcell-1">第四、五名</div>
+                        <div class="td tcell-2">50000克拉、5个上头条、<br/><span class="g-sprite badge-sh"></span>花神守护勋章*3日</div>
+                    </div>
+                </div>
+                <p class="rule-s-t">奖励说明</p>
+                <p class="rule-i">1. 花神开屏奖励会在活动结束的3个工作日内，运营和奖励主播联系排期设计；</p>
+                <p class="rule-i">2. 花神推荐标签为稀有设计标签，活动结束即时推荐生效；</p>
+                <p class="rule-i">3. 克拉奖励会在活动结束的5个工作日内发放；</p>
+                <p class="rule-i">4. 上头条会在活动结束，即时下发；</p>
+                <p class="rule-i">5. 花神守护勋章为稀有勋章，活动结束即时下发生效。</p>
+            </template>
+        </component>
+    </div>
+</div>
+
+<!-- 碎片兑换 -->
+<div class="layer layer-segs" v-show="segLayerState" @click="capClick">
+    <div class="layer-inner">
+        <div class="btn btn-sprite btn-close" @click="toggleSeg"></div>
+        <div class="txt-sprite txt-spdh"></div>
+        <p class="segs-txt">活动期间，主播花神值每累计<span class="green">10000</span>，即可获得<span class="green">10个花神碎片</span>。用户守护值每累计<span class="green">10000</span>，即可获得<span class="green">10个守护碎片</span>。主播累计花神碎片和用户累计守护碎片到以下标准，可兑换对应奖励。<span class="green">兑换时间截止至4.21 23:59:59</span>，逾期失效。</p>
+        <div class="btn btn-sprite btn-myseg" @click="toggleSegInfo">查看我的兑换</div>
+        <div class="segs-tab fl-box" v-if="isMod">
+            <div :class="['segs-tab-i btn-sprite', segTab === 'mod' ? 'tab-draw-f-a' : 'tab-draw-f']" @click="changeSegTab('mod')">花神碎片兑换</div>
+            <div :class="['segs-tab-i btn-sprite', segTab === 'user' ? 'tab-draw-u-a' : 'tab-draw-u']" @click="changeSegTab('user')">守护碎片兑换</div>
+        </div>
+        <component
+            ref="segs-scroller"
+            class="layer-content hs"
+            :is="scroller"
+            :right="4"
+            :thumb-color="'#cbb2e3'">
+            <!-- 碎片兑换列表 -->
+            <div :class="['segs-list', segTab === 'mod' ? 'hs' : 'sh']">
+                <div v-for="(seg, si) in exGifts[segTab]" :key="segTab + '_seg_' + si" :class="['segs-i fl-box', segTab === 'mod' ? 'hs' : 'sh']">
+                    <div class="btn segs-pic g-sprite gift-bd" @click="seg.animationUrl && preview(seg.animationUrl)">
+                        <span :class="['g-sprite', seg.icon]"></span>
+                        <span v-if="seg.animationUrl" class="btn-sprite icon-play"></span>
+                    </div>
+                    <div class="segs-info">
+                        <div class="segs-name">
+                            {{ seg.name }}
+                            <div v-if="seg.qs" class="btn-sprite icon-qs" @click="isMobile && showToast(seg.qs, true)">
+                                <div v-if="!isMobile" class="qs-info">{{ seg.qs }}</div>
+                            </div>
+                        </div>
+                        <p class="segs-desc">{{ seg.desc }}</p>
+                    </div>
+                    <div class="segs-opt">
+                        <div :class="['btn btn-sprite', (stage > 6 || (seg.needDis && stage > 5)) ? 'btn-draw-d' : 'btn-draw-c', 'segs-draw']" @click="!(stage > 6 || (seg.needDis && stage > 5)) && exchange(seg)">兑换</div>
+                        <div class="segs-price">{{ seg.val }}{{ segTab === 'mod' ? '花神' : '守护' }}碎片</div>
+                        <div v-if="seg.nums" class="segs-num">{{ seg.nums[0] }}：{{ seg.nums[1] }}/{{ seg.nums[2] }}</div>
+                    </div>
+                </div>
+            </div>
+        </component>
+    </div>
+</div>
+
+<!-- 查看我的碎片 -->
+<div class="modal modal-segs" v-show="segModalState" @click="capClick">
+    <div class="modal-inner">
+        <div class="btn btn-sprite btn-close" @click="toggleSegInfo"></div>
+        <div class="segs-tab fl-box" v-if="isMod">
+            <div :class="['segs-tab-i btn-sprite', segDeTab === 'mod' ? 'tab-draw-f-a' : 'tab-draw-f']" @click="changeSegDeTab('mod')">花神碎片兑换</div>
+            <div :class="['segs-tab-i btn-sprite', segDeTab === 'user' ? 'tab-draw-u-a' : 'tab-draw-u']" @click="changeSegDeTab('user')">守护碎片兑换</div>
+        </div>
+        <div class="sglist-h fl-box">
+            <div class="sglist-h-i sglist-cell-1 fl-box">
+                <span class="txt-sprite draw-time">时间</span>
+            </div>
+            <div class="sglist-h-i sglist-cell-2 fl-box">
+                <span class="txt-sprite draw-info">兑换详情</span>
+            </div>
+            <div class="sglist-h-i sglist-cell-3 fl-box">
+                <span :class="['txt-sprite', segDeTab === 'mod' ? 'draw-val' : 'draw-val2']">消耗碎片</span>
+            </div>
+        </div>
+        <component
+            ref="rw-scroller"
+            class="modal-content"
+            :is="scroller"
+            :right="4"
+            :thumb-color="'#cbb2e3'">
+            <!-- 花神碎片 -->
+            <p class="rw-holder" v-if="currMySegList.length === 0">呀，还没有兑换记录呢~</p>
+            <div v-else v-for="row, rowi in currMySegList" class="sglist-row fl-box">
+                <div class="sglist-td-i sglist-cell-1">{{ row.time }}</div>
+                <div class="sglist-td-i sglist-cell-2">{{ row.gift }}</div>
+                <div class="sglist-td-i sglist-cell-3">{{ row.pieces }}</div>
+            </div>
+        </component>
+        <div class="segs-center">
+            <div class="segs-c-i">你一共获得<span class="txt-clr">{{ currMySegInfo.total }}</span>个{{ txtOfSeg }}碎片</div>
+            <div class="segs-c-i">你已经消耗<span class="txt-clr">{{ currMySegInfo.total - currMySegInfo.left }}</span>个{{ txtOfSeg }}碎片</div>
+            <div class="segs-c-i">你还剩<span class="txt-clr">{{ currMySegInfo.left }}</span>个{{ txtOfSeg }}碎片</div>
+            <div class="segs-progress">
+                <div class="tube">
+                    <div class="tube-i" :style="{width: Math.min(currMySegInfo.val % 10000 / 100, 100) + '%' }"></div>
+                </div>
+                <div class="val">{{ currMySegInfo.val }}/10000</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 确认兑换 -->
+<div class="modal modal-confirm" v-show="confirmMState" @click="capClick">
+    <div class="modal-inner">
+        <div class="btn btn-sprite btn-close" @click="toggleCM"></div>
+        <p class="modal-h" v-show="segDrawInfo.type === 'mod'">小主，确定要消耗{{ segDrawInfo.val }}个花神碎片，兑换{{ segDrawInfo.name }}吗？</p>
+        <p class="modal-h" v-show="segDrawInfo.type === 'user'">用户大大，确定要消耗{{ segDrawInfo.val }}个守护碎片，兑换{{ segDrawInfo.name }}吗？</p>
+        <div class="modal-opt fl-box">
+            <div class="btn btn-sprite btn-cancel" @click="toggleCM">我再看看</div>
+            <div class="btn btn-sprite btn-draw-c" @click="toExchange">兑换</div>
+        </div>
+    </div>
+</div>
+
+<!-- toast msg层 -->
+<div class="toast-container" v-show="toastState" @click="hideToast">
+    <div class="toast-msg">{{ toastMsg }}</div>
+</div>
+
+<!-- 动画效果 -->
+<div class="svg-layer" v-show="svgShow" @click="stopSvg">
+    <div class="svg-container"></div>
+</div>
+
+<!-- modal modal-confirm -->
+<div class="toast-container" v-show="tTState" @click="hideTToast">
+    <div class="toast-table rule-table">
+        <div class="fl-box th">
+            <div class="td tcell-1">奖励花神碎片</div>
+            <div class="td tcell-2">第1名</div>
+            <div class="td tcell-3">第2名</div>
+            <div class="td tcell-4">第3名</div>
+            <div class="td tcell-5">第4名</div>
+            <div class="td tcell-6">第5名</div>
+            <div class="td tcell-7">第6名</div>
+            <div class="td tcell-8">第7名</div>
+        </div>
+        <div class="fl-box tr">
+            <div class="td tcell-1">18日</div>
+            <div class="td tcell-2">50</div>
+            <div class="td tcell-3">40</div>
+            <div class="td tcell-4">30</div>
+            <div class="td tcell-5">20</div>
+            <div class="td tcell-6">10</div>
+            <div class="td tcell-7">10</div>
+            <div class="td tcell-8">10</div>
+        </div>
+        <div class="fl-box tr">
+            <div class="td tcell-1">19日</div>
+            <div class="td tcell-2">50</div>
+            <div class="td tcell-3">40</div>
+            <div class="td tcell-4">30</div>
+            <div class="td tcell-5">无</div>
+            <div class="td tcell-6">无</div>
+            <div class="td tcell-7">无</div>
+            <div class="td tcell-8">无</div>
+        </div>
+        <div class="fl-box tr">
+            <div class="td tcell-1">20日</div>
+            <div class="td tcell-2">50</div>
+            <div class="td tcell-3">无</div>
+            <div class="td tcell-4">无</div>
+            <div class="td tcell-5">无</div>
+            <div class="td tcell-6">无</div>
+            <div class="td tcell-7">无</div>
+            <div class="td tcell-8">无</div>
+        </div>
+    </div>
+</div>
+
+<loading ref="loading" />

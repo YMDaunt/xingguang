@@ -1,0 +1,59 @@
+<main class="main_box" id="app" v-cloak>
+    <section>
+    	   	<img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/channel/13/1.jpg')}">
+    </section>
+	<section class="part-2">
+			<img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/channel/13/2.jpg')}">	
+		<div class="input-info-wrap">
+			<div class="input_wrap">
+				<label for="tel">手机号</label>
+				<input type="tel" name="tel" id="tel" placeholder="请输入手机号" 
+					v-model.trim="tel"
+					@input="restrictTel($event.target.value)"
+					@blur="verifyTel($event.target.value)"
+				>
+			</div>
+			<div class="input_wrap">
+			    <label for="tel">验证码</label>
+				<input type="text" name="authCode" id="authCode" placeholder="请输入短信验证码"
+					v-model.trim="authCode"
+					@input="restrictAuthCode($event.target.value)"
+				>
+				<label @click="getAuthCode($event)" v-show="!getingVcode" class="getingVcode">获取</label>
+				<label v-show="getingVcode" class="geting_vcode">重新发送({{ countDownNum }})</label>
+
+				<P class="err_hint">{{errMsg}}</P>
+			</div>
+
+			<div class="btn_wrap">
+				<span class="flow_btn" v-on:click="verifyAuthCode"></span>
+			</div>	
+		</div>
+		
+	</section>
+
+    <section>
+			<img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/channel/13/3.jpg')}">
+    </section>
+
+
+	<div class="dl_footer" v-bind:style="{display:activeDisplay}">
+	    <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/common/rq/logo.png')}" class="fl">
+	    <div class="desc fl">
+	        <h2>人气直播</h2>
+	        <p>不是所有人都能看的直播</p>
+	    </div>
+	    <a v-bind:href='downUrl'>立即下载</a>
+	</div>
+</main>
+
+<script type="text/javascript" src="//static.guojiang.tv/mobile/v2/js/lib/gt.js"></script>
+<script>
+	var gjShareParam = JSON.stringify({
+        title: '领取最高100M流量',
+        content: '土豪的世界，就是任性，打开app就随机领20-100M流量',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/channel/12/share.jpg")}'
+    });
+</script>
+

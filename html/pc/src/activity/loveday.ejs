@@ -1,0 +1,283 @@
+<canvas class="popo" id="canvas" width="900" height="700"></canvas>
+<main class="main_box" id="app" v-cloak>
+    <div class="wrap">
+        <div class="ban"></div> 
+        <div class="wrap-con">
+            <section class="gb-gift">
+                <div class="common-con">
+                    <div class="common-tit">
+                        <b class="xianding"></b>
+                    </div>
+                    <!-- 内容区 -->
+                    <div class="box-con"></div>
+                    <div class="posi-box">
+                        <ul>
+                            <li>
+                                <b></b>
+                                <strong>爱神</strong>
+                                <span>2999克拉/个</span>
+                                <div class="gift-btns">
+                                    <div class="yl" @click="doLoveSvg()"></div>
+                                    <div class="buy" @click="buy($event)" data-value="2999" data-id="500"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <b></b>
+                                <strong>520</strong>
+                                <span>5200克拉/个</span>
+                                <div class="gift-btns">
+                                    <div class="yl"  @click="doTianShiSvg()"></div>
+                                    <div class="buy" @click="buy($event)" data-value="5200" data-id="501"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="common-bottom"></div>
+                </div>
+            </section>
+
+            <!-- 告白榜 -->
+            <section class="love-rank">
+                <div class="common-con">
+                    <div class="common-tit">
+                        <b class="gaobaibang"></b>
+                    </div>
+                    <!-- 内容区 -->
+                    <div class="box-con">
+                        <!-- 第一名 -->
+                        <div class="top-one" v-for="(item, index) in gaobaiArr" v-if="index < 1">
+                            <strong>第1名</strong>
+                            <span>心动值: <strong>{{item.score}}</strong></span>
+                            <div class="top-con-box">
+                                <div>
+                                    <div class="one-mod">
+                                        <img :src="item.mHeadPic" alt="" v-bind:data-rid="item.mid" @click="inlive($event)"/>
+                                        <b v-show="item.isPlaying" v-bind:data-rid="item.mid" @click="inlive($event)"></b>
+                                        <strong>{{item.mNickname}}</strong>
+                                    </div>
+                                    <div class="one-user">
+                                        <img :src="item.uHeadPic" alt="" />
+                                        <strong>{{item.uNickname}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2+ -->
+                        <ul class="top-two-thi">
+                            <li v-for="(item, index) in gaobaiArr" v-if="index >= 1 && index < 10">
+                                <strong>第{{index+1}}名</strong>
+                                <span>心动值: <strong>{{item.score}}</strong></span>
+                                <div class="top-two-box">
+                                    <div>
+                                        <div class="two-mod">
+                                            <img :src="item.mHeadPic" alt="" v-bind:data-rid="item.mid" @click="inlive($event)"/>
+                                            <b v-show="item.isPlaying" v-bind:data-rid="item.mid" @click="inlive($event)"></b>
+                                            <strong>{{item.mNickname}}</strong>
+                                        </div>
+                                        <div class="two-user">
+                                            <img :src="item.uHeadPic" alt="" />
+                                            <strong>{{item.uNickname}}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                        </ul>
+
+                        <!-- 11+ -->
+                        <div class="line" v-show="other"></div>
+                        <div class="top-other" v-show="other">
+                            <div class="other-list">
+                                <div class="other-out">
+                                    <ul class="ul-con clearfix">
+                                        <li v-for="(item, index) in gaobaiArr" v-if="index >= 10">
+                                            <div class="number">{{index+1}}</div>
+                                            <b v-if="item.isPlaying" v-bind:data-rid="item.mid" @click="inlive($event)"></b>
+                                            <img :src="item.mHeadPic" alt="" v-bind:data-rid="item.mid" @click="inlive($event)" alt="" />
+                                            <strong>{{item.mNickname}}</strong>
+                                            <span>心动值: {{item.score}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="common-bottom">
+                        <div class="show-btn" v-if="!other" v-show="gaobaiLen > 10" @click="show()">展开</div>
+                        <div class="hide-btn" v-else @click="show()">收起</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 告白墙 -->
+            <section class="love-word">
+                <div class="common-con">
+                    <div class="common-tit">
+                        <b class="gaobaiqiang"></b>
+                    </div>
+
+                    <div class="word-con">
+                        <h3>一次性送出99个“一见钟情”可发出告白宣言哦！</h3>
+                        <div class="line"></div>
+                        <div class="scroll-out">
+                        </div>
+                    </div>
+                    <div class="common-bottom"></div>
+                </div>
+            </section>
+
+            <!-- 今日榜单 -->
+            <section class="day-rank">
+                <div class="common-con">
+                    <div class="common-tit">
+                        <b class="todaybang"></b>
+                    </div>
+                    <div class="box-con">
+                        <h3>*榜单实时更新</h3>
+                        <div class="mod-rank">
+                            <ul class="top-three">
+                                <li v-for="(item,index) in modArr" v-if="index < 3">
+                                    <div class="img-area">
+                                        <img :src="item.head_pic_1"  v-bind:data-rid="item.mid" @click="inlive($event)" alt="" />
+                                        <b></b>
+                                        <span v-if="item.isPlaying == true" @click="inlive($event)" v-bind:data-rid="item.mid"></span>
+                                        <em></em>
+                                    </div>
+                                    <div class="mes-area">
+                                        <div>
+                                            <strong>{{item.nickname}}</strong>
+                                        </div>
+                                        <span>收到表白 {{item.score}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="line"></div>
+                        </div>
+                        <div class="mod-rank user-rank">
+                            <ul class="top-three">
+                                <li v-for="(item,index) in userArr" v-if="index < 3">
+                                    <div class="img-area">
+                                        <img :src="item.head_pic_1"  alt="" />
+                                        <b></b>
+                                        <em></em>
+                                    </div>
+                                    <div class="mes-area">
+                                        <div>
+                                            <strong>{{item.nickname}}</strong>
+                                        </div>
+                                        <span>送出表白 {{item.score}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="common-bottom">
+                    <div class="show-btn" @click="pass()">查看往期记录</div>
+                </div>
+            </section>
+            <div class="copyright"></div>
+        </div>
+    </div>
+
+
+    <!-- 往期记录 -->
+    <div class="posi tj-histroy" v-show="code">
+        <div class="common-con">
+            <div class="common-tit">
+                <b class="wqcode"></b>
+            </div>
+            <!-- 内容区 -->
+            <div class="his-con">
+                <b @click="code = !code"></b>
+                <div class="ul-out">
+                    <ul class="ul-out-con">
+                        <li v-for="(item,day) in passArr">
+                            <h3>{{day}}</h3>
+                            <div class="mod-his">
+                                <div v-for="(per, index) in item.mod">
+                                   <span>{{index+1}}</span>
+                                   <strong>{{per.nickname}}</strong>
+                                </div>  
+                            </div>
+                            <div class="user-his">
+                                <div v-for="(per, index) in item.user">
+                                   <span>{{index+1}}</span>
+                                   <strong>{{per.nickname}}</strong>
+                                </div>  
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="common-bottom"></div>
+        </div>
+    </div>
+
+    <!-- 活动规则 -->
+    <div class="posi rules"  v-show="showRule" >
+        <div class="common-con">
+            <div class="common-tit">
+                <b class="hdrule"></b>
+            </div>
+            <!-- 内容区 -->
+            <div class="his-con rules-txt">
+                <b @click="showRule= !showRule"></b>
+                <div class="cover">
+                    <div class="cover-con">
+                        <p>1.活动时间：<strong>2018/05/15 12:00:00—05/20 23:59:59</strong>。</p>
+                        <p>2.告白榜为收到“一见钟情”礼物主播，配对的用户为给前十名主播<strong>送出“一见钟情”礼物最多的用户</strong>。</p>
+                        <p>3.此次活动分阶段炸房，每天前五次炸房送出指定数量的“一见钟情”即可炸房，从第六次炸房起，每次炸房需送出3000个“一见钟情”。</p>
+                        <span></span>
+                        <p>4.每天0点刷新进度条，0点后，直播间当前进度条炸完，再从第一轮炸房（500个“一见钟情”）开始炸房。</p>
+                        <p>5.用户一次性送出<strong>99个“一见钟情”</strong>，可触发<strong>告白特效</strong>，并发出<strong>告白宣言</strong>，告白在单个直播间内飘屏展示，并登上活动页面“告白墙”。</p>
+                        <p>6.每日（00:00:00-23:59:59）<strong>收到/送出最多告白宣言的前三名主播/用户</strong>将获得奖励，奖励将于每日23:59:59下发到背包，主播奖励活动推荐时间从次日12:00:00起算。</p>
+                        <p>注：若主播在推荐期间下线，将自动取消活动推荐位。</p>
+                        <p>7.告白榜前10名主播可获得活动礼品，礼品将于活动结束后15个工作日内发放。</p>
+                        <p>8.本次活动最终解释权归星光直播所有。</p>
+                        <div class="activity-gift">
+                            <h3></h3>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="common-bottom"></div>
+        </div>
+    </div>
+    
+    <!-- 文案提示 -->
+    <div class="posi tip-txt" v-show="buyTips">
+        <div>
+            <b @click="buyTips = !buyTips"></b>
+            <p>{{buyText}}</p>
+        </div>
+    </div>
+    
+    <!-- 购买 -->
+    <div class="posi buybox" v-show="buyBox">
+        <div>
+            <b @click="buyBox= !buyBox"></b>
+            <h3>购买个数</h3>
+            <div class="buy-num">
+                <div class="dev" @click="dev()"></div>
+                <input id="totalMoney" type="" maxlength="8" value="1" @input="inputNumber()" />
+                <div class="add" @click="add()"></div>
+            </div>
+            <strong>价格: {{buyTotal}}克拉</strong>
+            <div class="sure-buy" @click="sureBuy" v-bind:data-id="goodId"></div>
+        </div>
+    </div>
+
+    <!-- svg -->
+    <div class="posi svg-con" v-show="svgPlayer"></div>
+    
+    <div class="rule-btn" @click="rules()"></div>
+</main>
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '520告白日',
+        content: '听说来星光告白成功率99.9%哦~',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/loveday/share.jpg")}'
+    });
+</script>

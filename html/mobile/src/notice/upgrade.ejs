@@ -1,0 +1,23 @@
+<style>
+    body{
+        background: #321281;
+    }
+    img{
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+</style>
+<div id="app">
+    <!-- /* img path - "../../../../static_guojiang_tv/src/mobile/v2/img/notice/upgrade" */ -->
+    <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/notice/upgrade/1.jpg')}">
+</div>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '通知',
+    content: '系统升级通知',
+    link: location.href,
+    imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/common/logo_1.png")}' // eslint-disable-line
+})
+</script>

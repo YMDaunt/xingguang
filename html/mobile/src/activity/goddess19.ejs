@@ -1,0 +1,58 @@
+<div id="app" v-cloak>
+    <Rank @inlive="inlive" @attention="attention"></Rank>
+    <div class="bottom"></div>
+    <div class="rules-btn" @click="showRules=true"></div>
+    <div class="rules-box" v-show="showRules">
+        <div class="rules-wrap">
+            <div class="rules">
+                <div class="close-btn" @click="showRules=false"></div>
+                <div class="title"></div>
+                <ul class="rules-content">
+                    <li>
+                        1.活动时间：<span style="color: #d36f26">3.7 10:00-3.8 23:59:59</span>
+                    </li>
+                    <li>
+                        2.活动礼物：
+                        <div class="gift2"></div>
+                    </li>
+                    <li>
+                        3.活动期间，指定礼物限时5折售卖
+                        <div class="gift3">
+                            <div class="gift3-1"></div>
+                            <div class="gift3-2"></div>
+                            <div class="gift3-3"></div>
+                        </div>
+                    </li>
+                    <li>
+                        4.活动期间，主播按照收取活动礼物及以上三种打折礼物，按照1克拉=1魅力值进行榜单排名，若有相同成绩者，按照先到先得原则排名。
+                    </li>
+                    <li>
+                        5.<span style="color: #d36f26"> 活动期间，用户送出活动礼物及以上三种打折礼物，用户经验值翻倍！</span>
+                        <br>
+                        例：用户A送给主播B一个丘比特，价值9999克拉。女神榜和粉丝榜分别累计9999魅力值和9999贡献值。主播B直播间累计9999星光值。用户A的用户等级经验值累计9999*2=19998。主播B的主播等级经验值累计9999。粉丝亲密度：1克拉=1亲密度不变。主播分成为折后价9999*0.45。
+                    </li>
+                    <li>
+                        6.女神榜前五名主播获得奖励。
+                        <div class="gift6"></div>
+                    </li>
+                    <li>
+                        7.奖励说明：
+                        <br>
+                        1）开屏和广告位奖励，运营会在活动结束的3个工作日内和获得奖励的主播联系排期；
+                        <br>
+                        2）开播飘屏奖励会自3月9日起，每日获奖主播首次开播下发，每日下发一次。
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '女神驾到',
+    content: '我的节日我做主！指定特效礼物5折开售！',
+    link: location.href,
+    imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/goddess19/share.png")}' // eslint-disable-line
+})
+</script>

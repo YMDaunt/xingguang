@@ -1,0 +1,322 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="ban"></div> 
+    <div class="wrap">
+        <!-- 充值返利 -->
+        <section class="fls">
+            <a class="btn-fl"  @click="tz()"></a>
+            <ul>
+                <li class="clearfix">
+                    <span>1</span>
+                    <strong>活动期间，单笔充值达到相应金额，即可获得对应比例的克拉返利；</strong>
+                </li>
+                <li class="clearfix">
+                    <span>2</span>
+                    <strong>充值方式不限；</strong>
+                </li>
+                <li class="clearfix">
+                    <span>3</span>
+                    <strong>24小时内累计充值超过<b>2万元</b>的，可以按2万元以上的返利区间进行克拉返利。此类返利请联系客服发放哦！<br /><b>请在APP内“我的”-“联系客服”中联系客服或者扫描微信公众号，在微信公众号中联系客服</b></strong>
+                </li>
+            </ul>
+            <div class="btn-seefl" @click="fl = !fl"></div>
+        </section>
+
+        <!-- PK视频区 -->
+        <section class="video-area">
+            <div class="video-con">
+                <!-- 前排 -->
+                <div class="topfour">
+                    <div class="swiper-container four">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" v-for="(item,index) in videoArr" v-if="index < 4">
+                                <div :class="[item.isPlaying ? 'live' : 'unlive']">
+                                    <span>{{item.score}}</span>
+                                    <strong>NO.{{index+1}}</strong>
+                                    <div v-bind:data-mid="item.mid">
+                                        <div class="jj-ico" v-if="item.promotion"></div>
+                                        <img :src="item.headPic" v-bind:data-rid="item.rid" v-bind:data-url="item.mobileVideoUrl" @click="change($event)" alt="" />
+                                        <!-- <img v-else :src="item.headPic" v-bind:data-rid="item.rid" v-bind:data-url="item.mobileVideoUrl" alt="" /> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 视频 -->
+                <div class="videoplayer">
+                    <div class="mes-area">
+                        <div class="mod1">
+                            <div class="mod1-name" v-bind:data-rid='roomId' @click="inlive($event)">{{playingName}}</div>
+                            <div class="mod1-mr-img" v-if="!someOneLive" v-bind:data-rid='roomId' @click="inlive($event)"></div>
+                            <img :src="playingImg" alt="" v-else v-bind:data-rid='roomId' @click="inlive($event)"/>
+                        </div>
+                        <div class="mod2">
+                            <div class="mod2-name" v-if="isPk" v-bind:data-rid='pkArr.otherRid'@click="inlive($event)">{{pkArr.otherNickname}}</div>
+                            <div class="mod2-mr-img" v-show="!isPk"></div>
+                            <img v-show="isPk" :src="pkArr.otherPic" alt="" v-bind:data-rid='pkArr.otherRid' @click="inlive($event)"/>
+                        </div>
+                        <div class="pk-ico" v-show="isPk"></div>
+                        <div class="video-bg"></div>
+                    </div>
+                </div>
+
+                <!-- 后排 -->
+                <div class="topeight">
+                    <div class="swiper-container eight">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" v-for="(item,index) in videoArr" v-if="index >= 4">
+                                <div :class="[item.isPlaying ? 'live' : 'unlive']">
+                                    <span>{{item.score}}</span>
+                                    <strong>NO.{{index+1}}</strong>
+                                    <div v-bind:data-mid="item.mid">
+                                        <div class="jj-ico" v-if="item.promotion"></div>
+                                        <img :src="item.headPic" v-bind:data-rid="item.rid" v-bind:data-url="item.mobileVideoUrl" @click="change($event)" alt="" />
+                                        <!-- <img v-else :src="item.headPic" v-bind:data-rid="item.rid" v-bind:data-url="item.mobileVideoUrl" alt="" /> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 如果需要导航按钮 -->
+                    <div class="swiper-button-prev eight-button-prev"></div>
+                    <div class="swiper-button-next eight-button-next"></div>
+                </div>
+            </div>
+
+            <!-- PK时间 -->
+            <div class="pk-time">
+                <div class="time-con">
+                    <div class="line">
+                        <span></span>
+                        <div class="line-stage stage1"></div>
+                        <div class="line-stage stage2"></div>
+                        <div class="line-stage stage3"></div>
+                        <div class="line-stage stage4"></div>
+                        <div class="time-doit">
+                            <div class="time-tips"></div>
+                        </div>
+                        <div class="time-text">
+                            <strong>{{timeArr.startTime}}</strong>
+                            <strong>{{timeArr.stage1EndTime}}</strong> 
+                            <strong>{{timeArr.stage2EndTime}}</strong> 
+                            <strong>{{timeArr.endTime}}</strong>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主播介绍 -->
+            <div class="mod-intr">
+                <div class="swiper-container instr">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" v-for="(item,index) in instArr">
+                            <div class="mod-mes">
+                                <div class="img-area">
+                                    <img :src="item.headPic" v-bind:data-rid="item.rid" @click="inlive($event)" alt="" />
+                                </div>
+                                <div class="mes-text">
+                                    <p v-bind:data-rid="item.rid" @click="inlive($event)">昵称: {{item.nickname}}</p>
+                                    <p>ID: {{item.mid}}</p>
+                                    <p>战绩: {{item.score}}/{{item.winTimes}}</p>
+                                    <p>当前排名: {{item.rank}}</p>
+                                    <p>头号粉丝: {{item.top1Fan}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 如果需要导航按钮 -->
+                <div class="swiper-button-prev instr-button-prev"></div>
+                <div class="swiper-button-next instr-button-next"></div>
+            </div>
+        </section>
+        
+        <!-- PK规则 -->
+        <section class="pk-rule">
+            <ul class="pkrule-con">
+                <li>
+                    <span>1</span>
+                    <strong>活动时间：6月26日 12:00:00—6月30日 11:59:59。</strong>
+                </li>
+                <li>
+                    <span>2</span>
+                    <strong>活动期间平台挑选了八位主播作为第一阶段PK的擂主，在主播守擂阶段向主播发起PK即可参与歌谣PK大战，获得有效积分。</strong>
+                </li>
+                <li>
+                    <span>3</span>
+                    <strong>活动分为三个阶段：<b>（每个阶段结算时,还在进行中的PK，只计算已发生的收入，不计算未发生的收入）</b><br />
+                    阶段一（6月26日 12:00:00—6月27日 11:59:59）：官方选出的8位擂主守擂，在此阶段向她们发起挑战，即可获得有效积分；
+                    <br />阶段二（6月27日 12:00:00—6月29日 11:59:59）：第一阶段8位擂主前四名即可继续守擂，第一阶段后四名由积分榜前四名替换；按照有效PK实际收入（克拉）计算积分；
+                    <br />阶段三（6月29日 12:00:00—6月30日 11:59:59）：第二阶段8位擂主前四名即可继续守擂，第二阶段后四名由积分榜前四名替换。按照有效PK实际收入（克拉）计算积分。
+                    </strong>
+                </li>
+                <li>
+                    <span>4</span>
+                    <strong>积分规则为，向守擂方发起PK（或由守擂方发起PK），有效对战中，1克拉对应1积分。<b>仅计算在守擂主播守擂阶段发起PK时赠送的克拉，非有效阶段发生的普通PK不计入榜单）。</b></strong>
+                </li>
+                <li>
+                    <span>5</span>
+                    <strong>一次性送出66个“女神驾临”即可触发<b>惊喜特效</b>！</strong>
+                </li>
+                <li>
+                    <span>6</span>
+                    <strong>本活动最终解释权归星光直播所有。更多详情请查看详细规则。</strong>
+                </li>
+            </ul>
+        </section>
+        
+        <!-- 榜单 -->
+        <section class="rank-con">
+            <div class="tab-tit">
+                <div :class="{'choose': tabCon}" @click="tab('choose')"></div>
+                <div :class="{'choose': !tabCon}" @click="tab('')"></div>
+            </div>
+            <div class="tab-box">
+                <div class="tab-top tab1" v-if="tabCon"></div>
+                <div class="tab-top tab2" v-else></div>
+                <div class="tab-con">
+                    <div class="mod-rank" v-show="tabCon">
+                        <ul class="three">
+                            <li v-for="(item,index) in modArr" v-if="index < 3">
+                                <div class="rank-img">
+                                    <b></b>
+                                    <img :src="item.headPic"  v-bind:data-rid="item.rid" @click="inlive($event)" alt="">
+                                    <span v-if="item.isPlaying"></span>
+                                </div> 
+                                <div class="rank-name">
+                                    <div>{{item.nickname}}</div> 
+                                    <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                </div> 
+                                <p>战绩：{{item.score}}/{{item.winTimes}}</p> 
+                                <div class="care" v-if="!item.isLoved" v-bind:data-id="item.id" @click="love($event, index)"></div>
+                                <div v-else class="cared"></div>
+                            </li>
+                        </ul>
+
+                        <!-- 4+ -->
+                        <div class="rank-other mod-other">
+                            <div class="rank-out">
+                                <ul>
+                                    <li class="clearfix" v-for="(item,index) in modArr" v-if="index >= 3">
+                                        <div class="top-num">{{index+1}}</div> 
+                                        <div class="top-img">
+                                            <span v-if="item.isPlaying" @click="inlive($event)" v-bind:data-rid="item.rid"></span>
+                                            <img :src="item.headPic" v-bind:data-rid="item.rid" @click="inlive($event)" alt="" >
+                                        </div>
+                                        <div class="top-mes">
+                                            <div>{{item.nickname}}</div> 
+                                            <b :class="'level_icon m_level_icon_' + item.level"></b></div> 
+                                        <div class="top-mark">{{item.score}}/{{item.winTimes}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 用户 -->
+                    <div class="user-rank" v-show="!tabCon">
+                        <ul class="three">
+                            <li v-for="(item,index) in userArr" v-if="index < 3">
+                                <div class="rank-img">
+                                    <b></b>
+                                    <img :src="item.headPic">
+                                </div> 
+                                <div class="rank-name">
+                                
+                                    <div>{{item.nickname}}</div> 
+                                    <b :class="'level_icon u_level_icon_' + item.level"></b>
+                                </div> 
+                                <p>送出：{{item.score}}</p> 
+                            </li>
+                        </ul>
+
+                        <!-- 4+ -->
+                        <div class="rank-other user-other">
+                            <div class="rank-out">
+                                <ul>
+                                    <li class="clearfix" v-for="(item,index) in userArr" v-if="index >= 3">
+                                        <div class="top-num">{{index+1}}</div> 
+                                        <div class="top-img">
+                                            <img :src="item.headPic">
+                                        </div>
+                                        <div class="top-mes">
+                                            <div>{{item.nickname}}</div> 
+                                            <b :class="'level_icon u_level_icon_' + item.level"></b>
+                                        </div> 
+                                        <div class="top-mark">{{item.score}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-bottom"></div>
+            </div>
+        </section>
+
+        <!-- 规则详情按钮 -->
+        <div class="rule-btn" @click="rule()"></div>
+
+        <!-- 详细规则 -->
+        <div class="posi" v-show="showRule">
+            <div class="rule">
+                <h2></h2>
+                <div>
+                    <i @click="showRule = !showRule"></i>
+                    <ul class="rules-out">
+                        <li class="clearfix">
+                            <span>1</span>
+                            <strong>活动时间：6月26日 12:00:00—6月30日 11:59:59。</strong>
+                        </li>
+                        <li class="clearfix">
+                            <span>2</span>
+                            <strong>阶段擂主将出现在发起PK的邀请列表的顶部，点选即可发出PK邀请。</strong>
+                        </li>
+                        <li class="clearfix">
+                            <div class="rule-stage"></div>
+                        </li>
+                        <li class="clearfix">
+                            <span>3</span>
+                            <strong>积分规则为，向守擂方发起PK（或由守擂方发起PK），有效对战中，1克拉对应1积分。<b>（仅计算在守擂主播守擂阶段发起PK时赠送的克拉，非有效阶段发生的普通PK不计入榜单）。</b></strong>
+                        </li>
+                        <li class="clearfix">
+                            <span>4</span>
+                            <strong>关于榜单并列的问题：若守擂擂主第四名或者积分榜的第四名有并列，则需共享晋级特权和同一个展示位。</strong>
+                        </li>
+                        <li class="clearfix">
+                            <span>5</span>
+                            <strong>活动最终擂主的前四名和最终积分榜前三名将获得丰厚奖励。奖励将于活动结束后15个工作日发放。</strong>
+                        </li>
+                        <li class="clearfix">
+                            <div class="reward"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 返利 -->
+        <div class="posi" v-show="fl">
+            <div class="fl-step">
+                <h2></h2>
+                <div>
+                    <i @click="fl = !fl"></i>
+                    <p>1000≤单次充值&lt;2000元，返利比例为2% 克拉；</p>
+                    <p>2000≤单次充值&lt;5000元，返利比例为3%克拉；</p>
+                    <p>5000≤单次充值&lt;20000元 ，返利比例为4%克拉；</p>
+                    <p>20000≤单次充值&lt;50000元 ，返利比例为8%克拉；</p>
+                    <p>单次充值≥50000元 ，返利比例为12%克拉。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '歌谣PK一触即发！',
+        content: '“强强对抗!给你好看！',
+        link: location.href,
+        imgLink: "${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/pkSong/share.png')}"
+    });
+</script>

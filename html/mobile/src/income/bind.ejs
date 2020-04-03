@@ -1,0 +1,18 @@
+<article>
+	<section class="s_1" v-show="!isCodeBind">
+		<p>没有验证码的用户点击此处</p>
+		<button @click="switchAutoBind()">完成授权自动绑定</button>
+
+		<p>在app获得验证码的用户，必须点此项哦</p>
+		<button @click="switchCodeBind()">验证码手动绑定</button>
+
+		<p style="padding: 0 20px;">若您不确定是否有验证码，可返回app内点击“我的收益-微信提现”，有验证码的用户进入的第一个页面即可看到验证码</p>
+	</section>
+
+	<section class="s_2" v-show="isCodeBind" v-cloak>
+		<h2>验证码</h2>
+		<input type="text" name="code" v-model="code" placeholder="请输入App内获得的验证码">
+
+		<button @click="goBind()">完成绑定</button>
+	</section>
+</article>

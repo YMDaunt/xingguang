@@ -1,0 +1,305 @@
+<div class="page-content">
+    <div class="banner"></div>
+
+    <!-- 限定礼物 -->
+    <div class="fl-box gifts">
+        <p class="gifts-desc">听说每到愚人节，人们就会整蛊所爱之人，希望可爱的你能在这一天被爱意包围~</p>
+        <div class="gifts-i"></div>
+        <div class="gifts-i gifts-zgdj">
+            <div class="gifts-pic">
+                <div class="pic"></div>
+            </div>
+            <p class="gifts-name">价格:6666克拉/个</p>
+            <div class="fl-box gifts-opt">
+                <div class="icon-sprite btn btn-preview" @click="preview">预览</div>
+                <div :class="['icon-sprite btn', currStage > 1 ? 'btn-buy-dis' : 'btn-buy']" @click="togglePurchase">购买</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="deco-sep"></div>
+
+    <!-- 榜单 -->
+    <div class="fl-box ranks-tab">
+        <div :class="'ranks-tab-i icon-sprite tab-mod' + ['-a', ''][isModRank]" @click="changeRanks(0)">愚乐榜</div>
+        <div :class="'ranks-tab-i icon-sprite tab-user' + ['', '-a'][isModRank]" @click="changeRanks(1)">整蛊榜</div>
+    </div>
+
+    <deco-box class="ranks">
+        <!-- rank top 3 -->
+        <div v-if="currStage > 0 && currRank.list.length > 0" :class="['rank-top3', currRank.type]">
+            <div v-for="(item, i) in currRank.list.slice(0, 3)" :class="['rank-top-i', 'rank-top-i' + i]">
+                <div class="headpic">
+                    <img class="pic" :src="item.headPic" alt="头像" @click="isModRank === 0 && goRoom(item)">
+                    <div :class="['icon-sprite cown', 'cown' + (i+1)]"></div>
+                    <div v-if="isModRank === 0 && item.isPlaying" class="icon-sprite LIVE"></div>
+                    <div :class="['icon-sprite badge', 'No' + (i+1)]"></div>
+                </div>
+                <div class="fl-box nickname">
+                    <div class="txt-of name">{{ item.nickname }}</div>
+                    <div :class="['level_icon', levelPerfix + item.level]"></div>
+                </div>
+                <div :class="['txt-of score', isModRank === 0 && 'underline']">{{ isModRank === 0 ? '愚乐值' : '愚乐值' }}：{{ item.score }}</div>
+                <div v-if="isModRank === 0" :class="['icon-sprite btn-opt btn', item.isLoved ? 'btn-atted' : 'btn-atte' ]" @click="!item.isLoved && payAttention(item)"></div>
+            </div>
+        </div>
+
+        <div v-if="currRank.list.length > 0" class="fl-box rank-listh">
+            <div class="rank-cell rank-cell-1">排&nbsp;名</div>
+            <div class="rank-cell rank-cell-2">{{ isModRank === 1 ? '用&nbsp;户' : '主&nbsp;播' }}</div>
+            <div class="rank-cell rank-cell-3">愚乐值</div>
+        </div>
+
+        <!-- rank-list -->
+        <scroller
+            ref="rank-scroller"
+            :class="['rank-listc', !currRank.meCenter && 'rank-nocenter']"
+            :right="0"
+            :thumb-color="'#c67de9'">
+            <p v-if="currStage === 0" class="rank-holder">活动尚未开始</p>
+            <p v-else-if="currRank.list.length === 0" class="rank-holder">今天不去直播间皮一下么？</p>
+            <!-- rank item -->
+            <template
+                v-else
+                v-for="(item, ind) in currRank.list.slice(3)">
+                <div
+                    class="fl-box rank-row"
+                    :key="currRank.type + '_' + ind"
+                >
+                    <div class="rank-cell rank-cell-1">
+                        <span v-for="numi, nindex in ((ind+4)+'').split('')" :class="'icon-sprite num-' + numi"></span>
+                    </div>
+                    <div class="fl-ver rank-cell rank-cell-2">
+                        <div class="n-headpic">
+                            <img
+                                :src="item.headPic"
+                                :alt="item.nickname"
+                                class="avatar"
+                                @click="isModRank === 0 && goRoom(item)">
+                            <span v-if="isModRank === 0 && item.isPlaying" class="icon-sprite LIVE">Live</span>
+                        </div>
+                        <p class="fl-ver nickname">
+                            <span class="txt-of name">{{ item.nickname }}</span>
+                            <span :class="['level_icon', levelPerfix + item.level]"></span>
+                        </p>
+                    </div>
+                    <div :class="['txt-of rank-cell rank-cell-3', isModRank === 0 && 'underline']">{{ item.score }}</div>
+                </div>
+            </template>
+        </scroller>
+
+        <div v-if="isModRank === 0" class="rank-tips">仅展示前100位主播</div>
+        <div v-if="isModRank === 1" class="rank-tips">仅展示前100位用户</div>
+        <div v-if="currRank.meCenter" class="rank-sep"></div>
+
+        <!-- 榜单个人中心 -->
+        <div class="fl-box rank-center" v-if="currRank.meCenter">
+            <div class="intro">
+                <div class="n-headpic center-headpic" @click="isModRank === 0 && goRoom(currRank.meCenter)">
+                    <img
+                        :src="currRank.meCenter.headPic"
+                        :alt="currRank.meCenter.nickName"
+                        class="avatar">
+                    <span v-if="isModRank === 0 && currRank.meCenter.isPlaying" class="icon-sprite LIVE">Live</span>
+                </div>
+                <p :class="['fl-box nickname', isModRank === 0 && currRank.meCenter.scoreLevel > 0 && 'mt-top']">
+                    <span class="txt-of name">{{ currRank.meCenter.nickName }}</span>
+                    <span :class="['level_icon', levelPerfix + currRank.meCenter.level]"></span>
+                </p>
+            </div>
+            <div class="fl-box me-status">
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[0].name }}</h5>
+                    <p class="txt-of">{{ currRank.meCenter.pairInfos[0].value }}</p>
+                </div>
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[2].name }}</h5>
+                    <p class="txt-of">{{ currRank.meCenter.pairInfos[2].value }}</p>
+                </div>
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[1].name }}</h5>
+                    <p :class="['txt-of', isModRank === 0 && 'underline']" @click="isModRank === 0 && showScore(currRank.meCenter)">{{ currRank.meCenter.pairInfos[1].value }}</p>
+                </div>
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[3].name }}</h5>
+                    <p class="txt-of">{{ currRank.meCenter.pairInfos[3].value }}</p>
+                </div>
+            </div>
+        </div>
+    </deco-box>
+
+    <!-- 整蛊大师 -->
+    <h2 class="title-h2">
+        <div class="pic-sprite title-zgds">整蛊大师</div>
+    </h2>
+    <div class="today-toper">
+        <div class="toper-desc pic-sprite txt-zgds">整蛊大神为活动期间送出“整蛊道具”数量最多的三位用户，可获得奖池抽奖机会。</div>
+        <deco-box>
+            <p v-if="currStage === 0" class="rank-holder">活动尚未开始</p>
+            <p v-else-if="topUser.length === 0" class="rank-holder">今天不去直播间皮一下么？</p>
+            <!-- rank top 3 -->
+            <div v-else class="user-top3">
+                <div v-for="(item, i) in topUser" :class="['fl-box user-top-i', 'user-top-i' + i]">
+                    <div class="headpic">
+                        <img class="avatar" :src="item.headPic" alt="用户头像">
+                        <div :class="['icon-sprite cown', 'cown-no' + (i+1)]"></div>
+                    </div>
+                    <div class="fl-ver desc">
+                        <div class="fl-ver nickname txt-sprite name-bg">
+                            <div class="txt-of name">{{ item.nickname }}</div>
+                            <div :class="'level_icon u_level_icon_' + item.level"></div>
+                        </div>
+                        <div class="txt-of score">送出数量: {{ item.score }}</div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="topMeCenter" class="fl-box user-center">
+                <div class="n-headpic">
+                    <img :src="topMeCenter.headPic" alt="我的头像" class="avatar">
+                </div>
+                <div class="fl-ver infos">
+                    <div class="fl-box nickname">
+                        <div class="txt-of name">{{ topMeCenter.nickName }}</div>
+                        <div :class="'level_icon u_level_icon_' + topMeCenter.level"></div>
+                    </div>
+                    <p class="txt-of value">送出数量: {{ topMeCenter.pairInfos && topMeCenter.pairInfos[1].value }}</p>
+                    <div class="txt-of race-value">{{ topMeCenter | calcRankComment }}</div>
+                </div>
+            </div>
+        </deco-box>
+    </div>
+
+    <!-- 终极奖池 -->
+    <h2 class="title-h2">
+        <div class="pic-sprite title-zjjc">终极奖池</div>
+    </h2>
+    <div class="lottery">
+        <div class="lottery-clown">
+            <div class="pic-sprite icon-clown1"></div>
+            <div class="pic-sprite icon-clown2"></div>
+        </div>
+        <deco-box>
+            <div class="fl-box lottery-pool">
+                <div v-for="(gi, gindex) in [0, 1, 2, 5, 4, 3]" :ref="'lottery-i-' + gi" class="fl-box lottery-i">
+                    <div class="lottery-pic">
+                        <img :src="prizePool[gi].pic" :alt="prizePool[gi].name">
+                    </div>
+                    <p class="lottery-name">{{ prizePool[gi].name }}</p>
+                </div>
+            </div>
+        </deco-box>
+        <div v-if="drawBtnShow" :class="['icon-sprite btn draw-btn', drawBtnClass]" @click="draw">抽奖</div>
+        <div v-if="drawBtnShow" class="drawtime">您还有{{ drawTime }}次抽奖机会</div>
+    </div>
+
+    <!-- copyright -->
+    <div class="copyright">
+        <div class="pic-sprite txt-copy">本次活动最终解释权归平台运营团队所有</div>
+    </div>
+</div>
+
+<!-- floater -->
+<div class="floater pic-sprite btn btn-rules" @click="toggleRule">活动规则</div>
+
+<!-- rules -->
+<div class="layer layer-rules" v-show="ruleState" @click="captureLayer">
+    <div class="layer-inner">
+        <h2 class="pic-sprite txt-rules"></h2>
+        <div class="icon-sprite btn btn-close" @click="toggleRule"></div>
+        <div class="layer-deco1 icon-sprite ball"></div>
+        <div class="layer-deco2 icon-sprite ball"></div>
+        <div class="layer-deco3 icon-sprite ball"></div>
+        <div class="layer-deco4 icon-sprite ball"></div>
+        <scroller
+            ref="rules-scroller"
+            class="layer-content"
+            :right="8"
+            :thumb-color="'#a22791'">
+            <p class="rule-h"><span class="rule-bold">活动时间：</span>2019/3/29 12:00:00 — 2019/4/2 23:59:59。</p>
+            <p class="rule-h"><span class="rule-bold">活动礼物：</span></p>
+            <div class="fl-box rule-gifts">
+                <div class="r-gifts-i r-gifts-i0">
+                    <div class="r-gifts-pic r-gifts-clown"></div>
+                    <p class="r-gifts-name">小丑</p>
+                    <p class="r-gifts-desc">1个小丑=10克拉=10愚乐值</p>
+                </div>
+                <div class="r-gifts-i">
+                    <div class="r-gifts-pic r-gifts-zgdj"></div>
+                    <p class="r-gifts-name">整蛊道具</p>
+                    <p class="r-gifts-desc">1个整蛊道具=6666克拉=6666愚乐值</p>
+                </div>
+            </div>
+            <p class="rule-h"><span class="rule-bold">1）</span>此次活动分阶段炸房，每天前五次炸房送出指定数量的“小丑”即可炸房，从第六次炸房起，每次炸房需送出3000个“小丑”。炸房可触发全站飘屏，由补满进度条的用户冠名。点击飘屏可有机会抢到活动礼物-小丑。</p>
+            <p class="rule-tips">注：抢到的小丑，会放入背包。需在4/3 23:59:59前送出，逾期失效，请及时送出！</p>
+            <div class="pic-sprite rw-progress"></div>
+            <p class="rule-h"><span class="rule-bold">2）</span>每天0点刷新炸房次数，所有直播间当前进度条炸房后，从第一次炸房（500个“小丑”）开始炸房。</p>
+            <p class="rule-h"><span class="rule-bold">3）</span>在活动页面购买特效礼物“整蛊道具”，即可在送出直播间整蛊主播，送出效果可使主播当前炸房进度条瞬间清零！非活动期间送出，则只有特效，无整蛊效果。送出“整蛊道具”最多的前3名用户，将获得“整蛊大神”勋章<span class="icon-sprite badge-zgds"></span>*7日，以及奖池抽奖机会*1。</p>
+            <p class="rule-tips">注：整蛊道具在活动期间送出，清空的进度条数据仍会记录在活动榜单，只是皮一下~大家放心~</p>
+            <p class="rule-h"><span class="rule-bold">4）</span>榜单若有相同成绩，则按照先到先得原则。</p>
+            <p class="rule-h"><span class="rule-bold">5）</span>愚乐榜前5名主播和整蛊榜前5名用户可获得奖励。</p>
+            <my-table
+                class="rw-table"
+                :source="{
+                    th: ['愚乐榜', '奖励', '整蛊榜', '奖励'],
+                    tdata: [
+                        ['第一名', '300000克拉', '第一名', '奖池抽奖机会*3'],
+                        ['第二名', '200000克拉', '第二名', '奖池抽奖机会*2'],
+                        ['第三名', '150000克拉', '第三名', '奖池抽奖机会*1'],
+                        ['第四,五名', '100000克拉', '第四,五名', '奖池抽奖机会*1']
+                    ]
+                }"></my-table>
+            <p class="rule-tips">注：克拉奖励于活动结束的5个工作日内发放；抽奖时间截止至4/3 23:59:59，逾期视为放弃奖励。</p>
+        </scroller>
+    </div>
+</div>
+
+<!-- modal buy -->
+<div class="modal-layer purchase" v-show="purchaseState">
+    <div class="icon-sprite btn btn-close" @click="togglePurchase"></div>
+    <div class="fl-box modal-content">
+        <div class="modal-title">购买个数</div>
+        <div class="form-i">
+            <span class="before" @click="calcBuyNum(-1)">-</span>
+            <input class="form-input" type="text" @input="buyInput" @click="inputFocus" :value="formBuyNum">
+            <span class="after" @click="calcBuyNum(1)">+</span>
+        </div>
+        <p class="result">价格：{{ this.formBuyPrice }}克拉</p>
+        <div class="icon-sprite btn btn-buy" @click="goBuy"></div>
+    </div>
+</div>
+
+<!-- modal recharge -->
+<div class="modal-layer recharge" v-show="rechargeState">
+    <div class="icon-sprite btn btn-close" @click="toggleRecharge"></div>
+    <div class="fl-box modal-content">
+        <p class="modal-title">余额不足，快去充值吧！</p>
+        <div class="fl-box modal-opts">
+            <div class="btn-cancel" @click="toggleRecharge">不了</div>
+            <div class="icon-sprite btn btn-charge" @click="goRecharge">充值</div>
+        </div>
+    </div>
+</div>
+
+<!-- toast msg层 -->
+<div class="toast-container" v-show="toastState" @click="hideToast">
+    <div class="toast-msg">{{ toastMsg }}</div>
+</div>
+
+<!-- 动画效果 -->
+<div class="svg-layer" v-show="svgShow" @click="stopSvg">
+    <div class="svg-container"></div>
+</div>
+
+<loading ref="loading" />
+
+<script type="text/template" id="deco-box">
+<div class="deco-box">
+    <div class="deco-inner">
+        <div class="deco-db-a">
+            <div class="deco-content">
+                <slot></slot>
+            </div>
+        </div>
+    </div>
+</div>
+</script>

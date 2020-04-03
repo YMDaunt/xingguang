@@ -1,0 +1,592 @@
+<div id="app" :style="ui.appLoaded" v-cloak>
+    <!-- /* img path - "../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi" */ -->
+    <div class="banner-box">
+        <img class="secbox-bg" src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/banner_know.jpg")}' alt="banner" v-if="constVar.activityStage < 2">
+        <img class="secbox-bg" src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/banner_love.jpg")}' alt="banner" v-if="constVar.activityStage >= 2">
+    </div>
+    <!-- 七夕限定 -->
+    <div class="gift-box c-box">
+        <img class="secbox-bg" src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/sec_a_bg.jpg")}' alt="">
+        <div class="c-content">
+            <div class="c-title"></div>
+            <div class="gifts">
+                <div class="jieyuan">
+                    <div class="gift-icon">
+                        <img src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/yuelao.png")}' alt="月老结缘">
+                    </div>
+                    <div class="gift-state">2999克拉/个</div>
+                    <div class="gift-opt">
+                        <div class="gift-preview" @click="preview('yuelao')"></div>
+                        <div class="gift-buy" @click="toast('buy')"></div>
+                    </div>
+                </div>
+                <div class="queqiao">
+                    <div class="gift-icon">
+                        <img src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/queqiao.png")}' alt="鹊桥相会">
+                    </div>
+                    <div class="gift-state">一次性送出520个喜鹊</div>
+                    <div class="gift-opt">
+                        <div class="gift-preview" @click="preview('queqiao')"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 排行榜 -->
+    <div class="board-box c-box">
+        <img class="secbox-bg" src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/sec_b_bg.jpg")}' alt="">
+        <div class="c-content">
+            <div class="c-title"></div>
+            <ul class="board-nav">
+                <li :class="['board-nav-user', ui.boardActiveNav === 'user' ? 'active' : '']" @click="navigate('user', 1)"></li>
+                <li :class="['board-nav-love', ui.boardActiveNav === 'love' ? 'active' : '']" @click="navigate('love', 1)"></li>
+                <li :class="['board-nav-hours', ui.boardActiveNav === 'hours' ? 'active' : '']" @click="navigate('hours', 1)"></li>
+            </ul>
+            <div class="board-list cornor-box">
+                <span class="cornor-top"></span>
+                <span class="cornor-bottom"></span>
+                <!-- 情投意合榜 S -->
+                <div :class="['love', ui.boardActiveNav === 'love' ? 'active' : '']">
+                   <div v-for="(item, ind) in boardLoveTop10":class="['love-i love-' + (ind+1), item.mNickname === undefined ? 'hidden' : '']" :key="ind">
+                        <span class="love-value" v-if="ind === 0">相爱值：{{ item.score }}</span>
+                        <span class="love-value" v-if="ind !== 0">相爱值<br/>{{ item.score }}</span>
+                        <span class="love-bridge">
+                            <span class="love-woman"></span>
+                            <span class="love-man"></span>
+                        </span>
+                        <div class="love-girl">
+                            <span :class="'love-badge-' + (ind+1)"></span>
+                            <span class="love-avatar" @click="gotoRoom(item.mid)"><img :src="item.mHeadPic" :alt="item.mNickname"></span>
+                            <span class="love-live" v-show="item.isPlaying">LIVE</span>
+                            <span class="love-nickname">{{ item.mNickname }}</span>
+                        </div>
+                        <div class="love-boy">
+                            <span class="love-avatar"><img :src="item.uHeadPic" :alt="item.uNickname"></span>
+                            <span class="love-nickname">{{ item.uNickname }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div :class="['love-board-me', ui.boardActiveNav === 'love' ? 'active' : '']" v-show="!!boardLoveMe.rid">
+                    <span class="me-badge">{{ boardLoveMe.rank }}</span>
+                    <span class="me-avatar"  @click="gotoRoom(boardLoveMe.mid || boardLoveMe.uid)"><img :src="boardLoveMe.headPic" :alt="boardLoveMe.nickname"></span>
+                    <span class="me-live" v-show="boardLoveMe.isPlaying">LIVE</span>
+                    <div class="me-info">
+                        <p class="me-header"><span class="name">{{ boardLoveMe.nickname }}</span><span class="value">相爱值：{{ boardLoveMe.score }}</span></p>
+                        <p class="me-desc">{{ boardLoveMe.rankComment }}</p>
+                    </div>
+                </div>
+                <!-- 情投意合榜 E -->
+                <!-- 用户榜 S -->
+                <div :class="['users', ui.boardActiveNav === 'user' ? 'active' : '']">
+                    <div class="users-list">
+                        <div class="user-list-nav">
+                            <span :class="['user-list-contribute', ui.usersActiveNav === 'contribute' ? 'active' : '']" @click="navigate('contribute', 2)">贡献榜</span>
+                            <span :class="['user-list-dao', ui.usersActiveNav === 'dao' ? 'active' : '']" @click="navigate('dao', 2)">补刀榜</span>
+                        </div>
+                        <div class="user-list-content">
+                            <div :class="['user-l-c-contribute', ui.usersActiveNav === 'contribute' ? 'active' : '']">
+                                <div class="user-l-header">
+                                    <div class="user-l-item-2" v-if="boardUser.contribute[1]">
+                                        <span class="crown"></span>
+                                        <div class="avatar"><img :src="boardUser.contribute[1].headPic" :alt="boardUser.contribute[1].nickname"></div>
+                                        <span class="name">{{ boardUser.contribute[1].nickname }}</span>
+                                        <span class="desc">贡献值：{{ boardUser.contribute[1].score }}</span>
+                                    </div>
+                                    <div class="user-l-item-1" v-if="boardUser.contribute[0]">
+                                        <span class="crown"></span>
+                                        <div class="avatar"><img :src="boardUser.contribute[0].headPic" :alt="boardUser.contribute[0].nickname"></div>
+                                        <span class="name">{{ boardUser.contribute[0].nickname }}</span>
+                                        <span class="desc">贡献值：{{ boardUser.contribute[0].score }}</span>
+                                    </div>
+                                    <div class="user-l-item-3" v-if="boardUser.contribute[2]">
+                                        <span class="crown"></span>
+                                        <div class="avatar"><img :src="boardUser.contribute[2].headPic" :alt="boardUser.contribute[2].nickname"></div>
+                                        <span class="name">{{ boardUser.contribute[2].nickname }}</span>
+                                        <span class="desc">贡献值：{{ boardUser.contribute[2].score }}</span>
+                                    </div>
+                                </div>
+                                <div class="user-l-main-th">
+                                    <div class="user-i-rank">排名</div>
+                                    <div class="user-i-name">用户</div>
+                                    <div class="user-i-count">贡献值</div>
+                                </div>
+                                <div ref="sCon" class="user-l-main">
+                                    <div class="user-l-item" v-for="(item, ind) in boardUser.contribute.slice(3)">
+                                        <div class="user-i-rank">{{ ind + 4 }}</div>
+                                        <div class="user-i-name">
+                                            <div class="avatar">
+                                                <img :src="item.headPic" :alt="item.nickname">
+                                            </div>
+                                            <span class="name">{{ item.nickname }}</span>
+                                        </div>
+                                        <div class="user-i-count">{{ item.score }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div :class="['user-l-c-dao', ui.usersActiveNav === 'dao' ? 'active' : '']">
+                                <div class="user-l-header">
+                                    <div class="user-l-item-2" v-if="boardUser.dao[1]">
+                                        <span class="crown"></span>
+                                        <div class="avatar"><img :src="boardUser.dao[1].headPic" :alt="boardUser.dao[1].nickname"></div>
+                                        <span class="name">{{ boardUser.dao[1].nickname }}</span>
+                                        <span class="desc">补刀数：{{ boardUser.dao[1].score }}</span>
+                                    </div>
+                                    <div class="user-l-item-1" v-if="boardUser.dao[0]">
+                                        <span class="crown"></span>
+                                        <div class="avatar"><img :src="boardUser.dao[0].headPic" :alt="boardUser.dao[0].nickname"></div>
+                                        <span class="name">{{ boardUser.dao[0].nickname }}</span>
+                                        <span class="desc">补刀数：{{ boardUser.dao[0].score }}</span>
+                                    </div>
+                                    <div class="user-l-item-3" v-if="boardUser.dao[2]">
+                                        <span class="crown"></span>
+                                        <div class="avatar"><img :src="boardUser.dao[2].headPic" :alt="boardUser.dao[2].nickname"></div>
+                                        <span class="name">{{ boardUser.dao[2].nickname }}</span>
+                                        <span class="desc">补刀数：{{ boardUser.dao[2].score }}</span>
+                                    </div>
+                                </div>
+                                <div class="user-l-main-th">
+                                    <div class="user-i-rank">排名</div>
+                                    <div class="user-i-name">用户</div>
+                                    <div class="user-i-count">补刀数</div>
+                                </div>
+                                <div ref="sBudao" class="user-l-main">
+                                    <div class="user-l-item" v-for="(item, ind) in boardUser.dao.slice(3)" :key="ind">
+                                        <div class="user-i-rank">{{ ind + 4 }}</div>
+                                        <div class="user-i-name">
+                                            <div class="avatar">
+                                                <img :src="item.headPic" :alt="item.nickname">
+                                            </div>
+                                            <span class="name">{{ item.nickname }}</span>
+                                        </div>
+                                        <div class="user-i-count">{{ item.score }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="users-me" v-show="!!boardUserMe.uid && !!boardUserMe.nickName">
+                        <span class="me-badge">{{ boardUserMe.rank }}</span>
+                        <span class="me-avatar"><img :src="boardUserMe.headPic" :alt="boardUserMe.nickName"></span>
+                        <div class="me-info">
+                            <p class="me-header"><span class="name">{{ boardUserMe.nickName }}</span><span class="value">{{ ui.usersActiveNav === 'contribute' ? '贡献值：' + boardUserMe.score : '补刀数：' + boardUserMe.score }}</span></p>
+                            <p class="me-desc">{{ boardUserMe.rankComment }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 用户榜 E -->
+                <!-- 小时榜 S -->
+                <div :class="['hours', ui.boardActiveNav === 'hours' ? 'active' : '']">
+                    <div class="hours-secA" v-if="constVar.activityStage === 1">
+                        <div class="hours-blog">
+                            <p class="hours-blog-h" v-if="ui.hours.isCurr">距离本时段结束还有<span class="time">{{ [ui.hours.min, '分', ui.hours.sec, '秒'].join('') }}</span></p>
+                            <p class="hours-blog-h" v-if="!ui.hours.isCurr">{{ ui.hours.default }}</p>
+                            <!-- <p class="hours-blog-subh">数据实时更新</p> -->
+                            <div class="love-i love-1">
+                                <span class="love-value">{{ boardHoursTop1.score ? '相爱值：' + boardHoursTop1.score : '' }}</span>
+                                <span class="love-bridge">
+                                    <span class="love-woman"></span>
+                                    <span class="love-man"></span>
+                                </span>
+                                <div class="love-girl">
+                                    <span class="love-badge-1"></span>
+                                    <span class="love-avatar" @click="gotoRoom(boardHoursTop1.mid || item.uid)"><img :src="boardHoursTop1.mHeadPic || '//static.guojiang.tv/pc/v3/img/common/avatar/head_bg_p7_330.png'" :alt="boardHoursTop1.mNickname"></span>
+                                    <span class="love-live" v-show="boardHoursTop1.isPlaying">LIVE</span>
+                                    <span class="love-nickname">{{ boardHoursTop1.mNickname || '虚位以待' }}</span>
+                                </div>
+                                <div class="love-boy">
+                                    <span class="love-avatar"><img :src="boardHoursTop1.uHeadPic || '//static.guojiang.tv/pc/v3/img/common/avatar/head_bg_p7_330.png'" :alt="boardHoursTop1.uNickname"></span>
+                                    <span class="love-nickname">{{ boardHoursTop1.uNickname || '虚位以待' }}</span>
+                                </div>
+                            </div>
+                            <div class="sep" v-if="!!boardHoursMe.rid"></div>
+                            <div class="hours-me" v-if="!!boardHoursMe.rid">
+                                <!-- <span class="me-badge">{{ !boardHoursMe.rank ? '未上榜' : boardHoursMe.rank }}</span> -->
+                                <span class="me-avatar" @click="gotoRoom(boardHoursMe.mid || boardHoursMe.uid)"><img :src="boardHoursMe.headPic" :alt="boardHoursMe.nickname"></span>
+                                <span class="me-live" v-show="boardHoursMe.isPlaying">LIVE</span>
+                                <div class="me-info">
+                                    <p class="me-header"><span class="name">{{ boardHoursMe.nickname }}</span></p>
+                                    <p class="me-desc">{{ boardHoursMe.rankComment }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hours-secA" v-if="constVar.activityStage > 1">
+                        <p class="hours-finished">本阶段活动已结束！</p>
+                    </div>
+                    <div class="hours-secA" v-if="constVar.activityStage < 1">
+                        <p class="hours-finished">本阶段活动尚未开始！</p>
+                    </div>
+                    <div class="hours-secB">
+                        <p class="title">小时榜</p>
+                        <div class="hours-list">
+                            <div class="hours-list-header">
+                                <div class="hours-i-rank">排名</div>
+                                <div class="hours-i-name">主播</div>
+                                <div class="hours-i-count">TOP1次数</div>
+                            </div>
+                            <div ref="hours" class="hours-list-box">
+                                <div class="hours-item" v-for="(item, ind) in boardHours.list" :key="ind">
+                                    <div class="hours-i-rank">{{ind + 1}}</div>
+                                    <div class="hours-i-name">
+                                        <div class="avatar" @click="gotoRoom(item.mid)">
+                                            <img :src="item.mHeadPic" :alt="item.mNickname">
+                                        </div>
+                                        <span class="live" v-show="item.isPlaying">LIVE</span>
+                                        <span class="name">{{ item.mNickname }}</span>
+                                    </div>
+                                    <div class="hours-i-count">{{ item.score }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 小时榜 E -->
+            </div>
+        </div>
+    </div>
+    <!-- 主播奖励 -->
+    <div class="rewards-box c-box">
+        <img class="secbox-bg" src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/sec_c_bg.jpg")}' alt="">
+        <div class="c-content">
+            <div class="c-title"></div>
+            <div class="rewards cornor-box">
+                <span class="cornor-top"></span>
+                <span class="cornor-bottom"></span>
+                <div class="rules">
+                    <div class="rules-i">
+                        <span class="rules-icon">1</span>
+                        <span class="rules-desc">相知阶段，相爱值TOP1次数最多的主播获得100000克拉奖励。</span>
+                    </div>
+                    <div class="rules-i">
+                        <span class="rules-icon">2</span>
+                        <span class="rules-desc">情投意合榜前10名主播可获得七夕奖励。</span>
+                    </div>
+                </div>
+                <div class="rewards-list">
+                    <div class="rewards-list-item rewards-list-1">
+                        <span class="rewards-title"></span>
+                        <span class="rewards-list-i">350000克拉</span>
+                        <span class="rewards-list-i">全站开播飘屏X10</span>
+                        <span class="rewards-list-i">开屏24小时</span>
+                    </div>
+                    <div class="rewards-list-item rewards-list-2">
+                        <span class="rewards-title"></span>
+                        <span class="rewards-list-i">300000克拉</span>
+                        <span class="rewards-list-i">全站开播飘屏X8</span>
+                        <span class="rewards-list-i">APP端banner24小时</span>
+                    </div>
+                    <div class="rewards-list-item rewards-list-3">
+                        <span class="rewards-title"></span>
+                        <span class="rewards-list-i">200000克拉</span>
+                        <span class="rewards-list-i">全站开播飘屏X5</span>
+                    </div>
+                    <div class="rewards-list-item rewards-list-4">
+                        <span class="rewards-title"></span>
+                        <span class="rewards-list-i">100000克拉</span>
+                        <span class="rewards-list-i">全站开播飘屏X3</span>
+                    </div>
+                    <div class="rewards-list-item rewards-list-5">
+                        <span class="rewards-title"></span>
+                        <span class="rewards-list-i">60000克拉</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 用户奖励 -->
+    <div class="rw-user-box c-box">
+        <img class="secbox-bg" src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/sec_d_bg.jpg")}' alt="">
+        <div class="c-content">
+            <div class="c-title"></div>
+            <div class="rw-content cornor-box">
+                <span class="cornor-top"></span>
+                <span class="cornor-bottom"></span>
+                <div class="rw-user">
+                    <div class="rw-user-contribute">
+                        <div class="rw-user-title">贡献榜</div>
+                        <div class="re-user-list">
+                            <div class="re-user-list-item re-user-list-1">
+                                <span class="re-user-title"></span>
+                                <span class="re-user-list-i">广播卡X10</span>
+                                <span class="re-user-list-i">月老结缘X10</span>
+                            </div>
+                            <div class="re-user-list-item re-user-list-2">
+                                <span class="re-user-title"></span>
+                                <span class="re-user-list-i">广播卡X8</span>
+                                <span class="re-user-list-i">月老结缘X8</span>
+                            </div>
+                            <div class="re-user-list-item re-user-list-3">
+                                <span class="re-user-title"></span>
+                                <span class="re-user-list-i">广播卡X6</span>
+                                <span class="re-user-list-i">月老结缘X6</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rw-user-dao">
+                        <div class="rw-user-title">
+                            补刀榜
+                            <span class="icon-tips">
+                                <div class="rw-dao-tips">炸房环节中每次进度条最后刷礼物补满进度条的人即为补刀，若一次性送满进度条所需要礼物，则该用户为补刀者。</div>
+                            </span>
+                        </div>
+                        <div class="re-user-list">
+                            <div class="re-user-list-item re-user-list-1">
+                                <span class="re-user-title"></span>
+                                <span class="re-user-list-i icon-dao"></span>
+                                <span class="re-user-list-i">神补刀X15日</span>
+                            </div>
+                            <div class="re-user-list-item re-user-list-2">
+                                <span class="re-user-title"></span>
+                                <span class="re-user-list-i icon-dao"></span>
+                                <span class="re-user-list-i">神补刀X7日</span>
+                            </div>
+                            <div class="re-user-list-item re-user-list-3">
+                                <span class="re-user-title"></span>
+                                <span class="re-user-list-i icon-dao"></span>
+                                <span class="re-user-list-i">神补刀X3日</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 奖励发放 -->
+    <div class="state-box c-box">
+        <img class="secbox-bg" src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/sec_e_bg.jpg")}' alt="">
+        <div class="c-content">
+            <div class="c-title"></div>
+            <div class="state-content cornor-box">
+                <span class="cornor-top"></span>
+                <span class="cornor-bottom"></span>
+                <div class="states">
+                    <div class="states-i">
+                        <span class="states-icon">1</span>
+                        <span class="states-desc">克拉奖励于活动结束的7个工作日内发放；</span>
+                    </div>
+                    <div class="states-i">
+                        <span class="states-icon">2</span>
+                        <span class="states-desc">开屏、banner奖励需要于活动结束的15个工作日内发放；</span>
+                    </div>
+                    <div class="states-i">
+                        <span class="states-icon">3</span>
+                        <span class="states-desc">开播飘屏奖励在活动结束后，主播第一次开播开始计算次数；</span>
+                    </div>
+                    <div class="states-i">
+                        <span class="states-icon">4</span>
+                        <span class="states-desc">礼物、勋章奖励在活动结束后即时发放。</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+        </div>
+    </div>
+
+    <!-- 弹窗 活动规则 -->
+    <div :class="['rules-box', ui.toastRules ? 'active' : '']">
+        <div class="rules-content cornor-box">
+            <span class="cornor-top"></span>
+            <span class="cornor-bottom"></span>
+            <div class="toast-close" @click="toast('rules', false)"></div>
+            <div class="rules-main">
+                <div class="c-title"></div>
+                <div class="rules-list">
+                    <div class="states-i">
+                        <span class="states-icon">1</span>
+                        <span class="states-desc">活动时间：2018年8月9日 12:00:00-8月17日 23:59:59。</span>
+                    </div>
+                    <div class="states-i">
+                        <span class="states-icon">2</span>
+                        <span class="states-desc">活动礼物：</span>
+                    </div>
+                    <div class="gifts-list">
+                        <div class="gifts-item gifts-i-love">
+                            <div class="gifts-title"></div>
+                            <div class="gifts-avatar">
+                                <img src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/gift_mine.png")}' alt="">
+                            </div>
+                            <div class="gifts-info">
+                                <span>=10克拉</span>
+                                <span>=10相爱值</span>
+                                <span>=10贡献值</span>
+                            </div>
+                            <div class="gifts-desc">*该礼物不参与分成</div>
+                        </div>
+                        <div class="gifts-item gifts-i-bird">
+                            <div class="gifts-title"></div>
+                            <div class="gifts-avatar">
+                                <img src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/gift_brid.png")}' alt="">
+                            </div>
+                            <div class="gifts-info">
+                                <span>=10克拉</span>
+                                <span>=10相爱值</span>
+                                <span>=10贡献值</span>
+                            </div>
+                        </div>
+                        <div class="gifts-item gifts-i-oldman">
+                            <div class="gifts-title"></div>
+                            <div class="gifts-avatar">
+                                <img src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/yuelao.png")}' alt="月老结缘">
+                            </div>
+                            <div class="gifts-info">
+                                <span>=2999克拉</span>
+                                <span>=2999相爱值</span>
+                                <span>=2999贡献值</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="states-i">
+                        <span class="states-icon">3</span>
+                        <span class="states-desc">每个手机用户每日可获得5个“情有独钟”礼物。仅当日有效，次日将被清零。（注：“情有独钟”礼物可增加主播相爱值，但不参与分成；需登录APP才可以获得；每个设备/IP每日最多下发3个ID）</span>
+                    </div>
+                    <div class="states-i">
+                        <span class="states-icon">4</span>
+                        <span class="states-desc">活动期间一次性送出520个活动礼物--“喜鹊”，触发七夕鹊桥特效，赠送房间祝福飘屏。</span>
+                    </div>
+                    <div class="states-i">
+                        <span class="states-icon">5</span>
+                        <span class="states-desc">情投意合榜按照主播的相爱值排序，配对的用户为给前十名主播相爱值贡献最大的用户。</span>
+                    </div>
+                    <div class="states-i">
+                        <span class="states-icon">6</span>
+                        <span class="states-desc">活动中所有排行榜若有并列情况，则按照ID降序排序。</span>
+                    </div>
+                </div>
+                <div class="rules-header">
+                    <p class="title">相知篇</p>
+                    <p class="desc">8月9日 12:00:00-8月12日 23:59:59</p>
+                </div>
+                <div class="rules-list">
+                    <div class="states-i">
+                        <span class="states-icon">1</span>
+                        <span class="states-desc">每天10:00-24:00，相爱值TOP1的主播和贡献最大的用户获得全站飘屏并赠送烟花盛宴特效，掉落相爱礼盒。（APP端用户需更新到V4.8.0才可以看到烟花特效哦~）</span>
+                    </div>
+                    <div class="states-i">
+                        <span class="states-icon">2</span>
+                        <span class="states-desc">TOP1次数最多的主播获得100000克拉奖励。<br/>注：①该时段的最高相爱值达到200000以上才认定为TOP1。
+                            <br/>②若TOP1主播在奖励期间出现停播、断播等特殊情况，则飘屏、烟花等福利不做补偿。</span>
+                    </div>
+                </div>
+                <div class="rules-header">
+                    <p class="title">相恋篇</p>
+                    <p class="desc">8月13日 12:00:00-8月17日 23:59:59</p>
+                </div>
+                <div class="rules-list">
+                    <div class="states-i">
+                        <span class="states-icon">1</span>
+                        <span class="states-desc">分阶段炸房，每天前五次炸房送出指定数量的“喜鹊”即可炸房，从第六次炸房起，每次炸房需送出3000个“喜鹊”。</span>
+                    </div>
+                    <div class="rule-jieti">
+                        <div class="rule-jieti-i">
+                            <div class="main">
+                                <div class="avatar"><img src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/gift_brid.png")}' alt=""></div>
+                                <span class="count">X500个</span>
+                            </div>
+                            <span class="desc">第一轮炸房</span>
+                        </div>
+                        <div class="rule-jieti-i">
+                            <div class="main">
+                                <div class="avatar"><img src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/gift_brid.png")}' alt=""></div>
+                                <span class="count">X1000个</span>
+                            </div>
+                            <span class="desc">第二轮炸房</span>
+                        </div>
+                        <div class="rule-jieti-i">
+                            <div class="main">
+                                <div class="avatar"><img src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/gift_brid.png")}' alt=""></div>
+                                <span class="count">X1500个</span>
+                            </div>
+                            <span class="desc">第三轮炸房</span>
+                        </div>
+                        <div class="rule-jieti-i">
+                            <div class="main">
+                                <div class="avatar"><img src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/gift_brid.png")}' alt=""></div>
+                                <span class="count">X2000个</span>
+                            </div>
+                            <span class="desc">第四轮炸房</span>
+                        </div>
+                        <div class="rule-jieti-i">
+                            <div class="main">
+                                <div class="avatar"><img src='${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/qixi/gift_brid.png")}' alt=""></div>
+                                <span class="count">X3000个</span>
+                            </div>
+                            <span class="desc">第五轮及以上炸房</span>
+                        </div>
+                    </div>
+                    <div class="states-i">
+                        <span class="states-icon">2</span>
+                        <span class="states-desc">每天0点刷新进度条，0点后，直播间当前进度条炸完，再从第一轮炸房（500个“喜鹊”）开始炸房。</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹窗 购买 -->
+    <div :class="['toast-buy-box', ui.toastBuy.show ? 'active' : '']">
+        <div class="buy-content cornor-box">
+            <span class="cornor-top"></span>
+            <span class="cornor-bottom"></span>
+            <div class="toast-close" @click="toast('buy', false)"></div>
+            <div class="border-box">
+                <div class="buy-input">
+                    <span class="label">购买：</span>
+                    <input :value="ui.toastBuy.input" @input="buyInput">
+                    <span class="per">个</span>
+                </div>
+                <div class="buy-info">
+                    <span class="desc">价格：{{payMoney}}</span>
+                </div>
+            </div>
+            <div class="opts-box">
+                <span class="btn-buy" @click="toastBuy"></span>
+            </div>
+        </div>
+    </div>
+    <!-- 弹窗 余额不足 -->
+    <div :class="['toast-yue-box', ui.toastYuE.show ? 'active' : '']">
+        <div class="yue-content cornor-box">
+            <span class="cornor-top"></span>
+            <span class="cornor-bottom"></span>
+            <div class="toast-close"  @click="toast('yue', false)"></div>
+            <div class="border-box">
+                <div class="yue-info">
+                    <span class="desc">余额不足，快去充值吧！</span>
+                </div>
+            </div>
+            <div class="opts-box">
+                <span class="btn-cancel"  @click="toast('yue', false)"></span>
+                <span class="btn-charge" @click="charge"></span>
+            </div>
+        </div>
+    </div>
+    <!-- 弹窗 知道了 -->
+    <div :class="['toast-info-box', ui.toastInfo.show ? 'active' : '']">
+        <div class="info-content cornor-box">
+            <span class="cornor-top"></span>
+            <span class="cornor-bottom"></span>
+            <div class="toast-close" @click="toast('info', false)"></div>
+            <div class="border-box">
+                <div class="info-info">
+                    <span class="desc">{{ ui.toastInfo.info }}</span>
+                </div>
+            </div>
+            <div class="opts-box">
+                <span class="btn-ok" @click="toast('info', false)"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 侧边栏按钮 活动规则 -->
+    <div class="rules-btn" @click="toast('rules')"></div>
+
+    <!-- 动画效果 -->
+    <div class="svg-layer" v-show="ui.svgShow" @click="stopSvg">
+        <div class="svg-container"></div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast-box" v-show="ui.toast.show">
+        <div class="info">{{ ui.toast.info }}</div>
+    </div>
+</div>

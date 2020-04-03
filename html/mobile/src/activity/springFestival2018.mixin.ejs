@@ -1,0 +1,582 @@
+<div class="page-bgs">
+    <!-- bgs -->
+    <div class="page-bg bg1"></div>
+    <div class="page-bg bg2"></div>
+    <div class="page-bg bg3"></div>
+</div>
+
+<div class="page-content">
+    <!-- 星光主播学员 -->
+    <p class="pic-title gift-title" v-if="isModerator">
+        <span class="icon-sprite font-bg"><i class="icon-sprite txt-xing">星</i></span>
+        <span class="icon-sprite font-bg"><i class="icon-sprite txt-guang">光</i></span>
+        <span class="icon-sprite font-bg"><i class="icon-sprite txt-zhu">主</i></span>
+        <span class="icon-sprite font-bg"><i class="icon-sprite txt-bo">播</i></span>
+        <span class="icon-sprite font-bg"><i class="icon-sprite txt-xue">学</i></span>
+        <span class="icon-sprite font-bg"><i class="icon-sprite txt-yuan">院</i></span>
+    </p>
+    <p class="gift-subt" v-if="isModerator">星光主播学院开学啦！</p>
+    <p class="gift-subt" v-if="isModerator">主播只要持续开播就可以获得学分！</p>
+
+    <!-- 星光主播学院 - 学分 -->
+    <deco-box class="xgschool" v-if="isModerator">
+        <div class="credit-table">
+            <div class="row">
+                <div class="cell cell-key">我的等级</div>
+                <div class="cell cell-value"><span class="font-yl">{{ school.levelText }}</span>学员</div>
+            </div>
+            <div class="row">
+                <div class="cell cell-key">我的学分</div>
+                <div class="cell cell-value"><span class="font-yl">{{ school.score }}</span>分</div>
+            </div>
+            <div class="row">
+                <div class="cell cell-key" v-if="school.levelText !== '明星'">距离下一级还差</div>
+                <div class="cell cell-key" v-else>距离满分111分还差</div>
+                <div class="cell cell-value"><span class="font-yl">{{ school.need_score }}</span>分</div>
+            </div>
+            <div class="row">
+                <div class="cell cell-key">
+                    连续未开播天数
+                    <span class="icon-sprite icon-qs" @click="showTips &&showTips('credit')">
+                        <i class="tips">2天&lt;主播连续未开播天数≤4天，从连续未开播的第3天开始，每天将连续扣1个学分。学分扣至0分为止。<br/>主播连续未开播天数＞4天，从连续未开播的第5天开始，每天将扣2个学分。学分扣至0分为止。</i>
+                    </span>
+                </div>
+                <div class="cell cell-value"><span class="font-yl">{{ school.days }}</span>天</div>
+            </div>
+        </div>
+        <div class="credit-tip">注：若今日累计开播时长＜30分钟，则视为未开播！</div>
+    </deco-box>
+
+    <!-- 好运榜 -->
+    <p class="pic-title hy-rank-title">
+        <span class="icon-sprite font-bg"><i class="icon-sprite txt-hao">好</i></span>
+        <span class="icon-sprite font-bg"><i class="icon-sprite txt-yun">运</i></span>
+        <span class="icon-sprite font-bg"><i class="icon-sprite txt-bang">榜</i></span>
+    </p>
+    <p class="hy-rank-subt">新年好呀！愿你2019好运相伴！</p>
+    <div class="hy-rank-tab">
+        <div :class="['tab-i btn-box icon-sprite tab-zb tab-bg-a', currTab !== 0 && 'disabled']" @click="changeTab(0)">
+            <span class="icon-sprite txt-zbb">主播榜</span>
+        </div>
+        <div :class="['tab-i btn-box icon-sprite tab-user tab-bg-a', currTab !== 1 && 'disabled']" @click="changeTab(1)">
+            <span class="icon-sprite txt-yhb">用户榜</span>
+        </div>
+        <span class="icon-sprite icon-qs2" @click.stop="showTips && showTips('zhuboRank')">
+            <i class="tips">主播收取新年礼物“新年红包”、“过年啦”累计好运值。好运值前十名主播获得克拉奖励。</i>
+        </span>
+    </div>
+
+    <deco-box cname="hy-rank">
+        <p class="placeholder" v-if="currRank.list.length === 0">快去给你支持的主播送个新年礼物，助她上榜吧！</p>
+        <ul :class="['cowns-rank', currTab === 1 && 'shorter']">
+            <li
+                v-for="(item, index) in currRank.list.slice(0, 3)"
+                :class="['cowns-rank-i', 'cowns-rank-' + index]"
+                :key="currRank.type + index">
+                <div class="head icon-sprite">
+                    <span :class="'icon-sprite icon-cown cown-no' + (index+1)"></span>
+                    <sixangle>
+                        <img class="img" :src="item.headPic" :alt="item.nickname" @click="currTab === 0 && goRoom(item)">
+                    </sixangle>
+                    <span class="icon-sprite icon-live" v-show="currTab === 0 && item.isPlaying">LIVE</span>
+                </div>
+                <p :class="['icon-sprite name-bg-no' + (index+1), 'name']">
+                    <span class="txt-name-m txt-of nick">{{ item.nickname }}</span>
+                    <span :class="['level_icon', (currTab === 0 ? 'm_level_icon_' : 'u_level_icon_') + item.level]"></span>
+                </p>
+                <p class="txt-of val">好运值：{{ item.score }}</p>
+                <div v-if="currTab === 0" :class="['icon-sprite btn-box btn-check', item.isLoved && 'btn-check-dis']" @click="attention(item, index)">+关注</div>
+            </li>
+        </ul>
+        <ul class="tables-rank" ref="scroller">
+            <li class="tables-rank-i" v-for="(item, index) in currRank.list.slice(3)" :key="currRank.type + index">
+                <span class="td-1 index">{{ index + 4 }}</span>
+                <div class="td-2 information">
+                    <div class="avatar">
+                        <img class="pic" :src="item.headPic" :alt="item.nickname" @click="currTab === 0 && goRoom(item)">
+                        <span class="icon-sprite icon-live" v-show="currTab === 0 && item.isPlaying">LIVE</span>
+                    </div>
+                    <p class="name">
+                        <span class="txt-name-m txt-of nick">{{ item.nickname }}</span>
+                        <span :class="['level_icon', (currTab === 0 ? 'm_level_icon_' : 'u_level_icon_') + item.level]"></span>
+                    </p>
+                </div>
+                <span class="td-3 val txt-of">好运值：{{ item.score }}</span>
+            </li>
+        </ul>
+        <p class="rank-tips">{{ currTab === 0 ? '仅展示前100名的主播' : '仅展示前100名的用户' }}</p>
+        <p class="sep" v-show="currRank.meCenter"></p>
+        <div v-if="currRank.meCenter" class="me-center">
+            <div class="avatar">
+                <img
+                    :src="currRank.meCenter.headPic"
+                    class="pic"
+                    alt="我的头像"
+                    @click="currTab === 0 && goRoom(currRank.meCenter)">
+                <span
+                    v-if="currTab === 0 && currRank.meCenter.isPlaying"
+                    class="icon-sprite icon-live">LIVE</span>
+                <p class="name">
+                    <span class="txt-name-m txt-of nick">{{ currRank.meCenter.nickName }}</span>
+                    <span :class="['level_icon', (currTab === 0 ? 'm_level_icon_' : 'u_level_icon_') + currRank.meCenter.level]" />
+                </p>
+            </div>
+            <ul
+                v-if="currRank.meCenter.pairInfos"
+                class="me-status">
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[0].name }}</h5>
+                    <p>{{ currRank.meCenter.pairInfos[0].value }}</p>
+                </div>
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[2].name }}</h5>
+                    <p>{{ currRank.meCenter.pairInfos[2].value }}</p>
+                </div>
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[1].name }}</h5>
+                    <p>{{ currRank.meCenter.pairInfos[1].value }}</p>
+                </div>
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[3].name }}</h5>
+                    <p>{{ currRank.meCenter.pairInfos[3].value }}</p>
+                </div>
+            </ul>
+        </div>
+    </deco-box>
+
+    <!-- 团拜榜 -->
+    <p class="pic-title tb-rank-title">
+        <span class="icon-sprite font-bg"><i class="icon-sprite txt-tuan">团</i></span>
+        <span class="icon-sprite font-bg"><i class="icon-sprite txt-bai">拜</i></span>
+        <span class="icon-sprite font-bg"><i class="icon-sprite txt-bang">榜</i></span>
+        <span class="icon-sprite icon-qs2" @click="showTips && showTips('tbRank')">
+            <i class="tips">团拜总值排名前三的团队将能获得克拉奖励。</i>
+        </span>
+    </p>
+    <p class="tb-rank-subt">大家一起去拜年，热热闹闹过新年~</p>
+    <div v-if="!group.hasGroup" :class="['icon-sprite', running ? 'tab-bg-a-l' : 'tab-bg-a-l2', 'btn-box']" @click="running && buildOrJoinTeam()">
+        <span class="icon-sprite txt-cjjrtd">创建/加入团队</span>
+    </div>
+    <div v-else class="icon-sprite tab-bg-a-l btn-box" @click="showMyMainTeam">
+        <span class="icon-sprite txt-wdtd">我的团队</span>
+    </div>
+    <deco-box cname="tb-rank">
+        <!-- 前三团队 -->
+        <p v-if="teamRank.list.length === 0" class="team-box-holder">当前暂无团队，快去创建/加入团队一起去拜年吧！</p>
+        <div class="team-box">
+            <div v-for="(team, tind) in teamRank.list" :class="'tb-team-i top-team-' + tind">
+                <p class="team-rank">NO.{{ tind + 1 }}</p>
+                <p class="team-val txt-of">团拜总值：{{ team.allScore }}</p>
+                <div class="leader">
+                    <div :class="'avatar icon-sprite t-avatar-no' + (tind + 1)">
+                        <sixangle>
+                            <img class="pic" :src="team.members[0].headPic" alt="用户头像">
+                        </sixangle>
+                    </div>
+                    <p :class="['icon-sprite name-bg-no' + (tind+1), 'name']">
+                        <span class="txt-name-m txt-of nick">{{ team.members[0].nickname }}</span>
+                        <span :class="['level_icon', 'u_level_icon_' + team.members[0].level]"></span>
+                    </p>
+                    <p class="val txt-of">团拜值：{{ team.members[0].score }}</p>
+                </div>
+                <div ref="icon-more" class="triangle-top" @click="showMembers(tind)"></div>
+                <div v-if="tind === 0" v-show="currTeamMore[0]" class="members">
+                    <div v-for="(mb, mbInd) in team.members.slice(1, 10)" class="members-i" :key="'_members_0_' + mbInd">
+                        <img class="avatar" :src="mb.headPic" alt="头像">
+                        <p class="nickname">
+                            <span class="txt-name-m txt-of nick">{{ mb.nickname }}</span>
+                            <span :class="['level_icon', 'u_level_icon_' + mb.level]"></span>
+                        </p>
+                        <p class="val txt-of">团拜值：{{ mb.score }}</p>
+                    </div>
+                    <div class="triangle-bottom" @click="hideMembers(0)"></div>
+                </div>
+            </div>
+            <div class="members members23" v-show="currTeamMore[1]">
+                <div v-for="(mb, mbInd) in currTeam23.members.slice(1, 10)" class="members-i" :key="mbInd + '_members_' + currTeamInd">
+                    <img class="avatar" :src="mb.headPic" alt="头像">
+                    <p class="nickname">
+                        <span class="txt-name-m txt-of nick">{{ mb.nickname }}</span>
+                        <span :class="['level_icon', 'u_level_icon_' + mb.level]"></span>
+                    </p>
+                    <p class="val txt-of">团拜值：{{ mb.score }}</p>
+                </div>
+                <div class="triangle-bottom" @click="hideMembers(1)"></div>
+            </div>
+        </div>
+        <p class="rank-tips">仅展示前三团队</p>
+        <p class="sep" v-show="group.hasGroup && teamRank.meCenter"></p>
+        <!-- 我的团队 -->
+        <div class="my-team" v-if="group.hasGroup && teamRank.meCenter">
+            <div class="avatar">
+                <img class="pic" :src="group.hasGroup && teamRank.meCenter.headPic" alt="用户头像">
+            </div>
+            <div class="basic-info">
+                <p class="nickname">
+                    <span class="txt-name-m txt-of nick">{{ group.hasGroup && teamRank.meCenter.nickname }}</span>
+                    <span :class="['level_icon', 'u_level_icon_' + group.hasGroup && teamRank.meCenter.level]"></span>
+                </p>
+                <p class="val">团拜值：{{ group.hasGroup && teamRank.meCenter.score }}</p>
+                <p class="team-state">{{ teamRank.meCenter.comment }}</p>
+                <p class="link-myteam" @click="showModal('myMemberTeam')">我的团队信息&nbsp;&nbsp;GO&gt;</p>
+            </div>
+        </div>
+    </deco-box>
+
+    <!-- copyright -->
+    <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+</div>
+
+<!-- 侧边按钮 -->
+<div class="icon-sprite floater">
+    <div class="btn-ar" @click="go2MyReport">开启你的年度总结</div>
+    <div class="btn-rules" @click="showRule">新年玩法</div>
+</div>
+
+<!-- modal对话框 -->
+<div class="modal-container" v-show="modalShow">
+    <div class="modal-box">
+        <div class="icon-sprite icon-close modal-close" @click="hideModal"></div>
+        <!-- 团队入口 -->
+        <div v-if="currModal === 'askTeamOpt'" class="modal-content modal-team-1">
+            <deco-box :need-wrapper="false">
+                <p class="modal-txt modal-txt1">您是选择</p>
+                <p class="modal-txt modal-txt1">创建团队还是加入团队呢？</p>
+            </deco-box>
+            <div class="btn-oprations">
+                <div class="icon-sprite btn-bg-l btn-box btn-create-team" @click="askBuildTeam">
+                    <span class="icon-sprite txt-cjtd">创建团队</span>
+                </div>
+                <div class="icon-sprite btn-bg-l2 btn-box btn-join-team" @click="askJoinTeam">
+                    <span class="icon-sprite txt-jrtd">加入团队</span>
+                </div>
+            </div>
+        </div>
+        <!-- 申请创建团队 -->
+        <div v-if="currModal === 'askBuildTeam'" class="modal-content modal-team-2">
+            <deco-box :need-wrapper="false">
+                <p class="modal-txt">您正在申请创建团队。</p>
+                <p class="modal-txt">团队创建者不可以解散团队，活动结束后，系统将自动解散所有团队。</p>
+            </deco-box>
+            <div class="btn-oprations">
+                <div class="icon-sprite btn-bg-l btn-box btn-cancel" @click="hideModal">
+                    <span class="icon-sprite txt-qx">取消</span>
+                </div>
+                <div class="icon-sprite btn-bg-l2 btn-box btn-confirm-create" @click="buildTeam">
+                    <span class="icon-sprite txt-qrsq">确认申请</span>
+                </div>
+            </div>
+        </div>
+        <!-- 申请创建团队成功 -->
+        <div v-if="currModal === 'buildTeamOk'" class="modal-content modal-team-3">
+            <deco-box :need-wrapper="false">
+                <p class="modal-title">您已成功创建团队！</p>
+                <p class="modal-txt modal-txt1">您的团队邀请码为</p>
+                <div class="team-id">
+                    <span class="val">{{ group.groupName }}</span>
+                    <div :class="['icon-sprite', isFullMbs ? 'btn-bg-s3 disabled' : 'btn-bg-s', 'btn-box btn-copy']" @click="!isFullMbs && copyCode()">
+                        <span class="icon-sprite txt-fz">复制</span>
+                    </div>
+                </div>
+                <p class="modal-txt">您可以将邀请码给您想邀请加入团队的用户。一个团队最多10名成员。</p>
+            </deco-box>
+        </div>
+        <!-- 申请加入团队 -->
+        <div v-if="currModal === 'joinTeam'" class="modal-content modal-team-4">
+            <deco-box :need-wrapper="false">
+                <p class="modal-title">请填写您申请加入的团队邀请码</p>
+                <div class="team-input">
+                    <input type="text" @input="inputTeamId" @click="focusInput">
+                    <p class="modal-txt val">{{ searchTeamRes }}</p>
+                </div>
+            </deco-box>
+            <div class="btn-oprations">
+                <div class="icon-sprite btn-bg-l btn-box btn-cancel" @click="hideModal">
+                    <span class="icon-sprite txt-qx">取消</span>
+                </div>
+                <div class="icon-sprite btn-bg-l2 btn-box btn-commit" @click="commitJoin">
+                    <span class="icon-sprite txt-tj">提交</span>
+                </div>
+            </div>
+        </div>
+        <!-- 我的团队: 分leader侧/menber侧 (leader侧 加入信息) -->
+        <div v-show="currModal === 'myLeaderTeam'" class="modal-content modal-my-team">
+            <deco-box :need-wrapper="false">
+                <p class="modal-title">我的团队</p>
+                <div class="team-id2">
+                    <div class="val">团队邀请码：{{ group.groupName }}</div>
+                    <div :class="['icon-sprite', isFullMbs ? 'btn-bg-s3 disabled' : 'btn-bg-s', 'btn-box btn-copy']" @click="!isFullMbs && copyCode()">
+                        <span class="icon-sprite txt-fz">复制</span>
+                    </div>
+                </div>
+                <div v-if="group.isLeader" class="modal-tab">
+                    <div :class="'icon-sprite btn-box modal-tab-bg' + (teamTab === 0 ? '-a' : '')" @click="changeTeamTab(0)">
+                        <span class="icon-sprite txt-sqxx">申请信息</span>
+                    </div>
+                    <div :class="'icon-sprite btn-box modal-tab-bg' + (teamTab === 1 ? '-a' : '')" @click="changeTeamTab(1)">
+                        <span class="icon-sprite txt-tdcy">团队成员</span>
+                    </div>
+                </div>
+                <div class="nav-icons" v-if="group && group.isLeader">
+                    <span class="nav-icons-i nav-icons-1" v-show="teamTab === 0"></span>
+                    <span class="nav-icons-i nav-icons-2" v-show="teamTab === 1"></span>
+                </div>
+                <div v-show="teamTab === 0" class="mtc-box mtc-records" ref="mtc-records">
+                    <p v-if="myTeamQuerys.list.length === 0" class="placeholder">暂无申请记录</p>
+                    <div v-for="(query, qid) in myTeamQuerys.list" class="mtc-records-i" :key="'query_' + qid">
+                        <div class="inner">
+                            <div class="icon-sprite icon-cornor2 cornor-0"></div>
+                            <div class="icon-sprite icon-cornor2 cornor-1"></div>
+                            <div class="icon-sprite icon-cornor2 cornor-2"></div>
+                            <div class="icon-sprite icon-cornor2 cornor-3"></div>
+                            <p class="status">{{ query.nickname }}申请加入您的团队</p>
+                            <p class="time">{{ query.time }}</p>
+                            <div class="btn-oprations">
+                                <div :class="['icon-sprite', isFullMbs ? 'btn-bg-s3 disabled' : 'btn-bg-s' ,'btn-box btn-refuse']" @click="!isFullMbs && refuseApply(query.id, qid)">
+                                    <span class="icon-sprite txt-jj">拒绝</span>
+                                </div>
+                                <div :class="['icon-sprite', isFullMbs ? 'btn-bg-s3 disabled' : 'btn-bg-s2', 'btn-box btn-allow']" @click="!isFullMbs && allowApply(query.id, qid)">
+                                    <span class="icon-sprite txt-ty">同意</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-show="teamTab === 1" class="mtc-box mtc-members" ref="mtc-members">
+                    <p v-if="myTeamMbs.length === 0" class="placeholder">啊哦，您的团队只有您一个人，快去邀请成员一起拜年吧！</p>
+                    <div class="mtc-members-i" v-for="(mb, mind) in myTeamMbs">
+                        <div class="avatar"><img class="pic" :src="mb.headPic" alt="用户头像"></div>
+                        <p class="nickname">
+                            <span class="txt-name-m txt-of nick">{{ mb.nickname }}</span>
+                            <span :class="'level_icon u_level_icon_' + mb.level"></span>
+                        </p>
+                        <div class="val txt-of">团拜值：{{ mb.score }}</div>
+                    </div>
+                </div>
+            </deco-box>
+        </div>
+        <!-- 我的团队: 不分leader侧/menber侧 （概要信息) -->
+        <div v-show="currModal === 'myMemberTeam'" class="modal-content modal-my-team-2">
+            <deco-box :need-wrapper="false">
+                <p class="modal-title">我的团队</p>
+                <div class="team-id2">
+                    <div class="val">团队邀请码：{{ group.groupName }}</div>
+                    <div :class="['icon-sprite', isFullMbs ? 'btn-bg-s3 disabled' : 'btn-bg-s', 'btn-box btn-copy']" @click="!isFullMbs && copyCode()">
+                        <span class="icon-sprite txt-fz">复制</span>
+                    </div>
+                </div>
+                <div class="list-members" ref="list-members">
+                    <p v-if="myTeamOthers.length === 0" class="placeholder">啊哦，您的团队只有您一个人，快去邀请成员一起拜年吧！</p>
+                    <div v-for="(item, ind) in myTeamOthers" class="list-members-i" :key="'listm_' + ind">
+                        <div class="avatar"><img class="pic" :src="item.headPic" alt="用户头像"></div>
+                        <p class="nickname">
+                            <span class="txt-name-m txt-of nick">{{ item.nickname }}</span>
+                            <span :class="'level_icon u_level_icon_' + item.level"></span>
+                        </p>
+                        <p class="val txt-of">团拜值：{{ item.score }}</p>
+                    </div>
+                </div>
+            </deco-box>
+        </div>
+    </div>
+</div>
+
+<!-- layer弹出层 -->
+<div class="layer-container" v-show="ruleState">
+    <div class="deco-box layer-box">
+        <div class="icon-sprite icon-close layer-close" @click="closeRule"></div>
+        <p class="pic-title rule-title">
+            <span class="icon-sprite font-bg"><i class="icon-sprite txt-xin">新</i></span>
+            <span class="icon-sprite font-bg"><i class="icon-sprite txt-nian">年</i></span>
+            <span class="icon-sprite font-bg"><i class="icon-sprite txt-wan">玩</i></span>
+            <span class="icon-sprite font-bg"><i class="icon-sprite txt-fa">法</i></span>
+        </p>
+        <div class="db-inner">
+            <div class="icon-sprite icon-cornor cornor-0"></div>
+            <div class="icon-sprite icon-cornor cornor-1"></div>
+            <div class="icon-sprite icon-cornor cornor-2"></div>
+            <div class="icon-sprite icon-cornor cornor-3"></div>
+            <div class="layer-content" ref="rules-scroller">
+                <!-- 滚动区域 -->
+                <p class="rule-txt rule-subt">活动分为三个玩法，不管是主播还是用户都有机会拿到奖励，请各位仔细阅读哦~</p>
+                <p class="rule-txt rule-time">活动时间：1月30日 12:00:00-2月11日 23:59:59</p>
+                <div class="layer-tab">
+                    <div :class="'icon-sprite btn-box rule-tab-bg' + (ruleTab === 0 ? '-a' : '')" @click="changeRuleTab(0)">
+                        <span class="icon-sprite txt-xchby">新春红包雨</span>
+                    </div>
+                    <div :class="'icon-sprite btn-box rule-tab-bg' + (ruleTab === 1 ? '-a' : '')" @click="changeRuleTab(1)">
+                        <span class="icon-sprite txt-xgzbxy">星光主播学院</span>
+                    </div>
+                    <div :class="'icon-sprite btn-box rule-tab-bg' + (ruleTab === 2 ? '-a' : '')" @click="changeRuleTab(2)">
+                        <span class="icon-sprite xctbh">新春团拜会</span>
+                    </div>
+                </div>
+                <!-- 新春红包雨 -->
+                <div v-show="ruleTab === 0" class="layer-tc ltc-xchby">
+                    <p class="rule-i">1. 活动礼物：</p>
+                    <div class="rule-gifts">
+                        <div class="rule-gi">
+                            <div class="icon-sprite badge-xnhb rule-gi-t">新年红包</div>
+                            <div class="rule-gi-pic">
+                                <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/springFestival2018/gift_xnll.png')}" alt="新年红包">
+                            </div>
+                            <div class="rule-gi-price">
+                                <p class="val">=10克拉</p>
+                                <p class="val">=10好运值</p>
+                            </div>
+                        </div>
+                        <div class="rule-gi">
+                            <div class="icon-sprite badge-gnl rule-gi-t">过年啦</div>
+                            <div class="rule-gi-pic">
+                                <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/springFestival2018/gift_gnl.png')}" alt="过年啦">
+                            </div>
+                            <div class="rule-gi-price">
+                                <p class="val">=6666克拉</p>
+                                <p class="val">=6666好运值</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="rule-i">2. 一次性送出99个“新年红包”，触发新年特效。</p>
+                    <p class="rule-i">3. 送出1个“过年啦”可触发全平台飘屏，飘屏由送出的用户冠名。点击飘屏可有机会抢到活动礼物-新年红包。</p>
+                    <p class="rule-i rule-tips">注：1. 过年啦礼物，主播30%分成。</p>
+                    <p class="rule-i rule-tips with-pad">2. 抢到的“新年红包”，会放入背包。需在03/31 23:59:59前送出，逾期失效，请及时送出！</p>
+                    <p class="rule-i">4. 主播按照好运值进行排名，排名前十的主播获得克拉奖励。有相同成绩的按照先到先得排序。于活动结束的7个工作日内发放。</p>
+                    <div class="rule-table">
+                        <div class="rule-row rule-hr">
+                            <div class="rule-cell cell-1">主播榜</div>
+                            <div class="rule-cell cell-1">克拉奖励</div>
+                        </div>
+                        <div class="rule-row">
+                            <div class="rule-cell cell-1">第一名</div>
+                            <div class="rule-cell cell-1">500000克拉</div>
+                        </div>
+                        <div class="rule-row">
+                            <div class="rule-cell cell-1">第二名</div>
+                            <div class="rule-cell cell-1">350000克拉</div>
+                        </div>
+                        <div class="rule-row">
+                            <div class="rule-cell cell-1">第三名</div>
+                            <div class="rule-cell cell-1">250000克拉</div>
+                        </div>
+                        <div class="rule-row">
+                            <div class="rule-cell cell-1">第四-五名</div>
+                            <div class="rule-cell cell-1">150000克拉</div>
+                        </div>
+                        <div class="rule-row">
+                            <div class="rule-cell cell-1">第六-八名</div>
+                            <div class="rule-cell cell-1">100000克拉</div>
+                        </div>
+                        <div class="rule-row">
+                            <div class="rule-cell cell-1">第九-十名</div>
+                            <div class="rule-cell cell-1">80000克拉</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 星光主播学院 -->
+                <div v-show="ruleTab === 1" class="layer-tc ltc-xfzbxy">
+                    <p class="rule-i">星光主播学院开学啦！主播只要持续开播就可以获得学分！</p>
+                    <p class="rule-i fc-blue">1. 如何获得学分？</p>
+                    <p class="rule-i">1) 活动期间，主播每日累计开播满1h，可获得1个学分，每日最多可获得3个学分；</p>
+                    <p class="rule-i">2) 农历除夕-初五（即2月4日-9日），主播每日累计开播满1h，可获得5个学分，每日最多可获得15个学分。相当于是翻了5倍哦！</p>
+                    <p class="rule-i">3）1月30日的学分从零点开始计算。</p>
+                    <p class="rule-i fc-blue">2. 学分将在次日零点进行统计。</p>
+                    <p class="rule-i fc-blue">3. 旷课警告</p>
+                    <p class="rule-i">1) 轻度旷课</p>
+                    <p class="rule-i">2天&lt;主播连续未开播天数≤4天，从连续未开播的第3天开始，每天将连续扣1个学分。学分扣至0分为止。</p>
+                    <p class="rule-i">2) 重度旷课</p>
+                    <p class="rule-i">主播连续未开播天数＞4天，从连续未开播的第5天开始，每天将扣2个学分。学分扣至0分为止。</p>
+                    <p class="rule-i">注：主播当日开播累计时长＜30分钟，则视为当日未开播。</p>
+                    <p class="rule-i fc-blue">4. 等级说明</p>
+                    <p class="rule-i">1) 普通学员（0-30分） 奖励：无</p>
+                    <p class="rule-i">2) 新秀学员（31-57分） 升级奖励：过年啦*1</p>
+                    <p class="rule-i">3) 精英学员（58-78分） 升级奖励：过年啦*2</p>
+                    <p class="rule-i">4) 明星学员（79-111分） 升级奖励：过年啦*3</p>
+                    <p class="rule-i">注：每个等级的奖励仅能获得1次，会在主播升级至该等级时，下发至主播背包。若主播降级后再次升级至该等级，则无法再次获得奖励。“过年啦”礼物有效期截止3月31日 23:59:59，逾期清空，请及时送出！</p>
+                </div>
+                <!-- 新春团拜会 -->
+                <div v-show="ruleTab === 2" class="layer-tc ltc-xctbh">
+                    <p class="rule-i fc-blue">1. 创建团队</p>
+                    <p class="rule-i">用户等级达到12级及以上用户可以创建团队，每个团队最多10名成员。</p>
+                    <p class="rule-i fc-blue">2. 加入团队</p>
+                    <p class="rule-i">用户等级4级及以上的用户可以通过输入团队邀请码加入团队，1个用户只能参与1个团队。</p>
+                    <p class="rule-i fc-blue">3. 团拜值</p>
+                    <p class="rule-i">1) 团队团拜值为团队成员在加入团队时至活动结束在直播间送出所有礼物，累计团拜值，1克拉=1团拜值。</p>
+                    <p class="rule-i">2) 团队团拜总值为所有成员自加入团队时至活动结束在直播间送出所有礼物，累计团拜值。</p>
+                    <p class="rule-i">3) 每位团队成员可计入团队【团拜总值】的最大值为400w团拜值，成员超出【团拜值上限】的部分将不计入【团拜总值】中。</p>
+                    <p class="rule-i">4) 送出活动礼物的团拜值是翻倍的哦~</p>
+                    <p class="rule-i">1个新年红包=10克拉=20团拜值</p>
+                    <p class="rule-i">1个过年啦=6666克拉=13332团拜值</p>
+                    <p class="rule-i fc-blue">4. 奖励及分配</p>
+                    <p class="rule-i">活动结束后，团队团拜总值排名前三的团队将能获得克拉奖励。若有相同成绩，按照先到先得原则排序。于活动结束的7个工作日内发放。</p>
+                    <p class="rule-i">奖励按照团队成员在团队贡献的百分比进行分配。注：奖励的团队中若有队员贡献值小于20000团拜值，则该队员不享有任何奖励。</p>
+                    <div class="rule-table">
+                        <div class="rule-row rule-hr">
+                            <div class="rule-cell cell-1">团拜榜</div>
+                            <div class="rule-cell cell-1">奖励克拉</div>
+                        </div>
+                        <div class="rule-row">
+                            <div class="rule-cell cell-1">第一名</div>
+                            <div class="rule-cell cell-1">500000克拉</div>
+                        </div>
+                        <div class="rule-row">
+                            <div class="rule-cell cell-1">第二名</div>
+                            <div class="rule-cell cell-1">400000克拉</div>
+                        </div>
+                        <div class="rule-row">
+                            <div class="rule-cell cell-1">第三名</div>
+                            <div class="rule-cell cell-1">300000克拉</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- toast tip层 -->
+<div class="toast-container" v-show="toastTipShow" @click="hideToastTip">
+    <div class="toast-msg tips" v-html="toastTip" @click.stop=""></div>
+</div>
+<!-- toast msg层 -->
+<div class="toast-container" v-show="toastState">
+    <div class="toast-msg">{{ toastMsg }}</div>
+</div>
+
+<!-- 信息层 -->
+<div class="info-container" style="position: absolute; z-index: -2;">
+    <span id="code" style="user-select: text;">{{ group.groupName }}</span>
+</div>
+
+<!-- template -->
+<script id="deco-box" type="text/template">
+<div>
+    <div v-if="needWrapper" :class="['deco-box', cname]">
+        <div class="db-inner">
+            <div class="icon-sprite icon-cornor cornor-0"></div>
+            <div class="icon-sprite icon-cornor cornor-1"></div>
+            <div class="icon-sprite icon-cornor cornor-2"></div>
+            <div class="icon-sprite icon-cornor cornor-3"></div>
+            <slot></slot>
+        </div>
+    </div>
+    <div v-else :class="['db-inner', cname]">
+        <div class="icon-sprite icon-cornor cornor-0"></div>
+        <div class="icon-sprite icon-cornor cornor-1"></div>
+        <div class="icon-sprite icon-cornor cornor-2"></div>
+        <div class="icon-sprite icon-cornor cornor-3"></div>
+        <slot></slot>
+    </div>
+</div>
+</script>
+
+<script id="sixangle" type="text/template">
+<div class="sixangle">
+    <div class="sixangle-a sixangle-i">
+        <div class="sixangle-b sixangle-i">
+            <div class="sixangle-c sixangle-i">
+                <slot></slot>
+            </div>
+        </div>
+    </div>
+</div>
+</script>

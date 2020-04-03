@@ -1,0 +1,67 @@
+<article>
+	<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/mountPromotion/banner_1.jpg')}" class="banner">
+	<div class="car_wrap">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/mountPromotion/banner_2.jpg')}">
+
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/mountPromotion/car_l.png')}" class="animated bounceInLeft car_l">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/mountPromotion/car_r.png')}" class="animated bounceInRight car_r">
+
+		<div class="title_wrap">
+			<span>活动礼包</span>
+			<p>感谢您长期以来对土豪的支持，我们根据您的等级为您准备了一份座驾礼包，请笑纳！</p>
+		</div>
+	</div>
+
+	<div class="mount_stand_wrap">
+		<div class="mount_wrap" @click="previewMount">
+			<img :src="myMount.image" alt="座驾图片" v-cloak class="fadeIn">
+			<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/mountPromotion/play.png')}" class="play_icon">
+		</div>
+ 
+		<h3 v-cloak>{{myMount.name}} X{{myMount.days}}天</h3>
+		<p v-cloak>{{myMount.description}}</p>
+	</div>
+
+	<span class="get_btn" @click="getMount"></span>
+
+	<ul class="go_other clearfix">
+		<li>
+			<a href="/dist/backpack/list.html">我的背包 》</a>
+			<p>去背包中使用座驾</p>
+		</li>
+		<li>
+			<a href="/dist/store/list.html">商城 》</a>
+			<p>点击查看更多炫酷座驾</p>
+		</li>
+	</ul>
+
+	<div class="rule_wrap">
+		<h2>活动规则</h2>
+		<p>1.活动时间：2017年7月10日-2017年7月18日；</p>
+		<p>2.不同用户等级，礼包内容有可能不一样哦；</p>
+		<p>3.活动期间，登录App即可领取专属登录大礼包，一个账户限领一次。</p>
+	</div>
+
+	<small class="footer_desc">{{websiteKeywords}}保留在法律允许的范围内对上诉规则进行解释的权利</small>
+
+	<div class="layer_alert" v-show="isShowLayer" v-cloak>
+		<span class="mask"></span>
+		<div class="la_content">
+			<div class="msg_wrap">
+				<p>{{layerMsg}}</p>
+			</div>
+
+			<span class="btn" @click="closeLayer">朕知道了</span>
+		</div>
+	</div>
+
+</article>
+
+<script>
+var gjShareParam = JSON.stringify({
+            title: '免费领取炫酷座驾',
+            content: '商城新上线，请你来试驾。免费座驾领回家！',
+            link: location.href,
+            imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/mountPromotion/share.png")}'
+        });
+</script>

@@ -1,0 +1,25 @@
+// ../../img/business/one
+
+@activityName: 'business/one';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+@baseImgPath: '../../img/business/one';
+body, html, #app{
+    height: 100%;
+}
+img{
+    width: 100%;
+    display: block;
+}
+.swiper-container {
+    width: 100%;
+}  
+.bottom{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.top, .bottom{
+    &:active{
+        opacity: 0.8;
+    }
+}

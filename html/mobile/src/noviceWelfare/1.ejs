@@ -1,0 +1,47 @@
+<article>
+	<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/noviceWelfare/1/1.jpg')}" class="banner">
+	<ul class="p_2">
+		<li v-for="(item, index) in product" v-cloak>
+			<div class="gift_wrap">
+				<img :src="item.gifts[0].image" class="cat">
+				<span class="corner_icon" :class="'ci_'+(parseInt(index)+1)"><i>￥</i>{{ parseInt(item.price)/100}}</span>
+			</div>
+			<p class="desc">{{item.gifts[0].name}}X{{item.gifts[0].number}}个</p>
+			<span class="btn" @click="goBuy(index)">立即购买</span>
+		</li>
+	</ul>
+
+	<div class="p_3">
+		<span class="rule_title">新手福利说明</span>
+		<ul>
+			<li class="clearfix">
+				<span class="index">1</span>
+				<span>喵喵喵礼物效果：<i>提升主播热门排名，效果是普通礼物的2倍</i>，且<i>主播参与分成</i>；</span>
+			</li>
+			<li class="clearfix">
+				<span class="index">2</span>
+				<span>所有新注册用户在注册7日内可重复购买，每台设备的购买上限为100元；</span>
+			</li>
+			<li class="clearfix">
+				<span class="index">3</span>
+				<span>礼物购买成功后，将存放于背包中，请前往背包赠送礼物；</span>
+			</li>
+			<li class="clearfix">
+				<span class="index">4</span>
+				<span>本活动最终解释权归官方运营团队所有。</span>
+			</li>
+		</ul>
+	</div>
+</article>
+<script>
+// 支付成功之后回调函数
+    function payResultCallback(code,errMsg){
+        if(code){
+            hasUnpayOrder = 0;
+            layer.closeAll();
+            vm.succussBuy();     
+            vm.reportSucc();
+        }
+    }
+
+</script>

@@ -1,0 +1,100 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../../static_guojiang_tv/src/pc/v4/img/activity/family/top" */ -->
+    <div class="xg-container banner">
+        <div class="xg-content banner-content">
+            <p>斗转星移</p>
+            <p>星光TOP</p>
+            <p>伴随你我</p>
+            <p>匆匆两载</p>
+            <p>广结益友</p>
+            <p>无尽风骚</p>
+            <p class="top40">2018年9月9日星光TOP家族两岁啦！</p>
+            <p>艾瑞巴蒂~骚起来~浪起来~荡起来~ </p>
+        </div>
+    </div>
+    <div class="xg-container gifts">
+        <div class="xg-content gifts-content">
+            <div class="gifts-title"></div>
+            <div class="gifts-info">
+                <p>点击和TOP一起浪，TOP家族专属礼物即可下发至你的礼物栏哦！礼物仅在活动期间有效。</p>
+                <p>活动时间：9月7日 12:00:00-9月10日 12:00:00</p>
+            </div>
+            <div class="gifts-main">
+                <div class="avatar">
+                    <img src="${require('../../../../../static_guojiang_tv/src/pc/v4/img/activity/family/top/gift.png')}" alt="TOP_gifts">
+                </div>
+                <p class="price">TOP 10克拉/个</p>
+                <span :class="['run-btn', user.isAttend ? 'disabled' : '']" @click="joinActivity">和TOP一起浪</span>
+            </div>
+        </div>
+    </div>
+    <div class="xg-container info">
+        <div class="xg-content info-content">
+            <div class="info-title"></div>
+            <div class="info-main">
+                <div class="times">
+                    <p>9月7日21:00-23:00</p>
+                    <p>9月8日21:00-23:00</p>
+                    <p>9月9日21:00-23:00</p>
+                </div>
+                <div class="txt">
+                    <p>全平台跑骚，TOP家族所到直播间，都有壕礼相送，各位主播准备好接招了吗！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="xg-container meeting">
+        <div class="xg-content meeting-content">
+            <div class="meeting-title"></div>
+            <ul class="meeting-list">
+                <li class="meeting-i" v-for="item in rooms">
+                    <div class="avatar" @click="goToRoom(item)">
+                        <img :src="item.avatar" :alt="item.nickname">
+                    </div>
+                    <span class="live" v-if="item.live">Live</span>
+                    <p class="name">{{ item.nickname }}</p>
+                    <span class="check-btn" @click="checkin(item)" v-if="!item.followed">+关注</span>
+                    <span class="check-btn checked" v-if="item.followed">已关注</span>
+                </li>
+            </ul>
+            <span class="invite-btn" @click="invite">点击生成邀请函</span>
+            <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+        </div>
+    </div>
+
+    <div :class="['modal', ui.modalShow ? 'active' : '']">
+        <div class="modal-content">
+            <div class="modal-close" @click="closeModal"></div>
+            <p class="text">确定要和TOP一起浪起来吗？</p>
+            <div class="modal-btns">
+                <span class="cancel-btn" @click="cancelModal">不了</span>
+                <span class="confirm-btn" @click="confirmModal">确定</span>
+            </div>
+        </div>
+    </div>
+
+    <div :class="['toast', ui.toastShow ? 'active' : '']">
+        <p class="txt">{{ toast.msg }}</p>
+    </div>
+
+    <div :class="['layer', {'active': ui.layer}]" ref="layer" @click="hideLayer">
+
+        <canvas id="env-panel" ref="panel"></canvas>
+
+        <!-- <div class="content">
+            <p class="txt time">2018年9月7日-9月10日</p>
+            <p class="txt">TOP家族成立2周年</p>
+            <p class="txt">邀您共聚星光直播</p>
+            <div class="avatar">
+                <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/family/top/share.jpg')}" alt="TOP家族">
+            </div>
+            <div class="qrcode">
+                <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/family/top/qrcode.png')}" alt="TOP家族_活动二维码">
+            </div>
+            <p class="desc">识别图中二维码，即可参与活动！</p>
+        </div> -->
+        <span class="save-btn" @click="savePic">保存图片</span>
+    </div>
+
+    <a ref="downloadHref" href="" download="TOP家族2周年啦_邀您共聚星光直播.png" id="download-pic" style="display:none"></a>
+</div>

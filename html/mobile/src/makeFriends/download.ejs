@@ -1,0 +1,17 @@
+<main id="app" v-cloak>
+    <!-- <div class="invitedCode">{{invitedCode}}</div> -->
+    <p class="tips">注册时填写邀请码，有红包领取哦</p>
+    <div class="download-btn" @click="download">立即下载体验</div>
+    <section class="mask" v-if="showGuide">
+        <div class="guide"></div>
+    </section>
+</main>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '最火交友APP',
+    content: '想交友，来这里！，当下最火的线上交友APP',
+    link: location.href,
+    imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/makeFriends/download/share.png")}' // eslint-disable-line
+})
+</script>

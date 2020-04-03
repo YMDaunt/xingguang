@@ -1,0 +1,57 @@
+<main class="main_box" id="app" v-cloak>
+	<section class="part part_1">
+	<p class="activity_time">{{activityTime}}</p>
+	</section>
+	<section class="part part_2">	
+	    <span class="order order_one"></span>
+		<div class="tip_box">
+			<h1 class="main_h1">活动介绍</h1>
+			<p class="main_p">1、活动期间在{{channelName}}下载人气直播；</p>
+			<p class="main_p">2、用手机号注册并登录；</p>	
+			<p class="main_p">3、从App内进入活动页面，点击“领取流量”按钮，即可随机领取20-100M流量；</p>
+			<p class="main_p">4、流量将在活动结束后7日内以短信的形式通知您已发放，请耐心等待。</p>
+			<div class="btn_wrap">
+				<span class="flow_btn" v-on:click="getFlow">领取流量</span>
+			</div>			
+		</div>
+		<span class="icon icon_1"></span>
+	</section>
+	<section class="part part_3">
+		<span class="order order_two"></span>	
+		<div class="tip_box">
+			<h1 class="main_h1">活动规则</h1>
+			<p class="main_p">1、本活动仅限新用户参与；</p>
+			<p class="main_p">2、一台设备只有一次领取流量的机会，一台设备多个账号领取视作无效，土豪官方会核实清楚后送出流量；</p>
+			<p class="main_p">3、不允许刷票行为，土豪官方会查实后发放流量，一经发现，取消领取资格；</p>
+			<p class="main_p">4、任何疑问请联系土豪官方客服：进入App个人中心-联系客服。</p>
+		</div>
+		<span class="icon icon_2"></span>
+	</section>
+	<section class="part part_4">
+		<span class="order order_two"></span>	
+		<div class="tip_box">
+			<h1 class="main_h1">温馨提示</h1>
+			<p class="main_p">本活动由{{channelName}}主办，具体规则以主办方公布为准。</p>
+		</div>
+		<span class="icon icon_3"></span>
+	</section>
+
+	<div class="dl_footer" v-bind:style="{display:activeDisplay}">
+	    <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/common/rq/logo.png')}" class="fl">
+	    <div class="desc fl">
+	        <h2>人气直播</h2>
+	        <p>不是所有人都能看的直播</p>
+	    </div>
+	    <a v-bind:href='downUrl'>立即下载</a>
+	</div>
+</main>
+
+<script>
+	var gjShareParam = JSON.stringify({
+        title: '领取最高100M流量',
+        content: '土豪的世界，就是任性，打开app就随机领20-100M流量',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/channel/12/share.jpg")}'
+    });
+</script>
+

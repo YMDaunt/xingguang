@@ -1,0 +1,199 @@
+@activityName: 'sao';
+// @baseSize: 108rem; // 1080px -> fontSize -> 108px
+@baseSize: 98rem; // 1080px -> fontSize -> 108px
+
+@fontDeafultColor: #f4c261;
+@fontLightColor: #56fdff;
+@fontBtnColor: #3e2f01;
+@fontBtnColor2: #765708;
+@fontSize: 36 / @baseSize;
+@fSMid: 45 / @baseSize;
+
+//滚动更流畅
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    background: rgba(0,0,0,0.6);
+}
+
+body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+}
+
+#app button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+
+#app .button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    text-align: center;
+    -webkit-user-select: none;
+
+    &.disabled {
+        position: relative;
+    }
+
+    &.disabled:after {
+        content: '';
+        font-size: 0px;
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 102%;
+        background: #000;
+        opacity: 0.6;
+        top: -0.5px;
+        left: 0px;
+    }
+}
+
+// #app img {
+//     width: 100%;
+//     height: 100%;
+// }
+
+#app {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    // padding-bottom: 60px;
+}
+
+.largeButton () {
+    display: block;
+    width: 612 / @baseSize;
+    height: 120 / @baseSize;
+    line-height: 120 / @baseSize;
+    margin: 0 auto;
+    background: url('../../img/activity/sao/btn_bg.png') no-repeat;
+    background-size: cover;
+    color: @fontBtnColor;
+    font-size: @fSMid;
+    font-weight: bold;
+    font-family: inherit;
+}
+
+.toastBox () {
+    // position: fixed;
+    width: 100%;
+    height: 100%;
+
+    .masker {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        background: #000;
+        opacity: 0.6;
+    }
+}
+
+.layer {
+    .toastBox;
+
+    #env-panel {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 976/@baseSize;
+        height: 1200/@baseSize;
+        opacity: 0;
+    }
+
+    .invite-img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 976/@baseSize;
+        height: 1200/@baseSize;
+        display: none;
+    }
+
+    .content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 976/@baseSize;
+        height: 1200/@baseSize;
+        background: url('../../img/activity/sao/invite_bg.png') no-repeat center;
+        background-size: cover;
+        position: relative;
+        // overflow: hidden;
+        text-align: center;
+        font-size: 40/@baseSize;
+
+        .close {
+            content: '';
+            display: block;
+            width: 82/@baseSize;
+            height: 80.816/@baseSize;
+            background: url('../../img/activity/sao/icon_close.png') no-repeat center;
+            background-size: cover;
+            position: absolute;
+            top: -0.2rem;
+            right: 0.2rem;
+        }
+
+        .avatar {
+            display: block;
+            overflow: hidden;
+            margin: 0 auto 40/@baseSize;
+
+            &:before {
+                content: '';
+                display: block;
+                padding-top: 252/@baseSize;
+            }
+
+            img {
+                // width: 100%;
+                // height: 100%;
+                width: 270/@baseSize;
+                height: 270/@baseSize;
+                border: 6/@baseSize solid @fontDeafultColor;
+                border-radius: 50%;
+            }
+        }
+
+        .info {
+            color: #000;
+            line-height: 64/@baseSize;
+        }
+
+        .qrcode {
+            margin-top: 105/@baseSize;
+
+            img {
+                width: 204/@baseSize;
+                height: 204/@baseSize;
+            }
+
+            .text {
+                color: @fontDeafultColor;
+                margin-top: 30/@baseSize;
+            }
+        }
+    }
+
+    .save-invite {
+        .largeButton;
+        position: absolute;
+        top: (180+1200)/@baseSize;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 85/@baseSize auto 0px;
+    }
+}

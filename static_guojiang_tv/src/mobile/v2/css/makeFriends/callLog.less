@@ -1,0 +1,125 @@
+@activityName: 'callLog';
+@baseSize: 108rem; // 1080px -> fontSize -> 108px
+@bf: 108rem;
+@baseImgPath: '../../img/makeFriends/callLog';
+
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
+h1,h2,h3,strong {
+    font-weight: normal;
+}
+[v-cloak] {
+    display: none;
+}
+body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+}
+//水平居中对齐
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/*两端对齐*/
+.flex-justify-between(){
+    -webkit-box-pack:justify;
+    -moz-justify-content:space-between;
+    -webkit-justify-content:space-between;
+    justify-content: space-between;
+}
+/*上下居中*/
+.flex-align(){
+    -webkit-box-align:center;
+    -moz-align-items:center;
+    -webkit-align-items:center;
+    align-items: center;
+}
+// 顺序
+.flex-left(){
+    -webkit-box-align:flex-start;
+    -moz-align-items:flex-start;
+    -webkit-align-items:flex-start;
+    align-items: flex-start;
+}
+.flex(){
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.flex-justify-center(){
+    -webkit-box-pack:center;
+    -moz-justify-content:center;
+    -webkit-justify-content:center;
+    justify-content: center;
+}
+//多余的字符用省略号显示
+.ellipsis() {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.bgm(@imgName) {
+    background-image: url('../../img/makeFriends/callLog/@{imgName}');
+    background-repeat: no-repeat;
+}
+html, body, .main_box {
+    height: 100%;
+}
+
+.wrap {
+    height: 100%;
+    background: #f5f5f5;
+}
+.code-no {
+    padding-top: 402/@bf;
+    div {
+        width:  603/@bf;
+        height: 570/@bf;
+        margin: 0 auto;
+        .bgm('no.jpg');
+        background-size: 603/@bf 570/@bf;
+    }
+}
+.code-list {
+    height: 100%;
+    overflow: auto;
+    li {
+        padding-top: 30/@bf;
+        padding-bottom: 26/@bf;
+        background: #fff;
+    }
+}
+.code-list li > div {
+    padding: 0 48/@bf;
+    .flex;
+    .flex-justify-between;
+}
+.code-name {
+    height: 78/@bf;
+    line-height: 78/@bf;
+    strong {
+        max-width: 600/@bf;
+        .ellipsis;
+        font-size: 42/@bf;
+        color: #333;
+        // font-weight: bold;
+    }
+    span {
+        color: #7e28ff;
+        font-size: 36/@bf; 
+    }
+}
+.code-mes {
+    height: 66/@bf;
+    line-height: 66/@bf;
+    color: #666;
+    font-size: 36/@bf;
+    strong {
+        // font-weight: bold;
+    }
+}

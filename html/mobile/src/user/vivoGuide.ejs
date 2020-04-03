@@ -1,0 +1,57 @@
+<!--
+ * @Date: 2020-01-10 14:12:01
+ * @LastEditors  : Jesse
+ * @LastEditTime : 2020-01-15 10:56:38
+ -->
+<main id="app" v-cloak>
+    <section class="gift">
+        <div class="title"></div>
+        <p class="top">注册星光直播APP即可领取，单Q限领一次</p>
+        <ul class="gift-list">
+            <li v-for="(item,index) in giftList">
+                <div class="gift-pic"></div>
+                <div class="gift-name">{{item.name}}</div>
+            </li>
+        </ul>
+        <div class="get-btn" v-show="!isGot" @click="getIt"></div>
+        <div class="download-btn" v-show="isGot" @click="download"></div>
+        <p class="download-tips" v-show="isGot">礼包已发放至背包<br />下载APP使用相同QQ/手机号登录即可使用礼包</p>
+    </section>
+    <section class="video">
+        <div class="title"></div>
+        <video src="https://static.guojiang.tv/mobile/v2/video/newYearVideo.mp4"
+            poster="${require('../../../../static_guojiang_tv/src/mobile/v2/img/user/qqGuide/poster.png')}"
+            preload="auto" controls="true" controlslist="nodownload nofullscreen" playsinline="true" loop="loop"
+            x5-playsinline="true" webkit-playsinline="true" x-webkit-airplay="allow" x5-video-player-type="h5-page"
+            x5-video-player-fullscreen="true" x5-video-orientation="portraint">
+        </video>
+    </section>
+    <section class="about">
+        <div class="title"></div>
+        <p>星光直播是一个大型在线娱乐直播互动平台。平台特色除了海量美女和众多娱乐玩法外，还
+        </p>
+        <p>
+            【更真实】：不用担心聊天的都是机器人回复，在这里，每一位新用户都会成为宠er。聊天交朋友，我们致力于打造真实互动平台。
+        </p>
+        <p>
+            【更活跃】：不用担心找不到一起互动的ta，在这里，主播用户每天活跃互动，发现有缘人实现奔现不再是梦！
+        </p>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide slide1"></div>
+                <div class="swiper-slide slide2"></div>
+                <div class="swiper-slide slide3"></div>
+                <div class="swiper-slide slide4"></div>
+                <div class="swiper-slide slide5"></div>
+            </div>
+        </div>
+
+    </section>
+    <section class="download">
+        <div class="logo-wrap fl">
+            <div class="logo fl"></div>
+            <div class="msg fl">下载星光直播<br>等你来嗨！</div>
+        </div>
+        <div class="download-btn fr" @click="download"></div>
+    </section>
+</main>

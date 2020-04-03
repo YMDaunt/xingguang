@@ -1,0 +1,270 @@
+/**
+ * 背景渐变，默认从top到bottom渐变，
+ * 举例: .bggradient(#ff0000, #ee9988, left, right)
+ * 		.bggradient(#ff0000, #ee9988, top, bottom)
+ * @Author   smy
+ * @DateTime 2017-09-19T11:26:09+0800
+ */
+.bggradient(@startColor: #000, @endColor: #fff, @start: top, @end: bottom){ 
+		background: @startColor; 
+		background: -moz-linear-gradient(@start, @startColor 0%, @endColor 100%); 
+		background: -webkit-gradient(linear, @start, @end, color-stop(0%,@startColor), color-stop(100%,@endColor)); 
+		background: -webkit-linear-gradient(@start, @startColor 0%,@endColor 100%); 
+		background: -o-linear-gradient(@start, @startColor 0%,@endColor 100%); 
+		background: -ms-linear-gradient(@start, @startColor 0%,@endColor 100%); 
+		background: linear-gradient(to @end, @startColor 0%,@endColor 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@startColor, endColorstr=@endColor,GradientType=0 ); } 
+@bf: 108rem;
+
+body{
+	//.bggradient(#060f4a, #24094b);
+	//padding-top: 1px ;
+}
+body article{
+	.bggradient(#061254, #260840);
+	height: 100%;
+}
+.body_wrap{
+	position: relative;
+	z-index: 1;
+	overflow: hidden;
+}
+.bg{
+	position: absolute;
+	z-index: 0;
+	top:0;
+	left: 0;
+	width: 100%;
+}
+.galaxy{
+	position: fixed;
+	bottom:0;
+	left: 0;
+	width: 100%;
+	height: 400px;
+	z-index: 0;
+	opacity: 0.5;
+}
+.line-round{
+	position: absolute;
+	top:0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+}
+.logo{
+	width: 421/@bf;
+	height: 144/@bf;
+	display: block;
+	margin: 30/@bf 0 85/@bf 40/@bf;
+}
+.lan_switch{
+	border: 1px solid;
+	border-image: -webkit-linear-gradient(#29b7e8, #22e8be) 1 1;
+	background: none;
+    width: 151/@bf;
+    height: 69/@bf;
+    text-align: center;
+    line-height: 69/@bf;
+    cursor: pointer;
+    .bggradient(#22e8be, #29b6e8, left, right);
+	-webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: absolute;
+    top: 67/@bf;
+    right: 61/@bf;
+}
+
+h2{
+	font-size: 34px;
+	text-align: center;
+	font-weight: bold;
+	.bggradient(#22e8be, #29b6e8, left, right);
+	-webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+	text-decoration: underline;
+	position: relative;
+	margin: 0 auto 130/@bf;
+	span{
+		border-top: 1px solid #29b6e8;
+		position: absolute;
+		bottom: -23/@bf;
+		width: 710/@bf;
+		height: 1px;
+		left: 50%;
+		margin-left: -355/@bf;
+	}
+}
+
+form{
+	margin-left: 200/@bf;
+	width: 690/@bf;
+	.input_wrap{
+		padding-bottom: 95/@bf;
+		position: relative;
+		p{
+			font-size: 16px;
+			.bggradient(#22e8be, #29b6e8, left, right);
+			-webkit-background-clip: text;
+		    -webkit-text-fill-color: transparent;
+			padding-bottom: 15/@bf;
+		}
+		input{
+			width: 680/@bf;
+			height: 85/@bf;
+			border: 1px solid;
+			border-image: -webkit-linear-gradient(#29b7e8, #22e8be) 1 1;
+			background: none;
+			padding: 0 25/@bf;
+			font-size: 12px;
+			color: #fff;
+			&::-webkit-input-placeholder{
+				color: rgba(255, 255, 255, 0.6);
+				font-size: 12px;
+			}
+		}
+
+		label{
+			font-size: 12px;
+			color:#ffffff;
+			margin-left: 135/@bf;
+			padding-bottom: 25/@bf;
+			display: block;
+			position: relative;
+			input{
+				width: 38/@bf;
+				height: 38/@bf;
+				opacity: 0;
+			}
+			.radio_mask{
+				width: 38/@bf;
+				height: 38/@bf;
+				position: absolute;
+				top: 2px;
+				left: -3px;
+				border: 1px solid #25d0d2;
+				border-radius: 100%;
+				i{
+					width: 21/@bf;
+					height: 21/@bf;
+					border-radius: 100%;
+					background: #22e5c0;
+					display: block;
+					margin: 6/@bf auto;
+					display: none;
+				}
+				&.active i{
+					display: block;
+				}
+			}
+		}
+		.country_input_wrap{
+			width: 680/@bf;
+			height: 85/@bf;
+			position: relative;
+
+			.select_icon{
+				position: absolute;
+				right: 18/@bf;
+				bottom: 20/@bf;
+				background: url(../../img/naus/applyBuy/input_select.png) no-repeat top center;
+				background-size: 20/@bf 45/@bf;
+				width: 20/@bf;
+				height: 45/@bf;
+			}
+		}
+	}
+}
+.input_wrap.input_wrap_select{
+	padding-bottom: 60/@bf;
+}
+.input_wrap.input_wrap_select p{
+	padding-bottom: 45/@bf;
+}
+
+.submit_btn{
+	display: block;
+	width: 364/@bf;
+	height: 137/@bf;
+	margin:0 auto 70/@bf;
+	text-align: center;
+	line-height: 130/@bf;
+	background:url(../../img/naus/applyBuy/submit.png) no-repeat top center;
+	background-size: 364/@bf 137/@bf;
+	font-size: 24px;
+	color:#060c40;
+	font-weight: bold;
+	cursor: pointer;
+	&.disabled{
+		filter: grayscale(1);
+	}
+}
+.rule{
+	font-size: 12px;
+	color: #28c0df;
+	padding: 0 70/@bf 0 60/@bf;
+	text-align: center;
+	margin-bottom: 74/@bf;
+}
+
+.nation_select_wrap{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 99999;
+	.mask{
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-inedx: 1;
+		background: rgba(0,0,0,0.6);
+	}
+	.control-nationality-suggest{
+		width: 80%;
+		height: 500px;
+		position: fixed;
+		top:20px;
+		left: 10%;
+		background: #07072d;
+		border: 1px solid #29b6e8;
+		input{
+			background: #07072d;
+    		color: #fff;
+    		font-size: 12px;
+    		height: 30px;
+    		line-height: 30px;
+    		padding: 0 10px;
+    		width: 100%;
+    		border-bottom: 1px solid #29b6e8;
+		}
+		.nationality-suggest-hint{
+			color:#fff;
+		}
+		.nationality-suggest-list-container{
+			height: 90%;
+			overflow: scroll;
+		}
+		ul li{
+			color: #fff;
+    		line-height: 22px;
+    		padding: 0 5px;
+    		&:active{
+    			background: rgba(43, 43, 115, 0.6);
+    		}
+		}
+	}
+}
+
+@media only screen and (max-width: 340px){
+	.nation_select_wrap .control-nationality-suggest{
+		height: 400px;
+	}
+}

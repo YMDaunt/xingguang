@@ -1,0 +1,24 @@
+<article>
+	<section class="no_badge" v-if="!hasMedal && showLock" v-cloak>
+		您还未设置徽章，去“<span>准备开播</span>”页面设置一枚吧
+	</section>
+
+	<section class="badge_list" v-if="hasMedal && showLock" v-cloak>
+		<p class="myBadge">我的徽章：<img :src="medalPic | formatHeadpic" class="medal_img"></p>
+		<p class="fans_num" v-cloak>粉丝总人数：{{ fansCount }}人</p>
+
+		<div class="fans_list"  v-if="hasFans"  v-cloak>
+			<ul>
+				<li v-for="(item, index) in items"> {{ index+1 }} <img :src="item.medalPic | formatHeadpic"  class="medal_img"> {{ item.nickname }}</li>
+			</ul>
+
+			<p class="click_load_more wdl_more"  v-if="isLoading"><i></i><span>正在加载...</span></p>
+
+			<p class="no_more"  v-if="isEnd"><span>我是有底线哒</span></p>
+
+			<p class="no_record_hint" v-if="isEmpty">还没有红包记录哦</p>
+		</div>
+
+		<p class="no_fans_hint" v-if="!hasFans">粉丝正在赶来的路上</p>
+	</section>
+</article>

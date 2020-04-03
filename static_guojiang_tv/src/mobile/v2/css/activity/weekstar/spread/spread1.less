@@ -1,0 +1,300 @@
+@baseSize: 108rem; // 1080px -> fontSize -> 108px
+@bf: 108rem;
+
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
+h1,h2,h3,strong {
+    font-weight: normal;
+}
+[v-cloak] {
+    display: none;
+}
+body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+}
+//水平居中对齐
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/*两端对齐*/
+.flex-justify-between(){
+    -webkit-box-pack:justify;
+    -moz-justify-content:space-between;
+    -webkit-justify-content:space-between;
+    justify-content: space-between;
+}
+/*上下居中*/
+.flex-align(){
+    -webkit-box-align:center;
+    -moz-align-items:center;
+    -webkit-align-items:center;
+    align-items: center;
+}
+// 顺序
+.flex-left(){
+    -webkit-box-align:flex-start;
+    -moz-align-items:flex-start;
+    -webkit-align-items:flex-start;
+    align-items: flex-start;
+}
+.flex(){
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.flex-justify-center(){
+    -webkit-box-pack:center;
+    -moz-justify-content:center;
+    -webkit-justify-content:center;
+    justify-content: center;
+}
+//多余的字符用省略号显示
+.ellipsis() {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.bgm(@imgName) {
+    background-image: url('../../../../img/activity/weekstar/spread/spread1/@{imgName}');
+}
+
+.spt {
+    background-image: url('../../../../img/activity/weekstar/spread/spread1/spt.png');
+    background-repeat: no-repeat;
+    background-size: 900/@bf 400/@bf;
+}
+
+.ban {
+    img {
+        display: block;
+        width: 100%;
+    }
+}
+.wrap {
+    height: 4190/@bf;
+    .bgm('bg.jpg');
+    background-size: 1080/@bf 4190/@bf;
+    .mod-text, .mod-mes {
+        width: 1016/@bf;
+        margin: 0 auto;
+    }
+}
+.mod-text {
+    position: relative;
+    padding: 40/@bf 0;
+    border: 3/@bf solid #383838;
+    border-top: 0;
+    background: #fff;
+    p {
+        width: 900/@bf;
+        margin: 0 auto;
+        padding-left: 40/@bf;
+        border-bottom: 2/@bf solid #bec4d5;
+        min-height: 60/@bf;
+        line-height: 60/@bf;
+        color: #4a4a4a;
+        font-size: 36/@bf;
+    }
+    .tips {
+        padding-top: 20/@bf;
+        line-height: 48/@bf;
+        text-align: center;
+        color: #ff5475;
+        font-size: 34/@bf;
+    }
+    .text-posi {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 40/@bf;
+        line-height: 60/@bf;
+        padding: 0 40/@bf;
+        color: #4a4a4a;
+        font-size: 36/@bf;
+    }
+}
+
+// 主播信息
+.common-mes-title {
+    position: relative;
+    overflow: hidden;
+    height: 264/@bf;
+    padding-top: 20/@bf;
+    text-align: center;
+    color: #fff;
+    strong {
+        display: block;
+        height: 112/@bf;
+        line-height: 112/@bf;
+        font-size: 80/@bf;
+    }
+    b {
+        display: block;
+        width: 890/@bf;
+        height: 32/@bf;
+        margin: 0 auto;
+        .spt;
+        background-position: -9/@bf -275/@bf;
+    }
+    span {
+        height: 74/@bf;
+        line-height: 74/@bf;
+        font-size: 46/@bf;
+    }
+    em {
+        position: absolute;
+        display: block;
+        width: 235/@bf;
+        height: 235/@bf;
+        .spt;
+        z-index: 9;
+    }
+}
+.mod-mes li:first-child {
+    .common-mes-title {
+        background: #4ca4ff;
+        em {
+            bottom: -130/@bf;
+            left: 0;
+            background-position: -7/@bf -8/@bf;
+        }
+    }
+}
+.mod-mes li:nth-child(2) {
+    .common-mes-title {
+        background: #fb9e4c;
+        em {
+            bottom: -130/@bf;
+            right: -36/@bf;
+            background-position: -276/@bf -8/@bf;
+        }
+    }
+    .mes-text > b {
+        border-color: #fb9e4c transparent transparent;
+    }
+}
+.mod-mes li:last-child {
+    .common-mes-title {
+        background: #ff52b4;
+        em {
+            top: -130/@bf;
+            left: -36/@bf;
+            background-position: -543/@bf -8/@bf;
+        }
+    }
+    .mes-text > b {
+        border-color: #ff52b4 transparent transparent;
+    }
+}
+
+.mes-text {
+    position: relative;
+    padding: 74/@bf 24/@bf;
+    background: #fff;
+    > b {
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 50%;
+        width:0;
+        height:0;
+        margin-left: -38/@bf;
+        border-width: 50/@bf 40/@bf 0;
+        border-style: solid;
+        border-color: #4ca4ff transparent transparent;
+    }
+    .img-area, .mes-area {
+        margin-top: 10/@bf;
+        float: left;
+        width: 50%;
+    }
+}
+.img-area {
+    position: relative;
+    border: 1px solid #75757a;
+
+    .img-box {
+        width: 100%;
+        padding-bottom: 100%;
+        overflow: hidden;
+        position: relative;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+    // img {
+    //     position: absolute;
+    //     top: 0px;
+    //     left: 0px;
+    //     display: block;
+    //     width: 100%;
+    //     height: 100%;
+    //     background: #39f;
+    // }
+    span {
+        position: absolute;
+        top: -26/@bf;
+        left: 50%;
+        display: block;
+        width: 148/@bf;
+        height: 52/@bf;
+        margin-left: -74/@bf;
+        .spt;
+        background-position: -15/@bf -328/@bf;
+        z-index: 9;
+    }
+    strong {
+        display: block;
+        height: 116/@bf;
+        line-height: 116/@bf;
+        text-align: center;
+        color: #4a4a4a;
+        font-size: 46/@bf;
+        font-weight: bold;
+        .ellipsis;
+    }
+    .care, .cared {
+        width: 376/@bf;
+        height: 112/@bf;
+        margin: 0 auto 35/@bf;
+        text-align: center;
+        line-height: 112/@bf;
+        border-radius: 52/@bf;
+        color: #fff;
+        font-size: 48/@bf;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .care {
+        background: #ff5475;
+    }
+    .cared {
+        background: #a6a6a6;
+    }
+}
+
+.mes-area {
+    height: 812/@bf;
+    overflow-y: auto;
+    > div > div {
+        margin-bottom: 36/@bf;
+    }
+    padding-left: 24/@bf;
+    font-size: 36/@bf;
+    h3 {
+        margin-bottom: 12/@bf;
+        color: #ff5475;
+    }
+    p {
+
+        line-height: 54/@bf;
+        color: #4a4a4a;
+    }
+}

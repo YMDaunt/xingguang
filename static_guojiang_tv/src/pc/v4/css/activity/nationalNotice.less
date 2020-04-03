@@ -1,0 +1,32 @@
+/**
+ * @authors edge 
+ */
+@bf: 1px * 10 / 7;
+@fr: 3;
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
+h1,h2,h3,strong {
+    font-weight: normal;
+}
+[v-cloak] {
+    display: none;
+}
+//滚动更流畅
+body {
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+    color: #ffee9f;
+}
+.bgm(@imgName) {
+    background-image: url('../../img/activity/nationalNotice/@{imgName}');
+}
+.ban {
+    height: 994px;
+    .bgm('pc_ban.jpg');
+    background-size: 1920px 994px;
+}
+.content {
+    height: 2190px;
+    .bgm('pc_content.jpg');
+    background-size: 1920px 2190px;
+}

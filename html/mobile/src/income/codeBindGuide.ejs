@@ -1,0 +1,20 @@
+<section>
+	<h2>在星光Live公众号完成账号绑定</h2>
+
+	<span class="step_1_img"></span>
+	<p>①微信搜索 "<span>星光Live</span>" 并关注</p>
+
+	<span class="arrow_icon"></span>
+
+	<span class="step_2_img"></span>
+	<p>②在公众号内点击 "<span>提现绑定</span>" 进入页面选择 "<span>验证码手动绑定</span>" </p>
+
+	<span class="arrow_icon"></span>
+
+	<p>③根据提示输入验证码完成绑定</p>
+
+	<p class="auth_code">验证码<span v-cloak>{{ code }}</span></p>
+	<small>长按复制，此验证码<span v-cloak>{{ expireTime }}</span>前有效</small>
+
+	<button @click="goBind()">去公众号完成账号绑定</button>
+</section>

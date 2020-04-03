@@ -1,0 +1,79 @@
+<div id="app" v-cloak>
+    <section class="banner">
+        <div class="info">
+            <p class="text">作为平台成立最早，成员数量最多的家族之一，Sao、家族一直致力于打造一支星光最受主播们欢迎和喜爱的游客家族。</p>
+            <p class="text">2018年7月9日，Sao、家族将迎来成立两周年的纪念日。现诚邀平台各位兄弟姐妹，和Sao、家人一起浪起来！</p>
+        </div>
+    </section>
+    <section class="gifts article">
+        <h3 class="title">Sao、家族专属礼物</h3>
+        <p class="info">点击<span class="text-light">我要跑Sao、</span>，Sao、家族专属礼物即可下发至你的礼物栏哦！礼物仅在活动期间有效。活动时间：7月7日 12:00:00-7月10日 12:00:00</p>
+        <div class="content">
+            <div class="avatar"><img src='${require("../../../../static_guojiang_tv/src/pc/v4/img/activity/sao/gifts_400.png")}' alt="gifts"></div>
+            <p class="text-state">10克拉/个</p>
+        </div>
+        <span :class="['button run', {'disabled': user.isAttend}]" @click="showToast">我要跑Sao、</span>
+    </section>
+    <section class="notice article">
+        <h3 class="title">跑Sao、预告</h3>
+        <div class="content">
+            <div class="items">
+                <span class="time">7月8日21:00-23:00</span>
+                <span class="time">7月9日21:00-23:00</span>
+            </div>
+            <div class="desc">全平台跑骚，带你领略Sao、家人风采，所到直播间，都有壕礼相送，各位主播准备好接招了吗！</div>
+        </div>
+    </section>
+    <section class="meetings article">
+        <h3 class="title">跑Sao、分会场</h3>
+        <div class="content">
+            <div class="rooms">
+                <div :class="['person', {'live': room.live}]" v-for="(room, ind) in rooms" :key="ind">
+                    <span class="avatar" @click="goToRoom(room)"><img :src='room.avatar' alt="avatar"></span>
+                    <span class="name">{{room.nickname}}</span>
+                    <button :class="['check', {'in': room.followed}]" @click="follow(room)">{{room.followed ? '已关注' : '+关注'}}</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="button invite" @click="generateEnvelop">点击生成邀请函</span>
+
+    <div :class="['toast', {'active': ui.toast}]" ref="toast">
+        <div class="masker"></div>
+        <div :class="['content', {'active': !ui.tips}]">
+            <span class="close" @click="hideModal('toast')"></span>
+            <p class="title">确定要参与跑Sao、吗？</p>
+            <div class="fns">
+                <button class="cancel" @click="hideModal('toast')">不了</button>
+                <button class="confirm" @click="run">确定</button>
+            </div>
+        </div>
+
+        <div :class="['content', 'tips', {'active': ui.tips}]">
+            <span class="close" @click="hideModal('toast')"></span>
+            <p class="title">{{ui.toastText}}</p>
+        </div>
+    </div>
+
+    <div :class="['layer', {'active': ui.layer}]" ref="layer">
+        <div class="masker" @click="hideModal('layer')"></div>
+
+        <canvas id="env-panel" ref="panel"></canvas>
+
+        <div class="content">
+            <div class="avatar"><img src='${require("../../../../static_guojiang_tv/src/pc/v4/img/activity/sao/share.jpg")}' alt="avatar"></div>
+            <div class="info">
+                <p class="text">2018年7月7日-7月10日</p>
+                <p class="text">Sao、家族成立2周年</p>
+                <p class="text">邀您共聚星光直播</p>
+            </div>
+            <div class="qrcode">
+                <img src='${require("../../../../static_guojiang_tv/src/pc/v4/img/activity/sao/qrcode.png")}' alt="qrcode">
+                <p class="text">识别图中二维码，即可参与活动！</p>
+            </div>
+        </div>
+        <span class="button save-invite" @click="savePic">保存图片</span>
+    </div>
+
+    <a ref="downloadHref" href="" download="Sao、家族成立2周年_邀您共聚星光直播.png" id="download-pic" style="display:none"></a>
+</div>

@@ -1,0 +1,289 @@
+@bf: 108rem;
+[v-cloak] { display: none }
+.bg_all{
+	background:url("../../../img/activity/channel/liuliang/all.png") 0 0 no-repeat;
+	background-size:936/@bf 444/@bf; 
+}
+img{
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+}
+.transform_center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+.main_box{
+	color:#fff;
+	padding-bottom: 150/@bf;
+}
+
+.tip_box{
+	margin:40/@bf;
+	padding:20/@bf;
+	background: rgba(0,0,0,0.2);
+	border-radius: 30/@bf;
+}
+.main_h1{
+	text-align: center;
+	margin:30/@bf 0;
+}
+.main_p{
+	line-height: 70/@bf;
+}
+.order{
+	position: absolute;
+	width: 210/@bf;
+	height: 155/@bf;
+	top:15/@bf;
+	right:348/@bf;
+	.bg_all;	
+}
+.icon{
+	.bg_all;
+	position: absolute;
+}
+.dl_footer{position: fixed;bottom: 0px;left:0px;right:0px;height:67px;background:rgba(0,0,0,0.3);padding:10px 10px 0 10px;  z-index: 99999;}
+.dl_footer img{width:48px;height:48px;margin-right: 10px;border-radius: 10px;-webkit-border-radius: 10px;}
+.dl_footer .desc{font-size:12px;color:#fff;padding-top: 5px;    line-height: 20px;}
+.dl_footer .desc h2{font-size:14px;}
+.dl_footer .desc a{position: absolute;right: 10px;padding:9px 15px;background: #fff;display: block;font-size:14px;color:#333333;border-radius:5px;    margin-top: 5px;}
+.dl_footer .desc a:active{background: rgba(255,255,255,0.6);}
+
+//输入手机号码
+.part-2{
+	position: relative;
+	margin-bottom: 100/@bf;
+}
+//注册
+.register-box{
+	width: 1010/@bf;
+	margin:0 auto;
+	background: rgba(225,225,225,0.35);
+    border-bottom-right-radius: 10/@bf;
+    border-bottom-left-radius: 10/@bf;
+    font-size: 14px;
+    padding: 60/@bf 33/@bf;
+	.input_wrap{
+		margin-bottom: 55/@bf;
+		position: relative;
+		input{
+			height: 120/@bf;
+			width: 725/@bf;
+			border-radius: 15/@bf;
+			padding-left: 15/@bf;
+			color:#000;
+		}
+		input[name="authCode"]{
+			width: 425/@bf;
+		}
+		input[name="sex"]{
+			width: 50/@bf;
+			height: 50/@bf;
+		}
+		label.w-190{
+			display: inline-block;
+			width: 190/@bf;
+		}
+		.getingVcode, .geting_vcode{
+			display: inline-block;
+			width: 270/@bf;
+			height: 120/@bf;
+			line-height: 120/@bf;
+			color:#000;
+			text-align: center;
+			background:#fff548;
+			border-radius: 15/@bf;
+			margin-left: 3px;
+		}
+		.getingVcode{
+		    transition:all 0.1s linear;	
+			&:active{
+				background:#fdc107;
+			}
+		}
+		.geting_vcode{
+			color:#fff;
+			background: #ddd;
+		}
+		.sex_label{
+			position: relative;
+			display: inline-block;
+			margin: 0 75/@bf;
+			height: 50/@bf;
+			line-height: 50/@bf;
+			vertical-align: middle;
+			
+			input[type="radio"] {
+	            width: 50/@bf;
+	            height: 50/@bf;
+	            opacity: 0;
+	        }
+	        label{
+	        	position: absolute;
+	            left: 0;
+	            top: 0;
+	            width: 50/@bf;
+	            height:50/@bf;
+	            border-radius: 50%;
+	            border: 1px solid #fff;	
+	        }
+	        input:checked+label { 
+	            background-color: #fff548;
+	            border: 1px solid #fff548;
+	        }
+	        
+	        input:checked+label::after {
+	            position: absolute;
+	            content: "";
+	            width: 15/@bf;
+	            height: 30/@bf;
+	            top: 1px;
+	            left: 4px;
+	            background: #fff548;
+	            border: 2px solid #84b7fb;
+	            border-top: none;
+	            border-left: none;
+	            transform: rotate(45deg);
+	        }
+	        span{ position: absolute;top:0px; left:60/@bf; margin-left:10/@bf;}
+		}
+	}
+	.i-agreement{
+		text-align: center;
+		margin-bottom: 50/@bf;
+		span{
+			color:#000;
+			margin-left: 3px;
+		}	
+		.agree-btn{
+			position: relative;
+			top:2px;
+			left: -3px;
+			display: inline-block;
+			width: 50/@bf;
+	        height:50/@bf;
+	        border-radius: 50%;
+	        border: 1px solid #fff;	
+			
+		}
+		.agree-btn.active{
+			background-color: #fff548;
+	        border: 1px solid #fff548;
+            &::after{
+				position: absolute;
+	            content: "";
+	            width: 15/@bf;
+	            height: 30/@bf;
+	            top: 1px;
+	            left: 4px;
+	            background: #fff548;
+	            border: 2px solid #84b7fb;
+	            border-top: none;
+	            border-left: none;
+	            transform: rotate(45deg);
+            }
+			
+		}
+	}
+	.register-btn{
+		margin:0 auto;
+		text-align: center;
+		color:#000;
+		font-size: 16px;
+		width: 935/@bf;
+		height: 152/@bf;
+		line-height: 152/@bf;
+		.bg_all;
+		background-position: -1px 0;
+	}
+	.register-btn:active{
+		background-position: 0 -183/@bf;
+	}
+	.err_hint{
+		padding-left: 200/@bf;
+		position: absolute;
+		font-size: 12px;
+		color:red;
+	}
+}
+@media screen and (max-width:375px) {
+	.register-box{
+		font-size: 12px;
+	}
+}
+
+//活动规则
+.part-3{
+	.title{
+		width: 305/@bf;
+		height: 82/@bf;
+		margin:0 auto;
+		.bg_all;
+		background-position: -1px -360/@bf;
+	}
+	.content{
+		padding:50/@bf;
+		line-height: 70/@bf;
+	}
+}
+
+//注册成功弹框
+.register-success-layer{
+	position: relative;
+	margin:0 auto;
+	width: 720/@bf;
+	height: 500/@bf;
+	padding:40/@bf 80/@bf; 
+	background: #4c97fd;
+	color:#fff;
+	border-radius: 15/@bf; 
+	font-size: 14px;
+	.close-layer{
+		position: absolute;
+		top:-20/@bf;
+		right: -20/@bf;
+		width: 70/@bf;
+		height:  70/@bf;
+		line-height: 70/@bf;
+		border-radius: 50%;
+		background: #ffee2e;
+		color:#000;
+		text-align: center;
+		font-style: normal;
+	}
+	p{
+		margin:100/@bf 0;
+	}
+	.confirm-btn{
+		display: inline-block;
+		margin: 0 auto;
+		width: 520/@bf;
+		height: 85/@bf;
+		line-height: 85/@bf;
+		text-align: center;
+		background: #ffee2e;
+		color:#000;
+		border-radius: 15/@bf; 
+		box-shadow: 0 2px 1px 0 #febc36;
+	}
+}
+//改写及验
+.geetest_small .geetest_feedback{
+	display: none !important;
+}
+//改写弹出层
+body .layui-m-layer .modification-style{
+    width:auto;
+}
+body .layui-m-layer .modification-style .layui-m-layercont{
+    padding:0;
+}
+body .modification-style{
+    background: none;
+}

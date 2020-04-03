@@ -1,0 +1,31 @@
+<main class='main-box' id='app' v-cloak>
+	<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/redPacket/invite_01.png')}" class="fadeIn animated">	
+	<section class="content">
+		<div class="invite-box">
+			<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/redPacket/invite_02.png')}" class="fadeIn animated">					
+			<div class="invite-1">
+				<p>已经获得邀请奖励：<span>{{info.obtain}}</span>元</p>
+				<p>还可以获得邀请奖励：<span>{{info.rest}}</span>元</p>
+				<div class="btn-wrap">
+					<span class="invite-btn" @click="clickToShare"></span>
+				</div>
+				<a href="./activityRule.html">查看活动规则</a>
+			</div>
+			
+			<div class="invite-2">
+				<input type="text" v-model="claimCode" placeholder="填写邀请码领取1元现金红包"><span class="confirm-btn"  @click="writeCode"></span>
+				<p>若有朋友邀请你，你可以使用邀请码获得现金红包，长按输入框可直接粘贴哦</p>
+			</div>		
+		</div>		
+	</section>
+</main>
+<script>
+	var gjShareParam = JSON.stringify({
+            title: '快来和我一起领现金红包',
+            content: "这个直播APP真奇葩，边看还能边领钱。没见过吧，快来玩玩看~",
+            link:window.location.href,
+            imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/redPacket/share.jpg")}'
+        });  
+</script>
+
+

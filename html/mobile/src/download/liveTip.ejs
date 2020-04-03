@@ -1,0 +1,20 @@
+<div id="app" v-show="showPage">
+    <img :src="info.bannerImg" class="banner">
+    <article>
+        <section>
+            <p class="title">由于当前应用内权限限制，{{Fun}}请移步至</p>
+            <img :src="info.logo" class="logo" @click="goDown()">
+            <p class="logo_name" :class="{'hide': isHideName}" @click="goDown()" v-cloak>{{info.name}}</p>
+            <span class="arrow_icon"></span>
+            <p class="guide">点击图标下载</p>
+
+            <i class="circle circle_0"></i>
+            <i class="circle circle_1"></i>
+            <i class="circle circle_2"></i>
+            <i class="circle circle_3"></i>
+
+        </section>
+        <img :src="info.tipImg" alt="tip" class="moreTip_icon tip_icon">
+        <img :src="info.textImg" alt="desc" :class="[type ? 'moreTip_desc' : '', 'desc']">
+    </article>
+</div>

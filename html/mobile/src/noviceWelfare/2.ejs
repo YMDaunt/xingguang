@@ -1,0 +1,74 @@
+<article>
+	<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/noviceWelfare/2/1.jpg')}" class="banner">
+
+	<div class="p2_wrap">
+		<div class="p_2">
+			<ul class="list">
+				<li class="clearfix">
+					<span class="index">1</span>
+					<span>连送99个该礼物<span class="icon_wrap"><i class="icon_1"></i></span>会出现酷炫特效。</span>
+				</li>
+				<li class="clearfix">
+					<span class="index">2</span>
+					<span>购买电动仙女棒，即可获取吊炸天的新手勋章<span class="icon_wrap"><i class="icon_2"></i></span>一枚，让你备受全场瞩目！</span>
+				</li>
+				<li class="clearfix">
+					<span class="index">3</span>
+					<span>只有新用户才买得到的礼物，主播收到该礼物满9999个时出发全站广播，所以送电动仙女棒更受主播欢迎哦！</span>
+				</li>
+			</ul>
+
+			<ul class="p2_buy">
+				<li  v-for="(item, index) in product" v-cloak>
+					<div class="gift_wrap">
+						<img :src="item.gifts[0].image" class="cat">
+						<span class="corner_icon" :class="'ci_'+(parseInt(index)+1)"><i>￥</i>{{ parseInt(item.price)/100}}</span>
+					</div>
+					<p class="desc">{{item.gifts[0].name}} X{{item.gifts[0].number}}个</p>
+					<span class="btn" @click="goBuy(index)">立即购买</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="p3_wrap">
+		<div class="p_3">
+			<span class="rule_title">电动仙女棒说明</span>
+			<ul class="list">
+				<li class="clearfix">
+					<span class="index">1</span>
+					<span>1元特惠活动每个设备号仅有1次机会，抢到即是赚到！</span>
+				</li>
+				<li class="clearfix">
+					<span class="index">2</span>
+					<span>9.9元礼包活动为每个用户仅在注册起7天内可以重复购买，手快有手慢无哦。</sp
+						an></li>
+				<li class="clearfix">
+					<span class="index">3</span>
+					<span>购买成功后礼物直接到背包使用哦。</span>
+				</li>
+				<li class="clearfix">
+					<span class="index">4</span>
+					<span>专属勋章的有效性为7天。</span>
+				</li>
+				<li class="clearfix">
+					<span class="index">5</span>
+						<span>本活动最终解释权归官方运营团队所有。</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+</article>
+<script>
+// 支付成功之后回调函数
+    function payResultCallback(code,errMsg){
+        if(code){
+            hasUnpayOrder = 0;
+            layer.closeAll();
+            vm.succussBuy(); 
+            vm.reportSucc();  
+        }
+    }
+
+</script>

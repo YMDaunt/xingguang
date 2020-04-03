@@ -1,0 +1,192 @@
+@bf:108rem;
+.bggradient(@startColor: #000, @endColor: #fff, @start: top, @end: bottom){ 
+		background: @startColor; 
+		background: -moz-linear-gradient(@start, @startColor 0%, @endColor 100%); 
+		background: -webkit-gradient(linear, @start, @end, color-stop(0%,@startColor), color-stop(100%,@endColor)); 
+		background: -webkit-linear-gradient(@start, @startColor 0%,@endColor 100%); 
+		background: -o-linear-gradient(@start, @startColor 0%,@endColor 100%); 
+		background: -ms-linear-gradient(@start, @startColor 0%,@endColor 100%); 
+		background: linear-gradient(to @end, @startColor 0%,@endColor 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@startColor, endColorstr=@endColor,GradientType=0 ); 
+	} 
+//渐变色
+body{
+	.bggradient(#160945, #383d59, top, bottom);
+	user-select: text;
+	-webkit-user-select : text;
+}
+
+img{
+	width: 100%;
+	vertical-align: middle;
+}
+//居中
+.transform-center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+.sprite{
+	background:url(../../img/redPacket/sprite.png) 0 0 no-repeat;
+	background-size:826/@bf 507/@bf; 
+}
+.content{
+	.invite-box,.success-box{
+		width: 100%;
+		height: 1218/@bf;
+		position: relative;
+	}
+	.invite-1, .invite-2{
+		position: absolute;
+	}
+	.invite-1{	
+		.transform-center;
+		top:25%;
+		text-align: center;
+		p{
+			text-align: center;
+			width: 700/@bf;
+			color: #d44f48;
+			font-size: 15px;
+			margin-bottom: 15/@bf;
+		}
+		h2{
+			color: #d44f48;
+			font-size: 20px;
+			margin-bottom: 10/@bf;
+		}
+		.btn-wrap{
+			width: 100%;		
+			position: relative;
+			.invite-btn,.invite-code{
+				.sprite;
+				display: inline-block;
+			}
+			.invite-btn{
+				width: 576/@bf;
+				height: 153/@bf;			
+				background-position:  0 -354/@bf;
+			}
+			.invite-code{
+				width: 663/@bf;
+				height: 153/@bf;
+				line-height: 153/@bf;
+				color:#fff;
+				font-size: 18px;
+				font-weight: bolder;
+				background-position:  0 -177/@bf;
+				span{
+					padding:10px 10px 10px 0;
+				}
+			}
+		}
+		a{
+			color: #d44f48;
+			font-size: 14px;
+			text-decoration: underline;
+		}
+		.tips{
+			padding:15/@bf 35/@bf;
+			color: #d44f48;
+			text-align: left;
+			font-size: 13px;
+		}
+		@media screen and (max-width:320px){
+			.invite-code{
+				font-size: 16px;
+			}
+			.tips{
+				font-size: 10px;
+			}
+		}
+	}
+	.invite-2{
+		bottom: 80/@bf;
+		width: 100%;
+		text-align: center;
+		input{
+			width: 660/@bf;
+			height: 146/@bf;
+			border-radius: 73/@bf;
+			background: #992e29;
+			font-size: 14px;
+			font-weight: bolder;
+			color:#fff;
+			text-align: center;
+		}
+		input:-moz-placeholder{
+		  color: #eb4d44;
+		}
+		input::-webkit-input-placeholder{
+		  color: #eb4d44;
+		}
+		.confirm-btn{
+			display: inline-block;
+			width: 226/@bf;
+			height: 151/@bf;
+			.sprite;
+			background-position:  -600/@bf -354/@bf;
+			margin-left: 30/@bf;
+			position: relative;
+			top:60/@bf;
+			&::active{
+				opacity:0.6;
+			}
+		}
+		p{
+			color: #fff;
+			font-size: 14px;
+			padding:25/@bf 120/@bf;
+		}
+		.load-btn{
+			.sprite;
+			display: inline-block;
+			width:826/@bf;
+			height: 153/@bf;
+			background-position:0 0;
+		}
+		
+	}
+	.success-box{
+		.invite-1{
+			top:29%;
+		}
+		.invite-2{
+			bottom: 60/@bf;
+			p{
+				padding:5/@bf 120/@bf;
+			}
+		}
+	}
+}
+
+//图片淡入效果
+.fadeIn{
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}
+.animated {
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+@keyframes fadeIn{
+    0% {
+    opacity: 0;
+}
+    100% {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes fadeIn{
+    0% {
+    opacity: 0;
+}
+    100% {
+        opacity: 1;
+    }
+}

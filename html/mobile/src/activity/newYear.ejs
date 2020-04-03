@@ -1,0 +1,275 @@
+<div class="wrapper" id="app" v-cloak>
+    <div class="banner"></div>
+    <div class="lead">
+        <p>旺财年来啦！终于到了穿起红内裤的时候啦！快快乐乐的送走过去的一年！红红火火的迎来元气满满的新年吧！</p>
+        <p>感激这一年，你对星光大家庭的支持和陪伴，新的一年，让我们伴你一路旺旺！</p>
+    </div>
+    <div class="end-year" @click="goSummary"></div>
+    <p class="active-intro"><em>签到</em>即送特效礼物和价值100元的广播卡！</p>
+    <div class="runway">
+        <div class="person" :class="'person-'+profile['signedTimes']">
+            <div class="boom">
+                <div class="boom-red">
+                    <span class="boom-num">{{signedTime}}</span>
+                </div>
+            </div>
+        </div>
+        <span class="prev-runway" @click="closeShowGif"></span>
+    </div>
+    <p class="count-block">
+        累计签到:
+        <em class="count-day">{{profile['signedTimes']}}天</em>
+        背包中“鞭炮”数:
+        <em class="count-num">{{boomNum}}个</em>
+    </p>
+    <div class="sign-btn" :class="{'sign-btn-had':profile['isUserSignToday']}" @click="signToday"></div>
+    <div class="newyear-gift">
+        <div class="newyear-gift-block">
+            <div class="basket-head">
+                <div class="basket-icon basket-icon-4"></div>
+            </div>
+            <div class="basket-body">
+                <div class="basket-content">
+                    <div class="newyear-gift-lists c_clearfix">
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div class="newyear-gift-btn c_clearfix">
+                       <span class="gift-handle-block c_clearfix">
+                           <span class="gift-show" @click="closeShowSvg(1)"></span>
+                           <span class="gift-buy" @click="giftBuyShow"></span>
+                       </span> 
+                       <span class="gift-handle-block">
+                           <span class="gift-show" @click="closeShowSvg(2)"></span>
+                       </span> 
+                    </div>
+                    <p class="newyear-gift-intro">*活动期间，<em>用户一次性送出2018个“大红包”，即可触发烟花特效哦！</em>新年给她一个烟花璀璨的夜空！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="page-footer">
+        <div class="sort-wrap">
+            <!-- 悬浮框 -->
+            <div class="fixed-wrap" v-show="fixedBtn">
+                <div class="fixed-rule-btn" @click="ruleBtnHanle"></div>
+                <div class="fixed-prize-btn" @click="prizeBtnHanle"></div>
+                <div class="fixed-fillmsg-btn" v-if="profile.showAwardForm" @click="inputBtnHanle"></div>
+            </div>
+
+            <article class="sort-block">
+                <div class="acti-rest c_clearfix">
+                    <div class="acti-item"
+                        :class="{
+                            act: currentItem==='toucai', 
+                            'acti-nobegin': currentTime<1518148800000,
+                            'acti-start': currentTime>1518148800000 && currentTime<1518623999000,
+                            'acti-end': currentTime>1518623999000,
+                        }" @click="changeActi(0)"></div>
+                    <div class="acti-item" :class="{
+                        act: currentItem==='caishen',
+                        'acti-nobegin': currentTime<1518624000000,
+                        'acti-start': currentTime>1518624000000 && currentTime<1519142399000,
+                        'acti-end': currentTime>1519142399000,
+                        }" @click="changeActi(1)"></div>
+                </div>
+                <div class="part-man">
+                    <div class="part-man-block c_clearfix">
+                        <span class="anchor-man" :class="{act: currentType==='mod'}" @click="changeMan(0)"></span>
+                        <span class="user-man" :class="{act: currentType==='user'}" @click="changeMan(1)"></span>
+                    </div>
+                    <p class="part-man-intro">
+                        {{actPartDeclar}}
+                    </p>
+                </div>
+                <div class="sort-item sort-head c_clearfix">
+                    <span class="sort-top">排名</span>
+                    <span class="sort-avator">头像</span>
+                    <span class="sort-nickname">昵称</span>
+                    <span class="sort-num">{{currentType === 'mod'? '收到' : '送出'}}礼物个数</span>
+                </div>
+                <div class="sort-body">
+                    <div class="sort-body-block">
+                        <ul>
+                            <li class="sort-list c_clearfix" v-for="(item,index) in currentLists" v-if="item && (moreStopStatus || index<3)">
+                                <span v-if="index < 3" class="sort-top sort-top-icon" :class="'sort-top-'+index"></span>
+                                <span v-else class="sort-top">{{index+1}}</span>
+                                <span class="sort-avator">
+                                    <span class="sort-avator-img" @click="goRoom(item['rid'])">
+                                        <img :src="item['head_pic_1']">
+                                    </span>
+                                    <span v-if="item['isLoved'] && currentType==='mod'" class="anchor-love lovee-had">已关注</span>
+                                    <span v-if="!item['isLoved'] && currentType==='mod'" class="anchor-love" @click="addLove(item['id'],index)">+关注</span>
+                                </span>
+                                <span class="sort-nickname">
+                                    {{item['nickname']}}
+                                </span>
+                                <span class="sort-num">{{item['num']}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="handle-show" :class="{'handle-hide': moreStopStatus}" @click="lookMore"></div>
+                </div>
+            </article>
+            <p class="sort-intro">
+                *截止至{{actDuratime}}，{{currentItem === "toucai" ? "头彩": "财神"}}榜最终榜单主播和用户将获得对应奖励，<em>请选择实物奖励的用户于页面填写地址。</em>
+            </p>
+        </div>
+        <p class="componey-declar">本活动最终解释权归星光直播所有</p>
+    </section>
+    <div class="fixed-sign-btn" v-show="signBtn" @click="signBtnHanle"></div>
+    <!-- 签到规则 -->
+    <div class="cover-bg" v-show="signPage">
+        <div class="basket">
+            <div class="basket-close" @click="closeCover"></div>
+            <div class="basket-head">
+                <div class="basket-icon basket-icon-0"></div>
+            </div>
+            <div class="basket-body">
+                <div class="basket-content">
+                    <p class="basket-txt">
+                        1.活动时间：2.9 12:00:00——2.20 23:59:59。
+                    </p>
+                    <p class="basket-txt">
+                        2.活动期间，每日签到即可免费获得特效礼物，奖励将自动放入你的背包！<em>连续签到12天最多可获得三个“鞭炮”和广播卡！</em>
+                    </p>
+                    <p class="basket-txt">3.若发现恶意套取活动奖励的账号，将给予封号处理。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 活动规则 -->
+    <div class="cover-bg"  v-show="rulePage">
+        <div class="basket">
+            <div class="basket-close" @click="closeCover"></div>
+            <div class="basket-head">
+                <div class="basket-icon basket-icon-1"></div>
+            </div>
+            <div class="basket-body">
+                <div class="basket-content">
+                    <p class="basket-txt">
+                        1.活动时间：2.9 12:00:00——2.20 23:59:59。
+                    </p>
+                    <p class="basket-txt">
+                        2.活动期间，单个主播直播间每收到3000个“大红包”，即可炸出新年红包！快来抢克拉吧！
+                    </p>
+                    <p class="basket-txt">
+                        3.“头彩榜”是根据2.9 12:00:00——2.14 23:59:59期间，送出和收到活动礼物“大红包”的数量计算的。
+                    </p>
+                    <p class="basket-txt">
+                        4.“财神榜”是根据2.15 0:00:00——2.20 23:59:59期间，送出和收到活动礼物的“大红包”的数量计算的。
+                    </p>
+                    <p class="basket-txt">
+                        5.活动期间，<em>用户在直播间一次性送出2018个大红包，即可触发烟花特效哦！</em>
+                    </p>
+                    <p class="basket-txt">
+                        6.用户可选择实物奖励或者返利，请于活动结束后7天之内在页面选择并填写地址，若未选择则默认返利。主播和用户奖励将于活动结束后15个工作日内发放。
+                    </p>
+                    <p class="basket-txt">
+                        7.本次活动最终解释权归星光直播所有。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 活动奖励 -->
+    <div class="cover-bg" v-show="prizePage">
+        <div class="basket">
+            <div class="basket-close" @click="closeCover"></div>
+            <div class="basket-prize-wrap">
+                <div class="basket-head">
+                    <div class="basket-icon basket-icon-2"></div>
+                </div>
+                <div class="basket-body">
+                    <div class="basket-content">
+                        <p class="basket-txt">
+                            获得用户类奖励的，可在实物奖励和返利中选择其一，于活动结束起7天内在活动页面填写邮寄信息，若7日内未进行选择的用户，则默认返利。
+                        </p>
+                        <article class="sort-block">
+                            <div class="acti-rest c_clearfix">
+                                <div class="acti-item" :class="{act:!prizeModel}" @click="changePrizeModel(0)"></div>
+                                <div class="acti-item" :class="{act:prizeModel}" @click="changePrizeModel(1)"></div>
+                            </div>
+                            <div class="basket-prize-block">
+                                <div class="basket-prize" :class="{'prize2-bg':prizeModel}"></div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 领取奖励 -->
+    <div class="cover-bg" v-show="inputPage">
+        <div class="basket">
+            <div class="basket-close" @click="closeCover"></div>
+            <div class="basket-head">
+                <div class="basket-icon basket-icon-3"></div>
+            </div>
+            <div class="basket-body">
+                <div class="basket-content">
+                    <div class="check-prize c_clearfix">
+                        <div class="check-goods" @click="setUserMsg(0)">
+                            <span class="radio-check" :class="{'radio-check-act':!getPrizeMethod}"></span>
+                            <span>实物奖励</span>
+                        </div>
+                        <div class="check-money" @click="setUserMsg(1)">
+                            <span class="radio-check" :class="{'radio-check-act':getPrizeMethod}"></span>
+                            返利
+                        </div>
+                    </div>
+                    <div class="msg-wrapper">
+                        <div v-show="!getPrizeMethod">
+                            <div class="msg-input-item c_clearfix">
+                                <span class="msg-tips">收货地址：</span>
+                                <input type="text" class="msg-input" v-model.trim="userMsg.place">
+                            </div>
+                            <div class="msg-input-item c_clearfix">
+                                <span class="msg-tips">收货人姓名：</span>
+                                <input type="text" class="msg-input" v-model.trim="userMsg.name">
+                            </div>
+                            <div class="msg-input-item c_clearfix">
+                                <span class="msg-tips">手机号码：</span>
+                                <input type="text" class="msg-input" v-model.trim="userMsg.phone">
+                            </div>
+                        </div>
+                        <div class="submit-sure" @click="submitUserMsg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 提示信息 -->
+    <div class="cover-bg" v-show="tips">
+        <div class="tips-content">{{tipsMsg}}</div>
+    </div>
+    <!-- 购买 -->
+    <div class="cover-bg" v-show="giftBuyStatus">
+        <div class="basket">
+            <div class="basket-close" @click="closeCover"></div>
+            <div class="buy-wrap">
+                确认购买?
+                <div class="submit-sure" @click="submitNum"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 预览 -->
+    <div class="cover-bg show-svg" v-show="showSvgStatus" @click="closeShowSvg">
+    </div>
+    <div class="cover-bg" v-show="showGifStatus" @click="closeShowGif">
+        <img class="gif-img" src="//static.guojiang.tv/mobile/v2/img/activity/newYear/firecrack.gif">
+    </div>
+</div>
+<script src="//static.guojiang.tv/mobile/js/common/bodymovin.min.js?vs=0804"></script>
+
+<script src="//static.guojiang.tv/mobile/v2/js/lib/swiper-4.1.0.min.js"></script>
+<script src="//static.guojiang.tv/mobile/v2/js/lib/swiper.animate1.0.2.min.js"></script>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '旺财年到，欢聚星光！',
+        content: '主播陪你过大年，开年大礼享不停！',
+        link: '//m.tuho.tv/dist/activity/newYear.html',
+        imgLink: '//static.guojiang.tv/mobile/v2/img/activity/newYear/share.png'
+    });
+</script>

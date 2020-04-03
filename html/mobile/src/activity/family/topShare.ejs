@@ -1,0 +1,27 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../../static_guojiang_tv/src/mobile/v2/img/activity/family/top" */ -->
+    <div class="invite-container">
+        <div class="invite-content">
+            <div class="close-btn" @click="goBack"></div>
+            <p class="txt time">2018年9月7日-9月10日</p>
+            <p class="txt">TOP家族成立2周年</p>
+            <p class="txt">邀您共聚星光直播</p>
+            <div class="avatar">
+                <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/family/top/share.jpg')}" alt="TOP家族">
+            </div>
+            <div class="qrcode">
+                <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/family/top/qrcode.png')}" alt="TOP家族_活动二维码">
+            </div>
+            <p class="desc">识别图中二维码，即可参与活动！</p>
+        </div>
+    </div>
+</div>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: 'TOP家族2周年庆',
+    content: '9月9日，TOP家族2周年啦，邀您共聚星光直播！',
+    link: location.href,
+    imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/family/top/share.jpg")}' // eslint-disable-line
+})
+</script>

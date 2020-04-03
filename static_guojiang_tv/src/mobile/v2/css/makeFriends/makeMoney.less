@@ -1,0 +1,191 @@
+@activityName: 'makeMoney';
+@baseSize: 108rem; // 1080px -> fontSize -> 108px
+@bf: 108rem;
+@baseImgPath: '../../img/makeFriends/makeMoney';
+
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
+h1,h2,h3,strong {
+    font-weight: normal;
+}
+[v-cloak] {
+    display: none;
+}
+body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+}
+//水平居中对齐
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/*两端对齐*/
+.flex-justify-between(){
+    -webkit-box-pack:justify;
+    -moz-justify-content:space-between;
+    -webkit-justify-content:space-between;
+    justify-content: space-between;
+}
+/*上下居中*/
+.flex-align(){
+    -webkit-box-align:center;
+    -moz-align-items:center;
+    -webkit-align-items:center;
+    align-items: center;
+}
+// 顺序
+.flex-left(){
+    -webkit-box-align:flex-start;
+    -moz-align-items:flex-start;
+    -webkit-align-items:flex-start;
+    align-items: flex-start;
+}
+.flex(){
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.flex-justify-center(){
+    -webkit-box-pack:center;
+    -moz-justify-content:center;
+    -webkit-justify-content:center;
+    justify-content: center;
+}
+//多余的字符用省略号显示
+.ellipsis() {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.bgm(@imgName) {
+    background-image: url('../../img/makeFriends/makeMoney/@{imgName}');
+    background-repeat: no-repeat;
+}
+
+.spt {
+    background-image: url('../../img/makeFriends/makeMoney/spt.png');
+    background-repeat: no-repeat;
+    background-size: 600/@bf 1000/@bf;
+}
+
+.wrap {
+    background: #ff4668;
+    .ban {
+        height: 588/@bf;
+        .bgm('ban.jpg');
+        background-size: 1080/@bf 588/@bf;
+    }
+    .con-step {
+        width: 1030/@bf;
+        height: 966/@bf;
+        margin: -130/@bf auto 60/@bf;
+        .bgm('x.png');
+        background-size: 1030/@bf 966/@bf;
+    }
+}
+.tab-tit {
+    width: 950/@bf;
+    margin: 0 auto 22/@bf;
+    .flex;
+    .flex-justify-between;
+    > div {
+        width: 300/@bf;
+        height: 93/@bf;
+        .spt;
+        background-position: -22/@bf -137/@bf;
+        text-align: center;
+        line-height: 93/@bf;
+        font-size: 48/@bf;
+        color: #fff;
+    }
+    .choose {
+        background-position: -22/@bf -17/@bf;
+    }
+}
+.tab-con {
+    width: 1030/@bf;
+    min-height: 2050/@bf;
+    padding-bottom: 52/@bf;
+    margin: 0 auto;
+    > div > div {
+        width: 540/@bf;
+        height: 133/@bf;
+        margin: 0 auto;
+        .spt;
+    }
+    > div:first-child {
+        height: 2318/@bf;
+        padding-top: 470/@bf;
+        .bgm('1.png');
+        background-size: 1030/@bf 2318/@bf;
+        .set-img {
+            margin: 0 auto 552/@bf;
+            background-position: -22/@bf -272/@bf;
+        }
+        .approve {
+            margin: 552/@bf auto 0;
+            background-position: -22/@bf -762/@bf;
+        }
+    }
+    .old-1:first-child {
+        height: 1996/@bf;
+        .bgm('old_1.jpg');
+        background-size: 1030/@bf 1996/@bf;
+    }
+    > div:nth-child(2) {
+        height: 1614/@bf;
+        padding-top: 412/@bf;
+        .bgm('2.png');
+        background-size: 1030/@bf 1614/@bf;
+        div {
+            background-position: -22/@bf -439/@bf;
+        }
+    }
+    > div:last-child {
+        height: 1614/@bf;
+        padding-top: 412/@bf;
+        .bgm('3.png');
+        background-size: 1030/@bf 1614/@bf;
+        div {
+            background-position: -22/@bf -597/@bf;
+        }
+    }
+
+    .over {
+        width: 540/@bf;
+        height: 133/@bf;
+        line-height: 133/@bf;
+        text-align: center;
+        font-size: 48/@bf;
+        color: #fff;
+        background: #a9a9a9;
+        border-radius: 62/@bf;
+        background-image: none;
+        box-shadow: inset 0 0 10/@bf 6/@bf #ddd;
+    }
+    .over-2 {
+        margin: 520/@bf auto;
+    }
+}
+
+.tost {
+    position: fixed;
+    z-index: 999999;
+    left: 50%;
+    top: 40%;
+    width: 780/@bf;
+    margin-left: -390/@bf;
+    height: 68/@bf;
+    line-height: 68/@bf;
+    text-align: center;
+    border-radius: 18/@bf;
+    color: #fff;
+    background: rgba(0 ,0, 0, 0.8);
+    font-size: 36/@bf;
+}

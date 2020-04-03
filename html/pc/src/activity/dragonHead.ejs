@@ -1,0 +1,200 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="wrap">
+        <div class="ban"></div>
+        <div class="pc_container" style="width: auto;">
+            <!-- 推荐 -->
+            <section class="recommend">
+                <div class="title-img"></div>
+                <div class="con-box">
+                    <b class="posi-top-left"></b>
+                    <b class="posi-top-right"></b>
+                    <b class="posi-bottom-left"></b>
+                    <b class="posi-bottom-right"></b>
+                    <div class="list-box" >
+                        <ul v-if="recommendNum > 0">
+                            <li v-for="(item,index) in recommendArr" v-if="index < 3">
+                                <div class="img-cover">
+                                    <img :src="item.head_pic_1" v-bind:data-rid="item.id" @click="inlive($event)"  alt="" />
+                                </div>
+                                <strong>{{item.nickname}}</strong>
+                                <span>今日炸房数</span>
+                                <span>{{item.times}}</span>
+                                <div v-if="!item.isLoved" class="btn-care" v-bind:data-mid="item.id" @click="love($event,index)"></div>
+                                <div v-else class="cared"></div>
+                            </li>
+                        </ul>
+                        <p>还没有主播完成5次炸房~</p>
+                    </div>
+                </div>
+                <div v-if="recommendNum > 3" class="change-list" @click="change()">换一批</div>
+                <div v-else class="change-list not-change" >换一批</div>
+            </section>
+            
+            <!-- 飘云 -->
+            <div class="cloud"></div>
+
+            <!-- 排行榜 -->
+            <section class="top-list">
+                <div class="title-img"></div>
+                <div class="con-box">
+                    <b class="posi-top-left"></b>
+                    <b class="posi-top-right"></b>
+                    <b class="posi-bottom-left"></b>
+                    <b class="posi-bottom-right"></b>
+                    <div class="top-tab">
+                        <div class="tab-tit clearfix">
+                            <div class="tab-choose">
+                                <b></b>
+                            </div>
+                            <div>
+                                <b></b>
+                            </div>
+                        </div>
+
+                        <div class="tab-con">
+                            <!-- 主播榜 -->
+                            <div class="rank-top ranks">
+                                <ul class="three">
+                                    <li v-for="(item,index) in modArr" v-if="index < 3">
+                                        <div class="rank-img">
+                                            <b></b>
+                                            <span v-if="item.is_playing == 1" @click="inlive($event)" v-bind:data-rid="item.id"></span>
+                                            <img :src="item.head_pic_1"  @click="inlive($event)" v-bind:data-rid="item.id" alt="" />
+                                        </div>
+                                        <div class="rank-name">
+                                            <div>{{item.nickname}}</div>
+                                            <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                        </div>
+                                        <p>收到：{{item.num.pnum}}</p>
+                                        <div v-if="!item.is_attention" v-bind:data-mid="item.num.mid" class="btn-care" @click="attention($event,index)"></div>
+                                        <div v-else class="cared"></div>
+                                    </li>
+                                </ul>
+
+                                <!-- 4+ -->
+                                <div class="rank-other mod-other">
+                                    <div class="rank-out rank-out-mod">
+                                        <ul>
+                                            <li class="clearfix" v-for="(item,index) in modArr" v-if="index >= 3">
+                                                <div class="top-num">{{index+1}}</div>
+                                                <div class="top-img">
+                                                    <img :src="item.head_pic_1"  @click="inlive($event)" v-bind:data-rid="item.id" alt="" />
+                                                    <span v-if="item.is_playing == 1" @click="inlive($event)" v-bind:data-rid="item.id"></span>
+                                                </div>
+                                                <div class="top-mes">
+                                                    <div>{{item.nickname}}</div>
+                                                    <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                                </div>
+                                                <div class="top-mark">收到：{{item.num.pnum}}</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 用户榜 -->
+                            <div class="rank-top users">
+                                <ul class="three">
+                                    <li v-for="(item,index) in userArr" v-if="index < 3">
+                                        <div class="rank-img">
+                                            <b></b>
+                                            <img :src="item.head_pic_1" v-bind:data-rid="item.rid" alt="" />
+                                        </div>
+                                        <div class="rank-name">
+                                            <div>{{item.nickname}}</div>
+                                            <b :class="'level_icon u_level_icon_' + item.level"></b>
+                                        </div>
+                                        <p>送出：{{item.num.pnum}}</p>
+                                    </li>
+                                </ul>
+
+                                <!-- 4+ -->
+                                <div class="rank-other user-other">
+                                    <div class="rank-out rank-out-user">
+                                        <ul>
+                                            <li class="clearfix" v-for="(item,index) in userArr" v-if="index >= 3">
+                                                <div class="top-num">{{index+1}}</div>
+                                                <div class="top-img">
+                                                    <img :src="item.head_pic_1" v-bind:data-rid="item.rid" alt="" />
+                                                </div>
+                                                <div class="top-mes">
+                                                    <div>{{item.nickname}}</div>
+                                                    <b :class="'level_icon u_level_icon_' + item.level"></b>
+                                                </div>
+                                                <div class="top-mark">送出：{{item.num.pnum}}</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="tip-word">本活动最终解释权归星光直播所有</div>
+        </div>
+
+        <!-- 定位规则按钮 -->
+        <div class="rule-btn" @click="showRules()">
+            <div></div>
+            <div></div>
+        </div>
+
+        <!-- 规则 -->
+        <div class="rules" v-show="showRule">
+            <div class="con-box">
+                <h2></h2>
+                <b class="posi-top-left"></b>
+                <b class="posi-top-right"></b>
+                <b class="posi-bottom-left"></b>
+                <b class="posi-bottom-right"></b>
+                <div class="rules-txt">
+                    <ul class="rule-mes">
+                        <li>
+                            <p>1.活动时间：2018年3月17日 12:00:00—03月22 23:59:59。</p>
+                        </li>
+                        <li>
+                            <p>2.此次活动分阶段炸房，每天前五次炸房送出指定数量的“龙抬头”即可炸房，从第六次炸房起，每次炸房需送出3000个“龙抬头”。</p>
+                        </li>
+                        <li class="rule-img">
+                            <b></b>
+                        </li>
+                        <li>
+                            <p>3.每天0点刷新进度条，0点后，直播间当前进度条炸完，再从第一次炸房（500个“龙抬头”）开始炸房。</p>
+                        </li>
+                        <li>
+                            <p>4.“龙头推荐”列表推荐当日完成五次炸房并在线的主播，推荐顺序随机，每日0点将清空前一日推荐列表，重新推荐当日完成五次炸房的主播。主播下播将自动从推荐列表下线。</p>
+                        </li>
+                        <li>
+                            <p>5.仙气榜前5名主播可获得礼品，礼品将于活动结束后15日工作日内发放。</p>
+                        </li>
+                        <li>
+                            <p>6.本次活动最终解释权归星光直播所有。</p>
+                        </li>
+                        <li>
+                            <h3></h3>
+                        </li>
+                        <li class="gift-img">
+                            <b></b>
+                        </li>
+                        <li>
+                            <span>注：返利数量=主播榜单收入*返利额度</span>
+                            <span>返利金额为克拉（非收益），将于活动结束后15个工作日内发放到主播账户内。</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="close-btn" @click="showRule = !showRule"></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '二月二，龙抬头！',
+        content: '50块就能炸房，还有这种操作？',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/dragonHead/share.png")}'
+    });
+</script>

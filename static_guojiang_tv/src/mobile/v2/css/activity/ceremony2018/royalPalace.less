@@ -1,0 +1,716 @@
+// ../../../img/activity/ceremony2018/royalPalace
+
+@activityName: 'activity/ceremony2018/royalPalace';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+@imgUrl: '../../../img/activity/ceremony2018';
+
+/* 定义颜色字体大小 S */
+html, body {
+    background: #000;
+    overflow-x: hidden;
+}
+/* 定义颜色字体大小 E */
+
+/* 定义可复用样式 S */
+.getSprite (@w, @h, @posx, @posy) {
+    @pad: 5;
+    display: block;
+    background-position: (@posx + @pad)/@bf (@posy + @pad)/@bf;
+    width: (@w + @pad*2)/@bf;
+    height: (@h + @pad*2)/@bf;
+}
+.throne-sprite {
+    background-image: url('@{imgUrl}/royalPalace/throne.png');
+    background-repeat: no-repeat;
+    background-size: 2098/@bf 1656/@bf;
+}
+.throne-cown_top_2 {
+	.getSprite(78, 86, -1969, -1053);
+}
+.throne-cown_top_3 {
+	.getSprite(79, 87, -1870, -1053);
+}
+.throne-no1_bg {
+	.getSprite(1029, 836, -10, -10);
+}
+.throne-no2_bg {
+	.getSprite(911, 780, -10, -866);
+}
+.throne-no3_bg {
+	.getSprite(909, 779, -941, -866);
+}
+.throne-z_top_2 {
+	.getSprite(1029, 836, -1059, -10);
+}
+.throne-cown_top {
+	.getSprite(154, 167, -1870, -866);
+}
+.throne-cown_top_1 {
+	.getSprite(76, 83, -1870, -1160);
+}
+
+.pic-sprite {
+    background-image: url('@{imgUrl}/royalPalace/pic.png');
+    background-repeat: no-repeat;
+    background-size: 1416/@bf 1324/@bf;
+}
+.pic-t_left {
+	.getSprite(315, 57, -351, -1256);
+}
+.pic-t_right {
+	.getSprite(313, 57, -686, -1256);
+}
+.pic-txt_holder {
+	.getSprite(81, 261, -1110, -435);
+}
+.pic-nddrw {
+	.getSprite(321, 58, -10, -1256);
+}
+.pic-ndfyzb {
+	.getSprite(388, 58, -552, -872);
+}
+.pic-ndoxzb {
+	.getSprite(388, 58, -552, -950);
+}
+.pic-ndrqzb {
+	.getSprite(388, 58, -552, -1028);
+}
+.pic-ndtlzb {
+	.getSprite(388, 58, -10, -1178);
+}
+.pic-ndylzb {
+	.getSprite(388, 58, -418, -1178);
+}
+.pic-ndzjzb {
+	.getSprite(388, 58, -826, -1178);
+}
+.pic-holder1 {
+	.getSprite(63, 197, -1211, -435);
+}
+.pic-holder2 {
+	.getSprite(53, 156, -1294, -435);
+}
+.pic-holder3 {
+	.getSprite(53, 155, -1110, -716);
+}
+.pic-masker2 {
+	.getSprite(297, 408, -552, -444);
+}
+.pic-masker3 {
+	.getSprite(296, 405, -1110, -10);
+}
+.pic-masker {
+	.getSprite(522, 714, -10, -444);
+}
+.pic-sec_bg {
+	.getSprite(1080, 414, -10, -10);
+}
+
+/* 赛道sprite */
+.fy-sprite {
+    background-image: url('@{imgUrl}/royalPalace/fyzb.png');
+    background-repeat: no-repeat;
+    background-size: 1007/@bf 467/@bf;
+}
+.fy_top_3 {
+	.getSprite(287, 345, -710, -10);
+}
+.fy_top_1 {
+	.getSprite(371, 447, -10, -10);
+}
+.fy_top_2 {
+	.getSprite(289, 348, -401, -10);
+}
+
+.ox-sprite {
+    background-image: url('@{imgUrl}/royalPalace/oxzb.png');
+    background-repeat: no-repeat;
+    background-size: 1007/@bf 467/@bf;
+}
+.ox_top_1 {
+	.getSprite(371, 447, -10, -10);
+}
+.ox_top_3 {
+	.getSprite(287, 345, -710, -10);
+}
+.ox_top_2 {
+	.getSprite(289, 348, -401, -10);
+}
+
+.rq-sprite {
+    background-image: url('@{imgUrl}/royalPalace/rqzb.png');
+    background-repeat: no-repeat;
+    background-size: 1007/@bf 467/@bf;
+}
+.rq_top_3 {
+	.getSprite(287, 345, -710, -10);
+}
+.rq_top_2 {
+	.getSprite(289, 348, -401, -10);
+}
+.rq_top_1 {
+	.getSprite(371, 447, -10, -10);
+}
+
+.tl-sprite {
+    background-image: url('@{imgUrl}/royalPalace/tlzb.png');
+    background-repeat: no-repeat;
+    background-size: 1007/@bf 467/@bf;
+}
+.tl_top_2 {
+	.getSprite(289, 348, -401, -10);
+}
+.tl_top_3 {
+	.getSprite(287, 345, -710, -10);
+}
+.tl_top_1 {
+	.getSprite(371, 447, -10, -10);
+}
+
+.yl-sprite {
+    background-image: url('@{imgUrl}/royalPalace/ylzb.png');
+    background-repeat: no-repeat;
+    background-size: 1007/@bf 467/@bf;
+}
+.yl_top_1 {
+	.getSprite(371, 447, -10, -10);
+}
+.yl_top_2 {
+	.getSprite(289, 348, -401, -10);
+}
+.yl_top_3 {
+	.getSprite(287, 345, -710, -10);
+}
+
+// 用户徽章
+.badge-sprite {
+    background-image: url('@{imgUrl}/qualifier/badge.png');
+    background-repeat: no-repeat;
+    background-size: 215/@bf 1288/@bf;
+    font-size: 0;
+}
+.badge_2 {
+	.getSprite(195, 107, -10, -10);
+}
+.badge_3 {
+	.getSprite(195, 109, -10, -137);
+}
+.badge_4 {
+	.getSprite(195, 109, -10, -266);
+}
+.badge_5 {
+	.getSprite(195, 109, -10, -395);
+}
+.badge_6 {
+	.getSprite(195, 109, -10, -524);
+}
+.badge_7 {
+	.getSprite(195, 109, -10, -653);
+}
+.badge_8 {
+	.getSprite(195, 109, -10, -782);
+}
+.badge_9 {
+	.getSprite(195, 109, -10, -911);
+}
+.badge_10 {
+	.getSprite(195, 109, -10, -1040);
+}
+.badge_1 {
+	.getSprite(195, 109, -10, -1169);
+}
+
+/* 定义可复用样式 E */
+
+/* 定义普通样式 S */
+/* 背景图 */
+.page-bgs {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+
+    .page-bg {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 1107/@bf;
+        background-image: url('@{imgUrl}/royalPalace/banner.jpg');
+    }
+}
+
+/* 页面内容 */
+.page-content {
+    position: relative;
+    z-index: 2;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.sec-throne {
+    position: relative;
+
+    &:before {
+        content: '';
+        .pic-sprite;
+        .pic-sec_bg;
+        z-index: -1;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+}
+
+.throne-zb-1 {
+    padding-top: 930/@bf;
+
+    &:before {
+        top: 930/@bf;
+    }
+}
+
+.throne-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:before {
+        content: '';
+        .pic-sprite;
+        .pic-t_left;
+    }
+
+    &:after {
+        content: '';
+        .pic-sprite;
+        .pic-t_right;
+    }
+
+    .txt {
+        .pic-sprite;
+        font-size: 0px;
+        position: relative;
+        top: 6/@bf;
+    }
+
+    .txt-ndzjzb {
+        .pic-ndzjzb;
+    }
+
+    .txt-ndoxzb {
+        .pic-ndoxzb;
+    }
+
+    .txt-ndrqzb {
+        .pic-ndrqzb;
+    }
+
+    .txt-ndtlzb {
+        .pic-ndtlzb;
+    }
+
+    .txt-ndylzb {
+        .pic-ndylzb;
+    }
+
+    .txt-ndfyzb {
+        .pic-ndfyzb;
+    }
+
+    .txt-nddrw {
+        .pic-nddrw;
+    }
+}
+
+.throne-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 140/@bf;
+    margin-top: 40/@bf;
+
+    .throne-i {
+        position: relative;
+
+        .before {
+            content: '';
+            // .throne-sprite;
+            position: absolute;
+            z-index: -1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -60%);
+        }
+
+        &:after {
+            content: '';
+            .pic-sprite;
+            position: absolute;
+            z-index: 2;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .holder {
+            .pic-sprite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -40%);
+        }
+
+        .avatar {
+            width: 280/@bf;
+            margin: 0 auto;
+            position: relative;
+            top: 22%;
+            left: -0.5%;
+
+            .pic {
+                display: block;
+                border-radius: 50%;
+                width: 270/@bf;
+                height: 270/@bf;
+                border: 6/@bf solid #d19300;
+                margin: 0 auto;
+            }
+
+            .name {
+                color: #ffd67c;
+                font-size: 36/@bf;
+                text-align: center;
+                margin-top: 30/@bf;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
+    .throne-0 {
+        width: 620/@bf;
+        height: 700/@bf;
+
+        &.user {
+            margin: 0px 2rem;
+        }
+
+        .before {
+            // .throne-sprite;
+            // .throne-z_top_2;
+            // transform: translate(-51%, -58.5%) scale(1.3);
+            background: url('@{imgUrl}/royalPalace/zb_top.png') no-repeat;
+            background-size: 506/@bf 610/@bf;
+            width: 506/@bf;
+            height: 610/@bf;
+            display: block;
+            transform: translate(-50%, -50%);
+        }
+
+        &:after {
+            .pic-masker;
+        }
+
+        .holder {
+            .pic-txt_holder;
+        }
+
+        .infos {
+            bottom: -116/@bf;
+        }
+    }
+
+    .throne-0.user {
+        .before {
+            .throne-sprite;
+            .throne-z_top_2;
+            transform: translate(-51%, -58.5%) scale(1.3);
+        }
+    }
+
+    .throne-0.zhubo:before {
+        content: '';
+        position: absolute;
+        .throne-sprite;
+        .throne-no1_bg;
+        top: 0px;
+        left: 50%;
+        transform: translate(-50%, -8%) scale(1.3);
+        z-index: -2;
+    }
+
+    .throne-1 {
+        width: 360/@bf;
+        height: 480/@bf;
+
+        .before {
+            // .throne-no1_2;
+            transform: translate(-49%, -48%);
+        }
+
+        &:after {
+            .pic-masker;
+            transform: translate(-47%, -48%) scale(0.7);
+            transform-origin: center center;
+        }
+
+        .holder {
+            .pic-holder1;
+            transform: translate(-42%, -30%);
+        }
+
+        .avatar {
+            width: 220/@bf;
+            top: 25%;
+            left: 2%;
+
+            .pic {
+                width: 200/@bf;
+                height: 200/@bf;
+                border: 4/@bf solid #d19300;
+            }
+
+            .name {
+                font-size: 32/@bf;
+                margin-top: 30/@bf;
+            }
+        }
+    }
+
+    .throne-1.user {
+        .before {
+            .throne-sprite;
+            .throne-z_top_2;
+            transform: translate(-50%, -54%);
+        }
+    }
+
+    .throne-bg-1 {
+        position: absolute;
+        .throne-sprite;
+        .throne-no1_bg;
+        top: 0px;
+        left: 0px;
+        transform: translate(-33%, -22%);
+        z-index: -2;
+    }
+
+    .throne-2 {
+        width: 320/@bf;
+        height: 480/@bf;
+
+        .before {
+            // .throne-no2;
+            // transform: translate(-50%, -54%);
+            transform: translate(-50%, -33.5%);
+        }
+
+        &:after {
+            .pic-masker2;
+            transform: translate(-47%, -35%);
+            transform-origin: center center;
+        }
+
+        .holder {
+            .pic-holder2;
+            transform: translate(-42%, -0%);
+        }
+
+        .avatar {
+            width: 220/@bf;
+            top: 41%;
+            left: 3%;
+
+            .pic {
+                width: 160/@bf;
+                height: 160/@bf;
+                border: 4/@bf solid #d19300;
+            }
+
+            .name {
+                font-size: 28/@bf;
+                margin-top: 20/@bf;
+            }
+        }
+    }
+
+    .throne-bg-2 {
+        position: absolute;
+        .throne-sprite;
+        .throne-no2_bg;
+        top: 0px;
+        left: 0px;
+        transform: translate(-33%, -8%) scale(0.8);
+        z-index: -2;
+    }
+
+    .throne-3 {
+        width: 320/@bf;
+        height: 480/@bf;
+
+        .before {
+            // .throne-no3;
+            transform: translate(-50%, -33.5%);
+        }
+
+        &:after {
+            .pic-masker3;
+            transform: translate(-47%, -35%);
+            transform-origin: center center;
+        }
+
+        .holder {
+            .pic-holder3;
+            transform: translate(-42%, -1%);
+        }
+
+        .avatar {
+            width: 220/@bf;
+            top: 39%;
+            left: 3%;
+
+            .pic {
+                width: 160/@bf;
+                height: 160/@bf;
+                border: 4/@bf solid #d19300;
+            }
+
+            .name {
+                font-size: 28/@bf;
+                margin-top: 20/@bf;
+            }
+        }
+    }
+
+    .throne-bg-3 {
+        position: absolute;
+        .throne-sprite;
+        .throne-no3_bg;
+        top: 0px;
+        left: 0px;
+        transform: translate(-33%, -8%);
+        z-index: -2;
+    }
+    
+    .infos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: -80/@bf;
+        width: 95%;
+
+        .icon-cown-0 {
+            .throne-sprite;
+            .throne-cown_top;
+        }
+        .icon-cown-1 {
+            .throne-sprite;
+            .throne-cown_top_1;
+        }
+        .icon-cown-2 {
+            .throne-sprite;
+            .throne-cown_top_2;
+        }
+        .icon-cown-3 {
+            .throne-sprite;
+            .throne-cown_top_3;
+        }
+
+        .name {
+            max-width: 200/@bf;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .name-0 {
+            max-width: 340/@bf;
+            font-size: 36/@bf;
+            color: #ffd67c;
+        }
+
+        .name-1 {
+            font-size: 30/@bf;
+            color: #fec07f;
+        }
+
+        .name-2 {
+            font-size: 30/@bf;
+            color: #bdbdbd;
+        }
+
+        .name-3 {
+            font-size: 30/@bf;
+            color: #db8c58;
+        }
+    }
+
+    // 可点击区域
+    .clicker-layer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+    }
+
+    .clicker-1 {
+        width: 300/@bf;
+        height: 340/@bf;
+        position: relative;
+        top: 60/@bf;
+        margin: 0 42/@bf;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .clicker-2,
+    .clicker-3 {
+        width: 220/@bf;
+        height: 250/@bf;
+        margin: 0 auto;
+        position: relative;
+        top: 120/@bf;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .clicker-0 {
+        width: 380/@bf;
+        height: 440/@bf;
+        margin: 0 auto;
+        position: relative;
+        z-index: 10;
+        top: 130/@bf;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .throne-0.user {
+        margin-bottom: 0.5rem;
+
+        .badge-sprite {
+            margin: 1.3rem auto 0;
+            transform: scale(1.2);
+        }
+    }
+
+    .throne-1.user {
+        margin-bottom: 1rem;
+
+        .badge-sprite {
+            margin: 0.7rem auto 0;
+        }
+    }
+}
+/* 定义普通样式 E */

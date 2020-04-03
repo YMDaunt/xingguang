@@ -1,0 +1,35 @@
+<main id="app" v-cloak>
+    <section class="list" v-if="noData">
+        <div class="noList">
+            <div class="img"></div>
+            <p>暂无收支记录</p>
+        </div>
+    </section>
+    <section v-else>
+        <ul class="budgetList">
+            <li v-for="(item,index) in budgetList" :key="index">
+                <p class="date">{{item.date}}</p>
+                <ul>
+                    <li v-for="(subItem,index) in item.list" :key="index" class="subItem">
+                        <p class="clearfix">
+                            <span class="fl" v-if="subItem.ftype === '1501' && subItem.gift_num">给<em>{{subItem.nickname}}</em>({{subItem.uid}})送{{subItem.gift_name}}x{{subItem.gift_num}}</span>
+                            <span class="fl" v-else-if="['1004','1007','1502','1510','1511'].indexOf(subItem.ftype)>=0 && subItem.uid">给<em>{{subItem.nickname}}</em>({{subItem.uid}}){{subItem.remark}}</span>
+                            <span class="fl" v-else>{{subItem.remark}}</span>
+                            <span :class="['fr',subItem.record.slice(0,1) === '-'?'reduce':'add']">{{subItem.record}}</span>
+                        </p>
+                        <p class="clearfix">
+                            <span class="fl">{{subItem.time}}</span>
+                            <span class="fr">余额：{{subItem.left}}</span>
+                        </p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <p
+            class="click_load_more get_more"
+            v-if="budgetList.length>0"
+            @click="getBudgetHistoryList">
+        <span>{{getMoreTips}}</span>
+        </p>
+    </section>
+</main>

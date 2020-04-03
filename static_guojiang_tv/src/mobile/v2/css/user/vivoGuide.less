@@ -1,0 +1,215 @@
+// ../../img/user/vivoGuide
+
+@activityName: 'vivoGuide';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+@baseImgPath: '../../img/user/vivoGuide';
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+body {
+    /*ios*/
+    -webkit-overflow-scrolling: touch;
+}
+.sprite  {
+    background-image: url('../../img/user/@{activityName}/css_sprites.png');
+    background-repeat: no-repeat;
+    background-size: 1307/@bf 649/@bf;
+}
+.blur{
+    border-radius:30/@bf;
+    background-color: rgba(255,255,255,0.2);
+    box-shadow:inset 0 0 40/@bf rgba(255,255,255,0.5);
+}
+
+/***************common end************/
+
+#app{
+    height:4774/@bf;
+    width:1080/@bf;
+    background:url('../../img/user/qqGuide/1.jpg') no-repeat 0 0 scroll,url('../../img/user/qqGuide/2.jpg') no-repeat 0 1514/@bf scroll,url('../../img/user/qqGuide/3.jpg') no-repeat 0 3287/@bf scroll;
+    background-size:1080/@bf 1514/@bf,1080/@bf 1773/@bf,1080/@bf 1489/@bf;
+    background-color: #f95d5e;
+    overflow: hidden;
+}
+
+.gift{
+    position: relative;
+    width:1013/@bf;
+    height:881/@bf;
+    margin:770/@bf auto 0;
+    .blur;
+    .title{
+        position: relative;
+        top:-64/@bf;
+        margin:0 auto;
+        width: 551/@bf;
+        height: 128/@bf;
+        .sprite;
+        background-position:  -746/@bf -10/@bf;
+    }
+    p{
+        text-align: center;
+        font-size:36/@bf;
+        color:#fff;
+    }
+    .top{
+        position: relative;
+        top:-30/@bf;
+    }
+    .gift-list{
+        width:813/@bf;
+        margin:0 auto;
+        overflow: hidden;
+        li:nth-child(1){
+            float: left;
+            .gift-pic{
+                width: 348/@bf; height: 334/@bf;
+                .sprite;
+                background-position:  -378/@bf -10/@bf;
+            }
+        }
+        li:nth-child(2){
+            float: right;
+            .gift-pic{
+                width: 348/@bf; height: 334/@bf;
+                .sprite;
+                background-position:  -10/@bf -10/@bf;
+            }
+        }
+        .gift-name{
+            font-size:40/@bf;
+            color:#fcff03;
+            margin-top:20/@bf;
+            text-align: center;
+        }
+    }
+    .get-btn{
+        width: 342/@bf;
+        height: 147/@bf;
+        margin: 35/@bf auto 10/@bf;
+        .sprite;
+        background-position:  -746/@bf -157/@bf;
+    }
+    .download-btn{
+        width: 342/@bf;
+        height: 147/@bf;
+        margin: 35/@bf auto 10/@bf;
+        .sprite;
+        background-position:  -746/@bf -324/@bf;
+    }
+}
+
+.video{
+    margin:153/@bf auto 170/@bf;
+    .blur;
+    object-fit: fill;
+    width: 1013/@bf;
+    height: 664/@bf;
+    .title{
+        position: relative;
+        top:-64/@bf;
+        width: 673/@bf;
+        height: 127/@bf;
+        margin:0 auto;
+        .sprite;
+        background-position: -10/@bf -364/@bf;
+    }
+    video{
+        width:90%;
+        display: block;
+        margin:-30/@bf auto 0;
+    }
+}
+
+
+.about{
+    .blur;
+    width: 1013/@bf;
+    height: 1873/@bf;
+    margin:0 auto;
+    .title{
+        position: relative;
+        top:-64/@bf;
+        width: 551/@bf;
+        height: 128/@bf;
+        margin:0 auto;
+        .sprite;
+        background-position: -10/@bf -511/@bf;
+    }
+    p{
+        font-size:36/@bf;
+        color:#fff;
+        margin:0 40/@bf;
+        line-height: 60/@bf;
+    }
+    .swiper-container{
+        width:100%;
+        height:1083/@bf;
+        margin-top:150/@bf;
+        .swiper-slide{
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        .slide1{
+            background-image:url('../../img/user/qqGuide/slide/1.jpg');
+        }
+        .slide2{
+            background-image:url('../../img/user/qqGuide/slide/2.jpg');
+        }
+        .slide3{
+            background-image:url('../../img/user/qqGuide/slide/3.jpg');
+        }
+        .slide4{
+            background-image:url('../../img/user/qqGuide/slide/4.jpg');
+        }
+        .slide5{
+            background-image:url('../../img/user/qqGuide/slide/5.jpg');
+        }
+    }
+}
+
+
+.download{
+    position: fixed;
+    bottom:0;
+    padding:20/@bf 74/@bf 0 68/@bf;
+    width:1080/@bf;
+    height: 187/@bf;
+    background-color: rgba(255,255,255,0.5);
+    z-index: 999;
+    .logo-wrap{
+        .logo{
+            width: 134/@bf;
+            height: 133/@bf;
+            margin-right:20/@bf;
+            .sprite;
+            background-position:  -1108/@bf -157/@bf;
+        }
+        .msg{
+            font-size:46/@bf;
+            color:#fff;
+            text-shadow: 4/@bf 4/@bf 4/@bf #333;
+        }
+    }
+    .download-btn{
+        width: 342/@bf;
+        height: 147/@bf;
+        .sprite;
+        background-position:  -746/@bf -324/@bf;
+    }
+}
+.download-tips {
+    padding: 0 20/@bf;
+    text-align: center;
+    line-height: 48/@bf;
+}
+

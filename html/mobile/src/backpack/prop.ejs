@@ -1,0 +1,26 @@
+<div id="app" v-cloak>
+    <prop></prop>
+</div>
+
+<script type="text/javascript">
+	//支付成功后回调，app调用
+	function payResultCallback(code, errMsg){
+
+		if(code){
+			hasUnpayOrder = 0
+
+			layer.closeAll()
+			app.goBuy(true)
+		}
+	}
+	//用于切换不同的页面时，重新调用自定义右上角信息的接口
+	function pageOnShow(){
+		setTimeout(function(){
+			try{
+				gBridge.changeMenuButton('商城',location.protocol + '//' + location.host + '/dist/store/list.html')
+			}catch(e){
+				console.log(e.name+ ':' +e.message)
+			}
+		}, 200)
+	}
+</script>

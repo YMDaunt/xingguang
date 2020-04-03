@@ -1,0 +1,1849 @@
+// ../../../img/activity/qixi
+
+@activityName: 'qixi';
+@baseSize: 108rem; // 1080px -> fontSize -> 108px
+
+@baseColor: #4756A8;
+@pink: #FA6475;
+@gold: #C59D50;
+@sliver: #8D92AB;
+@dred: #CB6042;
+
+@giftFS: 45/@baseSize;
+@giftFC: @baseColor;
+
+@liveFS: 22/@baseSize;
+@boardFS: 34/@baseSize;
+@boardBigFS: 36/@baseSize;
+@boardMidFS: 28/@baseSize;
+@boardFC: @baseColor;
+
+@boardMeBigFS: 42/@baseSize;
+@boardMeFS: 36/@baseSize;
+@boradBadgeFS: 27/@baseSize;
+
+@rewardFS: 36/@baseSize;
+@rewardFC: @baseColor;
+
+@reUserTitleFS: 60/@baseSize;
+@reUserFC: @baseColor;
+
+@borderC: #B8A460;
+
+@userTitleFS: @reUserTitleFS;
+@userTitleC: @borderC;
+
+@ruleTitleFS: @reUserTitleFS;
+@ruleFS: 36/@baseSize;
+
+@ruleWarnFS: 22/@baseSize;
+@ruleWarnC: @pink;
+
+@toastFS: 42/@baseSize;
+@toastBigFS: 60/@baseSize;
+@toastInfoFS: 50/@baseSize;
+@toastWarnC: @pink;
+
+//滚动更流畅
+body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+}
+
+#app button {
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+#app .button {
+    outline: none;
+    border: none;
+    text-align: center;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+/* PC Mobile 公共样式部分 */
+
+/* Mobile 单独样式部分 */
+.getHeaderSprite() {
+    width: 872/@baseSize;
+    height: 114/@baseSize;
+    background-image: url('../../../img/activity/qixi/sec-header.png');
+    background-repeat: no-repeat;
+    background-size: 892/@baseSize 803/@baseSize;
+}
+
+.getTitlesSprite(@w, @h) {
+    width: @w/@baseSize;
+    height: @h/@baseSize;
+    background-image: url('../../../img/activity/qixi/titles.png');
+    background-repeat: no-repeat;
+    background-size: 447/@baseSize 1956/@baseSize;
+}
+
+.getBtnsSprite(@w, @h) {
+    width: @w/@baseSize;
+    height: @h/@baseSize;
+    background-image: url('../../../img/activity/qixi/btns.png');
+    background-repeat: no-repeat;
+    background-size: 978/@baseSize 820/@baseSize;
+}
+
+.getBtnsSpriteScale(@w, @h, @scale) {
+    width: @scale*@w/@baseSize;
+    height: @scale*@h/@baseSize;
+    background-image: url('../../../img/activity/qixi/btns.png');
+    background-repeat: no-repeat;
+    background-size: @scale*978/@baseSize @scale*820/@baseSize;
+}
+
+.getIconsSprite(@w, @h) {
+    width: @w/@baseSize;
+    height: @h/@baseSize;
+    background-image: url('../../../img/activity/qixi/icons.png');
+    background-repeat: no-repeat;
+    background-size: 402/@baseSize 519/@baseSize;
+}
+
+.getIconsScaleSprite(@w, @h, @scale) {
+    width: @scale*@w/@baseSize;
+    height: @scale*@h/@baseSize;
+    background-image: url('../../../img/activity/qixi/icons.png');
+    background-repeat: no-repeat;
+    background-size: @scale*402/@baseSize @scale*519/@baseSize;
+}
+
+.getIconsBird() {
+    .getIconsSprite(93, 60);
+    background-position: -237/@baseSize -333/@baseSize;
+}
+
+// 全局可复用
+.activeBtn() {
+    // cursor: pointer;
+    // background-color: transparent;
+
+    &:active {
+        opacity: 0.6;
+    }
+}
+
+body {
+    font-size: 0px;
+    line-height: 0px;
+}
+ 
+#app {
+    font-size: 0px;
+
+    .secbox-bg {
+        width: 100%;
+    }
+
+    .c-box {
+        position: relative;
+
+        .c-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            right: 0px;
+            line-height: initial;
+
+            .c-title {
+                .getHeaderSprite();
+                margin: 0 auto;
+            }
+        }
+    }
+
+    .cornor-box {
+        // background: #EDF0F5;
+        // box-shadow: 0px 0px 15/@baseSize #999;
+        background-image: url('../../../img/activity/qixi/cornor_bg.png');
+        background-repeat: repeat-y;
+        background-position: 0 0;
+        background-size: 100% 1px;
+
+        position: relative;
+        margin-top: 23/@baseSize;
+        margin-bottom: 23/@baseSize;
+
+        .cornor-top {
+            display: block;
+            background-image: url('../../../img/activity/qixi/cornor_top.png');
+            width: 1080/@baseSize;
+            height: 32/@baseSize;
+            background-position: 0 0;
+            background-size: 100% 100%;
+            position: absolute;
+            top: -32/@baseSize;
+            left: 0px;
+        }
+
+        .cornor-bottom {
+            display: block;
+            background-image: url('../../../img/activity/qixi/cornor_btm.png');
+            width: 1079/@baseSize;
+            height: 30/@baseSize;
+            background-position: 0 0;
+            background-size: 100% 100%;
+            position: absolute;
+            bottom: -30/@baseSize;
+            left: 0px;
+        }
+    }
+
+    .gift-box {
+
+        .c-title {
+            background-position: -10/@baseSize -10/@baseSize;
+            margin-top: 76/@baseSize !important;
+        }
+
+        .gifts {
+            margin-top: 65/@baseSize;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+
+            .jieyuan {
+                .gift-icon {
+                    .getTitlesSprite(430, 515);
+                    background-position: -10/@baseSize -894/@baseSize;
+                    margin: 0 auto;
+                    text-align: center;
+
+                    img {
+                        width: 65%;
+                        position: relative;
+                        top: 22%;
+                    }
+                }
+            }
+
+            .queqiao {
+                .gift-icon {
+                    .getTitlesSprite(430, 515);
+                    background-position: -10/@baseSize -1431/@baseSize;
+                    margin: 0 auto;
+                    text-align: center;
+
+                    img {
+                        width: 60%;
+                        position: relative;
+                        top: 23%;
+                    }
+                }
+            }
+
+            .gift-state {
+                font-size: @giftFS;
+                color: @giftFC;
+                text-align: center;
+            }
+
+            .gift-opt {
+                margin-top: 30/@baseSize;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+
+                .gift-buy {
+                    .activeBtn();
+                    .getBtnsSprite(234, 102);
+                    background-position: -12/@baseSize -538/@baseSize;
+                    margin: 0 10/@baseSize;
+                }
+
+                .gift-preview {
+                    .activeBtn();
+                    .getBtnsSprite(226, 102);
+                    background-position: -260/@baseSize -538/@baseSize;
+                    margin: 0 10/@baseSize;
+                }
+            }
+        }
+    }
+
+    .board-box {
+        .c-title {
+            background-position: -10/@baseSize -144/@baseSize;
+        }
+
+        .board-nav {
+            margin-top: 50/@baseSize;
+            padding: 0 15/@baseSize;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            @scale: 0.8;
+
+            li {
+                .getBtnsSpriteScale(401, 151, @scale);
+                opacity: 0.6;
+            }
+
+            li.active {
+                opacity: 1;
+                .getBtnsSprite(401, 151);
+                // .activeBtn();
+            }
+
+            li.board-nav-user {
+                background-position: -421*@scale/@baseSize -368*@scale/@baseSize;
+
+                &.active {
+                    background-position: -421/@baseSize -368/@baseSize;
+                }
+            }
+
+            li.board-nav-love {
+                background-position: -537*@scale/@baseSize -184*@scale/@baseSize;
+
+                &.active {
+                    background-position: -537/@baseSize -184/@baseSize;
+                }
+            }
+
+            li.board-nav-hours {
+                background-position: -10*@scale/@baseSize -368*@scale/@baseSize;
+
+                &.active {
+                    background-position: -10/@baseSize -368/@baseSize;
+                }
+            }
+        }
+
+        .board-list {
+            margin: 55/@baseSize 0/@baseSize 0;
+            padding: 0 55/@baseSize;
+            padding-bottom: 26/@baseSize;
+            min-height: 1700/@baseSize;
+        }
+
+        // 可复用 - 创建底部信息栏
+        .createBtmMe () {
+            .me-badge {
+                background: @pink;
+                color: #fff;
+                font-size: @boradBadgeFS;
+                border-top-right-radius: 16/@baseSize;
+                border-bottom-right-radius: 16/@baseSize;
+                padding: 0 10/@baseSize;
+                position: absolute;
+                left: -20/@baseSize;
+                top: -16/@baseSize;
+                text-align: center;
+                min-width: 100/@baseSize;
+            }
+
+            .me-avatar {
+                display: block;
+                width: 160/@baseSize;
+                height: 160/@baseSize;
+                border: 2/@baseSize solid @baseColor;
+                border-radius: 50%;
+                overflow: hidden;
+                background: #ccc;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .me-live {
+                position: absolute;
+                left: 140/@baseSize;
+                transform: translateX(-50%);
+                bottom: -16/@baseSize;
+
+                color: #fff;
+                font-size: @liveFS;
+                background: @baseColor;
+                border-radius: 24/@baseSize;
+                padding: 8/@baseSize 14/@baseSize 4/@baseSize;
+                line-height: 34/@baseSize;
+            }
+
+            .me-info {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-40%);
+                left: 0px;
+                margin-left: 240/@baseSize;
+                width: 710/@baseSize;
+                overflow: hidden;
+
+                .me-header {
+                    display: flex;
+                    justify-content: space-between;
+
+                    .name {
+                        font-weight: bold;
+                        font-size: @boardMeBigFS;
+                        color: @boardFC;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        width: 400/@baseSize;
+                    }
+                    .value {
+                        font-size: @boardMeFS;
+                        color: @boardFC;
+                        white-space: nowrap;
+                        word-break: break-all;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+
+                .me-desc {
+                    font-size: @boardMeFS;
+                    color: @boardFC;
+                    margin-top: 10/@baseSize;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+
+        // 可复用 - 创建排名列
+        .createColRank() {
+            width: 150/@baseSize;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+        }
+
+        // 可复用 - 创建昵称列
+        .createColName() {
+            width: 550/@baseSize;
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            .avatar {
+                width: 106/@baseSize;
+                height: 106/@baseSize;
+                border: 4/@baseSize solid @baseColor;
+                border-radius: 50%;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .live {
+                font-size: @boardFS;
+                color: #fff;
+                background: @baseColor;
+                padding: 2/@baseSize 8/@baseSize 2/@baseSize;
+                border-radius: 24/@baseSize;
+
+                position:absolute;
+                top: 0;
+                left: 106/@baseSize;
+                transform: translateX(-60%) translateY(-30%) scale(0.9);
+            }
+
+            .name {
+                padding-left: 20/@baseSize;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 440/@baseSize;
+            }
+        }
+
+        // 可复用 - 创建计数列
+        .createColCount() {
+            width: 230/@baseSize;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+        }
+
+        // 情投意合榜
+        .love {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            border: 4/@baseSize solid @borderC;
+            border-radius: 10/@baseSize;
+            padding-bottom: 46/@baseSize;
+            display: none;
+            // min-height: 1700/@baseSize;
+
+            &.active {
+                display: flex;
+            }
+        }
+
+        // 情投意合榜的item
+        .love-i {
+            position: relative;
+            width: 450/@baseSize;
+            height: 218/@baseSize;
+            margin-top: 70/@baseSize;
+
+            &.hidden {
+                opacity: 0;
+            }
+
+            .love-avatar {
+                display: block;
+                width: 120/@baseSize;
+                height: 120/@baseSize;
+                border: 2/@baseSize solid @pink;
+                border-radius: 50%;
+                overflow: hidden;
+                background: #ccc;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .love-nickname {
+                color: #fff;
+                font-size: @boardMidFS;
+                border-radius: 26/@baseSize;
+                line-height: 40/@baseSize;
+                padding: 10/@baseSize 12/@baseSize 6/@baseSize;
+                position: absolute;
+                white-space: nowrap;
+                display: inline-block;
+                width: 200/@baseSize;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-align: center;
+            }
+
+            .love-value {
+                font-size: @boardFS;
+                color: @boardFC;
+                display: block;
+                text-align: center;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                top: -18/@baseSize;
+            }
+
+            .love-bridge {
+                display: block;
+                background-image: url('../../../img/activity/qixi/activities.png');
+                background-repeat: no-repeat;
+
+                @scale: 0.75;
+                width: 461*@scale/@baseSize;
+                height: 162*@scale/@baseSize;
+                background-size: 675*@scale/@baseSize 182*@scale/@baseSize;
+                background-position: -204*@scale/@baseSize -10*@scale/@baseSize;
+
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 25/@baseSize;
+            }
+
+            .love-girl {
+                position: absolute;
+                width: 50%;
+                height: 120/@baseSize;
+                top: 56/@baseSize;
+                left: 0px;
+                z-index: 0;
+
+                .love-badge {}
+
+                .love-live {
+                    position: absolute;
+                    left: 64/@baseSize;
+                    bottom: 19/@baseSize;
+
+                    color: #fff;
+                    font-size: @liveFS;
+                    background: @baseColor;
+                    border-radius: 24/@baseSize;
+                    padding: 6/@baseSize 10/@baseSize;
+                    line-height: 30/@baseSize;
+                }
+
+                .love-nickname {
+                    background: @pink;
+                    bottom: -32/@baseSize;
+                    left: 0px;
+                }
+                
+            }
+
+            .love-boy {
+                position: absolute;
+                width: 50%;
+                height: 120/@baseSize;
+                top: 56/@baseSize;
+                right: 0px;
+                z-index: 0;
+
+                .love-avatar {
+                    position: absolute;
+                    right: 0px;
+                    border-color: @baseColor;
+                }
+
+                .love-nickname {
+                    background: @baseColor;
+                    bottom: -32/@baseSize;
+                    right: 0px;
+                }
+            }
+
+            &.love-1 {
+                width: 735/@baseSize;
+                height: 268/@baseSize;
+                margin-top: 40/@baseSize;
+
+                .love-girl,
+                .love-boy {
+                    top: 70/@baseSize;
+                    height: 160/@baseSize;
+                }
+
+                .love-value {
+                    top: 24/@baseSize;
+                    font-size: @boardBigFS;
+                }
+
+                .love-bridge {
+                    @scale: 1;
+                    width: 461*@scale/@baseSize;
+                    height: 162*@scale/@baseSize;
+                    background-size: 675*@scale/@baseSize 182*@scale/@baseSize;
+                    background-position: -204*@scale/@baseSize -10*@scale/@baseSize;
+
+                    .love-woman {
+                        display: block;
+                        background-image: url('../../../img/activity/qixi/activities.png');
+                        background-repeat: no-repeat;
+
+                        width: 93/@baseSize;
+                        height: 97/@baseSize;
+                        background-size: 675/@baseSize 182/@baseSize;
+                        background-position: -91/@baseSize -10/@baseSize;
+                        position: absolute;
+                        bottom: 22/@baseSize;
+                        left: -12/@baseSize;
+                    }
+
+                    .love-man {
+                        display: block;
+                        background-image: url('../../../img/activity/qixi/activities.png');
+                        background-repeat: no-repeat;
+
+                        width: 61/@baseSize;
+                        height: 101/@baseSize;
+                        background-size: 675/@baseSize 182/@baseSize;
+                        background-position: -10/@baseSize -10/@baseSize;
+                        position: absolute;
+                        bottom: 22/@baseSize;
+                        right: 16/@baseSize;
+                    }
+                }
+
+                .love-avatar {
+                    width: 160/@baseSize;
+                    height: 160/@baseSize;
+                    border-color: @gold;
+                }
+
+                .love-live {
+                    position: absolute;
+                    left: 100/@baseSize;
+                    bottom: 30/@baseSize;
+
+                    padding: 6/@baseSize 10/@baseSize;
+                }
+
+                .love-nickname {
+                    padding: 12/@baseSize 22/@baseSize 6/@baseSize;
+                    line-height: 48/@baseSize;
+                    min-height: 48/@baseSize;
+                    font-size: @boardBigFS;
+                    width: 300/@baseSize;
+                    border-radius: 32/@baseSize;
+                }
+
+                .love-girl {
+                    .love-nickname {
+                        background: @gold;
+                    }
+                }
+                
+            }
+
+            .love-badge-1 {
+                .getIconsSprite(109, 92);
+                background-position: -130/@baseSize -220/@baseSize;
+                position: absolute;
+                top: -65/@baseSize;
+                left: 50/@baseSize;
+            }
+
+            .love-badge-2 {
+                .getIconsSprite(85, 72);
+                background-position: -131/@baseSize -334/@baseSize;
+                position: absolute;
+                top: -46/@baseSize;
+                left: 40/@baseSize;
+            }
+
+            .love-badge-3 {
+                .getIconsSprite(86, 73);
+                background-position: -259/@baseSize -221/@baseSize;
+                position: absolute;
+                top: -46/@baseSize;
+                left: 40/@baseSize;
+            }
+
+            .getBadge(@w, @h) {
+                width: @w/@baseSize;
+                height: @h/@baseSize;
+                background-image: url('../../../img/activity/qixi/badges.png');
+                background-repeat: no-repeat;
+                background-size: 328/@baseSize 198/@baseSize;
+                display: block;
+                position: absolute;
+                top: 0px;
+                left: 120/@baseSize;
+                transform: translateX(-90%) translateY(-50%);
+            }
+
+            .love-badge-4 {
+                .getBadge(84, 46);
+                background-position: -130/@baseSize -10/@baseSize;
+            }
+
+            .love-badge-5 {
+                .getBadge(85, 45);
+                background-position: -10/@baseSize -79/@baseSize;
+            }
+
+            .love-badge-6 {
+                .getBadge(85, 45);
+                background-position: -115/@baseSize -79/@baseSize;
+            }
+
+            .love-badge-7 {
+                .getBadge(86, 44);
+                background-position: -10/@baseSize -144/@baseSize;
+            }
+
+            .love-badge-8 {
+                .getBadge(84, 45);
+                background-position: -234/@baseSize -10/@baseSize;
+            }
+
+            .love-badge-9 {
+                .getBadge(83, 45);
+                background-position: -234/@baseSize -75/@baseSize;
+            }
+
+            .love-badge-10 {
+                .getBadge(100, 49);
+                background-position: -10/@baseSize -10/@baseSize;
+            }
+
+            .love-badge-4 {
+                .getBadge(84, 46);
+                background-position: -130/@baseSize -10/@baseSize;
+            }
+        }
+
+        // 情投意合榜底栏
+        .love-board-me {
+            margin-top: 40/@baseSize;
+            padding-left: 60/@baseSize;
+            padding-top: 16/@baseSize;
+            position: relative;
+            display: none;
+
+            &.active {
+                display: block;
+            }
+
+            &.hidden {
+                opacity: 0;
+            }
+
+            .createBtmMe();
+        }
+
+        // 小时榜
+        .hours {
+            display: none;
+
+            &.active {
+                display: block;
+            }
+
+            .hours-secA {
+                border: 4/@baseSize solid @borderC;
+                border-radius: 10/@baseSize;
+                padding: 30/@baseSize 10/@baseSize 40/@baseSize;
+
+                .hours-blog-h {
+                    font-size: @boardBigFS;
+                    color: @boardFC;
+                    text-align: center;
+
+                    .time {
+                        color: @pink;
+                    }
+                }
+    
+                .hours-blog-subh {
+                    font-size: @boardFS;
+                    color: @boardFC;
+                    text-align: center;
+                    margin: 6/@baseSize 0;
+                }
+    
+                .love-i {
+                    margin: 0 auto 25/@baseSize;
+                }
+
+                .love-live {
+                    left: 86/@baseSize;
+                }
+    
+                .sep {
+                    height: 4/@baseSize;
+                    background: @gold;
+                }
+    
+                .hours-me {
+                    margin-top: 40/@baseSize;
+                    padding-left: 60/@baseSize;
+                    padding-top: 22/@baseSize;
+                    position: relative;
+                }
+    
+                .createBtmMe();
+    
+                .me-badge {
+                    left: -12/@baseSize;
+                }
+
+                .hours-finished {
+                    font-size: @reUserTitleFS;
+                    color: @baseColor;
+                    text-align: center;
+                    font-weight: bold;
+                    padding: 80/@baseSize 0;
+                }
+            }
+
+            .hours-secB {
+                margin-top: 54/@baseSize;
+
+                .title {
+                    font-size: @reUserTitleFS;
+                    color: @baseColor;
+                    text-align: center;
+                    font-weight: bold;
+                }
+
+                .hours-list {
+                    border: 4/@baseSize solid @borderC;
+                    border-radius: 10/@baseSize;
+                    padding: 10/@baseSize;
+                    margin-top: 20/@baseSize;
+                    
+                }
+
+                .hours-list-header {
+                    font-size: @boardFS;
+                    color: @baseColor;
+                    font-weight: bold;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 42/@baseSize 0px 20/@baseSize;
+
+                    .hours-i-name {
+                        text-align: center;
+                        display: inline-block;
+                    }
+                }
+
+                .hours-list-box {
+                    height: 1068/@baseSize;
+                    overflow-y: auto;
+                }
+
+                .hours-item {
+                    font-size: @boardFS;
+                    color: @baseColor;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin: 42/@baseSize 0px;
+                }
+
+                .hours-i-rank {
+                    .createColRank();
+                }
+
+                .hours-i-name {
+                    .createColName();
+                }
+
+                .hours-i-count {
+                    .createColCount();
+                }
+            }
+        }
+
+        // 用户榜 
+        .users {
+            display: none;
+            padding-top: (165/2)/@baseSize;
+
+            &.active {
+                display: block;
+            }
+
+            .users-list {
+                border: 4/@baseSize solid @borderC;
+                border-radius: 10/@baseSize;
+                padding: 30/@baseSize 10/@baseSize 10/@baseSize;
+                position: relative;
+            }
+
+            .user-list-nav {
+                display: flex;
+                justify-content: space-around;
+                width: 100%;
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                transform: translateY(-50%);
+
+                span {
+                    // .activeBtn();
+                    display: inline-block;
+                    width: 430/@baseSize;
+                    height: 135/@baseSize;
+                    line-height: 135/@baseSize;
+                    border-radius: 16/@baseSize;
+                    text-align: center;
+                    background: #bfbfbf;
+                    font-size: @userTitleFS;
+                    color: #fff;
+                }
+
+                span.active {
+                    background: @userTitleC;
+                }
+            }
+        
+            .user-list-content {}
+
+            .user-l-c-contribute {
+                display: none;
+                &.active {
+                    display: block;
+                }
+            }
+
+            .user-l-c-dao {
+                display: none;
+                &.active {
+                    display: block;
+                }
+            }
+
+            .user-l-header {
+                display: flex;
+                margin-top: 200/@baseSize;
+                padding-bottom: 85/@baseSize;
+                justify-content: space-around;
+
+                .avatar {
+                    display: block;
+                    width: 160/@baseSize;
+                    height: 160/@baseSize;
+                    border: 2/@baseSize solid @baseColor;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    background: #ccc;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                .live {
+                    position: absolute;
+                    left: 70/@baseSize;
+                    bottom: 10/@baseSize;
+
+                    color: #fff;
+                    font-size: @liveFS;
+                    background: @baseColor;
+                    border-radius: 24/@baseSize;
+                    padding: 6/@baseSize 10/@baseSize;
+                    line-height: 30/@baseSize;
+                }
+
+                .name {
+                    display: inline-block;
+                    width: 200/@baseSize;
+                    color: #fff;
+                    font-size: @boardMidFS;
+                    border-radius: 26/@baseSize;
+                    line-height: 40/@baseSize;
+                    padding: 10/@baseSize 12/@baseSize 4/@baseSize;
+                    position: absolute;
+                    bottom: -40/@baseSize;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    text-align: center;
+
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .desc {
+                    font-size: @boardFS;
+                    color: @baseColor;
+                    position: absolute;
+                    max-width: 200%;
+                    white-space: nowrap;
+                    left: 50%;
+                    bottom: -90/@baseSize;
+                    transform: translateX(-50%);
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .user-l-item-1 {
+                    position: relative;
+                    top: -80/@baseSize;
+
+                    .crown {
+                        .getIconsSprite(109, 92);
+                        background-position: -130/@baseSize -220/@baseSize;
+                        position: absolute;
+                        top: -65/@baseSize;
+                        left: 56/@baseSize;
+                    }
+
+                    .avatar {
+                        border-color: @gold;
+                    }
+
+                    .name {
+                        background: @gold;
+                    }
+                }
+
+                .user-l-item-2 {
+                    position: relative;
+
+                    .crown {
+                        .getIconsSprite(85, 72);
+                        background-position: -131/@baseSize -334/@baseSize;
+                        position: absolute;
+                        top: -46/@baseSize;
+                        left: 65/@baseSize;
+                    }
+
+                    .avatar {
+                        border-color: @sliver;
+                    }
+
+                    .name {
+                        background: @sliver;
+                    }
+                }
+           
+                .user-l-item-3 {
+                    position: relative;
+
+                    .crown {
+                        .getIconsSprite(86, 73);
+                        background-position: -259/@baseSize -221/@baseSize;
+                        position: absolute;
+                        top: -46/@baseSize;
+                        left: 65/@baseSize;
+                    }
+
+                    .avatar {
+                        border-color: @dred;
+                    }
+
+                    .name {
+                        background: @dred;
+                    }
+                }
+            }
+
+            .user-l-main-th {
+                font-size: @boardFS;
+                color: @baseColor;
+                font-weight: bold;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 42/@baseSize 0px 20/@baseSize;
+                margin-top: 30/@baseSize;
+
+                .user-i-name {
+                    text-align: center;
+                    display: inline-block;
+                }
+            }
+
+            .user-l-main {
+                height: 1088/@baseSize;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .user-l-item {
+                font-size: @boardFS;
+                color: @baseColor;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: 42/@baseSize 0px;
+            }
+
+            .user-i-rank {
+                .createColRank();
+            }
+
+            .user-i-name {
+                .createColName();
+            }
+
+            .user-i-count {
+                .createColCount();
+            }
+
+            .users-me {
+                margin-top: 40/@baseSize;
+                padding-left: 60/@baseSize;
+                padding-top: 22/@baseSize;
+                position: relative;
+
+                .createBtmMe();
+            }
+        }
+
+    }
+
+    .rewards-box {
+        .c-title {
+            background-position: -10/@baseSize -278/@baseSize;
+            margin-top: 50/@baseSize !important;
+        }
+
+        .rewards {
+            margin-top: 50/@baseSize;
+            padding-bottom: 20/@baseSize;
+
+            .rules {
+                padding: 0 55/@baseSize;
+            }
+
+            .rules-i {
+                display: flex;
+                line-height: 70/@baseSize;
+
+                .rules-icon {
+                    display: inline-block;
+                    .getIconsBird();
+
+                    color: #fff;
+                    font-size: @rewardFS;
+                    text-align: center;
+                    line-height: 70/@baseSize;
+                }
+
+                .rules-desc {
+                    display: inline-block;
+                    margin-left: 10/@baseSize;
+                    font-size: @rewardFS;
+                    color: @rewardFC;
+                    max-width: 900/@baseSize;
+                }
+            }
+
+            .rewards-list {
+                border: 4/@baseSize solid @borderC;
+                border-radius: 10/@baseSize;
+                margin: 10/@baseSize 59/@baseSize 0/@baseSize;
+                padding: 35/@baseSize 16/@baseSize;
+
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+
+            .rewards-list-item {
+                border: 4/@baseSize solid @borderC;
+                position: relative;
+                padding-top: 58/@baseSize;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .rewards-list-i {
+                text-align: center;
+                font-size: @rewardFS;
+                padding-top: 6/@baseSize;
+                color: @rewardFC;
+            }
+
+            .rewards-title {
+                .getTitlesSprite(284, 73);
+                display: block;
+                position: absolute;
+                top: -15/@baseSize;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .rewards-list-1,
+            .rewards-list-2 {
+                width: 450/@baseSize;
+                height: 257/@baseSize;
+                line-height: 46/@baseSize;
+            }
+
+            .rewards-list-3,
+            .rewards-list-4,
+            .rewards-list-5 {
+                width: 300/@baseSize;
+                min-height: 190/@baseSize;
+                margin-top: 35/@baseSize;
+            }
+
+            .rewards-list-1 {
+                .rewards-title {
+                    background-position: -10/@baseSize -105/@baseSize;
+                }
+            }
+            .rewards-list-2 {
+                .rewards-title {
+                    background-position: -10/@baseSize -199/@baseSize;
+                }
+            }
+            .rewards-list-3 {
+                .rewards-title {
+                    background-position: -10/@baseSize -293/@baseSize;
+                }
+            }
+            .rewards-list-4 {
+                .rewards-title {
+                    background-position: -10/@baseSize -387/@baseSize;
+                }
+            }
+            .rewards-list-5 {
+                .rewards-title {
+                    background-position: -10/@baseSize -481/@baseSize;
+                }
+            }
+        }
+    }
+
+    .rw-user-box {
+        .c-title {
+            background-position: -10/@baseSize -412/@baseSize;
+            margin-top: 65/@baseSize !important;
+        }
+
+        .rw-content {
+            padding: 20/@baseSize 55/@baseSize;
+            margin-top: 55/@baseSize;
+        }
+
+        .rw-user {
+            border: 4/@baseSize solid @borderC;
+            border-radius: 10/@baseSize;
+            padding: 10/@baseSize 10/@baseSize 30/@baseSize;
+        }
+
+        .rw-user-contribute {}
+
+        .rw-user-title {
+            font-size: @reUserTitleFS;
+            color: @reUserFC;
+            font-weight: bold;
+            text-align: center;
+
+            .icon-tips {
+                .getBtnsSprite(58, 58);
+                background-position: -535/@baseSize -660/@baseSize;
+                display: inline-block;
+                margin-left: 10/@baseSize;
+                position: relative;
+                top: 6/@baseSize;
+
+                .rw-dao-tips {
+                    position: absolute;
+                    width: 791/@baseSize;
+                    height: 178/@baseSize;
+                    z-index: 8;
+                    top: 64/@baseSize;
+                    left: -490/@baseSize;
+                    background: url('../../../img/activity/qixi/tips_bg.png') no-repeat;
+                    background-size: cover;
+                    padding: 0px 14/@baseSize;
+                    font-size: @rewardFS;
+                    color: @reUserFC;
+                    font-weight: normal;
+                    text-align: left;
+
+                    display: flex;
+                    align-items: center;
+
+                    display: none;
+
+                    &.active {
+                        display: flex;
+                    }
+                }
+            }
+        }
+
+        .re-user-list {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .re-user-list-item {
+            border: 4/@baseSize solid @borderC;
+            position: relative;
+            padding-top: 58/@baseSize;
+            padding-bottom: 10/@baseSize;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            width: 310/@baseSize;
+            min-height: 190/@baseSize;
+            margin-top: 35/@baseSize;
+        }
+
+        .re-user-title {
+            .getTitlesSprite(284, 73);
+            display: block;
+            position: absolute;
+            top: -15/@baseSize;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .re-user-list-1 {
+            .re-user-title {
+                background-position: -10/@baseSize -105/@baseSize;
+            }
+        }
+        .re-user-list-2 {
+            .re-user-title {
+                background-position: -10/@baseSize -199/@baseSize;
+            }
+        }
+        .re-user-list-3 {
+            .re-user-title {
+                background-position: -10/@baseSize -11/@baseSize;
+            }
+        }
+
+        .re-user-list-i {
+            text-align: center;
+            font-size: @rewardFS;
+            color: @rewardFC;
+            padding-top: 6/@baseSize;
+        }
+
+        .rw-user-dao {
+            .rw-user-title {
+                margin-top: 40/@baseSize;
+            }
+        }
+
+        .icon-dao {
+            .getIconsScaleSprite(64, 66, 1.2);
+            display: block;
+            background-position: -1.2*130/@baseSize -1.2*427/@baseSize;
+            margin: 0 auto;
+        }
+    }
+
+    // 可复用 获取喜鹊列表条目栏
+    .getBirdList() {
+        .states-i {
+            display: flex;
+            line-height: 70/@baseSize;
+        }
+
+        .states-icon {
+            display: inline-block;
+            .getIconsBird();
+
+            color: #fff;
+            font-size: @rewardFS;
+            text-align: center;
+            line-height: 70/@baseSize;
+        }
+
+        .states-desc {
+            display: inline-block;
+            margin-left: 10/@baseSize;
+            font-size: @rewardFS;
+            color: @rewardFC;
+            max-width: 900/@baseSize;
+            word-break: break-all;
+        }
+    }
+    
+    .state-box {
+        .c-title {
+            background-position: -10/@baseSize -546/@baseSize;
+            margin-top: 40/@baseSize !important;
+        }
+
+        .state-content {
+            margin-top: 50/@baseSize;
+            padding-bottom: 20/@baseSize;
+            padding-top: 20/@baseSize;
+
+            .states {
+                padding: 0 55/@baseSize;
+            }
+
+            .getBirdList();
+        }
+
+        .copyright {
+            font-size: @rewardFS;
+            color: @rewardFC;
+            text-align: center;
+            margin-top: 60/@baseSize;
+        }
+    }
+
+    // 创建弹出层
+    .createToast() {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 3;
+        display: none;
+        line-height: initial;
+
+        &.active {
+            display: block;
+        }
+
+        .toast-close {
+            .activeBtn();
+            .getBtnsSprite(114, 107);
+            background-position: -525/@baseSize -532/@baseSize;
+            position: absolute;
+            top: -50/@baseSize;
+            right: 15/@baseSize;
+            z-index: 3;
+        }
+    }
+
+    // 活动规则 - 弹出层
+    .rules-box {
+        .createToast();
+
+        .rules-content {
+            height: 93%;
+            margin-top: 80/@baseSize;
+        }
+
+        .rules-main {
+            padding: 30/@baseSize 0;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .c-title {
+            .getHeaderSprite();
+            margin: 0 auto 0;
+            background-position: -10/@baseSize -680/@baseSize;
+        }
+
+        .rules-list {
+            border: 4/@baseSize solid @borderC;
+            border-radius: 10/@baseSize;
+            padding: 30/@baseSize 10/@baseSize 40/@baseSize;
+            margin: 30/@baseSize 55/@baseSize 50/@baseSize;
+            position: relative;
+        }
+
+        .getBirdList();
+
+        .rules-header {
+            text-align: center;
+
+            .title {
+                font-size: @ruleTitleFS;
+                color: @baseColor;
+            }
+
+            .desc {
+                font-size: @ruleFS;
+                color: @baseColor;
+                margin-top: 16/@baseSize;
+            }
+        }
+
+        .gifts-list {
+            margin: 10/@baseSize 0 20/@baseSize;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .gifts-item {
+            width: 460/@baseSize;
+            height: 320/@baseSize;
+
+            border: 4/@baseSize solid @borderC;
+            border-radius: 10/@baseSize;
+            margin: 30/@baseSize 5/@baseSize 0/@baseSize;
+            padding: 50/@baseSize 16/@baseSize 10/@baseSize;
+            position: relative;
+
+            font-size: @ruleFS;
+            color: @baseColor;
+
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .gifts-title {
+            .getTitlesSprite(352, 84);
+            display: block;
+            position: absolute;
+            top: -15/@baseSize;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .gifts-avatar {
+            width: 183/@baseSize;
+            height: 190/@baseSize;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .gifts-info {
+            span {
+                display: block;
+            }
+        }
+
+        .gifts-desc {
+            position: absolute;
+            bottom: 0/@baseSize;
+            left: 0;
+            text-align: center;
+            width: 100%;
+            font-size: @ruleWarnFS;
+            color: @ruleWarnC;
+            transform: scale(0.9);
+        }
+
+        .gifts-i-love {
+            .gifts-title {
+                background-position: -10/@baseSize -788/@baseSize;
+            }
+        }
+        .gifts-i-bird {
+            .gifts-title {
+                background-position: -10/@baseSize -682/@baseSize;
+            }
+        }
+        .gifts-i-oldman {
+            .gifts-title {
+                background-position: -10/@baseSize -576/@baseSize;
+            }
+        }
+
+        .rule-jieti {
+            display: flex;
+            justify-content: space-around;
+            margin: 10/@baseSize 0;
+        }
+
+        .rule-jieti-i {
+            font-size: @ruleFS;
+            width: 180/@baseSize;
+            text-align: center;
+
+            .main {
+                display: inline-block;
+                width: 160/@baseSize;
+                height: 190/@baseSize;
+                border: 2/@baseSize solid @borderC;
+                border-radius: 10/@baseSize;
+                color: @baseColor;
+
+                .avatar {
+                    display: inline-block;
+                    width: 127/@baseSize;
+                    height: 127/@baseSize;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+
+            .desc {
+                display: inline-block;
+                color: @ruleWarnC;
+                padding-top: 12/@baseSize;
+            }
+        }
+    }
+
+    .getFlexToast() {
+        .createToast();
+
+        display: none;
+        align-items: center;
+        line-height: initial;
+
+        &.active {
+            display: flex;
+        }
+    }
+
+    .getBorderBox() {
+        border: 4/@baseSize solid @borderC;
+        border-radius: 10/@baseSize;
+        padding: 48/@baseSize 10/@baseSize 48/@baseSize;
+        margin: 0 55/@baseSize;
+        position: relative;
+    }
+
+    .opts-box {
+        display: flex;
+        justify-content: center;
+        margin-top: 40/@baseSize;
+        
+        span {
+            .activeBtn();
+            margin: 0 6/@baseSize;
+        }
+
+        .btn-buy {
+            .getBtnsSprite(514, 164);
+            background-position: -10/@baseSize -0/@baseSize;
+        }
+
+        .btn-cancel {
+            .getBtnsSprite(450, 164);
+            background-position: -537/@baseSize -0/@baseSize;
+        }
+
+        .btn-charge {
+            .getBtnsSprite(510, 164);
+            background-position: 0/@baseSize -656/@baseSize;
+        }
+
+        .btn-ok {
+            .getBtnsSprite(514, 164);
+            background-position: -10/@baseSize -184/@baseSize;
+        }
+    }
+
+    // 购买弹出层
+    .toast-buy-box {
+        .getFlexToast();
+
+        .buy-content {
+            width: 100%;
+            padding-bottom: 16/@baseSize;
+        }
+
+        .border-box {
+            .getBorderBox();
+
+            .buy-input {
+                font-size: @toastFS;
+                color: @baseColor;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .label { }
+
+                input {
+                    width: 600/@baseSize;
+                    border: 4/@baseSize solid @borderC;
+                    background: transparent;
+                    padding: 35/@baseSize;
+                    border-radius: 10/@baseSize;
+                    margin: 0 35/@baseSize;
+                    font-size: @toastFS;
+                    color: @baseColor;
+                }
+
+                .per { }
+            }
+
+            .buy-info {
+                margin-top: 30/@baseSize;
+                font-size: @toastFS;
+                color: @baseColor;
+                text-align: center;
+
+                .desc {
+                    width: 600/@baseSize;
+                    text-align: left;
+                }
+            }
+        }
+    }
+
+    // 充值层
+    .toast-yue-box {
+        .getFlexToast();
+
+        .yue-content {
+            width: 100%;
+            padding-bottom: 16/@baseSize;
+        }
+
+        .border-box {
+            .getBorderBox();
+        }
+
+        .yue-info {
+            padding: 75/@baseSize 0;
+            text-align: center;
+
+            .desc {
+                font-size: @toastInfoFS;
+                color: @toastWarnC;
+            }
+        }
+    }
+
+    // 确认层
+    .toast-info-box {
+        .getFlexToast();
+
+        .info-content {
+            width: 100%;
+            padding-bottom: 16/@baseSize;
+        }
+
+        .border-box {
+            .getBorderBox();
+        }
+
+        .info-info {
+            padding: 75/@baseSize 0;
+            text-align: center;
+
+            .desc {
+                font-size: @toastInfoFS;
+                color: @baseColor;
+            }
+        }
+    }
+
+    // 侧边悬浮按钮
+    .rules-btn {
+        .activeBtn();
+        .getIconsSprite(100, 287);
+        background-position: -10/@baseSize -221/@baseSize;
+        position: fixed;
+        bottom: 36%;
+        right: 0;
+        z-index: 2;
+    }
+
+    .svg-layer {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        background: rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+        z-index: 4;
+        line-height: initial;
+
+        .svg-container {
+            width: 100%;
+            height: 100%; // 可以控制动画区域大小
+            margin: 0 auto;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    // TOAST
+    .toast-box {
+        position: fixed;
+        z-index: 998;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 500/@baseSize;
+        text-align: center;
+        border-radius: 12.6/@baseSize;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 30/@baseSize;
+        line-height: initial;
+
+        .info {
+            font-size: 45/@baseSize;
+        }
+    }
+}

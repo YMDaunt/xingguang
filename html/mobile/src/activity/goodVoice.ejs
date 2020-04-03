@@ -1,0 +1,54 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="wrap">
+        <section class="voice-box">
+            <div :class="'mod-voice ' + moveClass" v-if="modArr.length != 0">
+                <div class="mod-mes clearfix">
+                    <div class="img-area">
+                        <img :src="nowArr.headPic" alt="" v-bind:data-rid="nowArr.rid" v-bind:data-play="nowArr.isPlaying" @click="inlive($event)">
+                        <span v-show="nowArr.isPlaying"></span>
+                    </div>
+                    <div class="cared" v-if="nowArr.isLoved"></div>
+                    <div class="care" v-bind:data-id="nowArr.mid" v-else @click="attention($event)"></div>
+                    <p>ID:{{nowArr.mid}}</p>
+                </div>
+                <div class="voice-mes">
+                    <div class="word">
+                        <p class="word-p">{{nowArr.introduction}}</p>
+                    </div>
+                    <div class="type">
+                        <strong>玩法</strong>
+                        <div class="type-out">
+                            <ul class="clearfix" >
+                                <li v-for="(item, index) in nowArr.playWays">{{index+1}}、{{item}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="voice">
+                    <audio id="playMusic" controls="controls" autoplay="true" :src="music" ></audio>
+                </div>
+                <div v-if="play && showBtn" class="pause-btn" @click="stop()"></div>
+                <div v-else-if="!play && showBtn" class="play-btn" @click="start()"></div>
+            </div>
+
+            <div class="next" @click="nextMod()"></div>
+            <div class="dl">
+                <p>更新至最新版本，解锁更多玩法哟~</p>
+                <div class="dl-btn">
+                    <a class="mn-ios-dl" :href="dlUrl" id="dlBtn" @click="codeTimes()"></a>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- 文案提示 -->
+    <div class="tost" v-show="tostBox">{{tostText}}</div>
+</main>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '恋上好声音',
+        content: '用声音撩动你的心，只闻其声不见其人',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/goodVoice/share.jpg")}'
+    });
+</script>

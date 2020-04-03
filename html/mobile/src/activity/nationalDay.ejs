@@ -1,0 +1,175 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="ban"></div>
+    <div class="wrap">
+        <!-- 签到 -->
+        <section class="qiandao">
+            <h2 class="common-tit"></h2>
+            <div class="tips">每日签到奖励更丰富哦</div>
+            <div class="mes-scroll">
+                <div class="scroll-con">
+                    <div id="scrollEle">
+                        <span v-for="(item, index) in broadArr">{{item}}</span>
+                    </div>
+                    <div id="scrollEle2"></div>
+                </div>
+            </div>
+            <div class="qd-con">
+                <ul class="clearfix">
+                    <li v-for="(item, index) in qdArr">
+                        <b></b>
+                        <span class="gq">x{{item.gq}}</span>
+                        <span class="coins">x{{item.coins}}</span>
+                        <em v-if="index <= signDay - 1"><i></i></em>
+                        <p>累计{{index+1}}日签到</p>
+                    </li>
+                </ul>
+                <div class="btn-qd" v-if="canSign" @click="sign()"></div>
+                <div class="qded" v-else></div>
+            </div>
+        </section>
+
+        <!-- 抽奖 -->
+        <section class="drew-con">
+            <ul class="drew">
+                <li v-for="(item, index) in drewArr">
+                    <b :class="{'now': index == nowIndex}"></b>
+                </li>
+            </ul>
+            <div class="drew-btn" v-if="canDrew" @click="drew()"></div>
+            <div class="cant-drew" v-else></div>
+        </section>
+        <div class="last-jf">您还有{{allJf}}抽奖积分</div>    
+
+        <!-- 榜单 -->
+        <section class="rank-con">
+            <div class="common-tit posi-tit"></div>
+            <!-- 第一 -->
+            <div class="step" v-for="(item, index) in modArr" v-if="index < 1">
+                <div>
+                    <div class="cover-pic" v-bind:data-rid="item.rid" @click="inlive($event)" ></div>
+                    <span v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></span>
+                    <div class="mes">
+                        <p>{{item.nickname}}</p>
+                        <strong>小红旗数：{{item.score}}</strong>
+                    </div>
+                </div>
+                <div class="top-one">
+                    <div class="img-area">
+                        <img :src="item.headPic" alt=""/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2+ -->
+            <ul class="clearfix">
+                <li v-for="(item, index) in modArr" v-if="index >= 1">
+                    <div class="number" v-if="index > 2 && index < 9">0{{index+1}}</div>
+                    <div class="number" v-else-if="index == 9">{{index+1}}</div>
+                    <div class="number" v-else></div>
+                    <div class="rank-img">
+                        <img :src="item.headPic" alt="" v-bind:data-rid="item.rid" @click="inlive($event)" />
+                        <b v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></b>
+                    </div>
+                    <p>{{item.nickname}}</p>
+                    <strong>小红旗数：{{item.score}}</strong>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 规则 -->
+        <section class="rule">
+            <div class="common-tit posi-tit"></div>
+            <ul>
+                <li class="clearfix">
+                    <span>1</span>
+                    <p>活动时间：09.30 00:00:00-10.7 23:59:59。</p>
+                </li>
+                <li class="clearfix">
+                    <span>2</span>
+                    <p>
+                        活动期间，每日签到即可获得“小红旗”礼物、抽奖积分。
+                        <br />注：小红旗价值1克拉，不参与主播分成 。
+                    </p>
+                </li>
+                <li class="clearfix">
+                    <span>3</span>
+                    <p>10抽奖积分即可获得一次抽奖机会，抽奖时间有效期至10.8  23:59:59。</p>
+                </li>
+                <li class="clearfix">
+                    <span>4</span>
+                    <p>每个设备/IP每日最多有3个ID可以签到。</p>
+                </li>
+                <li class="clearfix">
+                    <span>5</span>
+                    <p>收到“小红旗”礼物数量前三的主播获得奖励。</p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 奖励 -->
+        <section class="gift">
+            <div class="common-tit posi-tit"></div>
+            <div class="gift-center">
+                <b></b>
+            </div>
+            <div class="gift-between">
+                <b></b>
+                <b></b>
+            </div>
+        </section>
+
+        <!-- 说明 -->
+        <section class="descript">
+            <div class="common-tit posi-tit"></div>
+            <ul>
+                <li class="clearfix">
+                    <span>1</span>
+                    <p>活动期间如有违背活动公平，影响本平台利益的行为，将被取消获奖资格，严重者封禁账号。</p>
+                </li>
+                <li class="clearfix">
+                    <span>2</span>
+                    <p>用户参与本次活动即视为知晓并同意此活动规则。</p>
+                </li>
+                <li class="clearfix">
+                    <span>3</span>
+                    <p>在法律允许的范围内，本平台对本次活动拥有最终解释权。</p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 记录 -->
+        <div class="posi" v-show="codeBox">
+            <div class="drew-code">
+                <div class="common-tit posi-tit"></div>
+                <b class="close" @click="codeBox = !codeBox"></b>
+                <div class="code-tit">
+                    <span>时间</span>
+                    <span>奖品</span>
+                </div>
+                <div class="code-out">
+                    <div class="nothing" v-if="!codeArr">啊哦，还未中奖哦~</div>
+                    <ul v-else>
+                        <li v-for="(item, index) in codeArr" :class="{'color1': index % 2 != 0}">
+                            <span>{{item.date}}</span>
+                            <span>{{item.lottery}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="code-btn" @click="drewCode()"></div>
+
+        <!-- tost -->
+        <div class="tost" v-show="tostBox">{{tostText}}</div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '国庆每日签 好礼嗨翻天',
+        content: '为祖国母亲庆生，普天同庆。签到抽奖，好礼不断~',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/nationalDay/share.png")}'
+    });
+</script>

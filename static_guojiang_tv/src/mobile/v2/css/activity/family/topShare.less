@@ -1,0 +1,84 @@
+@activityName: 'activity/family/top';
+@baseSize: 108rem; // 1080px -> fontSize -> 108px
+@baseImgPath: '../../../img/activity/family/top';
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+.invite-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.invite-content {
+    width: 877/@baseSize;
+    height: 1333/@baseSize;
+    background: url('@{baseImgPath}/invite_bg.png') no-repeat;
+    background-size: cover;
+    position: relative;
+
+    .txt {
+        font-size: 60 / @baseSize;
+        color: #ffdfa2;
+        text-align: center;
+        line-height: 100/@baseSize;
+    }
+
+    .time {
+        margin-top: 130/@baseSize;
+    }
+
+    .avatar {
+        margin: 110/@baseSize auto 0;
+        width: 300/@baseSize;
+        height: 300/@baseSize;
+        border: 6/@baseSize solid #e2be76;
+        border-radius: 8/@baseSize;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .qrcode {
+        margin: 100/@baseSize auto 0;
+        width: 200/@baseSize;
+        height: 200/@baseSize;
+        overflow: hidden;
+        background: #fff;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .desc {
+        text-align: center;
+        color: #fff;
+        font-size: 40/@baseSize;
+        margin-top: 30/@baseSize;
+    }
+}
+
+.close-btn {
+    width: 100/@baseSize;
+    height: 100/@baseSize;
+    background: url('@{baseImgPath}/icon_close_2.png') no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    transform: translate(35%, -35%);
+}

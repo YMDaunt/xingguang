@@ -1,0 +1,93 @@
+@imgUrl:"../../../img/activity/staticPage/dogMan/";
+@bf:108rem;
+.fontDpr(@fontSize){
+    font-size: @fontSize;
+    [data-dpr="2"] & {
+        font-size: @fontSize*2;
+    }
+    [data-dpr="3"] & {
+        font-size: @fontSize*3;
+    }
+}
+/*背景图居中覆盖cover*/
+.bCover(@url){
+    background-image: url('@{imgUrl}@{url}?vs=0809');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+/*背景图居中contain*/
+.bContain(@url){
+    background-image: url('@{imgUrl}@{url}?vs=0809');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+/*背景图填满100%*/
+.bfill(@url){
+    background-image: url('@{imgUrl}@{url}?vs=0809');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+}
+/*背景图Y轴复制*/
+.backgroundRepeat(@url){
+    background-image: url('@{imgUrl}@{url}?vs=0809');
+    background-repeat: repeat;
+    background-size: contain;
+}
+.wrapper{ 
+    display: block;
+    height: 6670/@bf;
+}
+.ppbg{
+    .bfill("pp.jpg?vs=0809");
+}
+.add-btn{
+    position: absolute;
+    top: 1820/@bf;
+    right: 225/@bf;
+    width: 316/@bf;
+    height: 95/@bf;
+    line-height: 100/@bf;
+    text-align: center;
+    color: #48322f;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #fbc492;
+    border-radius: 12/@bf;
+    span{
+        display: inline;
+    }
+}
+@media screen and (min-width: 600px){
+    .add-btn{
+        font-size: 24px;
+    }
+}
+.add-attent-copy{
+    position: absolute;
+    top: 4455/@bf;
+    right: 274/@bf;
+    width: 530/@bf;
+    height: 112/@bf;
+    line-height: 112/@bf;
+    text-align: center;
+    color: #422311;
+    font-size: 16px;
+    border-radius: 12/@bf;
+    cursor: pointer;
+    background-color: #e1b08f;
+    span{
+        display: inline-block;
+        vertical-align: middle;
+        margin-top: -1px;
+        &:last-child{
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-left: 10px solid #fff;
+            border-bottom: 10px solid transparent;
+        }
+    }
+}

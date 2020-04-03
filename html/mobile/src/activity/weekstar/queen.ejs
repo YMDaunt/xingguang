@@ -1,0 +1,190 @@
+<div class="wrapper" id="app">
+    <header class="header">
+            <div class="act-rule sprite" @click="setActMsg"></div>
+        </header>
+        <article class="article">
+            <!-- 礼物选项 -->
+            <header class="gift-head c_clearfix">
+                <div v-for="(item,index) in gift" :class="{'gift-act': gift[index]}" class="fl gift-head-item" @click="giftchange(index,1)">
+                    <span :class="'gift-sprite-'+index" class="gift-sprite"></span>
+                </div>
+            </header>
+            <!-- 周星，战士 -->
+            <div class="line-wrapper c_clearfix">
+                <div class="weekstar weekstar-status sprite fl" @click="giftWeekSoldier(0)" :class="{'weekstar-status-act':giftItem[0]}"></div>
+                <div class="soldier soldier-status sprite fr" @click="giftWeekSoldier(1)" :class="{'soldier-status-act':giftItem[1]}"></div>
+            </div>
+            <!-- 列表信息 -->
+            <ul class="gift-sort">
+                <li class="gift-sort-item" v-for="(item,index) in currentShowList">
+                    <div @click="queenGoRoom(item[5])">
+                        <span class="sort-rank fl">
+                            <span :class="compSortRank(index)" v-if="index < 3"></span>
+                            <span class="sort-rank-num" v-else>{{index+1}}.</span>
+                        </span>
+                        <span class="sort-avator sprite fl">
+                            <img :src="item[0]">
+                        </span>
+                        <span class="sort-txt fl">
+                            <p class="sort-blue">{{item[1]}}</p>
+                            <p>共{{giftItem[0]?'收到':'送出'}} <em class="sort-blue">{{item[2]}}</em> 个</p>
+                        </span>
+                    </div>
+                    <span class="sort-name fl">{{giftCurrent}}</span>
+                    <span class="sort-attent sprite fr" :class="[currentShowList[index][4] ? 'sort-attent-had': '']" @click="attentHandle(item[3],index)"></span>
+                </li>
+            </ul>
+        </article>
+        <footer class="footer">
+            <header class="gift-head c_clearfix">
+                <div v-for="(item,index) in gifted" :class="{'gift-act': gifted[index]}" class="fl gift-head-item" @click="giftchange(index,0)">
+                    <span :class="'gift-sprite-'+index" class="gifted-sprite"></span>
+                </div>
+            </header>
+
+            <div class="foot-avator c_clearfix">
+                <div class="foot-left fl">
+                    <div class="avator-header c_clearfix">
+                        <span class="avator-header-img fr sprite" @click="goLastWeekRoom(getLastStarValue(0,5))">
+                            <img :src="getLastStarValue(0,0)" class="lastWeekAvator" />
+                            <p class="foot-result-text">收到：<em class="sort-blue">{{getLastStarValue(0,2)}}</em>个</p>
+                        </span>
+                        <span class="avator-header-name fr">
+                            {{getLastStarValue(0,1)}}
+                        </span>
+                    </div>
+                    
+                </div>
+                <div class="foot-right fr">
+                    <div class="avator-header c_clearfix">
+                        <span class="avator-header-img fl sprite">
+                            <img :src="getLastStarValue(1,0)" />
+                            <p class="foot-result-text">送出：<em class="sort-blue">{{getLastStarValue(1,2)}}</em>个</p>
+                        </span>
+                        <span class="avator-header-name fl">    
+                            {{getLastStarValue(1,1)}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="foot-declare">本活动最终解释权归人气直播所有</div>
+        </footer>
+    <div class="box-wrapper" v-show="actMsgBox" style="display: none">
+        <div class="show-box">
+            <div class="close-btn" @click="closeActMsg">X</div>
+            <div class="show-box-title">活动规则</div>
+            <p class="box-normal-txt">1.周星争夺时间：每周三18:00:00~每周日24:00:00</p>
+            <p class="box-normal-txt">2.周星争夺期间全平台直播间增加<em>三种周星礼物</em>，三种礼物分别统计榜单，<em>每种礼物对应产生一位周星</em>；</p>
+            <p class="box-normal-txt">3.周星将获得为期五天的集成广告位推广；</p>
+            <p class="box-normal-txt">4.<em>周星榜单第二、三名主播</em>将获得泡泡奖励：</p>
+            <ul class="show-table">
+                <li class="table-li c_clearfix">
+                   <span>周星</span>
+                   <span>{{giftName[0]}}榜</span>
+                   <span>{{giftName[1]}}榜</span>
+                   <span>{{giftName[2]}}榜</span>
+                </li>
+                <li class="table-li c_clearfix">
+                   <span>第二名</span>
+                   <span>30000泡泡</span>
+                   <span>40000泡泡</span>
+                   <span>60000泡泡</span>
+                </li>
+                <li class="table-li c_clearfix">
+                   <span>第三名</span>
+                   <span>20000泡泡</span>
+                   <span>30000泡泡</span>
+                   <span>50000泡泡</span>
+                </li>
+            </ul>
+            <p class="box-normal-txt">5.<em>同时夺得三个周星者，被冠以“女王”称号</em>，“女王”可获得单独推广页面、专属直播间礼物等福利。</p>
+            <p class="box-normal-txt">6.<em>战士榜单前三名</em>将获得泡泡奖励：</p>
+            <ul class="show-table">
+                <li class="table-li-heighter c_clearfix">
+                   <span>战士</span>
+                   <span>{{giftName[0]}}榜</span>
+                   <span>{{giftName[1]}}榜</span>
+                   <span>{{giftName[2]}}榜</span>
+                </li>
+                <li class="table-li-heighter c_clearfix">
+                    <span>第一名</span>
+                    <span>
+                        <div class="item-block-box">
+                            <span class="li-item-block">30000泡泡</span>
+                            <span class="li-item-block">+带你飞*10</span>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="item-block-box">
+                            <span class="li-item-block">40000泡泡</span>
+                            <span class="li-item-block">+带你飞*12</span>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="item-block-box">
+                            <span class="li-item-block">50000泡泡</span>
+                            <span class="li-item-block">+带你飞*15</span>
+                        </div>
+                    </span>
+                </li>
+                <li class="table-li-heighter c_clearfix">
+                    <span>第二名</span>
+                    <span>
+                        <div class="item-block-box">
+                            <span class="li-item-block">20000泡泡</span>
+                            <span class="li-item-block">+带你飞*8</span>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="item-block-box">
+                            <span class="li-item-block">30000泡泡</span>
+                            <span class="li-item-block">+带你飞*10</span>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="item-block-box">
+                            <span class="li-item-block">40000泡泡</span>
+                            <span class="li-item-block">+带你飞*12</span>
+                        </div>
+                    </span>
+                </li>
+                <li class="table-li-heighter c_clearfix">
+                    <span>第三名</span>
+                    <span>
+                        <div class="item-block-box">
+                            <span class="li-item-block">15000泡泡</span>
+                            <span class="li-item-block">+带你飞*5</span>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="item-block-box">
+                            <span class="li-item-block">20000泡泡</span>
+                            <span class="li-item-block">+带你飞*8</span>
+                        </div>
+                    </span>
+                    <span>
+                        <div class="item-block-box">
+                            <span class="li-item-block">30000泡泡</span>
+                            <span class="li-item-block">+带你飞*10</span>
+                        </div>
+                    </span>
+                </li>
+            </ul>
+            <p class="box-small-txt">
+                注："带你飞"用于提升主播热门排名,效果是普通礼物的2倍,但不参与分成。
+            </p>
+            <p class="box-normal-txt">
+                7.周星需主动联系官方工作人员（QQ：346291860）提供个人照片以作广告位推广。
+            </p>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '土豪女王争霸赛',
+        content: '带女王去海边度假吧！',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/weekstar/share.jpg")}'
+    });
+</script>

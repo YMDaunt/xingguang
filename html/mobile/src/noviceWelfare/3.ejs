@@ -1,0 +1,62 @@
+<article>
+	<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/noviceWelfare/3/1.jpg')}" class="banner">
+
+	<div class="p2_wrap">
+		<div class="p2">
+			<span class="coin_icon"></span>
+
+			<ul class="gifts clearfix">
+				<li v-for="(item, index) in product.gifts" v-cloak>
+					<div class="gift_wrap">
+						<img :src="item.image">
+					</div>
+					<p>{{item.name}} x{{item.number}}{{item.unit}}</p>
+				</li>
+			</ul>
+
+			<span class="btn" @click="goBuy()">立即领取</span>
+
+			<p class="title clearfix">
+				<span></span>
+				<span>礼包说明</span>
+				<span></span>
+			</p>
+
+			<ul class="rule_list">
+				<li class="clearfix">
+					<span>1</span>
+					<span>暖心热水袋礼物有效期30天，购买后存放于背包中，送出后主播不参与分成；</span>
+				</li>
+				<li class="clearfix">
+					<span>2</span>
+					<span>购买礼包后，自动佩戴新手勋章，有效期为24x7小时；</span>
+				</li>
+				<li class="clearfix">
+					<span>3</span>
+					<span>购买礼包后，mini座驾将存放于背包中，有效期为开始使用后的24小时。</span>
+				</li>
+				<li class="clearfix">
+					<span>4</span>
+					<span>新注册有1次购买大礼包的机会，每个设备号仅可购买1次，且仅在注册7天内有购买资格，错过就没有了哦；</span>
+				</li>
+				<li class="clearfix">
+					<span>5</span>
+					<span>本活动最终解释权归官方运营团队所有。</span>
+				</li>
+			</ul>
+		</div>
+
+	</div>
+</article>
+<script>
+// 支付成功之后回调函数
+    function payResultCallback(code,errMsg){
+        if(code){
+            hasUnpayOrder = 0;
+            layer.closeAll();
+            vm.succussBuy();
+            vm.reportSucc();
+        }
+    }
+
+</script>

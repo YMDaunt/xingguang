@@ -1,0 +1,560 @@
+<div class="page-content">
+    <!-- banner -->
+    <div class="banner"></div>
+
+    <!-- 热门对战 -->
+    <div class="hot-battle">
+        <h2 class="title-h2 no-show">热门对战</h2>
+        <div :class="['hot-battle-box', !hotBattle && 'no-data']">
+            <div class="fl-box toper">
+                <div class="toper-i">
+                    <div class="headpic bd-yl" @click="hotBattle && goRoom({
+                        mid: hotBattle.fromMid,
+                        rid: hotBattle.fromRid
+                    })">
+                        <img class="avatar" :src="hotBattle && hotBattle.fromHeadPic" alt="主播头像">
+                    </div>
+                    <p class="fl-box nickname">
+                        <span class="txt-of txt-cl-yl name">{{ hotBattle ? hotBattle.fromNick : '虚位以待' }}</span>
+                        <span v-if="hotBattle" :class="'level_icon m_level_icon_' + hotBattle.fromLevel"></span>
+                    </p>
+                </div>
+                <div class="toper-i">
+                    <div class="headpic bd-blue" @click="hotBattle && goRoom({
+                        mid: hotBattle.toMid,
+                        rid: hotBattle.toRid
+                    })">
+                        <img class="avatar" :src="hotBattle && hotBattle.toHeadPic" alt="主播头像">
+                    </div>
+                    <p class="fl-box nickname">
+                        <span class="txt-of txt-cl-blue name">{{ hotBattle ? hotBattle.toNick : '虚位以待' }}</span>
+                        <span v-if="hotBattle" :class="'level_icon m_level_icon_' + hotBattle.toLevel"></span>
+                    </p>
+                </div>
+            </div>
+            <div class="fl-box live-value" :style="pkBattleScore">
+                <span class="value">{{ hotBattle ? hotBattle.fromScore : ''}}</span>
+                <span class="value">{{ hotBattle ? hotBattle.toScore : ''}}</span>
+            </div>
+            <div class="masker" v-if="!hotBattle">
+                <div class="txt-sprite txt-ready-go"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 为荣耀而战！ -->
+    <div class="aim-for-glory">
+        <h2 class="title-h2 glory txt-sprite title-bg">
+            <span class="txt-sprite txt-aim-for-glory">为荣耀而战！</span>
+        </h2>
+        <div class="boardcast-wrapper txt-sprite boardcast-bg">
+            <div ref="boardcast" class="boardcast">
+                <div ref="msg-wrapper" class="bd-wrapper">
+                    <span v-for="(msg, mi) in boardcast" class="bd-i" :key="'msg_i_' + mi">{{ msg }}</span>
+                    <span v-for="(msg, mi) in boardcast" class="bd-i" :key="'msg_ii_' + mi">{{ msg }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="btn btn-sprite btn-myt-a" @click="toggleTitle">查看我的称号</div>
+
+        <div class="deco-box border-i">
+            <div class="deco-inner border-i">
+                <p class="glory-tips">*集齐指定数量的的称号，即可获得对应的奖励</p>
+                <p class="glory-tips">*每个称号每周只可获得一次</p>
+
+                <my-table
+                    class="glory-table"
+                    :source="{
+                        th: ['序号', '称号名称', '获得要求', '主播', '用户'],
+                        tdata: [
+                            ['1', { className: 'pic-sprite icon-ldzw' }, 'PK胜利数量累计50场的主播和其中累计贡献最大的用户可同时获得', { className: 'icon-sprite icon-cross' }, { className: 'icon-sprite icon-cross' }],
+                            ['2', { className: 'pic-sprite icon-cs' }, 'PK连胜5场的主播和其中累计贡献最大的用户可同时获得', { className: 'icon-sprite icon-cross' }, { className: 'icon-sprite icon-cross' }],
+                            ['3', { className: 'pic-sprite icon-zjz' }, '终止对手&ge;5连胜的主播和其中贡献最大的用户可同时获得', { className: 'icon-sprite icon-cross' }, { className: 'icon-sprite icon-cross' }],
+                            ['4', { className: 'pic-sprite icon-scjq' }, '当日PK，贡献前三名的用户', '', { className: 'icon-sprite icon-cross' }],
+                            ['5', { className: 'pic-sprite icon-psw' }, 'PK中，为30位不同的主播送礼过的用户', '', { className: 'icon-sprite icon-cross' }],
+                            ['6', { className: 'pic-sprite icon-ssw' }, '若A主播领先于B主播&ge;5000克拉，B主播获得胜利，则最后一刻帮助B主播赢得胜利的用户可获得此称号', '', { className: 'icon-sprite icon-cross' }],
+                            ['7', { className: 'pic-sprite icon-sdqc' }, 'PK中第一个送礼，数量达到30场的用户', '', { className: 'icon-sprite icon-cross' }],
+                            ['8', { className: 'pic-sprite icon-ymdx' }, '每天PK胜利的前20位主播，前20位主播若有重复情况，则名额顺延', { className: 'icon-sprite icon-cross' }, ''],
+                            ['9', { className: 'pic-sprite icon-yzyy' }, 'PK负的场次为30场的主播', { className: 'icon-sprite icon-cross' }, ''],
+                            ['10', { className: 'pic-sprite icon-fdbz' }, 'PK数量为80场的主播', { className: 'icon-sprite icon-cross' }, ''],
+                            ['11', { className: 'pic-sprite icon-yzdd' }, 'PK对象为25个不同主播的主播', { className: 'icon-sprite icon-cross' }, '']
+                        ]
+                    }"></my-table>
+            </div>
+        </div>
+
+        <div class="glory-rewards-wrap deco-box border-i">
+            <div class="deco-inner border-i">
+                <div class="glory-rewards fl-box">
+                    <div class="zhubo">
+                        <h4 class="subt">
+                            <span class="icon-sprite txt-zhubo">主播</span>
+                        </h4>
+                        <div class="zhubo-r-i">
+                            <div class="name">集齐3个不同的称号奖励：</div>
+                            <div class="gift-box fl-box">
+                                <div class="pic-sprite hot"></div>
+                            </div>
+                            <div class="icon-name">2小时热门推荐</div>
+                        </div>
+                        <div class="zhubo-r-i">
+                            <div class="name">集齐4个不同的称号奖励：</div>
+                            <div class="gift-box fl-box">
+                                <div class="gifts-mmm"></div>
+                            </div>
+                            <div class="icon-name">萌萌喵</div>
+                        </div>
+                        <div class="zhubo-r-i">
+                            <div class="name">集齐≥5个不同的称号奖励：</div>
+                            <div class="gift-box fl-box">
+                                <div class="icon-sprite prxd"></div>
+                            </div>
+                            <div class="icon-name">怦然心动</div>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <h4 class="subt">
+                            <span class="icon-sprite txt-user">用户</span>
+                        </h4>
+                        <div class="user-r-i">
+                            <div class="name">集齐3个不同的称号奖励：</div>
+                            <div class="gift-box fl-box">
+                                <div class="pic-sprite badge-s2"></div>
+                            </div>
+                            <div class="icon-name">PK守护勋章（7日）</div>
+                        </div>
+                        <div class="user-r-i">
+                            <div class="name">集齐4个不同的称号奖励：</div>
+                            <div class="btn gift-box fl-box" @click="preview(0)">
+                                <!-- <div class="pic-sprite badge-s2-zj"></div> -->
+                                <div class="badge-s2-pk"></div>
+                                <div class="icon-sprite bofang"></div>
+                            </div>
+                            <div class="icon-name">PK守护座驾（7日）</div>
+                        </div>
+                        <div class="user-r-i">
+                            <div class="name">集齐≥5个不同的称号奖励：</div>
+                            <div class="btn gift-box fl-box" @click="preview(1)">
+                                <div class="pic-sprite badge-s2-zj2"></div>
+                                <div class="icon-sprite bofang"></div>
+                            </div>
+                            <div class="icon-name">pk守护座驾（典藏版7日）</div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="glory-tips">*集齐指定数量称号，奖励就会自动下发</p>
+                <p class="glory-tips">*主播推荐奖励在集齐3个称号时，开始计算推荐时间</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 战绩盛况 -->
+    <div class="result">
+        <h2 class="title-h2 txt-sprite title-bg">
+            <span class="txt-sprite txt-zjsk">战绩盛况</span>
+        </h2>
+
+        <div class="fl-box txt-sprite border rank-toper">
+            <p class="txt-sprite txt-pkking">上周荣耀PK王</p>
+            <div class="headpic" @click="goRoom(lastPkKing)">
+                <img v-if="lastPkKing" :src="lastPkKing.headPic" alt="主播头像" class="avatar">
+                <div v-else class="holder"></div>
+                <span class="icon-sprite cown-no1"></span>
+                <div v-if="lastPkKing && lastPkKing.isPlaying" class="icon-sprite icon-live"></div>
+            </div>
+            <div class="infos">
+                <p class="nickname">{{ lastPkKing ? lastPkKing.nickname : '虚位以待' }}</p>
+                <p v-if="lastPkKing" class="score">总积分：{{ lastPkKing.score }}</p>
+            </div>
+        </div>
+
+        <!-- rank tab time -->
+        <div class="fl-box tab tab-time">
+            <div v-for="(stage, si) in stagesInfo" :class="['btn tab-i', showStage === stage.stage && 'active']" @click="changeTime(stage.stage)">
+                <div class="fl-box tab-inner">{{ stage.duration }}</div>
+            </div>
+        </div>
+
+        <!-- rank tab type -->
+        <div class="fl-box tab tab-type">
+            <div :class="['btn tab-i btn-sprite', isModRank === 0 ? 'btn-zhubo-a' : 'btn-zhubo']" @click="changeMainType(0)">PK主播榜</div>
+            <div :class="['btn tab-i btn-sprite', isModRank === 1 ? 'btn-user-a' : 'btn-user']" @click="changeMainType(1)">PK守护榜</div>
+        </div>
+
+        <div :class="['rank-wrapper deco-wrapper', isModRank === 1 && 'user']">
+            <p v-show="isModRank === 0" class="rank-top-tips">*点击积分，即可查看积分每日明细</p>
+
+            <!-- rank-tab-subtype -->
+            <div v-show="isModRank === 0" class="fl-box tab tab-mode">
+                <div :class="['btn tab-i icon-sprite', showRankType === 0 ? 'tab-zb-a' : 'tab-zb']" @click="changeModType(0)">周榜</div>
+                <div :class="['btn tab-i icon-sprite', showRankType === 4 ? 'tab-wz-a' : 'tab-wz']" @click="changeModType(4)">王者</div>
+                <div :class="['btn tab-i icon-sprite', showRankType === 3 ? 'tab-zs-a' : 'tab-zs']" @click="changeModType(3)">钻石</div>
+                <div :class="['btn tab-i icon-sprite', showRankType === 2 ? 'tab-jy-a' : 'tab-jy']" @click="changeModType(2)">精英</div>
+                <div :class="['btn tab-i icon-sprite', showRankType === 1 ? 'tab-xx-a' : 'tab-xx']" @click="changeModType(1)">新星</div>
+            </div>
+
+            <!-- rank top 3 -->
+            <div v-if="currStage > 0 && currRank.list.length > 0" class="rank-top3">
+                <div v-for="(item, i) in currRank.list.slice(0, 3)" :class="['rank-top-i', 'rank-top-i' + i]">
+                    <div class="headpic">
+                        <div class="triangle bg">
+                            <div class="triangle-inner bg"></div>
+                        </div>
+                        <div class="triangle avatar" @click="isModRank === 0 && goRoom(item)">
+                            <div class="triangle-inner">
+                                <img class="headpic" :src="item.headPic" alt="头像">
+                            </div>
+                        </div>
+                        <div :class="['icon-sprite cown', 'cown-no' + (i+1)]"></div>
+                        <div v-if="isModRank === 0 && item.isPlaying" class="icon-sprite icon-live"></div>
+                    </div>
+                    <div class="fl-box nickname txt-sprite name-bg">
+                        <div class="txt-of name">{{ item.nickname }}</div>
+                        <div :class="['level_icon', (isModRank === 0 ? 'm_level_icon_' : 'u_level_icon_') + item.level]"></div>
+                    </div>
+                    <div :class="['txt-of score', isModRank === 0 && 'underline']" @click="isModRank === 0 && showScore(item)">{{ isModRank === 0 ? '积分' : '贡献值' }}：{{ item.score }}</div>
+                </div>
+            </div>
+
+            <div v-if="currStage > 0 && currRank.list.length > 0" class="fl-box rank-listh">
+                <div class="rank-cell rank-cell-1">排&nbsp;名</div>
+                <div class="rank-cell rank-cell-2">{{ isModRank === 1 ? '用&nbsp;户' : '主&nbsp;播' }}</div>
+                <div class="rank-cell rank-cell-3">{{ isModRank === 1 ? '贡献值' : '积分' }}</div>
+            </div>
+
+            <!-- rank-list -->
+            <scroller
+                ref="rank-scroller"
+                :class="['rank-listc', 'rank-type-' + currRankType, !currRank.meCenter && 'rank-nocenter']"
+                :right="2"
+                :thumb-color="'#a22791'">
+                <p v-if="currStage === 0" class="rank-holder">活动尚未开始</p>
+                <p v-else-if="currRank.list.length === 0" class="rank-holder">支持TA就给TA上分，一起赢！</p>
+                <!-- rank item -->
+                <template
+                    v-else
+                    v-for="(item, ind) in currRank.list.slice(3)">
+                    <div
+                        class="fl-box rank-row"
+                        :key="currRank.type + '_' + ind"
+                    >
+                        <div class="rank-cell rank-cell-1">{{ ind+4 }}</div>
+                        <div class="fl-ver rank-cell rank-cell-2">
+                            <div class="n-headpic">
+                                <img
+                                    :src="item.headPic"
+                                    :alt="item.nickname"
+                                    class="avatar"
+                                    @click="isModRank === 0 && goRoom(item)">
+                                <span v-if="isModRank === 0 && item.isPlaying" class="icon-sprite icon-live">Live</span>
+                            </div>
+                            <p class="fl-ver nickname">
+                                <span class="txt-of name">{{ item.nickname }}</span>
+                                <span :class="['level_icon', (isModRank === 0 ? 'm_level_icon_' : 'u_level_icon_') + item.level]"></span>
+                            </p>
+                        </div>
+                        <div :class="['txt-of rank-cell rank-cell-3', isModRank === 0 && 'underline']" @click="isModRank === 0 && showScore(item)">{{ item.score }}</div>
+                    </div>
+                </template>
+            </scroller>
+
+            <div v-if="isModRank === 0 && (showRankType === 0 || showRankType === 1)" class="rank-tips">仅展示前100位主播</div>
+            <div v-if="isModRank === 1" class="rank-tips">仅展示前100位用户</div>
+            <div v-if="currRank.meCenter" class="rank-sep"></div>
+
+            <!-- 榜单个人中心 -->
+            <div class="fl-box rank-center" v-if="currRank.meCenter">
+                <div class="intro">
+                    <div class="n-headpic center-headpic" @click="isModRank === 0 && goRoom(currRank.meCenter)">
+                        <img
+                            :src="currRank.meCenter.headPic"
+                            :alt="currRank.meCenter.nickName"
+                            class="avatar">
+                        <span v-if="currRank.meCenter.isPlaying" class="icon-sprite icon-live">Live</span>
+                        <span v-if="isModRank === 0 && currRank.meCenter.scoreLevel > 0" :class="['icon-sprite icon-rank', currRank.meCenter.scoreLevel > 0 && ('rank-s-' + (currRank.meCenter.scoreLevel - 1))]"></span>
+                    </div>
+                    <p :class="['fl-box nickname', isModRank === 0 && currRank.meCenter.scoreLevel > 0 && 'mt-top']">
+                        <span class="txt-of name">{{ currRank.meCenter.nickName }}</span>
+                        <span :class="['level_icon', (isModRank === 0 ? 'm_level_icon_' : 'u_level_icon_') + currRank.meCenter.level]"></span>
+                    </p>
+                </div>
+                <div class="fl-box me-status">
+                    <div class="me-status-i">
+                        <h5>{{ currRank.meCenter.pairInfos[0].name }}</h5>
+                        <p class="txt-of">{{ currRank.meCenter.pairInfos[0].value }}</p>
+                    </div>
+                    <div class="me-status-i">
+                        <h5>{{ currRank.meCenter.pairInfos[2].name }}</h5>
+                        <p class="txt-of">{{ currRank.meCenter.pairInfos[2].value }}</p>
+                    </div>
+                    <div class="me-status-i">
+                        <h5>{{ currRank.meCenter.pairInfos[1].name }}</h5>
+                        <p :class="['txt-of', isModRank === 0 && 'underline']" @click="isModRank === 0 && showScore(currRank.meCenter)">{{ currRank.meCenter.pairInfos[1].value }}</p>
+                    </div>
+                    <div class="me-status-i">
+                        <h5>{{ currRank.meCenter.pairInfos[3].name }}</h5>
+                        <p class="txt-of">{{ currRank.meCenter.pairInfos[3].value }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 今日神豪 -->
+    <h2 class="title-h2 txt-sprite title-bg sh">
+        <span class="txt-sprite txt-jrsh">今日神豪</span>
+    </h2>
+    <p class="sub-title">*榜单实时更新</p>
+    <div class="today-toper deco-wrapper">
+        <p v-if="currStage === 0" class="rank-holder">活动尚未开始</p>
+        <p v-else-if="topUser.length === 0" class="rank-holder">支持TA就给TA上分，一起赢！</p>
+        <!-- rank top 3 -->
+        <div v-else class="rank-top3">
+            <div v-for="(item, i) in topUser" :class="['rank-top-i', 'rank-top-i' + i]">
+                <div class="headpic">
+                    <div class="triangle bg">
+                        <div class="triangle-inner bg"></div>
+                    </div>
+                    <div class="triangle avatar">
+                        <div class="triangle-inner">
+                            <img :src="item.headPic" alt="用户头像">
+                        </div>
+                    </div>
+                    <div :class="['icon-sprite cown', 'cown-no' + (i+1)]"></div>
+                </div>
+                <div class="fl-box nickname txt-sprite name-bg">
+                    <div class="txt-of name">{{ item.nickname }}</div>
+                    <div :class="'level_icon u_level_icon_' + item.level"></div>
+                </div>
+                <div class="txt-of score">贡献值: {{ item.score }}</div>
+            </div>
+        </div>
+        <div v-if="topMeCenter" class="rank-sep"></div>
+        <div v-if="topMeCenter" class="fl-box user-center">
+            <div class="n-headpic">
+                <img :src="topMeCenter.headPic" alt="我的头像" class="avatar">
+            </div>
+            <div class="infos">
+                <div class="fl-box info-txt">
+                    <div class="fl-box nickname">
+                        <div class="txt-of name">{{ topMeCenter.nickName }}</div>
+                        <div :class="'level_icon u_level_icon_' + topMeCenter.level"></div>
+                    </div>
+                    <p class="txt-of value">贡献值：{{ topMeCenter.score }}</p>
+                </div>
+                <div class="txt-of race-value">{{ topMeCenter.rankComment }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- copyright -->
+    <div class="copyright">本次活动最终解释权归平台运营团队所有</div>
+</div>
+
+<!-- floater -->
+<div class="floater icon-sprite btn btn-rules" @click="toggleRule">活动规则</div>
+
+<!-- rules -->
+<div class="layer layer-rules" v-show="ruleState">
+    <div class="layer-inner">
+        <h2 class="title-h2 txt-sprite title-bg rules">
+            <span class="txt-sprite txt-rules">活动规则</span>
+        </h2>
+        <div class="icon-sprite btn btn-close" @click="toggleRule"></div>
+        <div class="deco-box border-i">
+            <div class="deco-inner border-i">
+                <scroller
+                    ref="rules-scroller"
+                    class="layer-content"
+                    :right="4"
+                    :thumb-color="'#a22791'">
+                    <p class="rule-h">1、活动时间：3月11日 12:00:00 - 3月31日 23:59:59</p>
+                    <p class="rule-h">2、主播PK积分以及用户贡献值每周结算一次</p>
+                    <p class="rule-h">3、积分规则</p>
+                    <p class="rule-i">*PK积分算法如下：</p>
+                    <my-table
+                        class="pkscore-table"
+                        :source="{
+                            th: ['加分类型', '积分'],
+                            tdata: [
+                                ['胜', '10'],
+                                ['负', '-5'],
+                                ['平', '-2'],
+                                ['单场PK克拉每达到10000', '10'],
+                                ['单日PK每累计到达3场', '5（每日上限40积分）'],
+                            ]
+                        }"></my-table>
+                    <p class="rule-i">*连胜/终结连胜积分算法如下：</p>
+                    <my-table
+                        class="pkwin-table"
+                        :source="{
+                            th: ['连胜', '连胜积分', '终结连胜场次', '终结连胜积分'],
+                            tdata: [
+                                ['5', '5', '5', '5'],
+                                ['10', '10', '6-10', '10'],
+                                ['20', '20', '11-20', '20'],
+                                ['30', '30', '21-30', '30'],
+                                ['注：达到30连胜之后再重新累计连胜场次'],
+                            ]
+                        }"></my-table>
+                    <p class="rule-h">4、段位介绍</p>
+                    <p class="rule-i">*段位标准</p>
+                    <div class="fl-box badge-list">
+                        <div v-for="(badge, bi) in ['50积分以内', '50积分', '150积分','300积分', '500积分', '1000积分','2000积分', '3000积分', '5000积分', '7000+积分']" :class="'badge-i badge-i-' + bi">
+                            <div :class="'rank-sprite rank-' + bi">徽章图</div>
+                            <p class="badge-require">{{ badge }}</p>
+                        </div>
+                    </div>
+                    <p class="rule-i">*段位规则</p>
+                    <p class="rule-i">每次段位晋级将会触发房间飘屏，精英Ⅲ及以上段位晋级将触发全站飘屏+祝贺红包！</p>
+                    <p class="rule-i">注：精英Ⅲ及以上段位主播奖励只可获得一次，若段位下降后再次回到该等级，则无法再次获得段位升级奖励。</p>
+                    <p class="rule-h mt-top">5、PK达到指定成就时，即可获得相应称号，详见活动页面</p>
+                    <p class="rule-i">*每个称号每周只可获得一次</p>
+                    <p class="rule-i">*主播获得称号时，会立即在本直播间飘屏通知，用户获得称号时，会立即在其所在直播间飘屏通知，并出现祝贺特效（手机用户需要更新到V4.8.0以上，才可以看到祝贺特效哦）</p>
+                    <p class="rule-i">*集齐指定数量的的称号，即可获得对应的礼物或者座驾！</p>
+                    <p class="rule-h mt-top">6、注意事项：</p>
+                    <p class="rule-i">*PK双方克拉值总和≥5000，本场PK记为有效PK，否则双方都无成绩；PK双方任意一方手动结束PK或者异常中断，双方都无成绩；这两种情况中，用户若有贡献值，会计入PK守护榜以及在集称号中有效；</p>
+                    <p class="rule-i">*PK积分为0时，PK失败不扣积分；不足扣分数，则扣减至0；</p>
+                    <p class="rule-i">*榜单若有相同成绩，按照先到先得排序；</p>
+                    <p class="rule-i">*若发现有恶意刷分情况，平台有权利取消其活动成绩。</p>
+                    <p class="rule-h mt-top">7、活动周奖励</p>
+                    <my-table
+                        class="pkrw-table"
+                        :source="{
+                            th: ['名次', 'PK主播榜', 'PK守护榜'],
+                            tdata: [
+                                ['第一名', '80000克拉、开播飘屏7条、PK之王勋章（7日）', '上头条*15、80000克拉'],
+                                ['第二名', '60000克拉、开播飘屏5条、PK亚军勋章（7日）', '上头条*10、60000克拉'],
+                                ['第三名', '40000克拉、开播飘屏4条、PK季军勋章（7日）', '上头条*8、40000克拉'],
+                                ['第四、五名', '30000克拉、开播飘屏3条、PK之星勋章（7日）', '上头条*6、30000克拉'],
+                            ]
+                        }"></my-table>
+                    <p class="rule-h">8、奖励发放：</p>
+                    <p class="rule-i">*勋章奖励在每周一零点下发；</p>
+                    <p class="rule-i">*开播飘屏奖励会自次周一零点起，每日获奖主播首次开播下发，每日下发一次。</p>
+                    <p class="rule-i">*克拉奖励在活动结束后的5个工作日内发放；</p>
+                    <p class="rule-i">*上头条奖励在每周一零点下发。</p>
+                </scroller>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- my title -->
+<div class="layer layer-title" v-show="titleState">
+    <div class="layer-inner">
+        <h2 class="title-h2 txt-sprite title-bg titles">
+            <span class="txt-sprite txt-badge">我的称号</span>
+        </h2>
+        <div class="icon-sprite btn btn-close" @click="toggleTitle"></div>
+        <div class="deco-box border-i">
+            <div class="deco-inner border-i">
+                <div class="layer-content">
+                    <!-- tab type -->
+                    <div class="fl-box tab tab-astitle">
+                        <div v-if="titles.mod" :class="['tab-i btn btn-sprite', titleTabType === 'mod' ? 'btn-mod-t-a' : 'btn-mod-t']" @click="changeTitleType('mod')">作为主播的称号</div>
+                        <div v-if="titles.mod" :class="['tab-i btn btn-sprite', titleTabType === 'user' ? 'btn-user-t-a' : 'btn-user-t']" @click="changeTitleType('user')">作为用户的称号</div>
+                    </div>
+                    <!-- tab time -->
+                    <div class="fl-box tab tab-astime">
+                        <div v-for="(stage, si) in stagesInfo" :class="['btn tab-i', titleTimeStage === stage.stage && 'active']" @click="changeTitleTime(stage.stage)">
+                            <span class="fl-box tab-inner">{{ stage.duration }}</span>
+                        </div>
+                    </div>
+
+                    <p class="medals-tips">{{ isPC ? '鼠标靠近称号图，即可查看称号获得要求' : '长按称号图，即可查看称号获得要求' }}</p>
+
+                    <!-- medals -->
+                    <scroller
+                        ref="medals-scroller"
+                        class="fl-box medals"
+                        :right="6"
+                        :thumb-color="'#a22791'">
+                        <div v-for="(badge, bi) in titles[titleTabType]" :key="'_mtitle_' + bi" class="medals-i">
+                            <div class="medal-pic-wrapper fl-box" @click="showToastTip(badge.name)">
+                                <div :class="['medal-pic pic-sprite icon-' + badge.name]"></div>
+                            </div>
+                            <div class="progress" v-if="badge.progress">
+                                <div class="progress-tube" :style="{width: (+badge.progress.num / badge.progress.target) * 100 + '%'}"></div>
+                                <div class="progress-label">{{ (+badge.progress.num) + '/' + badge.progress.target }}</div>
+                            </div>
+                            <div class="progress-holder" v-else></div>
+                            <div class="time" v-if="badge.own">获得时间<br/>{{ badge.time }}</div>
+                            <div class="time" v-else>未获得</div>
+                        </div>
+                    </scroller>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- my score -->
+<div class="layer layer-score" v-show="scoreState">
+    <div class="layer-inner">
+        <h2 class="title-h2 txt-sprite title-bg score">
+            <span class="txt-sprite txt-jfmx">积分明细</span>
+        </h2>
+        <div class="icon-sprite btn btn-close" @click="hideScore"></div>
+        <div class="deco-box border-i">
+            <div class="deco-inner border-i">
+                <div class="layer-content">
+                    <!-- tab time -->
+                    <div class="weekdates">
+                        <div class="currdate" @click.stop="showSubDate">
+                            <div class="fl-box curr-inner">{{ currScoreList.date }}</div>
+                        </div>
+                        <div class="subdates" v-show="subdates">
+                            <div class="subinner">
+                                <div v-for="(date, di) in scoreDates" class="fl-box subdates-i" @click="chooseDate(date)">{{ date }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fl-box list-head">
+                        <div class="list-hi list-cell-1"><span class="linear-txt">积分</span></div>
+                        <div class="list-hi list-cell-2"><span class="linear-txt">积分时间</span></div>
+                        <div class="list-hi list-cell-3"><span class="linear-txt">积分详情</span></div>
+                    </div>
+
+                    <!-- score -->
+                    <scroller
+                        ref="score-scroller"
+                        class="score-list"
+                        :right="6"
+                        :thumb-color="'#a22791'">
+                        <p v-if="currScoreList.detail.length === 0" class="score-holder">呜呜，还没有积分呢，快去PK获得积分吧~</p>
+                        <div v-for="(sval, si) in currScoreList.detail" class="fl-box slist-i">
+                            <div class="list-di list-cell-1">{{ sval.score }}</div>
+                            <div class="list-di list-cell-2">{{ sval.time }}</div>
+                            <div class="list-di list-cell-3">{{ sval.detail }}</div>
+                        </div>
+                    </scroller>
+
+                    <div class="score-sep"></div>
+
+                    <!-- allscore -->
+                    <p class="all-score">总计积分: {{ currScoreList.todayScore }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- toast msg层 -->
+<div class="toast-container" v-show="toastState" @click="hideToast">
+    <div class="toast-msg">{{ toastMsg }}</div>
+</div>
+
+<!-- toast tip层 -->
+<div class="toast-container" v-show="toastTipShow" @click="hideToastTip">
+    <div class="toast-msg tips" v-html="toastTip" @click.stop=""></div>
+</div>
+
+<!-- 动画效果 -->
+<div class="svg-layer" v-show="svgShow" @click="stopSvg">
+    <div class="svg-container"></div>
+</div>
+
+<loading ref="loading" />

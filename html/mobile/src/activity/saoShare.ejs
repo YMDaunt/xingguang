@@ -1,0 +1,26 @@
+<div id="app">
+    <div class="layer active" ref="layer">
+        <div class="masker" @click="hideModal('layer')"></div>
+
+        <canvas id="env-panel" ref="panel"></canvas>
+
+        <div class="content">
+            <span id="returnBtn" onclick="window.history.back();" class="close"></span>
+
+            <div class="avatar"><img src='${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/sao/share.jpg")}' alt="avatar"></div>
+            <div class="info">
+                <p class="text">2018年7月7日-7月10日</p>
+                <p class="text">Sao、家族成立2周年</p>
+                <p class="text">邀您共聚星光直播</p>
+            </div>
+            <div class="qrcode">
+                <img src='${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/sao/qrcode.png")}' alt="qrcode">
+                <p class="text">识别图中二维码，即可参与活动！</p>
+            </div>
+        </div>
+
+        <img ref="inviteImg" class="invite-img" src="" alt="Sao家族成立2周年_邀您共聚星光直播.png" />
+
+        <!-- <span class="button save-invite" @click="savePic">保存图片</span> -->
+    </div>
+</div>

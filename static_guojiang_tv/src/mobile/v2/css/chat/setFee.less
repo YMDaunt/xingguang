@@ -1,0 +1,84 @@
+@bf: 108rem;
+#app{
+	padding-top: 55/@bf;
+	padding-left: 33/@bf;
+	.input_wrap{
+		
+		.label_1{
+			font-size: 14px;
+			color: #333333;
+			padding-top: 43/@bf;
+			padding-right: 20/@bf;
+		}
+		.fee_num{
+			width: 546/@bf;
+			height: 148/@bf;
+			line-height: 148/@bf;
+			background: #ffffff;
+			border-radius: 25/@bf;
+			font-size: 17px;
+			color: #ff0071;
+			text-align: center;
+			display: inline-block;
+			position: relative;
+			.conversion_price{
+				position: absolute;
+				left: 0;
+				top: 170/@bf;
+				font-size: 14px;
+				color: #999999;
+				line-height: 1;
+			}
+		}
+		.label_2{
+			font-size: 14px;
+			color: #999999;
+			padding-left: 13/@bf;
+			padding-top: 43/@bf;
+		}
+	}
+
+	.error_hint{
+		position: absolute;
+		top: 290/@bf;
+		left: 33/@bf;
+		font-size: 10px;
+		color: #f05e5f;
+		i{
+			background: url(../../img/chat/error.png) no-repeat top center;
+			background-position: 0 0;
+			background-size: 32/@bf 32/@bf;
+			width: 32/@bf;
+			height: 32/@bf;
+			display: inline-block;
+			vertical-align: sub;
+			margin-right: 2px;
+		}
+	}
+
+	.rule{
+		margin: 250/@bf 0 175/@bf;
+		li{
+			font-size: 13px;
+			color: #999999;
+			padding-bottom: 13/@bf;
+		}
+	}
+
+	.btn{
+		width: 800/@bf;
+		height: 136/@bf;
+		line-height: 136/@bf;
+		text-align: center;
+		margin: 0 auto;
+		background: #ff0071;
+		border-radius: 65/@bf;
+		border: none;
+		font-size: 18px;
+		color: #ffffff;
+		display: block;
+		&.readonly{
+			background: #c6c6c6;
+		}
+	}
+}

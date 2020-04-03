@@ -1,0 +1,69 @@
+@imgUrl:"../../img/activity/goRechargePage2/";
+@bf:108rem;
+.fontDpr(@fontSize){
+    font-size: @fontSize;
+    [data-dpr="2"] & {
+        font-size: @fontSize*2;
+    }
+    [data-dpr="3"] & {
+        font-size: @fontSize*3;
+    }
+}
+/*背景图居中覆盖cover*/
+.bCover(@url){
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+/*背景图居中contain*/
+.bContain(@url){
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+/*背景图填满100%*/
+.bfill(@url){
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+}
+/*背景图Y轴复制*/
+.backgroundRepeat(@url){
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: repeat;
+    background-size: contain;
+}
+.c_clearfix::after{
+    display: block;
+    clear: both;
+    content: "";
+}
+em{
+    font-style: normal;
+}
+.wrapper{ 
+    width: 10.0rem;
+    height: 37.037037rem;
+    .bfill("bg.jpg");
+}
+.recharge{
+    position: absolute;
+    top: 21.851852rem;
+    right: 0.833333rem;
+    width: 3.925926rem;
+    height: 3.777778rem;
+    cursor: pointer;
+}
+.recharge-btn{
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    margin-left: -8.657407rem/2;
+    width: 8.657407rem;
+    height: 1.111111rem;
+    .bfill("btn.png");
+    cursor: pointer;
+}

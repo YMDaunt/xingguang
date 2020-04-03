@@ -1,0 +1,335 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="ban"></div> 
+    <div class="wrap">
+        <section class="word"></section>
+        
+        <!-- 双旦限定 -->
+        <section class="buy-gift">
+            <h2 class="com-tit"></h2>
+            <div class="gift-cover">
+                <div class="tab-tit">
+                    <div :class="{'choose': tabCon}" @click="tab('choose')"></div>
+                    <div :class="{'choose': !tabCon}" @click="tab('')"></div>
+                </div>
+                <div class="tab-gift">
+                    <div class="sd-gift" v-show="tabCon">
+                        <ul>
+                            <li>
+                                <b></b>
+                                <strong>梦幻水晶球</strong>
+                                <span>6666克拉/个</span>
+                                <div class="btns">
+                                    <div class="yl" @click="doSdSvg1()"></div>
+                                    <div class="gobuy" v-if="stage <= 1" data-id="1997" data-value="6666" @click="buy($event, 1)"></div>
+                                    <div class="cantbuy" v-else></div>
+                                </div>
+                            </li>
+                            <li>
+                                <b></b>
+                                <strong></strong>
+                                <span>一次性送出99个“圣诞帽”</span>
+                                <div class="btns">
+                                    <div class="yl" @click="doSdSvg2()"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="yd-gift" v-show="!tabCon">
+                        <ul>
+                            <li>
+                                <b></b>
+                                <strong>一起跨年</strong>
+                                <span>6666克拉/个</span>
+                                <div class="btns">
+                                    <div class="yl" @click="doYdSvg2()"></div>
+                                    <div class="gobuy" v-if="stage <= 2" data-id="1996" data-value="6666" @click="buy($event, 2)"></div>
+                                    <div class="cantbuy" v-else></div>
+                                </div>
+                            </li>
+                            <li>
+                                <b></b>
+                                <strong></strong>
+                                <span>一次性送出99个“小福猪”</span>
+                                <div class="btns">
+                                    <div class="yl" @click="doYdSvg1()"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 双旦榜单 -->
+        <section class="rank">
+            <h2 class="com-tit"></h2>
+            <div class="rank-cover">
+                <div class="tab-tit">
+                    <div :class="{'choose': tabRankCon}" @click="tabRank('choose')">
+                        <b class="status-pre" v-if="stage == 0"></b>
+                        <b class="status-ing" v-else-if="stage == 1"></b>
+                        <b class="status-ed" v-else></b>
+                    </div>
+                    <div :class="{'choose': !tabRankCon}" @click="tabRank('')">
+                        <b class="status-pre" v-if="stage < 2"></b>
+                        <b class="status-ing" v-else-if="stage == 2 && stage < 3"></b>
+                        <b class="status-ed" v-else></b>
+                    </div>
+                </div>
+                <div class="rank-tab">
+                    <div class="sec-tab-tit">
+                        <div :class="{'choose': secCon}" @click="secTab('choose')">
+                            <b></b>
+                        </div>
+                        <div :class="{'choose': !secCon}" @click="secTab('')">
+                            <b></b>
+                        </div>
+                    </div>
+                    <div class="rank-con">
+                        <!-- 主播 -->
+                        <div class="rank-top mods" v-show="secCon">
+                            <ul class="three">
+                                <li v-for="(item,index) in modArr" v-if="index < 3">
+                                    <div class="rank-img">
+                                        <b></b>
+                                        <span v-if="item.isPlaying == 1" @click="inlive($event)" v-bind:data-rid="item.rid"></span>
+                                        <img :src="item.headPic"  @click="inlive($event)" v-bind:data-rid="item.rid" alt="" />
+                                    </div>
+                                    <div class="rank-name">
+                                        <div>{{item.nickname}}</div>
+                                        <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                    </div>
+                                    <p>收到：{{item.score}}</p>
+                                    <div v-if="!item.isLoved" v-bind:data-id="item.id" class="care" @click="attention($event,index)"></div>
+                                    <div v-else class="cared"></div>
+                                </li>
+                            </ul>
+                            <!-- 4+ -->
+                            <div class="con-h2 clearfix">
+                                <div v-show="modArr.length != 0">排名</div>
+                                <div v-show="modArr.length != 0">主播</div>
+                                <div v-show="modArr.length != 0">{{rankTitle}}</div>
+                            </div>
+                            <div class="rank-other mod-other">
+                                <div class="rank-out">
+                                    <ul>
+                                        <li class="clearfix" v-for="(item,index) in modArr" v-if="index >= 3">
+                                            <div class="top-num">{{index+1}}</div>
+                                            <div class="top-img">
+                                                <img :src="item.headPic"  @click="inlive($event)" v-bind:data-rid="item.rid" alt="" />
+                                                <span v-if="item.isPlaying == 1" @click="inlive($event)" v-bind:data-rid="item.rid"></span>
+                                            </div>
+                                            <div class="top-mes">
+                                                <div>{{item.nickname}}</div>
+                                                <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                            </div>
+                                            <div class="top-mark">{{item.score}}</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="txt-tips">仅展示前100名主播</div>
+
+                            <!-- 我的主播排名 -->
+                            <div class="my-mod-rank clearfix" v-if="myModArr != null">
+                                <div class="myrank-number"></div>
+                                <div class="my-message">
+                                    <div class="my-img">
+                                        <img v-if="myModArr.rid == null" :src="myModArr.headPic" alt="" />
+                                        <img v-else :src="myModArr.headPic" v-bind:data-rid="myModArr.rid" @click="inlive($event)" alt="" />
+                                        <b v-if="myModArr.isPlaying"></b> 
+                                    </div>
+                                    <div class="my-name">
+                                        <strong>{{myModArr.nickName}}</strong>
+                                        <span :class="'level_icon m_level_icon_' + myModArr.level"></span>
+                                    </div>
+                                </div>
+                                <div class="my-mark" v-if="myModArr.pairInfos != undefined">
+                                    <span>{{myModArr.pairInfos[0].name}}</span>
+                                    <strong>{{myModArr.pairInfos[0].value}}</strong>
+                                    <span>{{myModArr.pairInfos[1].name}}</span>
+                                    <strong>{{myModArr.pairInfos[1].value}}</strong>
+                                </div>
+                                <div class="my-mark" v-if="myModArr.pairInfos != undefined">
+                                    <span>{{myModArr.pairInfos[2].name}}</span>
+                                    <strong>{{myModArr.pairInfos[2].value}}</strong>
+                                    <span>{{myModArr.pairInfos[3].name}}</span>
+                                    <strong>{{myModArr.pairInfos[3].value}}</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 用户 -->
+                        <div class="rank-top users" v-show="!secCon">
+                            <ul class="three">
+                                <li v-for="(item,index) in userArr" v-if="index < 3">
+                                    <div class="rank-img">
+                                        <b></b>
+                                        <img :src="item.headPic" v-bind:data-rid="item.rid" alt="" />
+                                    </div>
+                                    <div class="rank-name">
+                                        <div>{{item.nickname}}</div>
+                                        <b :class="'level_icon u_level_icon_' + item.level"></b>
+                                    </div>
+                                    <p>送出：{{item.score}}</p>
+                                </li>
+                            </ul>
+                            <!-- 4+ -->
+                            <div class="con-h2 clearfix">
+                                <div v-show="userArr.length != 0">排名</div>
+                                <div v-show="userArr.length != 0">用户</div>
+                                <div v-show="userArr.length != 0">{{rankTitle}}</div>
+                            </div>
+                            <div class="rank-other user-other">
+                                <div class="rank-out">
+                                    <ul>
+                                        <li class="clearfix" v-for="(item,index) in userArr" v-if="index >= 3">
+                                            <div class="top-num">{{index+1}}</div>
+                                            <div class="top-img">
+                                                <img :src="item.headPic" v-bind:data-rid="item.rid" alt="" />
+                                            </div>
+                                            <div class="top-mes">
+                                                <div>{{item.nickname}}</div>
+                                                <b :class="'level_icon u_level_icon_' + item.level"></b>
+                                            </div>
+                                            <div class="top-mark">{{item.score}}</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="txt-tips">仅展示前100名用户</div>
+                            
+                            <!-- 我的用户信息 -->
+                            <div class="my-user-rank clearfix" v-if="myUserArr != null">
+                                <div class="myrank-number"></div>
+                                <div class="my-message">
+                                    <div class="my-img">
+                                        <img :src="myUserArr.headPic" alt="" />
+                                    </div>
+                                    <div class="my-name">
+                                        <strong>{{myUserArr.nickName}}</strong>
+                                        <span :class="'level_icon u_level_icon_' + myUserArr.level"></span>
+                                    </div>
+                                </div>
+                                <div class="my-mark" v-if="myUserArr.pairInfos != undefined">
+                                    <span>{{myUserArr.pairInfos[0].name}}</span>
+                                    <strong>{{myUserArr.pairInfos[0].value}}</strong>
+                                    <span>{{myUserArr.pairInfos[1].name}}</span>
+                                    <strong>{{myUserArr.pairInfos[1].value}}</strong>
+                                </div>
+                                <div class="my-mark" v-if="myUserArr.pairInfos != undefined">
+                                    <span>{{myUserArr.pairInfos[2].name}}</span>
+                                    <strong>{{myUserArr.pairInfos[2].value}}</strong>
+                                    <span>{{myUserArr.pairInfos[3].name}}</span>
+                                    <strong>{{myUserArr.pairInfos[3].value}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="copyright">本活动最终解释权归平台运营团队所有</div>
+
+        <div class="rule-btn" @click="showRule = true"></div>
+
+        <!-- 规则弹窗 -->
+        <div class="posi" v-show="showRule">
+            <div class="rule">
+                <h2></h2>
+                <div class="close-btn"  @click="showRule = false"></div>
+                <div class="rule-con">
+                    <div class="rule-out">
+                        <p>1.活动时间：2018.12.24 12:00:00-2019.1.1 23:59:59。</p>
+                        <p>2.活动礼物：</p>
+                        <ul class="gift-list clearfix">
+                            <li class="sdm">
+                                <b></b>
+                                <div></div>
+                                <span>=10/克拉</span>
+                                <span>=10暖冬值</span>
+                            </li>
+                            <li class="sjq">
+                                <b></b>
+                                <div></div>
+                                <span>=6666/克拉</span>
+                                <span>=6666暖冬值</span>
+                            </li>
+                            <li class="xfz">
+                                <b></b>
+                                <div></div>
+                                <span>=10/克拉</span>
+                                <span>=10福气值</span>
+                                <strong>12.29 00:00上线</strong>
+                            </li>
+                            <li class="yqkn">
+                                <b></b>
+                                <div></div>
+                                <span>=6666/克拉</span>
+                                <span>=6666福气值</span>
+                                <strong>12.29 00:00上线</strong>
+                            </li>
+                        </ul>
+                        <p class="fg-txt1">圣诞玩法</p>
+                        <p>1.圣诞狂欢时间：2018.12.24 12:00:00-2018.12.28 23:59:59。在此期间，分阶段炸房。每天前五次炸房送出指定数量的“圣诞帽”即可炸房，从第六次炸房起，每次炸房需送出3000个“圣诞帽”。</p>
+                        <div class="sd-stage-img"></div>
+                        <p>2.每天0点刷新进度条，0点后，直播间当前进度条炸完，再从第一轮炸房（500个“圣诞帽”）开始炸房。</p>
+                        <p>3. 用户一次性送出99个圣诞帽，可触发圣诞特效。</p>
+                        <p>4. 圣诞主播榜前5名主播可获得奖励，排名按照暖冬值高低排序，若有相同成绩，则按照先到先得原则。奖励将于活动结束后7个工作日内发放。</p>
+                        <p class="fg-txt2">元旦玩法</p>
+                        <p>1.元旦狂欢时间：2018.12.29 00:00:00-2019. 1.1 23:59:59。在此期间，分阶段炸房。每天前五次炸房送出指定数量的“小福猪”即可炸房，从第六次炸房起，每次炸房需送出3000个“小福猪”。</p>
+                        <div class="yd-stage-img"></div>
+                        <p>2.每天0点刷新进度条，0点后，直播间当前进度条炸完，再从第一轮炸房（500个“小福猪”）开始炸房。</p>
+                        <p>3. 用户一次性送出99个小福猪，可触发元旦特效。</p>
+                        <p>4. 元旦主播榜前5名主播可获得奖励，排名按照福气值高低排序，若有相同成绩，则按照先到先得原则。奖励将于活动结束后7个工作日内发放。</p>
+                        <h3></h3>
+                        <div class="gift-pic"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 购买弹窗 -->
+        <div class="posi buybox" v-show="buyBox">
+            <div>
+                <b class="close-btn" @click="buyBox= !buyBox"></b>
+                <h3>购买个数</h3>
+                <div class="buy-num">
+                    <div class="dev" @click="dev()"></div>
+                    <input id="totalMoney" maxlength="8" value="1" @input="inputNumber()" />
+                    <div class="add" @click="add()"></div>
+                </div>
+                <strong>价格: {{buyTotal}}克拉</strong>
+                <div class="sure-buy" @click="sureBuy()" v-bind:data-id="goodId"></div>
+            </div>
+        </div>
+
+        <!-- 余额不足 -->
+        <div class="posi ye" v-show="yeBox">
+            <div class="no-enough">
+                <b class="close-btn" @click="yeBox = !yeBox"></b>
+                <p>余额不足，快去充值吧!</p>
+                <div class="not-enough-btns clearfix">
+                    <div class="not-cz" @click="yeBox = !yeBox"></div>
+                    <div class="do-cz" @click="charge()"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 文案提示 -->
+        <div class="tost" v-show="tostBox">{{tostText}}</div>
+        <!-- svg -->
+        <div class="posi svg-con" v-show="svgPlayer" @click="removeSvg">
+        </div>
+    </div>
+</main>
+
+<script>
+    var gjShareParam = JSON.stringify({
+        title: '圣诞•元旦 双蛋来袭',
+        content: '圣诞跨年倒计时 ing，请开启你的狂欢模式！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/sdyd/share.png")}'
+    });
+</script>

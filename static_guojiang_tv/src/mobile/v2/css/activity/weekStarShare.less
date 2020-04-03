@@ -1,0 +1,261 @@
+@activityName: 'weekStarByYear';
+@bf: 108rem;
+
+@import "//static.guojiang.tv/src/mobile/v2/css/component/swiper.min.css";
+
+[v-cloak] {
+	display: none;
+}
+
+
+//水平居中对齐
+.transformCenter() {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+//多余的字符用省略号显示
+.ellipsis() {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+//头像是正方形100%填满
+.avatar {
+	width: 100%;
+	height: 100%;
+}
+
+//滚动更流畅
+body {
+	/*ios*/
+	-webkit-overflow-scrolling: touch;
+}
+
+.bgm(@imgName) {
+	background-image: url('../../img/activity/@{activityName}/@{imgName}');
+}
+
+
+.sprite2 {
+	background-image: url('../../img/activity/@{activityName}/sprite2.png');
+	background-repeat: no-repeat;
+	background-size: 1080/@bf 523/@bf;
+}
+
+.mod_report_page,
+.user_report_page {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	bottom: 0;
+	width:1080/@bf;
+	transform: translate(-50%,0);
+	background-size: 1080/@bf 1920/@bf;
+}
+
+
+
+.swiper-container {
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+}
+
+.swiper-slide {
+	text-align: center;
+	font-size: 14px;
+	background-size: 1080/@bf 1920/@bf;
+	.info {
+		color: #fff;
+	}
+	.avatar_box {
+		width: 277/@bf;
+		height: 277/@bf;
+		.sprite2;
+		overflow: hidden;
+		background-position: -21/@bf -12/@bf;
+		.avatar_wrap {
+			width: 257/@bf;
+			height: 257/@bf;
+			margin:10/@bf auto;
+			border-radius: 50%;
+			overflow: hidden;
+		}
+	}
+	.nickname {
+		font-size: 20px;
+		font-weight: bold;
+	}
+}
+
+
+.slide1 {
+	.bgm('page1.jpg');
+	.avatar_box {
+		margin: 160/@bf auto 0;
+		
+	}
+	.nickname {
+		-webkit-text-stroke: 1px #9d14c6;
+	}
+	.about {
+		margin-top: 60/@bf;
+		font-size: 14px;
+		line-height: 100/@bf;
+		em {
+			font-size: 30px;
+			font-style: normal;
+			color: #ffd974;
+			font-weight: bold;
+			-webkit-text-stroke: 1px #9d14c6;
+		}
+	}
+	.swiper-container2 {
+		margin-top: 20/@bf;
+		.modImg {
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
+
+.slide2 {
+	.bgm('page2.jpg');
+	.avatar_box {
+		margin: 105/@bf auto 0;
+	}
+	.nickname {
+		-webkit-text-stroke: 1px #026bc9;
+	}
+	.about {
+		line-height: 120/@bf;
+	}
+	.supporter {
+		width: 700/@bf;
+		height: 640/@bf;
+		margin: 0 auto;
+		overflow: hidden;
+	}
+	.sup1,
+	.sup2,
+	.sup3 {
+		.avatar_box {
+			margin: 50/@bf auto 20/@bf;
+			position: relative;
+			width: 152/@bf;
+			height: 170/@bf;
+			.sprite2;
+		}
+		.avatar_wrap {
+			position: absolute;
+			bottom: 3/@bf;
+			left: 3/@bf;
+			margin: 0 auto;
+			width: 140/@bf;
+			height: 140/@bf;
+			border-radius: 50%;
+			overflow: hidden;
+		}
+		.name{
+			width:100%;
+			.ellipsis;
+			font-size: 12px;
+		}
+	}
+	.sup1 {
+		.avatar_box {
+			width: 182/@bf;
+			height: 208/@bf;
+			background-position: -358/@bf -3/@bf;
+		}
+		.avatar_wrap {
+			width: 166/@bf;
+			height: 166/@bf;
+		}
+		.name {
+			font-weight: bold;
+			color: #ffd974;
+		}
+	}
+	.sup2 {
+		float: left;
+		width: 350/@bf;
+		.avatar_box {
+			background-position: -571/@bf -2/@bf;
+		}
+	}
+	.sup3 {
+		float: right;
+		width: 350/@bf;
+		.avatar_box {
+			background-position: -777/@bf 0;
+		}
+	}
+}
+
+.slide3 {
+	position: relative;
+	.bgm('page3.jpg');
+	.avatar_wrap {
+		width: 200/@bf;
+		height: 200/@bf;
+		margin: 494/@bf 0 0 428/@bf;
+		border-radius: 50%;
+		overflow: hidden;
+	}
+	.ribbon {
+		position: relative;
+		bottom: 40/@bf;
+		width: 227/@bf;
+		height: 34/@bf;
+		margin-left: 415/@bf;
+		.sprite2;
+		background-position: -822/@bf -275/@bf;
+	}
+	.prize_msg {
+		width: 950/@bf;
+		margin: -20/@bf auto;
+		padding: 0 40/@bf;
+		text-align: left;
+		font-size: 12px;
+		.nickname {
+			font-size: 12px;
+			font-weight: normal;
+		}
+		em {
+			display: block;
+			width: 760/@bf;
+			text-align: center;
+			font-style: normal;
+			font-size: 18px;
+			font-weight: bold;
+		}
+	}
+	.share {
+		.sprite2;
+		display: block;
+		height: 122/@bf;
+		width: 400/@bf;
+		margin: 350/@bf auto 0;
+		border: none;
+		background-color: transparent;
+		background-position: -2/@bf -322/@bf;
+		&:active {
+			background-position: -422/@bf -322/@bf;
+		}
+	}
+}
+
+.user_report_page {
+	.supporter {
+		margin: 80/@bf auto;
+		height:450/@bf;
+	}
+	.msg {
+		line-height: 120/@bf;
+	}
+}

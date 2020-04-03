@@ -1,0 +1,34 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../../static_guojiang_tv/src/mobile/v2/img/activity/qixi/qixi19" */ -->
+    <div class="page-bgs">
+        <!-- bgs -->
+        <div class="page-bg bg1"></div>
+        <div class="page-bg bg2"></div>
+    </div>
+
+    <%= content %>
+</div>
+
+<script>
+(function adaptation () {
+    var href = window.location
+    if (/Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone|SymbianOS/i.test(navigator.userAgent)) {
+        if (href.host.indexOf('www') >= 0) {
+            window.location.href = '//m.tuho.tv/dist' + href.pathname
+        }
+    } else {
+        if (href.host.indexOf('www') < 0) {
+            window.location.href = '//www.tuho.tv' + href.pathname.replace('/dist', '')
+        }
+    }
+}())
+</script>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '浪漫七夕 情定鹊桥',
+    content: '情定鹊桥，浪漫七夕助你找到意中人',
+    link: location.href,
+    imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/qixi/qixi19/share.jpg")}' // eslint-disable-line
+})
+</script>

@@ -1,0 +1,105 @@
+<div id="app" v-cloak>
+    <div class="nothing" @click="close"></div>
+    <div class="box">
+        <ul class="tab">
+            <li :class="{active:tab===1}" @click="changeTab(1)">购买车票<span class="underline"></span></li>
+            <li :class="{active:tab===2}" @click="changeTab(2)">我的车票<span class="underline"></span></li>
+            <li :class="{active:tab===3}" @click="changeTab(3)">中奖名单<span class="underline"></span></li>
+        </ul>
+        <div class="buy-ticket" :class="{current:tab===1}">
+            <div class="buy-ticket-box" v-show="showBuyTicket">
+                <div class="buy-ticket-bg"></div>
+                <div class="rules-btn" @click="showRulesFun(true)"></div>
+                <div class="statement">
+                    <p>每趟车售满100张车票即可发车，发车后抽取一位幸运乘客</p>
+                    <p>（车票购买越多，中奖概率越高）</p>
+                    <p>幸运乘客获得
+                        <span class="special">价值13140克拉的神秘礼物一个</span>
+                    </p>
+                    <p>未中奖用户
+                        <span class="special">每张车票可获得50克拉退款</span>
+                    </p>
+                </div>
+                <div class="new" @click="payPopup">
+                    <div v-if="halfPriceTimes > 0">
+                        <em>1元</em>
+                        <em class="special">1元</em>
+                        新手超值半价2元上车
+                        <div class="del"></div>
+                        <span class="last-num">剩余{{this.halfPriceTimes}}次</span>
+                    </div>
+                    <div v-else>
+                        2元上车
+                    </div>
+                </div>
+                <div class="first" :class="{active:firstDriver}" @click="firstDriverFun">
+                    首位老司机免费上车
+                    <span class="tips" v-if="firstDriver">快抢</span>
+                </div>
+            </div>
+           
+            <div class="rules" v-show="showRules">
+                <div class="back" @click="showRulesFun(false)"></div>
+                <div class="rules-title"></div>
+                <div class="rules-content">
+                    <p>
+                        <span class="special">关于车票价格：</span>新注册用户前3次购买可1元特惠购买车票，老用户每张车票价格2元。首发用户可以免费获得一张车票哦；</p>
+                    <p>
+                        <span class="special">关于车票数量：</span>每趟车限额车票100张。每名用户和设备，针对每趟车最多只能购买30张车票；</p>
+                    <p>
+                        <span class="special">关于发车时效：</span>每趟车在开始售票时算起，发车时效为20分钟，若20分钟内售完全部车票，则可成功发车；若是20分钟内未售完全部车票，则发车失败，已购买车票将全额退款(退款为克拉)给车票持有者<span class="special">(首张免费车票除外)</span>；</p>
+                    <p>
+                        <span class="special">关于发车奖励：</span>每趟车成功发车后，将抽取一张幸运车票，该幸运车票的持有者可以获得价值13140克拉的神秘礼物一个，其余未获奖车票，每张车票将给予车票持有者50克拉的退款<span class="special">(首张免费车票除外)</span>。</p>
+                </div>
+            </div>
+        </div>
+        <div class="my-ticket" :class="{current:tab===2}">
+            <div class="my-ticket-title"></div>
+            <div class="ticket-detail" v-if="noTicket">
+                <p class="no-ticket">您还没有购买车票哦，再不上车就来不及啦</p>
+            </div>
+            <div class="ticket-detail" v-else>
+                <div class="ticket-box">
+                    <div class="ticket fl"></div>
+                    <div class="ticket-num fr">X {{this.ticketNum}}</div>
+                </div>
+                <p>本趟列车距离开奖还有
+                    <span class="time">{{countDownTime}}</span>
+                </p>
+            </div>
+        </div>
+        <div class="lucky-list" :class="{current:tab===3}">
+            <div class="lucky-title"></div>
+            <ul class="lucky-list-box">
+                <li v-if="luckyListArr.length>0" v-for="(item,index) in luckyListArr" :key="index">
+                    <div class="avatar">
+                        <img :src="item.headPic" alt="">
+                    </div>
+                    <div class="name">{{item.nickname}}</div>
+                    <div class="time">{{item.time}}</div>
+                </li>
+                <p v-if="showNoLucky">
+                    还没有中奖用户哦，<br>快买车票，成为第一个中奖用户吧
+                </p>
+            </ul>
+        </div>
+        <div class="result" v-show="showResult">
+            <div class="lucky-box" v-if="luckyStatus === 1">
+                <div class="title"></div>
+                <p>抽中价值13140克拉的神秘礼物已发放至您的背包</p>
+                <div class="sure-btn" @click="closeResult">知道了</div>
+            </div>
+            <div class="nolucky-box" v-if="luckyStatus === 0">
+                <div class="title"></div>
+                <p>虽然您没有中奖
+                    <br>但是每张车票都给您退款了50克拉哟</p>
+                <div class="sure-btn" @click="closeResult">知道了</div>
+            </div>
+            <div class="nolucky-box" v-if="luckyStatus === 4">
+                <div class="title"></div>
+                <p>您的免费车票未中奖，下次再接再厉哦~</p>
+                <div class="sure-btn" @click="closeResult">知道了</div>
+            </div>
+        </div>
+    </div>
+</div>

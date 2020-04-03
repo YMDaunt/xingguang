@@ -1,0 +1,156 @@
+// ../../img/activity/SFStocking
+
+@activityName: 'activity/SFStocking';
+@bf: 1px*10/6.8;
+@imgUrl: '../../img/activity/SFStocking';
+
+/* 定义颜色字体大小 S */
+
+/* 定义颜色字体大小 E */
+
+// @spritePic: '@{imgUrl}/pic.png';
+@import '../../../../mobile/v2/css/activity/SFStockingMixin.less';
+
+.page-bgs {
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 859px;
+        background-image: url('@{imgUrl}/bg1.jpg');
+    }
+    .bg2 {
+        height: 1955px;
+        background-image: url('@{imgUrl}/bg2.jpg');
+    }
+}
+
+.btn-atte {
+    cursor: pointer;
+}
+
+.page-content {
+    height: 2814px;
+
+    .banner {
+        height: 890px;
+    }
+
+    .tab-h {
+        width: 724px;
+        margin: 0 auto;
+    }
+
+    .tab-h-i {
+        cursor: pointer;
+    }
+
+    .tab-c {
+        width: 724px;
+        height: 1588px;
+        margin: 0 auto;
+
+        .timecount-holder {
+            // height: 30px;
+        }
+
+        .timecount {
+            margin: 16px auto 8px;
+        }
+
+        .avatar {
+            padding: 2px;
+            cursor: pointer;
+        }
+
+        .txt-name-l {
+            font-weight: normal;
+        }
+
+        .zhubo .name .level_icon,
+        .user .name .level_icon {
+            margin-top: 10px;
+        }
+    }
+
+    .tab-time {
+        .rank-history {
+            height: 55.2rem;
+        }
+
+        .me-center .avatar,
+        .grid-list .avatar {
+            width: 109px;
+            height: 109px;
+
+            img {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .tab-rank {
+        .tables-rank {
+            height: 850px;
+
+            &.higher {
+                height: 1050px;
+            }
+        }
+
+        .tables-rank-i {
+            margin-top: 2px;
+            margin-bottom: 14px;
+        }
+
+        .tables-rank-i .information .avatar {
+            width: 98px;
+            height: 98px;
+            cursor: pointer;
+        }
+
+        .tables-rank-i .information .live {
+            left: 53px;
+        }
+
+        .cowns-rank {
+            padding-top: 70px;
+            min-height: 346px;
+        }
+
+        .cowns-rank-i .head img {
+            border-width: 3px;
+            cursor: pointer;
+        }
+
+        .me-center .name .level_icon {
+            margin-top: 10px;
+        }
+    }
+
+    .copyright {
+        margin-top: 82px;
+    }
+}
+
+.btn-rules {
+    left: 50%;
+    transform: translate(340%, 0);
+    cursor: pointer;
+}
+
+.layer .layer-close {
+    left: 50%;
+    transform: translate(280px, -70%);
+    cursor: pointer;
+}
+
+.layer-content {
+    width: 724px;
+
+    &:after {
+        height: 168px;
+    }
+
+    .rule-tr {
+        box-sizing: border-box;
+    }
+}

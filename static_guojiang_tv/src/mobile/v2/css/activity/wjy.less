@@ -1,0 +1,135 @@
+@bf: 108rem;
+img {
+    display: block;
+    width: 100%;
+}
+// 页面之中的公共样式
+.title{
+    text-align: center;
+    .decorate{
+        border: 1px dashed #000;
+        display: inline-block;
+        padding: 10/@bf 40/@bf;
+        font-size: 18px;
+        font-weight: 800;
+        border-radius: 60/@bf;
+        font-family:SimSun SimHei;
+        position: relative;
+    }
+    .decorate:after,.decorate:before{
+        content:"";
+        display: inline-block;
+        border: 1px solid #000;
+        position: absolute;
+        border-radius: 50%;
+    }
+    .decorate:before{
+        width: 34/@bf;
+        height: 34/@bf;
+        left:-45/@bf;
+        bottom: 0;
+    }
+    .decorate:after{
+        width: 16/@bf;
+        height: 16/@bf;
+        right: -30/@bf;
+        top:5/@bf;
+    }
+
+}
+.y_color{
+    display: inline-block;
+    position: relative;
+}
+.y_color:after{
+    content: "";
+    position: absolute;
+    width: 100%;    
+    height: 6px;
+    border-radius: 6px;
+    background-color: #FF8A00;
+    bottom: 6px;
+    left: 0;
+    opacity: 0.7;
+}
+.bg{
+    background-image: url('../../img/activity/wjy/all.png');
+    background-size:1080/@bf 250/@bf ;
+    background-repeat: no-repeat;
+}
+.bgc1{
+  background-color: #DCF2FD;
+}
+.bgc2{
+   background-color: #FEC017;
+}
+#app{
+    background-color: #000;
+    .box_1,.box_2,.notice{
+        padding: 0 25/@bf;
+        line-height: 2;
+    }
+    .box_1{
+        background-color: #FEC017;
+        padding-top: 40/@bf;
+        .d_title {
+            margin-bottom: 30/@bf;
+        }
+    }
+    .bg_1{
+        background-position: 0 0;
+        width: 1080/@bf;
+        height: 127/@bf;
+    }
+    .box_2{
+        padding-top: 32/@bf;
+      
+        .d_title.title{
+            margin-top: 36/@bf;
+        }
+        .details{
+            .d_title{
+                text-align: center;
+                >h3{
+                    font-size: 18px;
+                    font-weight: 400;
+                    font-style: italic;
+                    position: relative;
+                    display: inline-block;
+                    padding: 0  30/@bf;
+                    &:after{
+                        position: absolute;
+                        content: "";
+                        width: 100%;
+                        height: 25%;
+                        bottom: 9px;
+                        left: 0;
+                        background-color: #B4E6FD;
+                        border-radius: 9px;
+                        opacity: 0.7;
+                    }
+                }
+            }
+            .d_1,.d_2{
+                .color_ye{
+                    color: #FF8B04;
+                }
+            }
+        }
+    }
+    .bg_2{
+        width: 1080/@bf;
+        height: 91/@bf;
+        background-position: 0 -140/@bf;
+    }
+    .notice{
+        background-color: #FEC017;
+        padding: 40/@bf;
+        .n_title{
+            margin-bottom: 35/@bf;
+        }
+        .txt{
+            margin-bottom: 20px;
+        }
+    }
+}

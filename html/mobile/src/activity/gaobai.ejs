@@ -1,0 +1,324 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="ban"></div> 
+    <div class="wrap">
+        <!-- 告白限定 -->
+        <section class="buy-gift">
+            <ul class="gift-list">
+                <li>
+                    <div class="gift-img">
+                        <img src="" alt="" />
+                        <b></b>
+                    </div>
+                    <strong>天长地久</strong>
+                    <span>9999克拉/个</span>
+                    <div class="gift-btns">
+                        <div class="view" @click="doSvg1()"></div>
+                        <div class="buy" @click="buy()"></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="gift-img">
+                        <img src="" alt="" />
+                        <b></b>
+                    </div>
+                    <span>一次性送出99个告白情书</span>
+                    <div class="gift-btns">
+                        <div class="view" @click="doSvg2()"></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 告白墙 -->
+        <section class="wall">
+            <div class="wall-list">
+                <div class="no-wall" v-if="gbArr.length == 0">在直播间一次性送出99个告白情书，即可获得告白主播的机会！</div>
+                <ul v-else>
+                    <li v-for="(item, index) in gbArr">
+                        <div class="wall-img">
+                            <img :src="item.modHeadPic" alt="" />
+                            <b></b>
+                        </div>
+                        <div class="wall-word">
+                            <p>{{item.content}}</p>
+                        </div>
+                        <div class="wall-care">
+                            <div :class="[item.liked ? 'herted' : 'hert']" v-bind:data-gbid="item.confessionId" @click="zan($event, index, 1)"></div>
+                            <strong :class="{'hertcolor': item.liked}">{{item.likeNum}}</strong>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="wall-btns">
+                <div class="find" v-show="gbArr.length > 0 " @click="findBox = true">
+                    <strong></strong>
+                </div>
+                <div class="gaobai" @click="showGbBox()">
+                    <strong></strong>
+                    <span>还可以告白<b>{{times}}</b>次</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 榜单 -->
+        <section class="rank">
+            <ul>
+                <li v-for="(item, index) in gbRankArr">
+                    <div class="rank-bg" v-if="item != null">
+                        <div class="two">
+                            <div class="mod">
+                                <div class="img-area">
+                                    <img :src="item.headPic" alt="" v-bind:data-rid="item.rid" @click="inlive($event)" />
+                                    <b></b>
+                                    <div class="live" v-bind:data-rid="item.rid" @click="inlive($event)" v-show="item.isPlaying"></div>
+                                </div>
+                                <p>{{item.nickname}}</p>
+                            </div>
+                            <div class="user">
+                                <div class="img-area">
+                                    <img :src="item.confessionUser.headPic" alt="" />
+                                    <b></b>
+                                </div>
+                                <p>{{item.confessionUser.nickname}}</p>
+                            </div>
+                        </div>
+                        <div class="gb-value">
+                            <strong>NO.{{index+1}}</strong>
+                            <span>告白值{{item.score}}</span>
+                        </div>
+                    </div>
+                    <div class="rank-bg rank-wait" v-else>
+                        <div class="two">
+                            <div class="mod">
+                                <div class="img-area">
+                                    <span></span>
+                                    <b></b>
+                                </div>
+                                <p>虚位以待</p>
+                            </div>
+                            <div class="user">
+                                <div class="img-area">
+                                    <span></span>
+                                    <b></b>
+                                </div>
+                                <p>虚位以待</p>
+                            </div>
+                        </div>
+                        <div class="gb-value">
+                            <strong>NO.{{index+1}}</strong>
+                            <span>告白值— —</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="my-rank" v-if="isMod">
+            <div class="my-message">
+                <div class="my-img">
+                    <img :src="myModArr.headPic" alt="" v-bind:data-rid="myModArr.rid" @click="inlive($event)"/>
+                    <div class="live" v-show="myModArr.isPlaying" v-bind:data-rid="myModArr.rid" @click="inlive($event)"></div>
+                </div>
+                <div class="my-name">
+                    <strong>{{myModArr.nickName}}</strong>
+                </div>
+            </div>
+            <div class="my-mark" v-if="myModArr.pairInfos != undefined">
+                <span>{{myModArr.pairInfos[0].name}}</span>
+                <strong>{{myModArr.pairInfos[0].value}}</strong>
+                <span>{{myModArr.pairInfos[1].name}}</span>
+                <strong>{{myModArr.pairInfos[1].value}}</strong>
+            </div>
+            <div class="my-mark" v-if="myModArr.pairInfos != undefined">
+                <span>{{myModArr.pairInfos[2].name}}</span>
+                <strong>{{myModArr.pairInfos[2].value}}</strong>
+                <span>{{myModArr.pairInfos[3].name}}</span>
+                <strong>{{myModArr.pairInfos[3].value}}</strong>
+            </div>
+        </section>
+
+        <div class="copyright"></div>
+
+        <div class="rule-btn" @click="showRule = true"></div>
+
+        <!-- 规则弹窗 -->
+        <div class="posi" v-show="showRule">
+            <div class="rule">
+                <h2></h2>
+                <div class="close-btn"  @click="showRule = false"></div>
+                <div class="rule-con">
+                    <div class="rule-out">
+                        <p><b>1.活动时间：</b>2019/05/16 12:00:00—05/20 23:59:59。</p>
+                        <p><b>2.活动礼物：</b></p>
+                        <ul class="act-gift clearfix">
+                            <li>
+                                <div class="gift-img"></div>
+                                <strong>告白情书</strong>
+                                <p>1个告白情书=10克拉=10告白值</p>
+                            </li>
+                            <li>
+                                <div class="gift-img"></div>
+                                <strong>天长地久</strong>
+                                <p>1个天长地久=9999克拉=9999告白值</p>
+                            </li>
+                            <li>
+                                <div class="gift-img"></div>
+                                <strong>宠你上天</strong>
+                                <p>1个宠你上天=52000克拉=60000告白值</p>
+                            </li>
+                        </ul>
+                        <p><b>3. </b>告白榜为收到活动礼物主播，配对的用户为给前十名主播送出活动礼物最多的用户。</p>
+                        <p><b>4. </b>此次活动分阶段炸房，每天前五次炸房送出指定数量的“告白情书”即可炸房，从第六次炸房起，每次炸房需送出3000个“告白情书”。炸房可触发全站飘屏，由补满进度条的用户冠名。点击飘屏可有机会抢到活动礼物-告白情书。</p>
+                        <p><b>注：抢到的告白情书，会放入背包。需在05/21 23:59:59前送出，逾期失效，请及时送出！</b></p>
+                        <div class="stage-img"></div>
+                        <p><b>5. </b>每天0点刷新炸房次数，所有直播间当前进度条炸房后，从第一次炸房（500个“告白情书”）开始炸房。</p>
+                        <p class="with-pic">
+                            <b>6. </b>
+                            一次性送出99个告白情书，即可触发告白特效哦~还可获得一次自定义告白语的机会！告白语会直接在用户指定的直播间飘屏显示。用户可在活动页面告白墙为欣赏的告白语点赞！每个ID每天可点赞一次。告白语获得点赞最高的用户，活动结束后将收到宝箱<span class="bx-img"></span>*2！助您全站告白~
+                        </p>
+                        <p><b>7. 5月20日0点-24点，送出活动礼物：告白情书、天长地久、宠你上天，用户经验值翻倍哦！想要升级的用户大大，可别错过这个机会！</b>例：用户A送给主播B一个天长地久，价值9999克拉。活动榜单累计9999告白值。主播B直播间累计9999星光值。用户A的用户等级经验值累计9999*2=19998。主播B的主播等级经验值累计9999.粉丝亲密度:1克拉=1亲密度不变。</p>
+                        <p><b>8. </b>告白榜前5名主播可获得克拉奖励,将于活动结束的5个工作日内发放。</p>
+                        <p><b>9. </b>所有排名有相同成绩，按照先到先得排名。</p>
+                        <ul class="award-list clearfix">
+                            <li>告白榜</li>
+                            <li>奖励克拉</li>
+                            <li>第一名</li>
+                            <li>350000克拉</li>
+                            <li>第二名</li>
+                            <li>250000克拉</li>
+                            <li>第三名</li>
+                            <li>150000克拉</li>
+                            <li>第四、五名</li>
+                            <li>100000克拉</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 购买弹窗 -->
+        <div class="posi buybox" v-show="buyBox">
+            <div>
+                <b class="close-btn" @click="buyBox= !buyBox"></b>
+                <h3>购买个数</h3>
+                <div class="buy-num">
+                    <div class="dev" @click="dev()"></div>
+                    <input id="totalMoney" maxlength="8" value="1" @input="inputNumber()" />
+                    <div class="add" @click="add()"></div>
+                </div>
+                <strong>价格: {{buyTotal}}克拉</strong>
+                <div class="sure-buy" @click="sureBuy()" v-bind:data-id="goodId"></div>
+            </div>
+        </div>
+
+        <!-- 余额不足 -->
+        <div class="posi ye" v-show="yeBox">
+            <div class="no-enough">
+                <b class="close-btn" @click="yeBox = !yeBox"></b>
+                <p>余额不足，快去充值吧!</p>
+                <div class="not-enough-btns clearfix">
+                    <div class="not-cz" @click="yeBox = !yeBox">不 了</div>
+                    <div class="do-cz" @click="charge()"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 搜索 -->
+        <div class="posi find" v-show="findBox">
+            <div class="find-box">
+                <div class="close-btn" @click="findBox = !findBox"></div>
+                <div class="find-flex">
+                    <div class="find-area">
+                        <input class="search-id" type="text" placeholder="请输入ID" type="Number" autocomplete="on" />
+                        <b @click="searchWord($event)"></b>
+                    </div>
+                    <strong class="ud"></strong>
+                </div>
+                <p>提示：输入用户/主播ID，快速定位您想点赞的告白语</p>
+            </div>
+        </div>
+        
+        <!-- 告白 -->
+        <div class="posi gb" v-show="gbBox">
+            <div class="gb-box">
+                <div class="close-btn" @click="gbBox = !gbBox"></div>
+                <div class="gb-cover">
+                    <div class="gb-con">
+                        <div class="find-flex">
+                            <strong>我要告白</strong>
+                            <div class="find-area">
+                                <input type="text" placeholder="请输入ID" @input="changeId()" />
+                                <b @click="findMod($event)"></b>
+                            </div>
+                            <strong class="ud">{{modName}}</strong>
+                        </div>
+                        <h3 v-show="gbModArr.length > 0">以下是你送出过告白情书的主播，点击头像即可获取ID哦~</h3>
+                        <ul class="hs-list">
+                            <li v-for="(item, index) in gbModArr">
+                                <div class="hs-img">
+                                    <img :src="item.modHeadPic" alt="" v-bind:data-hsmid="item.modId" v-bind:data-hsname="item.modNickname" @click="valueMes($event)"/>
+                                    <b v-bind:data-hsmid="item.modId" v-bind:data-hsname="item.modNickname" @click="valueMes($event)"></b>
+                                </div>
+                                <strong>{{item.modNickname}}</strong>
+                            </li>
+                        </ul>
+                        <div class="input-word">
+                            <textarea placeholder="不知道如何表达，可以看看下方有没有击中你的文案哦~" @input="inputWord()"></textarea>
+                            <p>{{textLen}}/30</p>
+                        </div>
+                        <ul class="choose-word">
+                            <li v-for="(item, index) in gbTxtArr">
+                                <p v-bind:data-wordid="item.id" @click="useWord($event)">{{item.content}}</p>
+                            </li>
+                        </ul>
+                        <div class="change-one" @click="getInitWord()"></div>
+                        <div class="sure-gb" @click="sendGb()"></div>
+                        <div class="tips">提示：请文明用语哦，若发现有违反平台公约的言论，将严肃处理~</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="posi zan" v-show="zanBox">
+            <div class="zan-box">
+                <div class="close-btn" @click="zanBox = !zanBox"></div>
+                <div class="zan-out">
+                    <div class="wall-list">
+                        <ul>
+                            <li v-for="(item, index) in searchArr">
+                                <div class="wall-img">
+                                    <img :src="item.modHeadPic" alt="" />
+                                    <b></b>
+                                </div>
+                                <div class="wall-word">
+                                    <p>{{item.content}}</p>
+                                </div>
+                                <div class="wall-care">
+                                    <div :class="[item.liked ? 'herted' : 'hert']" v-bind:data-gbid="item.confessionId" @click="zan($event, index)"></div>
+                                    <strong :class="{'hertcolor': item.liked}">{{item.likeNum}}</strong>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 文案提示 -->
+        <div class="tost" v-show="tostBox">{{tostText}}</div>
+        <!-- svg -->
+        <div class="posi svg-con" v-show="svgPlayer" @click="removeSvg">
+        </div>
+    </div>
+</main>
+
+<script>
+    var gjShareParam = JSON.stringify({
+        title: '520 甜蜜告白',
+        content: '你出现在我的身边，就是我可以遇到的最大的惊艳，胜过五彩缤纷和一切轰轰烈烈的世界 ~',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/gaobai/share.jpg")}'
+    });
+</script>

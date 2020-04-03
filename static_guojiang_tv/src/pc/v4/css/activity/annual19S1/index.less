@@ -1,0 +1,196 @@
+// ../../../img/activity/annual19S1/index
+
+@activityName: 'activity/annual19S1/index';
+@bf: 1px*10/6.4;
+@imgUrl: '../../../img/activity/annual19S1';
+
+@import './../../../../../mobile/v2/css/activity/annual19S1/index.mixin.less';
+
+/* 定义普通样式 S */
+/* 背景图 */
+.page-bgs {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+
+    .page-bg {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 770px;
+        background-image: url('@{imgUrl}/banner.jpg');
+
+        // &.show-stage-1 {
+        //     background-image: url('@{imgUrl}/banner.jpg');
+        // }
+
+        &.show-stage-2 {
+            background-image: url('@{imgUrl}/banner1.jpg');
+        }
+
+        &.show-stage-3 {
+            background-image: url('@{imgUrl}/banner2.jpg');
+        }
+
+        &.show-stage-4 {
+            background-image: url('@{imgUrl}/banner3.jpg');
+        }
+
+        &.show-stage-5 {
+            background-image: url('@{imgUrl}/banner4.jpg');
+        }
+    }
+
+    .bg2 {
+        height: 2930px;
+        background-image: url('@{imgUrl}/bg.jpg');
+    }
+}
+
+/* 页面内容 */
+.page-content {
+    width: 800px;
+    margin: 0 auto;
+    padding-top: 750px;
+}
+
+#app * {
+    box-sizing: border-box;
+}
+
+.qs-tips {
+    display: none;
+    font-size: 16px;
+    position: absolute;
+    background: #000;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #e7ca62;
+    z-index: 11;
+    width: 200px;
+    text-align: left;
+    line-height: 18px;
+    margin-top: -26px;
+    margin-left: -19px;
+    transform: translate(0px, -100%);
+    cursor: pointer;
+
+    &:hover {
+        display: block;
+    }
+
+    // &:after {
+    //     content: '';
+    //     display: block;
+    //     width: 0px;
+    //     height: 0px;
+    //     position: absolute;
+    //     border-top: 8px solid#e7ca62;
+    //     border-left: 8px solid transparent;
+    //     border-right: 8px solid transparent;
+    //     margin-left: 90px;
+    //     bottom: -8px;
+    // }
+}
+
+#app .icon-qs {
+    margin-top: 1px;
+    cursor: pointer;
+}
+
+.icon-qs:hover ~ .qs-tips {
+    display: block;
+}
+
+.btn, .avatar {
+    cursor: pointer;
+}
+
+.floater {
+    left: 50%;
+    right: auto;
+    transform: translate(200%);
+}
+
+.layer-urank {
+    .scroller-container {
+        z-index: 29;
+    }
+}
+
+.sign-page {
+    .rule-p {
+        margin: 12.8px 70px;
+    }
+}
+
+.ticket-drawer {
+    .icon-qs {
+        z-index: 30;
+    }
+
+    .pc-tips {
+        display: none;
+        position: absolute;
+        width: 200px;
+        font-size: 12px;
+        padding: 4px 8px;
+        background: #20110f;
+        border: 1px solid #bf9a42;
+        border-radius: 4px;
+        transform: translate(-90%, -100%);
+        color: #ffe476;
+    }
+
+    .icon-qs:hover .pc-tips {
+        display: block;
+    }
+}
+
+.layer-urank,
+.q-rank,
+.levelup-rank {
+    .l-tr-0,
+    .l-tr-1,
+    .l-tr-2 {
+        .headpic {
+            padding: 5px;
+        }
+
+        .avatar,
+        .avatar-holder {
+            border-width: 2px;
+        }
+    }
+
+    .l-tr {
+        .headpic {
+            padding: 3px;
+        }
+
+        .avatar,
+        .avatar-holder {
+            border-width: 2px;
+        }
+    }
+
+    .me-center {
+        .headpic {
+            padding: 3px;
+        }
+
+        .avatar,
+        .avatar-holder {
+            border-width: 2px;
+        }
+    }
+}
+
+.layer-content.rule > .scroller-container {
+    display: none;
+}

@@ -1,0 +1,49 @@
+<main id="app" v-cloak>
+    <section class="activity-gift">
+        <div class="gift-img"></div>
+        <p class="price">小辰辰 10克拉/个</p>
+        <p class="gift-num">收到礼物：{{giftTotal}}</p>
+        <div class="inlive-btn" @click="goRoom"></div>
+    </section>
+    <ul class="gift-list">
+        <li v-for="(item,index) in giftList" key="index">
+            <img class="gift-img" :src="item.image"></img>
+            <p class="gift-name">{{item.name}}</p>
+            <p class="gift-price">{{item.price}}克拉/个</p>
+            <div class="btn-box">
+                <div class="preview-btn" @click="preview(item)"></div>
+                <div class="purchase-btn" @click="purchase(item)"></div>
+            </div>
+        </li>
+    </ul>
+    <section class="svgContainerWrap" v-show="svgContainerWrap" @click="destory">
+        <div id="svgContainer" @click="destory"></div>
+    </section>
+    <section class="mask" v-show="mask">
+        <div class="purchase-wrap">
+            <span class="close" @click="close"></span>
+            <p class="title">购买个数</p>
+            <div class="input">
+                <span class="subtraction" @click="subtraction">-</span>
+                <input type="tel" name="giftnum" v-model="purchaseNum" />
+                <span class="addition" @click="addition">+</span>
+            </div>
+            <p class="totalPrice">{{totalPrice}}克拉</p>
+            <span class="submitOrder" @click="submit"></span>
+        </div>
+    </section>
+    <ul class="rules">
+        <li>1.活动时间：2018/06/06 12:00:00 -- 06/10 23:59:59。</li>
+        <li>2.活动期间内，在瑾辰辰的直播间内，每送满3000个活动礼物——小辰辰，即可炸出守护红包，快来抢克拉吧！</li>
+        <li>3.活动期间请遵守星光直播文明公约。</li>
+    </ul>
+</main>
+
+<script>
+    var gjShareParam = JSON.stringify({
+        title: '星光女神——瑾辰辰',
+        content: '女神驾到，霸气全开！',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/jinchenchen/share.png")}'
+    });
+</script>

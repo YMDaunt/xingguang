@@ -1,0 +1,181 @@
+<main id="app" v-cloak>
+    <section class="banner">
+        <p class="active-time"><span class="num">{{activeTime}}</span></p>
+    </section>
+
+    <section class="package">
+        <div class="price"><p class="gift1 fl"><span class="num">2999</span> 克拉 / 个</p><p class="gift2 fl"><span class="num">8888</span> 克拉 / 个</p></div>
+        <ul class="btn-group1">
+            <li class="gift-btn fl" v-for="(item,index) in giftData" :key="index">
+                <p class="preview fl" @click="preview(item)"></p>
+                <p class="purchase fl" @click="popUp(item)"></p>
+            </li>
+        </ul>
+        <div class="animate">
+            <span class="corner"></span>
+            <span class="little-ghost"></span>
+        </div>
+        <ul class="btn-group2">
+            <li>
+                <p class="inlive fl" @click="inlive()"></p>
+                <p v-show="!love" class="follow_btn fl" @click="attention(linMid,1,'love')"></p>
+                <p v-show="love" class="following fl""></p>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <div class="layer-smash" v-show="smash" @click="destory()"></div>
+        <div id="svgContainer" v-show="svgContainerBox" @click="destory()"></div>
+    </section>
+
+    <section class="purchase_layer" v-show="purchaseLayer">
+        <div class="mask"></div>
+        <div class="purchase_box">
+            <span class="close" @click="close"></span>
+            <p class="rows">购买：<input type="number" class="giftNum" v-model.number="num"> 个</p>
+            <p class="rows">价格：<span id="price">{{totalMoney}}</span> 克拉</p>
+            <p class="purchase_btn" @click="purchase"></p>
+        </div>
+    </section>
+
+    <section class="list">
+        <div class="title"></div>
+        <div class="handler">
+            <p class="witch" :class="{'witch-on': listContent }" @click="change('witch')"></p>
+            <p class="ghost" :class="{'ghost-on': !listContent }" @click="change('ghost')"></p>
+        </div>
+        <div class="handler-content">
+            <div class="witch-list" v-show="listContent">
+                <ul class="prev-list">
+                    <li :class="'no'+index" v-for="(item,index) in modRank" v-if="index < 3">
+                        <div class="avatar_wrap">
+                            <p class="crown"></p>
+                            <p class="avatar_box"><img :src="item['head_pic_1']"  class="avatar" @click="inlive(item.rid)"></p>
+                            <p class="live" v-if="item.is_playing == '1'"></p>
+                            <p class="index">NO.{{index +1 }}</p>
+                        </div>
+                        <div class="info">
+                            <p>
+                                <span class="nickname">{{item.nickname}}</span>
+                                <span class="level_icon fl" :class="'m_level_icon_'+item.level"></span>
+                            </p>
+                            <p>
+                                <span class="gift_num">收到：{{item.num}}</span>
+                                <span v-show="modRank[index].is_attention" class="following">已关注</span>
+                                <span v-show="!modRank[index].is_attention" class="follow_btn" @click="attention(item.id,index,'modRank')">关注</span>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="last-list mod-last-list">
+                    <li v-for="(item,index) in modRank" v-if="index >= 3">
+                        <p class="index">{{index+1}}</p>
+                        <div class="avatar_wrap">
+                            <p class="avatar_box"><img :src="item['head_pic_1']" class="avatar" @click="inlive(item.rid)"></p>
+                            <p class="live" v-if="item.is_playing == '1'"></p>
+                        </div>
+                        <div class="info">
+                            <span class="nickname">{{item.nickname}}</span>
+                            <span class="level_icon fl" :class="'m_level_icon_'+item.level"> </span>
+                            <span class="gift_num">收到：{{item.num}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="ghost-list" v-show="!listContent">
+                <ul class="prev-list">
+                    <li  :class="'no'+index" v-for="(item,index) in userRank" v-if="index < 3">
+                        <div class="avatar_wrap">
+                            <p class="crown"></p>
+                            <p class="avatar_box"><img :src="item['head_pic_1']"  class="avatar"></p>
+                            <p class="index">NO.{{index +1 }}</p>
+                        </div>
+                        <div class="info">
+                            <p>
+                                <span class="nickname">{{item.nickname}}</span>
+                                <span class="level_icon fl" :class="'u_level_icon_'+item.level"></span>
+                            </p>
+                            <p>
+                                <span class="gift_num">送出：{{item.num}}</span>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="last-list user-last-list">
+                    <li v-for="(item,index) in userRank" v-if="index >= 3">
+                        <p class="index">{{index+1}}</p>
+                        <div class="avatar_wrap">
+                            <p class="avatar_box"><img :src="item['head_pic_1']"  class="avatar"></p>
+                        </div>
+                        <div class="info">
+                            <p>
+                                <span class="nickname">{{item.nickname}}</span>
+                                <span class="level_icon fl" :class="'u_level_icon_'+item.level"></span>
+                            </p>
+                            <p>
+                                <span class="gift_num">送出：{{item.num}}</span>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <p class="rules_btn" @click="showLayer = !showLayer"></p>
+    </section>
+
+    <section class="s_layer" v-show="showLayer">
+        <div>
+            <div class="rules">
+                <p class="close" @click="showLayer = !showLayer"></p>
+                <ul class="content">
+                    <li>1.活动时间：2017/10/26 18:00:00—10/31 23:59:59。</li>
+                    <li>2.活动期间，单个主播直播间每收到3000个“南瓜灯”，即可炸出万圣节红包！快来抢克拉吧！</li>
+                    <li>3.主播榜单前8名都可获得万圣节礼品，礼品将于活动结束后15个工作日内发放。</li>
+                    <li>4.本次活动最终解释权归星光直播所有。</li>
+                </ul>
+                <ul class="gift">  
+                    <li>第一名：Burberry<br>玲珑女士纯香香氛(85ml）</li>
+                    <li>第二名：Chanel<br>五号香水（50ml）</li>
+                    <li>第三名：Gucci<br>花之舞淡香水(50ml)</li>
+                    <li>第四名：Anna sui<br>幻境绮缘淡香水（50ml）</li>
+                    <li>第五名：Versace<br>臻挚粉钻香水(30ml）</li>
+                    <li>第六~八名：Burberry<br>英伦迷情香水（30ml)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="ghost-live">
+        <div class="title"></div>
+        <ul>
+            <li class="ghost-live-list" v-for="(item,index) in ghostList" :key="index" >
+                <div class="avatar_wrap">
+                    <img :src="item.head_pic_1" class="avatar" @click="inlive(item.rid)">
+                    <p v-if="item.is_playing == '1'" class="live"></p>
+                </div>
+                <div class="info">
+                    <p class="nickname">{{item.nickname}}</p>
+                    <div class="content">
+                        <span class="bold">直播内容：</span><span class="contentLen">{{item.content}}</span>
+                    </div>
+                    <p class="time">
+                        <span class="bold">直播时间：</span>{{item.duration}}
+                    </p>
+                    <p v-show="!ghostList[index].is_attention" class="follow_btn" @click="attention(item.mid,index,'ghostList')"></p>
+                    <p v-show="ghostList[index].is_attention" class="following"></p>
+                </div>
+            </li>
+        </ul>
+        <div class="bottom"></div>
+    </section>
+</main>
+<script src="//static.guojiang.tv/mobile/js/common/bodymovin.min.js"></script>
+<script>
+    var gjShareParam = JSON.stringify({
+        title: '不给糖，就捣蛋！',
+        content: '玩嗨万圣节',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/halloween2017/share.jpg")}'
+    });
+</script>

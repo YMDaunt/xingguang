@@ -1,0 +1,561 @@
+// ../../../img/activity/family/top
+
+@activityName: 'activity/family/top';
+@baseSize: 1px*10/7;
+@baseImgPath: '../../../img/activity/family/top';
+
+@themeColor: #e2be76;
+@themeFontSize: 32/@baseSize;
+
+/* 定义颜色字体大小 S */
+@bannerInfoFS: @themeFontSize;
+@bannerInfoFC: @themeColor;
+
+@giftsInfoFS: @themeFontSize;
+@giftsInfoFC: @themeColor;
+@giftsInfoSpecFC: #87baff;
+@giftsBorderColor: #ab9133;
+@giftsBGC: #362e2b;
+@giftsPriceFS: 40/@baseSize;
+@giftsPriceFC: #f4c261;
+@giftRunBtnBC: #f8cd46;
+@giftRunBtnFS: 40/@baseSize;
+@giftRunBtnFC: #322601;
+@giftRunBtnBCA: #ba902a;
+@giftRunBtnFCA: #322601;
+
+@infoTimeFS: 32/@baseSize;
+@infoTimeFC: #87baff;
+@infoTxtFS: 32/@baseSize;
+@infoTxtFC: #e2be76;
+
+@zhuboAvatarBorderColor: @themeColor;
+@zhuboNameFS: 40/@baseSize;
+@zhuboNameFC: #e2be76;
+
+@checkBtnBC: #f3bd34;
+@checkBtnFS: 38/@baseSize;
+@checkBtnFC: #3e2f01;
+@checkBtnBCA: #765708;
+@checkBtnFCA: #f2c15c;
+@liveBC: #87baff;
+@liveFS: 32/@baseSize;
+@liveFC: #362e2b;
+
+@inviteBC: #f8cf4a;
+@inviteFS: 50/@baseSize;
+@inviteFC: #3e2f01;
+@inviteBCA: #c6a337;
+@inviteFCA: #322601;
+
+@copyFS: @themeFontSize;
+@copyFC: @themeColor;
+
+@toastTxtFS: 38/@baseSize;
+@toastTxtFC: #333333;
+@toastCancelBC: #bbbbbb;
+@toastCancelFS: 38/@baseSize;
+@toastCancelFC: #fff;
+@toastCancelBCA: #969696;
+@toastCancelFCA: #cccccc;
+@toastOkBC: #f7c83d;
+@toastOkFS: 38/@baseSize;
+@toastOkFC: #3e2f01;
+@toastOkBCA: #c6a133;
+@toastOkFCA: #322601;
+
+
+/* 定义颜色字体大小 E */
+
+/* 定义全局基值 S */
+#app .xg-content img {
+    width: 100%;
+    height: 100%;
+}
+
+#app .noshow {
+    opacity: 0;
+}
+/* 定义全局基值 E */
+
+/* 定义可复用样式 S */
+
+// 设置Section背景图片
+// .getBgStyles(@width, @height, @picName) {
+//     width: @width/@baseSize;
+//     height: @height/@baseSize;
+//     background: url('@{baseImgPath}/@{picName}') no-repeat center;
+//     background-size: cover;
+//     overflow: hidden;
+// }
+
+/* 定义可复用样式 E */
+
+/* 定义普通样式 S */
+.xg-container {
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+}
+
+.xg-content {
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    width: 790px;
+    transform: translateX(-50%);
+}
+
+.banner {
+    background-image: url('@{baseImgPath}/bg1.jpg');
+    height: 793px;
+}
+
+.gifts {
+    background-image: url('@{baseImgPath}/bg2.jpg');
+    height: 797px;
+}
+
+.info {
+    background-image: url('@{baseImgPath}/bg3.jpg');
+    height: 326px;
+}
+
+.meeting {
+    background-image: url('@{baseImgPath}/bg4.jpg');
+    height: 1301px;
+}
+/* banner 区域 */
+.banner-content {
+    width: 672px;
+    height: 336px;
+
+    top: 375px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    border: 8/@baseSize solid @themeColor;
+
+    p {
+        text-align: center;
+        font-size: @bannerInfoFS;
+        color: @bannerInfoFC;
+    }
+
+    p.top40 {
+        padding-top: @bannerInfoFS;
+    }
+}
+
+/* 定制礼物区域 */
+// .gifts-content {}
+
+.gifts-title {
+    background-image: url('@{baseImgPath}/biaoti.png');
+    width: 783 / @baseSize;
+    height: 96 / @baseSize;
+    background-size: cover;
+    margin: 30/@baseSize auto 0;
+}
+
+.gifts-info {
+    padding: 45/@baseSize 50/@baseSize 0 50/@baseSize;
+
+    p {
+        font-size: @giftsInfoFS;
+        color: @giftsInfoFC;
+        text-indent: @giftsInfoFS * 2;
+        line-height: 56/@baseSize;
+    }
+}
+
+.gifts-main {
+    padding-top: 70/@baseSize;
+
+    .avatar {
+        transform: scale(0.9);
+        width: 340/@baseSize;
+        height: 340/@baseSize;
+        border: 6/@baseSize solid @giftsBorderColor;
+        border-radius: 16/@baseSize;
+        margin: 0 auto;
+        background-color: @giftsBGC;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 98% !important;
+            height: 98% !important;
+        }
+    }
+
+    .price {
+        transform: scale(0.9);
+        font-size: @giftsPriceFS;
+        color: @giftsPriceFC;
+        font-weight: bold;
+        text-align: center;
+        padding: 35/@baseSize 0;
+    }
+
+    .run-btn {
+        transform: scale(0.8);
+        width: 612/@baseSize;
+        height: 120/@baseSize;
+        margin: 20/@baseSize auto 0;
+        border-radius: 60/@baseSize;
+
+        background-color: @giftRunBtnBC;
+        font-size: @giftRunBtnFS;
+        color: @giftRunBtnFC;
+        font-weight: bold;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        cursor: pointer;
+
+        &:active {
+            background-color: @giftRunBtnBCA;
+            color: @giftRunBtnFCA;
+        }
+
+        &.disabled {
+            background-color: @giftRunBtnBCA;
+            color: @giftRunBtnFCA;
+        }
+
+        &.disabled:after {
+            content: '';
+            position: absolute;
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 0.6;
+            top: 0px;
+            left: 0px;
+        }
+    }
+}
+
+/* 时间文案区域 */
+// .info-content{}
+
+.info-title {
+    background-image: url('@{baseImgPath}/biaoti2.png');
+    width: 783 / @baseSize;
+    height: 96 / @baseSize;
+    background-size: cover;
+    margin: 0 auto;
+}
+
+.info-main {
+    height: 360/@baseSize;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .times {
+        p {
+            font-size: @infoTimeFS;
+            color: @infoTimeFC;
+            line-height: 68/@baseSize;
+        }
+    }
+
+    .txt {
+        p {
+            width: 540 / @baseSize;
+            font-size: @infoTxtFS;
+            color: @infoTxtFC;
+            line-height: 68/@baseSize;
+            margin-left: 60/@baseSize;
+        }
+    }
+}
+
+/* 分会场区域 */
+// .meeting-content{}
+
+.meeting-title {
+    background-image: url('@{baseImgPath}/biaoti3.png');
+    width: 783 / @baseSize;
+    height: 96 / @baseSize;
+    background-size: cover;
+    margin: 20/@baseSize auto 0;
+}
+
+.meeting-list {
+    display: flex;
+    justify-content: center;
+    // align-items: center;
+    flex-wrap: wrap;
+    padding-top: 90/@baseSize;
+    height: 1240/@baseSize;
+}
+
+.meeting-i {
+    width: 450/@baseSize;
+    margin-bottom: 60/@baseSize;
+    position: relative;
+    transform: scale(0.9);
+
+    .avatar {
+        width: 260/@baseSize;
+        height: 260/@baseSize;
+        border: 6/@baseSize solid @zhuboAvatarBorderColor;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto;
+        cursor: pointer;
+    }
+
+    .live {
+        position: absolute;
+        top: 0px;
+        right: 80/@baseSize;
+        display: block;
+        padding: 10/@baseSize 30/@baseSize;
+        border-radius: 30/@baseSize;
+        font-size: @liveFS;
+        color: @liveFC;
+        background-color: @liveBC;
+    }
+
+    .name {
+        text-align: center;
+        font-size: @zhuboNameFS;
+        color: @zhuboNameFC;
+        margin: 30/@baseSize 0;
+    }
+
+    .check-btn {
+        display: block;
+        width: 274/@baseSize;
+        height: 84/@baseSize;
+        border-radius: 40/@baseSize;
+        margin: 0 auto;
+
+        background-color: @checkBtnBC;
+        font-size: @checkBtnFS;
+        color: @checkBtnFC;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+
+        &:active, &.checked {
+            background-color: @checkBtnBCA;
+            color: @checkBtnFCA;
+        }
+    }
+}
+
+.invite-btn {
+    transform: scale(0.8);
+    display: block;
+    width: 614/@baseSize;
+    height: 124/@baseSize;
+    margin: 40/@baseSize auto;
+    border-radius: 60/@baseSize;
+
+    background-color: @inviteBC;
+    font-size: @inviteFS;
+    font-weight: bold;
+    color: @inviteFC;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    &:active {
+        background-color: @inviteBCA;
+        color: @inviteFCA;
+    }
+}
+
+.copyright {
+    text-align: center;
+    font-size: @copyFS;
+    color: @copyFC;
+    margin-top: 110/@baseSize;
+}
+
+/* 对话框 */
+.modal {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    display: none;
+
+    &.active {
+        display: flex;
+    }
+}
+
+.modal-content {
+    transform: scale(0.8);
+    width: 800/@baseSize;
+    background: #fff;
+    border-radius: 30/@baseSize;
+    position: relative;
+    padding: 40/@baseSize;
+
+    .text {
+        font-size: @toastTxtFS;
+        color: @toastTxtFC;
+        text-align: center;
+        margin-top: 48/@baseSize;
+    }
+
+    .modal-btns {
+        display: flex;
+        justify-content: center;
+        margin-top: 90/@baseSize;
+        margin-bottom: 20/@baseSize;
+
+        span {
+            display: inline-block;
+            width: 298 / @baseSize;
+            height: 120 / @baseSize;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 60/@baseSize;
+            cursor: pointer;
+        }
+
+        .cancel-btn {
+            background-color: @toastCancelBC;
+            font-size: @toastCancelFS;
+            color: @toastCancelFC;
+            cursor: pointer;
+
+            &:active {
+                background-color: @toastCancelBCA;
+                color: @toastCancelFCA;
+            }
+        }
+
+        .confirm-btn {
+            background-color: @toastOkBC;
+            font-size: @toastOkFS;
+            color: @toastOkFC;
+            margin-left: 40/@baseSize;
+            cursor: pointer;
+
+            &:active {
+                background-color: @toastOkBCA;
+                color: @toastOkFCA;
+            }
+        }
+    }
+}
+
+.modal-close {
+    position: absolute;
+    width: 100 / @baseSize;
+    height: 100 / @baseSize;
+    background: url('@{baseImgPath}/icon_close.png') no-repeat;
+    background-size: cover;
+    top: 0px;
+    right: 0px;
+    transform: translate(40%, -40%);
+    cursor: pointer;
+}
+
+.toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: none;
+
+    &.active {
+        display: block;
+    }
+
+    .txt {
+        background: rgba(0, 0, 0, 0.8);
+        padding: 20/@baseSize 30/@baseSize;
+        color: #fff;
+        border-radius: 8/@baseSize;
+        font-size: 36/@baseSize;
+    }
+}
+
+.layer {
+    position: fixed;
+    z-index: 11;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    display: none;
+
+    background: rgba(0, 0, 0, 0.6);
+
+    &.active {
+        display: flex;
+    }
+
+    #env-panel {
+        width: 877*@baseSize*0.34;
+        height: 1333*@baseSize*0.34;
+    }
+
+    .save-btn {
+        transform: scale(0.8);
+        display: block;
+        width: 614/@baseSize;
+        height: 124/@baseSize;
+        margin: 40/@baseSize auto;
+        border-radius: 60/@baseSize;
+
+        background-color: @inviteBC;
+        font-size: @inviteFS;
+        font-weight: bold;
+        color: @inviteFC;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+
+        &:active {
+            background-color: @inviteBCA;
+            color: @inviteFCA;
+        }
+    }
+}

@@ -1,0 +1,168 @@
+/**
+ * @Date: 2020-01-15 15:16:02
+ * @LastEditors: Jesse
+ * @LastEditTime: 2020-01-16 12:10:55
+ */
+@activityName: 'store';
+@bf: 108rem;
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+
+/***************common end************/
+#app{
+    width:1080/@bf;
+    background: #ff9650 url('../../img/makeFriends/store/bg.jpg') 0 0 no-repeat scroll;
+    background-size: contain;
+    overflow: hidden;
+}
+.title{
+    font-size: 45/@bf;
+    color:#984f1e;
+    text-align: center;
+    margin:148/@bf auto 20/@bf;
+}
+.product-list{
+    overflow: hidden;
+    width: 1035/@bf;
+    margin:0 auto 40/@bf;
+    li{
+        float: left;
+        width: 480/@bf;
+        height:816/@bf;
+        margin:25/@bf 18/@bf;
+        border-radius:20/@bf;
+        background-color: #fff;
+    }
+    .bg-img{
+        position: relative;
+        width: 450/@bf;
+        height:580/@bf;
+        margin:16/@bf;
+        border-radius:20/@bf;
+        overflow: hidden;
+        img{
+            width: 450/@bf;
+            height:580/@bf;
+        }
+        .price{
+            position: absolute;
+            bottom:0;
+            text-align: center;
+            height: 75/@bf;
+            width:100%;
+            font-size:39/@bf;
+            font-weight: bold;
+            color:#fff;
+            line-height: 75/@bf;
+            background: rgba(130,118,120,0.5);
+        }
+    }
+    .name{
+        font-size:45/@bf;
+        color:#ff9650;
+        text-align: center;
+    }
+    .store-btn {
+        width:348/@bf;
+        height:92/@bf;
+        line-height: 92/@bf;
+        text-align: center;
+        font-size: 39/@bf;
+        color:#fff;
+        margin:30/@bf auto;
+        border-radius:46/@bf;
+    }
+    .buy-btn,.use-btn{
+        background-color: #ff9650;
+    }
+    .used-btn{
+        background-color: #cccccc;
+    }
+}
+.mask,.preview{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background: rgba(0,0,0,0.5);
+}
+.purchasePopup{
+    .transformCenter;
+    width:846/@bf;
+    height: 670/@bf;
+    border-radius:40/@bf;
+    background-color: #fff;
+    .title{
+        font-size:48/@bf;
+        text-align: center;
+        margin:40/@bf auto;
+        color:#333333;
+    }
+    .name{
+        font-size: 42/@bf;
+        color:#333333;
+        text-align: center;
+    }
+    .price{
+        font-size: 42/@bf;
+        color:#666;
+        margin:30/@bf auto;
+        text-align: center;
+        span{
+            color:#7166f9;
+        }
+    }
+    .balance{
+        font-size: 42/@bf;
+        color:#999;
+        text-align: center;
+    }
+    .purchase-btn{
+        width: 765/@bf;
+        height:144/@bf;
+        margin:83/@bf auto 0;
+        .cancel{
+            width: 363/@bf;
+            height:144/@bf;
+            line-height: 144/@bf;
+            color:#7166f9;
+            text-align: center;
+            font-size:45/@bf;
+            border-radius:72/@bf;
+            border:1px solid ;
+
+        }
+        .sure{
+            width: 363/@bf;
+            height:144/@bf;
+            line-height: 144/@bf;
+            color:#fff;
+            text-align: center;
+            font-size:45/@bf;
+            border-radius:72/@bf;
+            background-color:  #7166f9;
+        }
+    }
+}
+
+.preview{
+    img{
+        .transformCenter;
+    width:825/@bf;
+    height: 1468/@bf;
+    }
+}

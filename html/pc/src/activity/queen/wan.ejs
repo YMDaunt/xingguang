@@ -1,0 +1,124 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="wrap">
+        <div class="content">
+            <!-- 专属礼物 -->
+            <section class="gift">
+                <div class="wan-gift">
+                    <b></b>
+                    <p>
+                        <strong>女神万姐</strong>
+                        <span>10克拉/个</span>
+                    </p>
+                    <div class="btns">
+                        <div class="care" v-if="!isLove" @click="love()"></div>
+                        <div class="cared" v-else></div>
+                        <div class="go-room" @click="inlive"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 问答 -->
+            <section class="question">
+                <ul>
+                    <li class="ask clearfix">
+                        <div class="askimg">
+                            <b></b>
+                            <span>星光小编</span>
+                        </div>
+                        <div class="say-text">
+                            <div class="arrow"></div>
+                            <strong>生活中你是个什么样的人？</strong>
+                        </div>
+                    </li>
+                    <li class="answer clearfix">
+                        <b></b>
+                        <div class="say-text">
+                            <div class="arrow"></div>
+                            <strong>活泼开朗的人。</strong>
+                        </div>
+                    </li>
+                    <li class="ask clearfix">
+                        <div class="askimg">
+                            <b></b>
+                            <span>星光小编</span>
+                        </div>
+                        <div class="say-text">
+                            <div class="arrow"></div>
+                            <strong>平时除了直播，还喜欢做什么呢？</strong>
+                        </div>
+                    </li>
+                    <li class="answer clearfix">
+                        <b></b>
+                        <div class="say-text">
+                            <div class="arrow"></div>
+                            <strong>上班、逛街、玩。</strong>
+                        </div>
+                    </li>
+                    <li class="ask clearfix">
+                        <div class="askimg">
+                            <b></b>
+                            <span>星光小编</span>
+                        </div>
+                        <div class="say-text">
+                            <div class="arrow"></div>
+                            <strong>有什么想对粉丝说的？</strong>
+                        </div>
+                    </li>
+                    <li class="answer clearfix">
+                        <b></b>
+                        <div class="say-text">
+                            <div class="arrow"></div>
+                            <strong>感谢大家的支持，感恩遇见你们，有你们真好。</strong>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 榜单 -->
+            <section class="rank">
+                <div class="rank-list-top">
+                    <ul>
+                        <li v-for="(item, index) in userRank" v-if="index < 3">
+                            <div class="top-img-area">
+                                <img :src="item.headPic" alt="" />
+                                <span></span>
+                                <b></b>
+                            </div>
+                            <div class="mes">
+                                <strong>{{item.nickname}}</strong>
+                                <p>送出 {{item.score}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="rank-list-other">
+                    <ul>
+                        <li class="clearfix" v-for="(item, index) in userRank" v-if="index >= 3">
+                            <div class="num">{{index+1}}</div>
+                            <img :src="item.headPic" alt="" />
+                            <div class="name">{{item.nickname}}</div>
+                            <div class="mark">送出 {{item.score}}</div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- 规则 -->
+            <section class="rule">
+                <p>1.活动时间：2018/12/1  12:00:00—12/4  23:59:59。</p>
+                <p>2.活动期间内，在主播二万的直播间内，每送满3000个活动礼物——女神万姐，即可炸出守护红包，快来抢克拉吧！</p>
+            </section>
+
+            <div class="copyright"></div>
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '星光女神',
+        content: '女神驾到，霸气全开！',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/queen/wan/share.png")}'
+    });
+</script>

@@ -1,0 +1,286 @@
+/* CSS sprite样式抽离 PC/Mobile复用 */
+.getSprite (@w, @h, @posx, @posy) {
+    @pad: 5;
+    display: inline-block;
+    background-position: (@posx + @pad)/@bf (@posy + @pad)/@bf;
+    width: (@w + @pad*2)/@bf;
+    height: (@h + @pad*2)/@bf;
+}
+
+/* 文字 */
+.txt-sprite {
+    background-image: url('@{imgUrl}/txt.png');
+    background-repeat: no-repeat;
+    background-size: 1053/@bf 744/@bf;
+    font-size: 0;
+}
+.txt-t_bg_l {
+	.getSprite(617, 60, -10, -247);
+}
+.txt-t_bg_m {
+	.getSprite(322, 60, -687, -167);
+}
+.txt-t_bg_xl {
+	.getSprite(657, 60, -10, -167);
+}
+.txt-t1 {
+	.getSprite(255, 58, -627, -327);
+}
+.txt-t2 {
+	.getSprite(254, 58, -570, -405);
+}
+.txt-t3 {
+	.getSprite(254, 58, -10, -485);
+}
+.txt-t4 {
+	.getSprite(321, 58, -10, -327);
+}
+.txt-t5 {
+	.getSprite(256, 58, -351, -327);
+}
+.txt-t_rule_bg {
+	.getSprite(192, 64, -10, -563);
+}
+.txt-t_top1 {
+	.getSprite(827, 60, -10, -87);
+}
+.txt-btn_check {
+	.getSprite(260, 60, -10, -405);
+}
+.txt-btn_check_a {
+	.getSprite(260, 60, -290, -405);
+}
+.txt-rank_1 {
+	.getSprite(242, 29, -284, -485);
+}
+.txt-rank_2 {
+	.getSprite(242, 29, -546, -485);
+}
+.txt-rank_3 {
+	.getSprite(242, 29, -222, -563);
+}
+.txt-rank_4 {
+	.getSprite(242, 29, -484, -563);
+}
+.txt-rank_5 {
+	.getSprite(242, 29, -746, -563);
+}
+.txt-rank_6 {
+	.getSprite(242, 29, -10, -647);
+}
+.txt-rank_7 {
+	.getSprite(242, 29, -272, -647);
+}
+.txt-rank_8 {
+	.getSprite(242, 29, -534, -647);
+}
+.txt-rank_9 {
+	.getSprite(242, 29, -796, -647);
+}
+.txt-rule_1 {
+	.getSprite(150, 38, -844, -405);
+}
+.txt-rule_2 {
+	.getSprite(117, 38, -902, -327);
+}
+.txt-rule_3 {
+	.getSprite(91, 38, -294, -696);
+}
+.txt-rule_4 {
+	.getSprite(94, 38, -180, -696);
+}
+.txt-rule_5 {
+	.getSprite(152, 38, -857, -87);
+}
+.txt-rule_5_2 {
+	.getSprite(150, 38, -10, -696);
+}
+.txt-stage_4 {
+	.getSprite(322, 60, -647, -247);
+}
+.txt-title_bg {
+	.getSprite(1033, 57, -10, -10);
+}
+.txt-title_bg_left {
+    .getSprite(367, 57, -10, -10);
+}
+.txt-title_bg_right {
+    .getSprite(365, 57, -678, -10);
+}
+
+/* 图标背景图 */
+.icon-sprite {
+    background-image: url('@{imgUrl}/icon.png');
+    background-repeat: no-repeat;
+    background-size: 952/@bf 724/@bf;
+    font-size: 0;
+}
+.icon-g_bg {
+	.getSprite(396, 378, -10, -10);
+}
+.icon-lock {
+	.getSprite(61, 87, -10, -627);
+}
+.icon-qs {
+	.getSprite(24, 24, -860, -448);
+}
+.icon-tl_1 {
+	.getSprite(199, 199, -10, -408);
+}
+.icon-tl_2 {
+	.getSprite(199, 199, -229, -408);
+}
+.icon-tl_3 {
+	.getSprite(199, 199, -448, -408);
+}
+.icon-tl_4 {
+	.getSprite(199, 199, -743, -10);
+}
+.icon-tl_5 {
+	.getSprite(199, 199, -743, -229);
+}
+.icon-close {
+	.getSprite(97, 86, -743, -448);
+}
+.icon-g_bg_2 {
+	.getSprite(297, 303, -426 - 10, -10 - 30);
+}
+
+/* 皇冠icon */
+.cown-sprite {
+    background-image: url('@{imgUrl}/cowns.png');
+    background-repeat: no-repeat;
+    background-size: 2158/@bf 211/@bf;
+    font-size: 0;
+}
+.icon-cown1 {
+	.getSprite(120, 137, -681, -10);
+}
+.icon-cown2 {
+	.getSprite(121, 137, -961, -10);
+}
+.icon-cown3 {
+	.getSprite(119, 136, -542, -10);
+}
+.icon-dcown1 {
+	.getSprite(115, 134, -272, -10);
+}
+.icon-dcown2 {
+	.getSprite(120, 123, -821, -10);
+}
+.icon-dcown3 {
+	.getSprite(111, 120, -10, -10);
+}
+.icon-dcown4 {
+	.getSprite(124, 99, -1102, -10);
+}
+.icon-dcown5 {
+	.getSprite(115, 90, -407, -10);
+}
+.icon-dcown6 {
+	.getSprite(111, 66, -141, -10);
+}
+.icon-dcown7 {
+	.getSprite(148, 89, -1409, -10);
+}
+.icon-dcown8 {
+	.getSprite(143, 126, -1246, -10);
+}
+.icon-dcown9 {
+	.getSprite(150, 101, -1577, -10);
+}
+.icon-cown00 {
+	.getSprite(206, 137, -1942, -10);
+}
+.icon-cown0 {
+	.getSprite(175, 191, -1747, -10);
+}
+
+/* 奖章 */
+.badge-sprite {
+    background-image: url('@{imgUrl}/badges.png');
+    background-repeat: no-repeat;
+    background-size: 1239/@bf 1109/@bf;
+    font-size: 0;
+}
+.bd-hgxjxz {
+	.getSprite(225, 126, -842, -304);
+}
+.bd-jctx {
+	.getSprite(164, 194, -658, -10);
+}
+.bd-kela {
+	.getSprite(102, 135, -172, -952);
+}
+.bd-lh {
+	.getSprite(123, 123, -1090, -508);
+}
+.bd-ryjb {
+	.getSprite(141, 185, -658, -224);
+}
+.bd-rynj {
+	.getSprite(228, 127, -483, -640);
+}
+.bd-ryzs {
+	.getSprite(204, 147, -10, -640);
+}
+.bd-stt {
+	.getSprite(198, 190, -10, -280);
+}
+.bd-tc {
+	.getSprite(186, 122, -742, -807);
+}
+.bd-tjbq {
+	.getSprite(138, 139, -1090, -349);
+}
+.bd-vtag {
+	.getSprite(142, 147, -10, -952);
+}
+.bd-xgzjxz {
+	.getSprite(221, 123, -501, -807);
+}
+.bd-xxlw {
+	.getSprite(110, 133, -1090, -651);
+}
+.bd-yybjxz {
+	.getSprite(226, 127, -842, -157);
+}
+.bd-zggwxz {
+	.getSprite(229, 125, -10, -807);
+}
+.bd-zrhjxz {
+	.getSprite(222, 125, -259, -807);
+}
+.bd-zzhdxz {
+	.getSprite(233, 130, -264, -490);
+}
+.bd-cqqwxz {
+	.getSprite(229, 128, -234, -640);
+}
+.bd-dzkp {
+	.getSprite(139, 160, -1090, -10);
+}
+.bd-dzxz {
+	.getSprite(234, 130, -10, -490);
+}
+.bd-dzxz_1 {
+	.getSprite(237, 131, -228, -280);
+}
+.bd-dzxz_2 {
+	.getSprite(225, 126, -842, -450);
+}
+.bd-dzxz_3 {
+	.getSprite(233, 130, -517, -490);
+}
+.bd-gggjxz {
+	.getSprite(224, 125, -842, -596);
+}
+.bd-gjjsxz {
+	.getSprite(228, 127, -842, -10);
+}
+.bd-hby {
+	.getSprite(139, 139, -1090, -190);
+}
+.bd-danmu {
+	.getSprite(628, 250, -10, -10);
+}

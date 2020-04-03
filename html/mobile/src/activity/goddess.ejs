@@ -1,0 +1,165 @@
+<main class="main_box" id="app" v-cloak>
+    <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/goddess/1.jpg')}">
+    <section class="abstract-box">
+    	<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/goddess/2.jpg')}">
+    	<div>
+    		<p>一千个土豪心中有一千种女神，各不相同，款款诱人，谁也说不准女神到底有什么标准。然而我可以肯定地说，八月一定是最适合女神的季节！试问谁不喜欢穿着清凉的小姐姐呢？所以，八月就是女神季呀，连空气中都散发着荷尔蒙的味道！</p>
+    		<p>
+    		你心中的女神是哪一款？展现家族实力的时刻到了！参与八月签到，给喜欢的女神投票，即可获得超豪华座驾，还可以送她上首页推广哦！
+    		</p>
+			<p>
+			我的女神，由我来守护！
+			</p>
+    	</div>
+    </section>
+    <section class="sign-box">
+    	<p class="title">
+    		<span></span>
+    	</p>
+    	<div class="broadcast">
+            <i></i>
+            <div class="outerBox">
+                <div class="innerBox clearfix">
+                    <ul class="ul">
+                      <li v-for = "list in mountList">
+                        {{list['nickname']}}获得{{list['mountName']}}{{list['mountDays']}}日体验卡
+                      </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="calendar">
+          <h3>2017年8月</h3>
+          <ul class="clearfix">
+            <li class="c-title">周日</li>
+            <li class="c-title">周一</li>
+            <li class="c-title">周二</li>
+            <li class="c-title">周三</li>
+            <li class="c-title">周四</li>
+            <li class="c-title">周五</li>
+            <li class="c-title">周六</li>
+            <li></li>
+            <li></li>
+            <li v-for="(item, index) in useSignedArr" >
+                <b v-bind:class="{active:item}"></b>
+                <i></i>
+                <span>{{ index | formatDay}}</span>
+                <div class="gift-name">{{signGifts[index-1]}}</div>
+            </li>
+            <li></li>
+            <li></li>
+          </ul>
+           <div class= "signIn-btn" 
+                v-bind:class="{disabled:userTodayStatus}"
+                @click="sign"
+            >
+              {{signStatusText}}
+            </div>
+        </div>
+        <div class="signIn-time">
+            <p>你已经累计签到</p>
+            <div>
+                第<span class="time">{{totalSignedDay}}</span>天
+            </div>
+        </div>
+    </section>
+    <section class="gift-box">
+	    <div class="tips">点击礼包，即可查看礼包的内容哦！</div>
+	    <ul class="gift-item clearfix">
+            <li v-for ="(day, index) in days" @click="clickToShowTip(index)">
+                <span class="gift-img" v-bind:class="{used:giftBoxStatus[index]}"></span>
+                <p>
+                    累计签到<span class="time"><i>{{day}}</i></span>日可开启
+                </p>
+            </li>
+	    </ul>
+	</section>
+	<section class="rule-box">
+	    <p class="title">
+    		<span></span>
+        </p>
+        <div class="content">
+            <p>1. 活动时间：<span>2017/08/01  00:00:00--2017/08/31  23:59:59。</span></p>
+            <p>2. 活动期间内，每日登陆活动页面，点击“我要签到”即签到成功。</p>
+            <p>3. 累计签到一定天数，即可获得豪华座驾体验卡，更有新品——筋斗云座驾可解锁尝鲜哦！所有座驾体验时长1-7天，体验时长随机下发。</p>
+            <p>4. 每日签到都有惊喜好礼！座驾体验卡、打榜礼物“顶”、翻倍女神卡统统都有！（详情见日历）</p>
+            <p>5. 从8月4日起，在未标明特殊礼物的日期签到，都可获得1张女神卡。</p>
+            <p>6. 收到最多“女神卡”的主播将获得人气直播专属推广位（有效期2天），榜单前3名的主播都有惊喜礼品哦！</p>
+            <p>7. 在人气直播3.2.0及以上版本才能使用座驾体验卡哦，快去下载吧！（搜索关键词“<span>人气直播</span>”或扫描二维码即可下载）<br/>
+            <span>座驾体验卡使用方法：打开人气直播→我的→我的背包→座驾→座驾体验卡→装备</span>
+            <div class="logo">
+                 <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/goddess/logo.png')}">
+                <span></span>
+            </div>
+            <div class="QR-code">
+                <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/goddess/QRcode.png')}">
+                <p>扫码下载人气直播</p>
+            </div>
+        </div> 
+	</section>
+	<section class="list-box">
+	  <p class="title">
+    	 <span></span>
+      </p>
+      <ul class="content clearfix">
+        <li v-for = "i in 10">
+            <p class="rank">NO.{{i}}</p>
+            <template v-if="goddessList[i-1]">
+                <a class="headPic-wrap" @click="goRoom(goddessList[i-1]['mid'])">
+                    <img :src="goddessList[i-1]['head_pic_1']" alt="">
+                </a>
+                <a  @click="goRoom(goddessList[i-1]['mid'])"><p class="nickname">{{goddessList[i-1]['nickname']}}</p></a>
+                <p>女神卡数：<span class="totalNum">{{goddessList[i-1]['pnum']}}</span></p>
+            </template>
+            <template v-else>
+                <a href="####" class="headPic-wrap"></a>
+            </template>
+        </li>
+      </ul>
+    </section>
+    <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/goddess/3.jpg')}">
+    <section class="award-box">
+	    <p class="title">
+	    	<span></span>
+	    </p>
+	    <div class="table-wrap">
+	        <table>
+	          <tr>
+	              <td>名次</td>
+	              <td>主播奖励</td>
+	          </tr>
+	           <tr>
+	              <td>1</td>
+	              <td>女神专属推广位（有效期两天）</td>
+	          </tr>
+	           <tr>
+	              <td>2</td>
+	              <td>女神祝福88888泡泡</td>
+	          </tr>
+	           <tr>
+	              <td>3</td>
+	              <td>女神祝福66666泡泡</td>
+	          </tr>
+	      </table>
+	    </div>
+	</section>
+	<section class="explain-box">
+	  	<p class="title">
+	    	<span></span>
+	    </p>
+	     <div class="content">
+	        <p>1. 活动期间如有违背活动公平，影响本平台利益的行为，将被取消获奖资格，严重者封禁账号。</p>
+	        <p>2. 用户参与本次活动即视为知晓并同意此活动规则。</p>
+	        <p>3. 在法律允许的范围内，本平台对本次活动拥有最终解释权。</p>  
+	    </div>
+	</section>
+</main>
+<script>
+    
+	var gjShareParam = JSON.stringify({
+        title: '八月·女神季',
+        content: '我的女神，由我来守护！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/goddess/share.jpg")}'
+    });
+</script>

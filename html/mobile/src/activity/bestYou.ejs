@@ -1,0 +1,27 @@
+<main class="main_box" id="app" v-cloak>
+	<section >
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/bestYou/1.jpg')}">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/bestYou/2.jpg')}">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/bestYou/3.jpg')}">
+	</section>
+	<section class="part-2">	
+		<div class="attention-wrap">
+			<span class="attention-btn" v-bind:class="{'gary-btn':isLove1}" v-on:click="attention1"></span>
+			<span class="attention-btn fr" v-bind:class="{'gary-btn':isLove2}" v-on:click="attention2"></span>
+		</div>	
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/bestYou/4.jpg')}">
+	</section>
+	<section>	
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/bestYou/5.jpg')}">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/bestYou/6.jpg')}">
+	</section>	
+</main>
+
+<script>
+	var gjShareParam = JSON.stringify({
+        title: '《最好的你们2.0》蔡照&陈秋实 贰周年粉丝答谢会',
+        content: '6月25日  台前幕后 泡泡直播独家呈现',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/bestYou/share.jpg")}'
+    });
+</script>

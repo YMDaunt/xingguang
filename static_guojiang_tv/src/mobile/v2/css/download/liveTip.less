@@ -1,0 +1,153 @@
+/**
+ * @Date: 2018-08-14 17:49:04
+ * @LastEditors: Jesse
+ * @LastEditTime: 2019-09-02 18:28:29
+ */
+@bf: 108rem;
+body{
+	background: linear-gradient(#b60d4f, #683c92);
+}
+
+
+.banner{
+	display: block;
+	width: 100%;
+}
+article{
+	background: url(../../img/download/liveTip/0_02.jpg) no-repeat top center;
+	background-size: 1080/@bf 1385/@bf;
+	width: 1080/@bf;
+	height: 1385/@bf;
+	padding-top: 70/@bf;
+	position: relative;
+}
+
+section{
+	width: 843/@bf;height: 810/@bf;
+	background: #fff;
+	border-radius: 20/@bf;
+	margin: 0 auto 30/@bf;
+	position: relative;
+	box-shadow: 0 0 5px rgba(0,0,0,0.25);
+	z-index: 2;
+	p{
+		width: 515/@bf;
+		margin: 0 auto;
+		text-align: center;
+		font-size: 14px;
+		color: #ff0071;
+		line-height: 70/@bf;
+		&.title{
+			padding: 45/@bf 0 50/@bf;
+		}
+	}
+	.logo{
+		width: 328/@bf;
+		display: block;
+		margin: 0 auto;
+		animation: down 0.6s;
+		&:active{
+			opacity: 0.6;
+		}
+	}
+	.logo_name{
+		font-size: 22px;
+		color: #7d7d7d;
+		font-weight: bold;
+		text-align: center;
+		padding-top: 30/@bf;
+	}
+	.arrow_icon{
+		border-bottom: 30/@bf solid #ff0071;
+		border-left: 22/@bf solid transparent;
+		border-right: 22/@bf solid transparent;
+		display: block;
+		width: 44/@bf;
+		margin: 40/@bf auto 20/@bf;
+		animation: upanddown 1.4s infinite;
+	}
+
+	.circle{
+		position: absolute;
+		width: 8px;
+		height: 8px;
+		box-shadow: 0 3/@bf 5px #cea6db;
+		border-radius: 100%;
+		background: #ff0071;
+		&.circle_0{
+			left: 25/@bf;
+			top: 25/@bf;
+		}
+		&.circle_1{
+			right: 25/@bf;
+			top: 25/@bf;
+		}
+		&.circle_2{
+			left: 25/@bf;
+			bottom: 25/@bf;
+		}
+		&.circle_3{
+			right: 25/@bf;
+			bottom: 25/@bf;
+		}
+	}
+
+}
+.tip_icon{
+	width: 341/@bf;
+	height: 138/@bf;
+	display: block;
+	position: absolute;
+	right: 145/@bf;
+	top: -55/@bf;
+	z-index: 1;
+}
+.moreTip_icon{
+	width: 215/@bf;
+	height: 196/@bf;
+}
+
+.desc{
+	width: 441/@bf;
+	height: 218/@bf;
+	display: none;
+	float: right;
+	margin-right: 30/@bf;
+	animation: slide_l 0.8s;
+}
+.moreTip_desc{
+	width: 468/@bf;
+	height: 182/@bf;
+}
+
+@keyframes down{
+	0%{
+		transform: translateY(-30px);
+	}
+	100%{
+		transform: translateY(0)
+	}
+}
+
+@keyframes upanddown{
+	0%{
+		transform: translateY(-3px);
+	}
+	50%{
+		transform: translateY(3px)
+	}
+	100%{
+		transform: translateY(-3px)
+	}
+}
+
+@keyframes slide_l{
+	0%{
+		transform: translateX(-80px);
+		display: block;
+	}
+	100%{
+		transform: translateY(0);
+		display: block;
+	}
+}

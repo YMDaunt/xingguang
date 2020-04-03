@@ -1,0 +1,2 @@
+require('common')
+require('wxShare')

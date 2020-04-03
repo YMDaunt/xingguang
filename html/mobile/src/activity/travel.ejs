@@ -1,0 +1,403 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="wrap">
+        <div class="ban"></div> 
+        <div class="content">
+            <section class="travel">
+                <p>每个景点打卡的前五名主播和其中贡献最大的用户获得额外奖励</p>
+                <div class="travel-box">
+                    <ul>
+                        <li v-for="(item, index) in travelArr">
+                            <div v-if="item == null">
+                                <div>
+                                    <span></span>
+                                </div>
+                                <div>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div v-for="(i, j) in item" v-if="j == 0">
+                                <div>
+                                    <img :src="i.mod_pic" alt="" />
+                                </div>
+                                <div>
+                                    <img :src="i.user_pic" alt="" />
+                                </div>
+                                <b v-if="item.length > 1" @click="showTravel(index)"></b>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 旅行榜单 -->
+            <section class="rank-list">
+                <h2 class="common-tit"></h2>
+                <div class="list">
+                    <ul class="clearfix" v-if="rankArr.length > 0">
+                        <li v-for="(item, index) in rankArr">
+                            <div class="number">第{{index+1}}名</div>
+                            <strong>旅行值:<b>{{item.score}}</b></strong>
+                            <div class="two">
+                                <div class="mod clearfix">
+                                    <img :src="item.headPic" v-bind:data-rid="item.rid" @click="inlive($event)" alt="" />
+                                    <span v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></span>
+                                    <p>{{item.nickname}}</p>
+                                </div>
+                                <div class="user clearfix">
+                                    <img :src="item.uHeadPic" alt="" />
+                                    <p>{{item.uNickname}}</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <p v-else>浪漫有你，旅行有你才浪漫~</p>
+                    <div class="my-mes clearfix" v-if="myMesArr != null">
+                        <div class="mine-img">
+                            <img :src="myMesArr.headPic" v-bind:data-rid="myMesArr.uid" @click="inlive($event)" alt="" />
+                            <p>{{myMesArr.nickName}}</p>
+                            <b v-if="myMesArr.isPlaying" v-bind:data-rid="myMesArr.uid" @click="inlive($event)"></b>
+                        </div>
+                        <div class="mine-rank" v-if="myMesArr.pairInfos != undefined">
+                            <p class="mine-text_1">{{myMesArr.pairInfos[0].name}}</p>
+                            <p class="mine-text_2">{{myMesArr.pairInfos[0].value}}</p>
+                            <p class="mine-text_1">{{myMesArr.pairInfos[1].name}}</p>
+                            <p class="mine-text_2">{{myMesArr.pairInfos[1].value}}</p>
+                        </div>
+                        <div class="mine-rank-num" v-if="myMesArr.pairInfos != undefined">
+                            <p class="mine-text_1">{{myMesArr.pairInfos[2].name}}</p>
+                            <p class="mine-text_2">{{myMesArr.pairInfos[2].value}}</p>
+                            <p class="mine-text_1">{{myMesArr.pairInfos[3].name}}</p>
+                            <p class="mine-text_2">{{myMesArr.pairInfos[3].value}}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="copy-right"></div>
+        </div>
+    </div>
+    
+    <!-- 旅行弹窗 -->
+    <div class="posi travel-box" v-show="travelBox">
+        <div class="t-box">
+            <h2>
+                <span>打卡排名</span>
+                <span>主播&用户</span>
+                <span>打卡时间</span>
+            </h2>
+            <b class="t-close" @click="travelBox = false"></b>
+            <div class="t-list">
+                <ul v-for="(item, index) in travelArr" v-bind:data-index="Number(index) - 1" v-show="awardArr[Number(index) - 1]">
+                    <li v-for="(i, j) in item">
+                        <span>{{j+1}}</span>
+                        <span><strong>{{i.mod_nickname}}</strong><b>&</b><strong>{{i.user_nickname}}</strong></span>
+                        <span>{{i.time}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="award-list">
+                <div class="list-item top-item">
+                    <div><span>排序</span></div>
+                    <div><span>地名</span></div>
+                    <div><span>旅行值</span></div>
+                    <div><span>前五名打卡的<br />主播奖励</span></div>
+                    <div><span>前五名打卡的主播，其<br />中贡献最大的用户奖励</span></div>
+                </div>
+                <div class="list-item two-item" v-show="awardArr[0]">
+                    <div><span>第一站</span></div>
+                    <div><span>巴厘岛</span></div>
+                    <div><span>1000</span></div>
+                    <div>
+                        <span>
+                            <b class="lx"></b> *1日
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <b class="lx"></b> *1日
+                        </span>
+                    </div>
+                </div>
+                <div class="list-item two-item" v-show="awardArr[1]">
+                    <div><span>第二站</span></div>
+                    <div><span>雅典</span></div>
+                    <div><span>5000</span></div>
+                    <div>
+                        <span>
+                            <b class="lx"></b> *1日
+                            <br />开播飘屏*1
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <b class="lx"></b> *1日
+                            <br />私人飞机座驾*1日体验卡
+                        </span>
+                    </div>
+                </div>
+                <div class="list-item two-item" v-show="awardArr[2]">
+                    <div><span>第三站</span></div>
+                    <div><span>冰岛</span></div>
+                    <div><span>10000</span></div>
+                    <div>
+                        <span>
+                            <b class="lx"></b> *1日
+                            <br />开播飘屏*2
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <b class="lx"></b> *1日
+                            <br />私人飞机座驾*1日体验卡
+                        </span>
+                    </div>
+                </div>
+                <div class="list-item two-item" v-show="awardArr[3]">
+                    <div><span>第四站</span></div>
+                    <div><span>威尼斯</span></div>
+                    <div><span>50000</span></div>
+                    <div>
+                        <span>
+                            <b class="lx"></b> *1日
+                            <br />开播飘屏*3
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <b class="lx"></b> *1日
+                            <br />私人飞机座驾*1日体验卡
+                        </span>
+                    </div>
+                </div>
+                <div class="list-item thi-item" v-show="awardArr[4]">
+                    <div><span>第五站</span></div>
+                    <div><span>巴黎</span></div>
+                    <div><span>100000</span></div>
+                    <div>
+                        <span>
+                            <b class="lx"></b> *2日
+                            <br />开播飘屏*4
+                            <br /><b class="qq"></b> *1
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <b class="lx"></b> * 2日
+                            <br />私人飞机座驾*2日体验卡
+                            <br /><b class="bx"></b> *1
+                        </span>
+                    </div>
+                </div>
+                <div class="list-item thi-item" v-show="awardArr[5]">
+                    <div><span>第六站</span></div>
+                    <div><span>迪拜</span></div>
+                    <div><span>150000</span></div>
+                    <div>
+                        <span>
+                            <b class="lx"></b> * 3日
+                            <br />开播飘屏*5
+                            <br /><b class="qq"></b> *2
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <b class="lx"></b> * 3日
+                            <br />私人飞机座驾*3日体验卡
+                            <br /><b class="bx"></b> *2
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 活动规则 -->
+    <div class="posi rules" v-show="ruleBox" >
+        <div class="rule-box">
+            <h2 class="common-tit"></h2>
+            <div class="rule-close" @click="ruleBox = false"></div>
+            <div class="rule-out">
+                <div class="rule-con">
+                    <p>1. 活动时间：<b>3.21 12:00:00 - 3.25 23:59:59</b></p>
+                    <p>2. 活动礼物：</p>
+                    <div class="lmyn"></div>
+                    <p>3. 主播这趟旅行可以打卡6个旅游胜地，每个旅游胜地需要不同的旅行值才能打卡。成功打卡1个度假胜地的主播，将获得打卡红包雨奖励，由其中贡献最大的用户冠名。
+                    红包雨中含活动礼物——浪漫有你。</p>
+                    <p><b>注：抢到的浪漫有你，会放入背包。需在03/26 23:59:59前送出，逾期失效，请及时送出！</b></p>
+                    <p>4.旅行榜按照主播旅行值排名，配对的用户为给前十名主播贡献旅行值最多的用户。若有相同成绩，按照先到先得排名。
+                    </p>
+                    <p>5. 旅游胜地按照以下顺序和旅行值进行打卡，每个旅游胜地解锁的前5名主播和其中贡献最大的用户将获得额外奖励。</p>
+                    <div class="award-list">
+                        <div class="list-item top-item">
+                            <div><span>排序</span></div>
+                            <div><span>地名</span></div>
+                            <div><span>旅行值</span></div>
+                            <div><span>前五名打卡的<br />主播奖励</span></div>
+                            <div><span>前五名打卡的主播，其<br />中贡献最大的用户奖励</span></div>
+                        </div>
+                        <div class="list-item two-item">
+                            <div><span>第一站</span></div>
+                            <div><span>巴厘岛</span></div>
+                            <div><span>1000</span></div>
+                            <div>
+                                <span>
+                                    <b class="lx"></b> *1日
+                                </span>
+                            </div>
+                            <div>
+                                <span>
+                                    <b class="lx"></b> *1日
+                                </span>
+                            </div>
+                        </div>
+                        <div class="list-item two-item">
+                            <div><span>第二站</span></div>
+                            <div><span>雅典</span></div>
+                            <div><span>5000</span></div>
+                            <div>
+                                <span>
+                                    <b class="lx"></b> *1日
+                                    <br />开播飘屏*1
+                                </span>
+                            </div>
+                            <div>
+                                <span>
+                                    <b class="lx"></b> *1日
+                                    <br />私人飞机座驾*1日体验卡
+                                </span>
+                            </div>
+                        </div>
+                        <div class="list-item two-item">
+                            <div><span>第三站</span></div>
+                            <div><span>冰岛</span></div>
+                            <div><span>10000</span></div>
+                            <div>
+                                <span>
+                                    <b class="lx"></b> *1日
+                                    <br />开播飘屏*2
+                                </span>
+                            </div>
+                            <div>
+                                <span>
+                                    <b class="lx"></b> *1日
+                                    <br />私人飞机座驾*1日体验卡
+                                </span>
+                            </div>
+                        </div>
+                        <div class="list-item two-item">
+                            <div><span>第四站</span></div>
+                            <div><span>威尼斯</span></div>
+                            <div><span>50000</span></div>
+                            <div>
+                                <span>
+                                    <b class="lx"></b> *1日
+                                    <br />开播飘屏*3
+                                </span>
+                            </div>
+                            <div>
+                                <span>
+                                    <b class="lx"></b> *1日
+                                    <br />私人飞机座驾*1日体验卡
+                                </span>
+                            </div>
+                        </div>
+                        <div class="list-item thi-item">
+                            <div><span>第五站</span></div>
+                            <div><span>巴黎</span></div>
+                            <div><span>100000</span></div>
+                            <div>
+                                <span>
+                                    <b class="lx"></b> *2日
+                                    <br />开播飘屏*4
+                                    <br /><b class="qq"></b> *1
+                                </span>
+                            </div>
+                            <div>
+                                <span>
+                                    <b class="lx"></b> * 2日
+                                    <br />私人飞机座驾*2日体验卡
+                                    <br /><b class="bx"></b> *1
+                                </span>
+                            </div>
+                        </div>
+                        <div class="list-item thi-item">
+                            <div><span>第六站</span></div>
+                            <div><span>迪拜</span></div>
+                            <div><span>150000</span></div>
+                            <div>
+                                <span>
+                                    <b class="lx"></b> * 3日
+                                    <br />开播飘屏*5
+                                    <br /><b class="qq"></b> *2
+                                </span>
+                            </div>
+                            <div>
+                                <span>
+                                    <b class="lx"></b> * 3日
+                                    <br />私人飞机座驾*3日体验卡
+                                    <br /><b class="bx"></b> *2
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fjzj"><b @click="doPlaneSvg()"></b></div>
+                    <p>*奖励会在主播/用户达到打卡要求时，自动下发。</p>
+                    <p>　勋章自动佩戴，私人飞机座驾下发至【个人中心】-【我的座驾】，需要手动装备，时间可累计。</p>
+                    <p>　开播飘屏会在次日每日首次开播下发，每日下发一次。</p>
+                    <p>　礼物奖励带你去旅行/宝箱即时下发至背包。</p>
+                    <br />
+                    <br />
+                    <p>6.打卡完毕当前旅游胜地，下一个旅游胜地将自动开启。</p>
+                    <p>7.旅游值排名前五名和其中贡献最大的用户获得以下奖励。</p>
+                    <h2 class="common-tit tit-award"></h2>
+
+                    <div class="act-award-list">
+                        <div class="top-item">
+                            <span>排名</span>
+                            <span>主播</span>
+                            <span>用户</span>
+                        </div>
+                        <div class="two-item">
+                            <span>第一名</span>
+                            <span>300000克拉</span>
+                            <span>私人飞机座驾*15日体验卡</span>
+                        </div>
+                        <div class="two-item">
+                            <span>第二名</span>
+                            <span>200000克拉</span>
+                            <span>私人飞机座驾*10日体验卡</span>
+                        </div>
+                        <div class="two-item">
+                            <span>第三名</span>
+                            <span>150000克拉</span>
+                            <span>私人飞机座驾*7日体验卡</span>
+                        </div>
+                        <div class="two-item">
+                            <span>第四名</span>
+                            <span>100000克拉</span>
+                            <span>私人飞机座驾*5日体验卡</span>
+                        </div>
+                        <div class="two-item">
+                            <span>第五名</span>
+                            <span>100000克拉</span>
+                            <span>私人飞机座驾*5日体验卡</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- svg -->
+    <div class="posi svg-con" v-show="svgPlayer" @click="removeSvg"></div>
+    
+    <div class="rule-btn" @click="ruleBox = !ruleBox"></div>
+</main>
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '就想和你去旅行',
+        content: '春暖花开，想和你打卡世界上浪漫的每一个角落。',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/travel/share.png")}'
+    });
+</script>

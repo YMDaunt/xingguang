@@ -1,0 +1,1049 @@
+@bf: 108rem;
+
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
+h1,h2,h3,strong {
+    font-weight: normal;
+}
+[v-cloak] {
+    display: none;
+}
+body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+}
+//水平居中对齐
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/*两端对齐*/
+.flex-justify-between(){
+    -webkit-box-pack:justify;
+    -moz-justify-content:space-between;
+    -webkit-justify-content:space-between;
+    justify-content: space-between;
+}
+/*上下居中*/
+.flex-align(){
+    -webkit-box-align:center;
+    -moz-align-items:center;
+    -webkit-align-items:center;
+    align-items: center;
+}
+// 顺序
+.flex-left(){
+    -webkit-box-align:flex-start;
+    -moz-align-items:flex-start;
+    -webkit-align-items:flex-start;
+    align-items: flex-start;
+}
+.flex(){
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.flex-justify-center(){
+    -webkit-box-pack:center;
+    -moz-justify-content:center;
+    -webkit-justify-content:center;
+    justify-content: center;
+}
+//多余的字符用省略号显示
+.ellipsis() {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.bgm(@imgName) {
+    background-image: url('../../img/activity/fans/@{imgName}');
+}
+
+.spt {
+    background-image: url('../../img/activity/fans/spt.png');
+    background-repeat: no-repeat;
+    background-size: 1600/@bf 800/@bf;
+}
+
+.ban {
+    width: 1080/@bf;
+    height: 938/@bf;
+    .bgm('ban.jpg');
+    background-size: 1080/@bf 938/@bf;
+}
+.wrap {
+    margin: 0 auto;
+    padding-top: 53/@bf;
+    height: 3753/@bf;
+    .bgm("bg.jpg");
+    background-size: 1080/@bf 3753/@bf;
+    section {
+        width: 1080/@bf;
+        margin: 0 auto;
+    }
+}
+.commom-tit {
+    width: 1040/@bf;
+    height: 50/@bf;
+    margin: 0 auto 28/@bf;
+    .spt;
+}
+.jg-pic {
+    width: 1080/@bf;
+    height: 60/@bf;
+    margin: 0 auto;
+    .spt;
+    background-position: -18/@bf -455/@bf;
+}
+
+// 团战信息
+.fans-team {
+    .commom-tit {
+        background-position: -18/@bf -249/@bf;
+    }
+    .fans-con {
+        position: relative;
+        width: 1040/@bf;
+        height: 1033/@bf;
+        padding: 32/@bf 50/@bf 0;
+        margin: 0 auto 44/@bf;
+        .bgm('box1.png');
+        background-size: 1040/@bf 1033/@bf;
+    }
+    .tab-btn {
+        position: absolute;
+        left: 24/@bf;
+        top: 38/@bf;
+        z-index: 99;
+        > div {
+            width: 180/@bf;
+            height: 62/@bf;
+            margin: 5/@bf 0;
+            .spt;
+        }
+        div:first-child {
+            background-position: -18/@bf -21/@bf;
+        }
+        div:last-child {
+            background-position: -703/@bf -15/@bf;
+        }
+        .choose:first-child {
+            background-position: -240/@bf -15/@bf;
+        }   
+        .choose:last-child {
+            background-position: -465/@bf -15/@bf;
+        }  
+    }
+    .con-top {
+        position: relative;
+        height: 286/@bf;
+        .my-join {
+            position: absolute;
+            bottom: 0;
+            left: 18/@bf;
+            width: 304/@bf;
+            height: 64/@bf;
+            .spt;
+            background-position: -465/@bf -123/@bf;
+        }
+    }
+    .img-area {
+        float: right;
+        width: 318/@bf;
+        .img-bt {
+            position: relative;
+            width: 242/@bf;
+            height: 242/@bf;
+            margin: 0 auto;
+            padding-top: 8/@bf;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+        img {
+            display: block;
+            width: 226/@bf;
+            height: 226/@bf;
+            margin: 0 auto;
+            border: 7/@bf solid #ffc674;
+            border-radius: 50%;
+        }
+        b {
+            position: absolute;
+            width: 50/@bf;
+            height: 50/@bf;
+            z-index: 9;
+            bottom: -5/@bf;
+            right: 25/@bf;
+        }
+        p {
+            line-height: 70/@bf;
+            font-size: 36/@bf;
+            color: #fbd88a;
+            font-weight: bold;
+            text-align: center;
+            .ellipsis;
+        }
+    }
+
+    // 进度
+    .team-line strong {
+        font-size: 38/@bf;
+        font-weight: bold;
+        color: #fff;
+    }
+    .jd-line {
+        position: relative;
+        width: 800/@bf;
+        height: 28/@bf;
+        border-radius: 14/@bf;
+        margin: 94/@bf auto 68/@bf;
+        background: rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 5/@bf 0 #000;
+    }
+    .present {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 9;
+        height: 28/@bf;
+        border-radius: 14/@bf;
+        background: -webkit-linear-gradient(left, #66cdcf, #eff2a3); 
+        background: -o-linear-gradient(right, #66cdcf, #eff2a3); 
+        background: -moz-linear-gradient(right, #66cdcf, #eff2a3); 
+        background: linear-gradient(to right, #66cdcf , #eff2a3); 
+    }
+    .jd-line > div {
+        position: absolute;
+        top: 6/@bf;
+        z-index: 99;
+        width: 16/@bf;
+        height: 16/@bf;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.3);
+        &:nth-child(1) {
+            left: -8/@bf;
+            background: none;
+        }
+        &:nth-child(2) {
+            left: 23%;
+        }
+        &:nth-child(3) {
+            left: 48%;
+        }
+        &:nth-child(4) {
+            left: 73%;
+        }
+        &:nth-child(5) {
+            right: -8/@bf;
+            background: none;
+        }
+    }
+    .jd-line > div em {
+        position: absolute;
+        z-index: 9;
+        top: -72/@bf;
+        left: -54/@bf;
+        display: block;
+        width: 126/@bf;
+        height: 54/@bf;
+        .spt;
+        background-position: -1013/@bf -30/@bf;
+        text-align: center;
+        line-height: 54/@bf;
+        font-size: 36/@bf;
+        color: #fff;
+        font-style: normal;
+    }
+    .jd-line > div span {
+        position: absolute;
+        bottom: -60/@bf;
+        left: -67/@bf;
+        display: block;
+        width: 150/@bf;
+        line-height: 44/@bf;
+        text-align: center;
+        color: #fff;
+        text-align: center;
+        font-size: 36/@bf;
+    }
+    .ul1, .ul2 {
+        width: 912/@bf;
+        margin: 0 auto;
+        box-shadow: 0 0 0 1px #f8cb78;
+    }
+    .ul1 li, .ul2 li {
+        height: 82/@bf;
+        line-height: 82/@bf;
+        text-align: center;
+        font-size: 34/@bf;
+        box-shadow: inset 0 0 0 1px #f8cb78;
+        color: #fff;
+        span {
+            color: #ffe178;
+        }
+    }
+    .ul1 li {
+        float: left;
+        width: 456/@bf;
+    }
+    .ul2 li {
+        float: left;
+        width: 280/@bf;
+        &:nth-child(2), &:nth-child(3) {
+            .flex;
+            .flex-justify-center;
+        }
+        &:nth-child(2), &:nth-child(5) {
+            width: 406/@bf;
+        }
+        &:nth-child(3), &:nth-child(6) {
+            width: 226/@bf;
+        }
+        b {
+            width: 26/@bf;
+            height: 26/@bf;
+            margin: 25/@bf 0 0 8/@bf;
+            .spt;
+            background-position: -952/@bf -33/@bf;
+        }
+    }
+    .con-bt > p {
+        height: 38/@bf;
+        line-height: 46/@bf;
+        margin: 24/@bf 0 0 0/@bf;
+        font-size: 36/@bf;
+        color: #fff;
+    }
+    
+    // 用户粉丝内容
+    .send-mes {
+        width: 900/@bf;
+        margin: 30/@bf auto 14/@bf;
+        color: #fff; 
+        font-size: 32/@bf;
+        strong {
+            color: #fcd98b;
+        }
+    }
+    .with-fans, .without-fans {
+        width: 900/@bf;
+        height: 526/@bf;
+        margin: 0 auto;
+        padding-top: 24/@bf;
+        overflow: auto;
+        border: 4/@bf solid #ffc674;
+    }
+    .with-fans li {
+        height: 140/@bf;
+        margin-bottom: 27/@bf;
+        padding: 0 75/@bf;
+        .fans-img {
+            float: left;
+            position: relative;
+            width: 140/@bf;
+            height: 140/@bf;
+            margin-right: 76/@bf;
+            border-radius: 50%;
+            border: 2/@bf solid #ffc674;
+            img {
+                display: block;
+                height: 100%;
+                border-radius: 50%;
+            }
+            span {
+                position: absolute;
+                right: -34/@bf;
+                top: 20/@bf;
+                z-index: 9;
+                width: 74/@bf;
+                height: 32/@bf;
+                .spt;
+                background-position: -1485/@bf -46/@bf;
+            }
+        }
+        .fans-mes {
+            float: left;
+            width: 280/@bf;
+            margin-right: 40/@bf;
+        }
+        .fans-mes .fan-hz {
+            margin: 0;
+        }
+        .fans-mes strong {
+            display: block;
+            margin-top: 10/@bf;
+            margin-bottom: 4/@bf;
+            line-height: 54/@bf;
+            font-size: 36/@bf;
+            color: #f6c36d;
+            font-weight: bold;
+            .ellipsis;
+        }
+        .send, .sended {
+            float: left;
+            width: 188/@bf;
+            height: 76/@bf;
+            margin-top: 40/@bf;
+            .spt;
+        }
+        .send {
+            background-position: -15/@bf -118/@bf;
+        }
+        .sended {
+            background-position: -233/@bf -118/@bf;
+        }
+    }
+
+    // 未加入
+    .without-fans  {
+        padding: 0 28/@bf;
+    }
+    .without-fans > p {
+        height: 120/@bf;
+        color: #fff;
+        line-height: 120/@bf;
+        font-size: 34/@bf;
+    }
+    .without-con {
+        padding-top: 14/@bf;
+        > p {
+            padding-top: 180/@bf;
+            line-height: 66/@bf;
+            font-size: 36/@bf;
+            color: #fff;
+        }
+        li {
+            float: left;
+            margin-bottom: 18/@bf;
+            width: 33.33333%;
+        }
+        strong {
+            display: block;
+            margin-top: 10/@bf;
+            height: 64/@bf;
+            line-height: 64/@bf;
+            color: #f6c46d;
+            font-weight: bold;
+            text-align: center;
+            font-size: 34/@bf;
+            .ellipsis;
+        }
+    }
+    .without-img {
+        position: relative;
+        width: 168/@bf;
+        height: 168/@bf;
+        margin: 0 auto 10/@bf;
+        border-radius: 50%;
+        border: 3/@bf solid #ffc674;
+        img {
+            display: block;
+            height: 100%;
+            border-radius: 50%;
+        }
+        span {
+            position: absolute;
+            z-index: 9;
+            right: -26/@bf;
+            top: 6/@bf;
+            width: 74/@bf;
+            height: 32/@bf;
+            .spt;
+            background-position: -1485/@bf -46/@bf;
+        }
+        b {
+            position: absolute;
+            right: -50/@bf;
+            bottom: 0;
+            z-index: 9;
+            display: block;
+            width: 50/@bf;
+            height: 50/@bf;
+        }
+    }
+}
+
+// 榜单 
+.wrap .rank {
+    margin: 44/@bf auto 52/@bf;
+}
+.rank {
+    .commom-tit {
+        background-position: -13/@bf -352/@bf;
+    }
+    .rank-con {
+        width: 1040/@bf;
+        height: 2074/@bf;
+        padding: 20/@bf 25/@bf 0;
+        margin: 0 auto 72/@bf;
+        .bgm('box2.png');
+        background-size: 1040/@bf 2074/@bf;
+    }
+    .jg-line {
+        width: 822/@bf;
+        height: 4/@bf;
+        margin: 0 auto;
+        .spt;
+        background-position: -27/@bf -633/@bf;
+    }
+    h3 {
+        width: 820/@bf;
+        height: 42/@bf;
+        margin: 40/@bf auto 0;
+        span {
+            text-align: center;
+            font-size: 36/@bf;
+            line-height: 42/@bf;
+            font-weight: bold;
+            color: #fff;
+        }
+    }
+    .rank-list {
+        width: 820/@bf;
+        height: 718/@bf;
+        padding-top: 10/@bf;
+        overflow: auto;
+        margin: 0 auto;
+    }
+    h3 span:nth-child(1), .rank-list li>div:nth-child(1) {
+        float: left;
+        width: 150/@bf;
+    }
+    h3 span:nth-child(2), .rank-list li>div:nth-child(2) {
+        float: left;
+        width: 450/@bf;
+    }
+    h3 span:nth-child(3), .rank-list li>div:nth-child(3) {
+        float: left;
+        width: 220/@bf;
+    }
+    .num-tips {
+        margin-bottom: 14/@bf;
+        font-size: 32/@bf;
+        text-align: center;
+        line-height: 68/@bf;
+        text-align: center;
+        color: #fff;
+    }
+    .my-mod {
+        width: 840/@bf;
+        margin: 0 auto;
+        > div {
+            float: left;
+            padding: 34/@bf 0 24/@bf;
+        }
+    }
+    .my-message {
+        width: 316/@bf;
+        .my-img {
+            position: relative;
+            width: 158/@bf;
+            height: 158/@bf;
+            padding-top: 4/@bf;
+            margin: 0/@bf auto 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            img {
+                display: block;
+                width: 150/@bf;
+                height: 150/@bf;
+                margin: 0 auto;
+                border: 4/@bf solid #ffc870;
+                border-radius: 50%;
+            }
+        }
+        .my-name {
+            .flex;
+            .flex-justify-center;
+            strong {
+                max-width: 270/@bf;
+                height: 84/@bf;
+                text-align: center;
+                font-size: 36/@bf;
+                line-height: 84/@bf;
+                .ellipsis;
+                color: #fff;
+                font-weight: bold;
+            }
+            span {
+                width: 58/@bf;
+                height: 52/@bf;
+                margin-left: 8/@bf;
+                margin-top: 18/@bf;
+            }
+        }
+        b {
+            position: absolute;
+            z-index: 9;
+            right: -24/@bf;
+            top: 16/@bf;
+            width: 74/@bf;
+            height: 32/@bf;
+            .spt;
+            background-position: -1485/@bf -46/@bf;
+        }
+    }
+    .my-mark {
+        width: 248/@bf;
+        text-align: center;
+        span {
+            display: block;
+            height: 48/@bf;
+            line-height: 48/@bf;
+            color: #fff;
+            font-size: 34/@bf;
+            font-weight: bold;
+        }
+        strong {
+            display: block;
+            margin-bottom: 26/@bf;
+            height: 48/@bf;
+            line-height: 48/@bf;
+            font-size: 34/@bf;
+            color: #fff;
+            font-weight: bold;
+        }
+    }
+}
+.three {
+    position: relative;
+    height: 850/@bf;
+    li {
+        position: absolute;
+        z-index: 9;
+        width: 320/@bf;
+    }
+    li:nth-child(1) {
+        left: 50%;
+        top: 92/@bf;
+        margin-left: -160/@bf;
+    }
+    li:nth-child(2) {
+        top: 400/@bf;
+        left: 20/@bf;
+        em {
+            background-position: -1387/@bf -158/@bf;
+        }
+        .rank-img img {
+            border: 6/@bf solid #c1c1c1;
+        }
+    }
+    li:nth-child(3) {
+        top: 400/@bf;
+        right: 20/@bf;
+        em {
+            background-position: -1174/@bf -312/@bf;
+        }
+        .rank-img img {
+            border: 6/@bf solid #d4a86c;
+        }
+    }
+    .rank-img {
+        position: relative;
+        width: 240/@bf;
+        height: 240/@bf;
+        margin: 0 auto 12/@bf;
+        padding-top: 7/@bf;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        img {
+            display: block;
+            width: 226/@bf;
+            height: 226/@bf;
+            margin: 0 auto;
+            border: 6/@bf solid #ffc674;
+            border-radius: 50%;
+        }
+        b {
+            position: absolute;
+            z-index: 9;
+            right: 25/@bf;
+            bottom: -10/@bf;
+            width: 50/@bf;
+            height: 50/@bf;
+        }
+        em {
+            position: absolute;
+            top: -56/@bf;
+            left: -12/@bf;
+            width: 142/@bf;
+            height: 112/@bf;
+            z-index: 9;
+            .spt;
+            background-position: -1159/@bf -173/@bf;
+        }
+        span {
+            position: absolute;
+            z-index: 9;
+            right: -10/@bf;
+            top: 34/@bf;
+            width: 74/@bf;
+            height: 32/@bf;
+            .spt;
+            background-position: -1485/@bf -46/@bf;
+        }
+    }
+    .rank-mes {
+        & > p, .jf {
+            height: 50/@bf;
+            line-height: 50/@bf;
+            color: #f7c873;
+            font-size: 36/@bf;
+            text-align: center;
+            .ellipsis;
+        }
+        .jf span {
+            color: #fff;
+        }
+        .jf strong {
+            text-decoration: underline;
+        }
+    }
+}
+.rank-list li {
+    height: 100/@bf;
+    margin-bottom: 18/@bf;
+    .number {
+        font-size: 48/@bf;
+        font-weight: bold;
+        line-height: 100/@bf;
+        text-align: center;
+        color: #fff;
+    }
+    .rank-other-img {
+        position: relative;
+        float: left;
+        width: 100/@bf;
+        height: 100/@bf;
+        margin: 0 18/@bf 0 32/@bf;
+        padding-top: 3/@bf;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        img {
+            display: block;
+            width: 94/@bf;
+            height: 94/@bf;
+            margin: 0 auto;
+            border-radius: 50%;
+            border: 1px solid #ffc55b;
+        }
+        span {
+            position: absolute;
+            display: block;
+            z-index: 9;
+            left: 50%;
+            bottom: -4/@bf;
+            width: 74/@bf;
+            height: 32/@bf;
+            margin-left: -37/@bf;
+            .spt;
+            background-position: -1485/@bf -46/@bf;
+        }
+    }
+    .rank-pic-mes > p {
+        float: left;
+        width: 300/@bf;
+        line-height: 100/@bf;
+        color: #f7c873;
+        .flex;
+        strong {
+            max-width: 250/@bf;
+            .ellipsis;
+            font-size: 36/@bf;
+        }
+        b {
+            width: 50/@bf;
+            height: 50/@bf;
+            margin-top: 20/@bf;
+            margin-left: 6/@bf;
+        }
+    }
+    .rank-jf {
+        line-height: 100/@bf;
+        font-size: 36/@bf;
+        color: #f7c873;
+        text-align: center;
+        text-decoration: underline;
+    }
+}
+
+.rule-btn {
+    position: fixed;
+    z-index: 101;
+    right: 0;
+    top: 46%;
+    width: 258/@bf;
+    height: 96/@bf;
+    .spt;
+    background-position: -1172/@bf -23/@bf;
+}
+
+// 规则
+.rule-con {
+    position: absolute;
+    width: 1006/@bf;
+    height: 1143/@bf;
+    top: 50%;
+    left: 50%;
+    padding: 10/@bf 0;
+    margin: -571/@bf 0 0 -503/@bf;
+    .bgm('box3.png');
+    background-size: 1006/@bf 1143/@bf;
+    .rule-cover {
+        height: 1123/@bf;
+        overflow: auto;
+    }
+    .rule-outer {
+        padding: 42/@bf; 
+        > p {
+            font-size: 34/@bf;
+            line-height: 64/@bf;
+            color: #fff;
+        }
+        > strong:first-child span {
+            font-size: 34/@bf;
+            color: #fff;
+        }
+    }
+    .rule-outer > strong, .max strong {
+        display: inline-block;
+        font-size: 38/@bf;
+        font-weight: bold;
+        color: #ffc976;
+        line-height: 68/@bf;
+    }
+    .max {
+        margin-top: 32/@bf;
+        span {
+            font-size: 34/@bf;
+            color: #fff;
+        }
+    }
+    .lz {
+        color: #fff;
+        font-size: 34/@bf;
+        color: #fff;
+        white-space: normal;
+        span {
+            vertical-align: middle;
+        }
+        b {
+            display: inline-block;
+            width: 86/@bf;
+            height: 86/@bf;
+            margin: 6/@bf 22/@bf 0 0;
+            .spt;
+            background-position: -952/@bf -114/@bf;
+            vertical-align: middle;
+        }
+    }
+    ul {
+        width: 800/@bf;
+        margin: 18/@bf auto;
+        box-shadow: inset 0 0 0 1px #ffc976;
+        li {
+            float: left;
+            width: 50%;
+            height: 70/@bf;
+            line-height: 70/@bf;
+            text-align: center;
+            font-size: 34/@bf;
+            font-weight: bold;
+            color: #fff;
+            box-shadow: 0 0 0 1px #ffc976;
+        }
+        strong {
+            color: #ffc976;
+        }
+    }
+}
+
+// 积分详情
+.jf-list {
+    .close-btn {
+        top: 20/@bf;
+        right: 28/@bf;
+    }
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 930/@bf;
+    height: 720/@bf;
+    margin: -360/@bf 0 0 -475/@bf;
+    padding: 80/@bf 0 50/@bf;
+    background: #4f278a;
+    ul {
+        width: 840/@bf;
+        margin: 0 auto;
+        box-shadow: inset 0 0 0 1px #fff;
+    }
+    > p {
+        padding: 0 30/@bf;
+        margin-top: 22/@bf;
+        color: #fff;
+        font-size: 34/@bf;
+        line-height: 46/@bf;
+    }
+    li {
+        position: relative;
+        float: left;
+        width: 50%;
+        height: 92/@bf;
+        line-height: 92/@bf;
+        text-align: center;
+        color: #fff;
+        font-size: 36/@bf;
+        box-shadow: 0 0 0 1px #fff;
+        background: #442178;
+        b {
+            width: 26/@bf;
+            height: 26/@bf;
+            margin: 36/@bf 0 0 8/@bf;
+            .spt;
+            background-position: -952/@bf -33/@bf;
+        }
+    }
+    .fans-num {
+        .flex;
+        .flex-justify-center;
+    }
+    .day-list {
+        position: absolute;
+        top: 92/@bf;
+        left: 0;
+        z-index: 99;
+        width: 100%;
+        background: #442178;
+        box-shadow: inset 0 0 0 1px #fff;
+        span {
+            display: block;
+            height: 100%;
+            text-align: center;
+            border-bottom: 1px solid #fff;
+            color: #84ffff;
+            font-weight: bold;
+        }
+    }
+    .choose-day {
+        .flex;
+        .flex-justify-center;
+        em {
+            display: block;
+            width: 0;
+            height: 0;
+            margin: 38/@bf 0 0 10/@bf;
+            border-left: 14/@bf solid transparent;
+            border-right: 14/@bf solid transparent;
+            border-top: 20/@bf solid #00ffff;
+
+        }
+        .arrow-up {
+            border-left: 14/@bf solid transparent;
+            border-right: 14/@bf solid transparent;
+            border-bottom: 20/@bf solid #00ffff;
+            border-top: 0;
+        }
+    }
+}
+
+.close-btn {
+    position: absolute;
+    top: 38/@bf;
+    right: 38/@bf;
+    z-index: 999;
+    width: 38/@bf;
+    height: 36/@bf;
+    -webkit-transform: scale(1.5);
+       -moz-transform: scale(1.5);
+        -ms-transform: scale(1.5);
+         -o-transform: scale(1.5);
+            transform: scale(1.5);
+    .spt;
+    background-position: -829/@bf -138/@bf;
+}
+
+.copyright {
+    width: 652/@bf;
+    height: 38/@bf;
+    margin: 52/@bf auto 0;
+    .spt;
+    background-position: -21/@bf -566/@bf;
+}
+
+.posi {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+
+
+
+
+//粉丝等级
+.fan-hz {
+    position: relative;
+    width: 244/@bf;
+    padding-left: 62/@bf;
+    margin: 0 auto;
+    height: 68/@bf;
+    .spt;
+    background-position: -1187/@bf -459/@bf;
+    text-align: center;
+    line-height: 68/@bf;
+    font-size: 36/@bf;
+    color: #fff;
+}
+
+.tost {
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    top: 50%;
+    width: 860/@bf;
+    margin-left: -430/@bf;
+    margin-top: -80/@bf;
+    padding: 20/@bf 30/@bf;
+    min-height: 68/@bf;
+    line-height: 48/@bf;
+    text-align: center;
+    border-radius: 18/@bf;
+    color: #fff;
+    background: rgba(0 ,0, 0, 0.8);
+    font-size: 36/@bf;
+    b {
+        position: absolute;
+        right: 5/@bf;
+        top: -2/@bf;
+        z-index: 999;
+        font-size: 68/@bf;
+        color: #fff;
+        font-weight: bold;
+    }
+}
+
+.zn-pic {
+    width: 648/@bf;
+    height: 378/@bf;
+    margin: 10/@bf auto;
+    .bgm('zn.png');
+    background-size: 648/@bf 378/@bf;
+}
+.tost-cover {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0);
+}

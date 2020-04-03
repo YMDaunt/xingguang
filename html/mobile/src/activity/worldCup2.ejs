@@ -1,0 +1,383 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="ban"></div> 
+    <div class="wrap">
+        <div class="word">世界杯激战正酣，星光主播们陪你畅聊精彩赛事！支持心仪的球队，瓜分数十万克拉！三阶段活动奖励不停，精彩不缺席！送出活动礼物即有机会触发宝箱福利！ 一次性送出666个活动礼物，即可触发进球特效！</div>
+
+        <section class="time">
+            <div class="step-text">
+                <span>第一阶段</span>
+                <span>第二阶段</span>
+                <span>第三阶段</span>
+            </div>
+            <div class="time-line">
+                <p></p>
+                <b></b>
+            </div>
+            <div class="date-text">
+                <span>6月30日-7月5日</span>
+                <span>7月5日-7月10日</span>
+                <span>7月10日-7月15日</span>
+            </div>
+        </section>
+
+        <!-- 支持 -->
+        <section class="support">
+            <b></b>
+            <div v-if="canSup" class="sup-btn" @click="sup()"></div>
+            <div v-else class="cant-sup-btn"></div>
+            <p>*仅<strong> 活动开始前有开播记录 </strong>的主播可以选择支持的球队哦~</p>
+            <br />
+            <p class="tip-text">*若你Pick的球队，进入了世界杯4强，且你又是队长榜前4名主播，即可平分200000克拉奖池大奖！</p>
+
+            <!-- 支持选择 -->
+            <div class="posi" v-show="supBox">
+                <div class="sup-select">
+                    <b @click="supBox = !supBox"></b>
+                    <ul>
+                        <!-- class="thisgj"支持 -->
+                        <li v-for="(item,index) in supArr" >
+                            <div :class="item.countryEngName" @click="choose($event, index)" v-bind:data-contury="item.countryName" v-bind:data-tid="item.teamCode" v-bind:data-pid="item.pid">
+                                <span class="se-box" v-bind:data-contury="item.countryName" v-bind:data-tid="item.teamCode" v-bind:data-pid="item.pid"></span>
+                            </div>
+                            <p>{{item.countryName}}</p>
+                        </li>
+                    </ul>
+                    <div v-if="chooseTeam" class="sup-it" @click="supTeam()"></div>
+                    <div v-else class="cantsup-it"></div>
+                </div>
+            </div>
+
+            <!-- 确认弹窗 -->
+            <div class="posi" v-show="supSure">
+                <div class="makesure">
+                    <b @click="supSure = !supSure"></b>
+                    <p>小主，确定支持 <strong>{{supContury}}</strong> 队吗？</p>
+                    <div class="sure-btns">
+                        <div @click="see()"></div>
+                        <div @click="sureSup()"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 支持过弹窗 -->
+            <div class="posi" v-show="sured">
+                <div class="makesure">
+                    <b @click="sured = !sured"></b>
+                    <p>您已经支持 <strong>{{likeTeam}}</strong> 队！祝好运！</p>
+                </div>
+            </div>
+            
+            <!-- 无法支持 -->
+            <div class="posi" v-show="startJudge">
+                <div class="makesure">
+                    <b @click="startJudge = !startJudge"></b>
+                    <p>{{fialText}}</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 排行榜 -->
+        <section class="list">
+            <h2></h2>
+            <div class="tab-h2">
+                <div class="step-now" @click="tabDate1($event)">
+                    <b class="ing"></b>
+                    <strong>第一阶段</strong>
+                </div>
+                <div @click="tabDate2($event)">
+                    <b></b>
+                    <strong>第二阶段</strong>
+                </div>
+                <div @click="tabDate3($event)">
+                    <b></b>
+                    <strong>第三阶段</strong>
+                </div>
+            </div>
+            <div class="list-tip">{{dataTime}}<br />           第一阶段数据与第二、三阶段无关</div>
+            <div class="tab-list">
+                <!-- 第一阶段 -->
+                <div class="list-step1">
+                    <div class="tab-tit">
+                        <div :class="{'choose': tabCon}" @click="tab('choose')">
+                            <span>队长榜</span>
+                        </div>
+                        <div :class="{'choose': !tabCon}" @click="tab('')"><span>队员榜</span></div>
+                    </div>
+                    <div class="tab-con">
+                        <div class="mod-rank" v-show="tabCon">
+                            <div class="top-three">
+                                <div class="step">
+                                    <div v-for="(item, index) in modArr" v-if="index < 3">
+                                        <div class="cover-pic" v-bind:data-rid="item.rid"  @click="inlive($event)"></div>
+                                        <a v-if="item.isPlaying" v-bind:data-rid="item.rid"  @click="inlive($event)"></a>
+                                        <div v-if="item.vote != '' " class="contury">
+                                            <div :class="item.vote"></div>
+                                        </div>
+                                        <div class="mes">
+                                            <h3>{{item.nickname}}</h3>
+                                            <strong @click="showGift($event)" v-bind:data-mid="item.id" v-bind:data-stage="getSatge" >收到:{{item.score}}</strong>
+                                            <div v-if="!item.isLoved" v-bind:data-id="item.id" class="care" @click="attention($event,index)"></div>
+                                            <div v-else class="cared"></div>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li v-for="(item, index) in modArr" v-if="index < 3">
+                                            <div class="img-area">
+                                                <img :src="item.headPic" alt="" />
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="top-other">
+                                <div class="top-h3">
+                                    <span v-show="modArr.length > 3">排名</span>
+                                    <span v-show="modArr.length > 3">主播</span>
+                                    <span v-show="modArr.length > 3">收到的礼物</span>
+                                </div>
+                                <div class="rank-out other-mod">
+                                    <ul>
+                                        <li class="clearfix" v-for="(item, index) in modArr" v-if="index >= 3">
+                                            <div class="number">{{index+1}}</div>
+                                            <div class="rank-img">
+                                                <img :src="item.headPic" alt="" v-bind:data-rid="item.rid" @click="inlive($event)" />
+                                                <b v-if="item.isPlaying" v-bind:data-rid="item.rid"  @click="inlive($event)"></b>
+                                            </div>
+                                            <div class="rank-name">
+                                                <div v-if="item.vote != '' " class="contury">
+                                                    <div :class="item.vote"></div>
+                                                </div>
+                                                <p v-bind:data-stage="getSatge">{{item.nickname}}</p>
+                                            </div>
+                                            <div class="rank-mark" @click="showGift($event)" v-bind:data-stage="getSatge" v-bind:data-mid="item.id" >{{item.score}}</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="jg-line"></div>
+
+                            <!-- 我的主播排名 -->
+                            <div class="mines mine-mod" v-show="uid != false">
+                                <div class="mine-num">{{myModArr.rank}}</div>
+                                <div class="mine-img">
+                                    <img v-if="myModArr.rid == null" :src="myModArr.headPic" alt="" />
+                                    <img v-else :src="myModArr.headPic" v-bind:data-rid="myModArr.rid" @click="inlive($event)" alt="" />
+                                    <b v-if="myModArr.isPlaying"></b>
+                                </div>
+                                <div class="mine-mes">
+                                    <div v-if="myModArr.vote != '' " class="contury">
+                                        <div :class="myModArr.vote"></div>
+                                    </div>
+                                    <p>{{myModArr.nickName}}</p>
+                                    <div class="mine-mark" v-bind:data-mid="myModArr.uid" @click="showGift($event)" v-bind:data-stage="getSatge">收到礼物： {{myModArr.score}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-rank" v-show="!tabCon">
+                            <div class="top-three">
+                                <div class="step">
+                                    <div v-for="(item, index) in userArr" v-if="index < 3">
+                                        <div class="cover-pic"></div>
+                                        <div class="mes">
+                                            <h3>{{item.nickname}}</h3>
+                                            <strong>送出:{{item.score}}</strong>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li v-for="(item, index) in userArr" v-if="index < 3">
+                                            <div class="img-area">
+                                                <img :src="item.headPic" alt="" />
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="top-other">
+                                <div class="top-h3">
+                                    <span v-show="userArr.length > 3">排名</span>
+                                    <span v-show="userArr.length > 3">用户</span>
+                                    <span v-show="userArr.length > 3">送出的礼物</span>
+                                </div>
+                                <div class="rank-out other-user">
+                                    <ul>
+                                        <li class="clearfix" v-for="(item, index) in userArr" v-if="index >= 3">
+                                            <div class="number">{{index+1}}</div>
+                                            <div class="rank-img">
+                                                <img :src="item.headPic" alt="" />
+                                            </div>
+                                            <div class="rank-name">
+                                                <p>{{item.nickname}}</p>
+                                            </div>
+                                            <div class="rank-mark">{{item.score}}</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="jg-line"></div>
+
+                            <!-- 我的用户排名 -->
+                            <div class="mines mine-user" v-show="uid != false">
+                                <div class="mine-num">{{myUserArr.rank}}</div>
+                                <div class="mine-img">
+                                    <img :src="myUserArr.headPic" alt="" />
+                                </div>
+                                <div class="mine-mes">
+                                    <p>{{myUserArr.nickName}}</p>
+                                    <div class="mine-mark">送出礼物： {{myUserArr.score}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>    
+
+        <!-- 推荐 -->
+        <section class="recommend">
+            <h2></h2>
+            <div class="recommend-con">
+                <ul>
+                    <li v-for="(item, index) in babyArr">
+                        <img :src="item.headPic" v-bind:data-rid="item.rid" @click="inlive($event)" alt="" />
+                        <b v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></b>
+                        <div v-if="item.vote != '' " class="contury">
+                            <div :class="item.vote"></div>
+                        </div>
+                        <p>{{item.nickname}}</p>
+                        <div v-if="!item.isLoved" v-bind:data-id="item.id" class="care" @click="attention2($event,index)"></div>
+                        <div v-else class="cared"></div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <div class="copyright">本次活动最终解释权归平台运营团队所有</div>
+    </div>
+    
+    <div class="rule-btn" @click="ruleBox = !ruleBox"></div>
+
+
+    <!-- 礼物统计 -->
+    <div class="posi" v-show="giftBox">
+        <div class="gift-all">
+            <b@click="giftBox = !giftBox"></b>
+            <div class="top-gift">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" v-for="(item, index) in giftTopArr">
+                            <div class="slide">
+                                <div class="gift-img">
+                                    <div :class="item.gift.countryEngName"></div>
+                                </div>
+                                <div class="cov-img">
+                                    <img :src="item.mod.headPic" alt="" v-bind:data-rid="item.mod.rid" @click="inlive($event)" class="cov-img" />
+                                    <span v-if="item.mod.isPlaying" v-bind:data-rid="item.mod.rid" @click="inlive($event)"></span>
+                                </div>
+                                <div class="gift-mod-mes">
+                                    <div class="cov-name">{{item.mod.nickname}}</div>
+                                    <div class="cov-mark">收到：{{item.mod.score}}</div>
+                                    <div class="cov-line"></div>
+                                </div>
+                                <div class="best-team">
+                                    <p>最佳队员</p>
+                                    <strong>{{item.user.nickname}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 如果需要导航按钮 -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            <div class="gift-tit">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;礼物&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>当前排名</span>
+                <span>收到的礼物</span>
+            </div>
+            <div class="other-gift">
+                <ul>
+                    <li class="clearfix" v-for="(item, index) in giftOtherArr">
+                        <div class="gift-spic">
+                            <span :class="item.countryEngName"></span>
+                            <strong>{{item.giftName}}</strong>
+                        </div>
+                        <div class="gift-rank">{{item.midRank}}</div>
+                        <div class="gift-num">{{item.midScore}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- tops -->
+    <div class="tost" v-show="tostBox">当前阶段还未开始哦！</div>
+
+    <!-- 活动规则 -->
+    <div class="posi" v-show="ruleBox">
+        <div class="rule">
+            <b @click="ruleBox = !ruleBox"></b>
+            <div class="rule-con">
+                <ul>
+                    <li class="clearfix">
+                        <span>1</span>
+                        <p>活动时间：18年6月30日12:00:00—7月15日 23:59:59。</p>
+                    </li>
+                    <li class="clearfix">
+                        <span>2</span>
+                        <p>
+                            活动分为三个阶段。
+                            <br />第一阶段：6月30日12:00:00-7月5日 11:59:59
+                            <br />第二阶段：7月5日 12:00:00-7月10日11:59:59
+                            <br />第三阶段：7月10日12:00:00-7月15日23:59:59
+                        </p>
+                    </li>
+                    <li class="clearfix">
+                        <span>3</span>
+                        <p>7月5日12:00起上线活动专属礼物，礼物分别对应2018世界杯8强球队。</p>
+                    </li>
+                    <li class="clearfix">
+                        <span>4</span>
+                        <p>活动礼物根据当日比赛队伍进行实时更新，其中“中国队加油”为活动期间一直存在的礼物。</p>
+                    </li>
+                    <li class="clearfix">
+                        <span>5</span>
+                        <p>送出活动礼物即有机会触发宝箱福利！一次性送出666个活动专属礼物，即可触发进球特效！</p>
+                    </li>
+                    <li class="clearfix">
+                        <span>6</span>
+                        <p>
+                            所有主播可以选择支持1支球队，若该球队进入世界杯4强。则猜中的队长榜前4名主播可以瓜分200000克拉奖池大奖。
+                            <br />1）只有在活动开始前有开播记录的主播有机会选择支持球队；
+                            <br />2）每个主播只有1次机会选择支持的1支球队；
+                            <br />3）该场比赛开始前，都可以有选择支持的机会；
+                        </p>
+                    </li>
+                    <li class="clearfix">
+                        <span>7</span>
+                        <p>根据世界杯8进4赛程，若该球队获胜，则在开赛前收到该球队礼物第一名的主播可获得30000克拉奖励。</p>
+                    </li>
+                    <li class="clearfix">
+                        <span>8</span>
+                        <p>奖励于活动结束后15个工作日内发放。</p>
+                    </li>
+                    <li class="clearfix">
+                        <span>9</span>
+                        <p>第二阶段总榜前5名获得奖励，详情见下表：</p>
+                    </li>
+                    <div class="rule-step"></div>
+                </ul>
+            </div>
+             
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '一起来看世界杯',
+        content: '世界杯激战正酣，支持心仪的球队，瓜分数十万克拉！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/worldCup/share.png")}'
+    });
+</script>

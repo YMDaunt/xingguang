@@ -1,0 +1,127 @@
+<main class="main_box" id="app">
+    <div class="ban">
+        <div class="wow"></div>
+    </div>
+    <div class="own-gift">
+        <div></div>
+        <p>
+            <strong>菲儿丫头</strong>
+            <em>10克拉/个</em>
+        </p>
+        <a href="javascript:void(0)" @click="inlive()"></a>
+    </div>
+    <!-- 守护榜单 -->
+    <section class="the-rank">
+        <div class="rank-tit">
+            <div class="wow"></div>
+        </div>
+        <div class="rank-con">
+            <div class="rank-area">
+                <div class="rank-three">
+                    <ul class="clearfix">
+                        <li v-for="(item,index) in userRank" v-if="index < 3">
+                            <div class="user-img">
+                                <b :class="'icon-top' + index"></b>
+                                <img :src="item.head_pic_1" alt="" />
+                                <strong>{{item.nickname}}</strong>
+                            </div>
+                            <span>贡献值：{{item.num.pnum}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="rank-other">
+                    <div class="rank-other-tit clearfix">
+                        <div class="rank-num">排名</div>
+                        <div class="rank-name">昵称</div>
+                        <div class="rank-val">贡献值</div>
+                    </div>
+                    <div class="other-cover">
+                        <ul class="clearfix">
+                            <li v-for="(item,index) in userRank" v-if="index >= 3">
+                                <div class="rank-num">{{index +1}}</div>
+                                <div class="rank-name">
+                                    <img :src="item.head_pic_1" alt="" />
+                                    <strong>{{item.nickname}}</strong>
+                                </div>
+                                <div class="rank-val">{{item.num.pnum}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>  
+
+    <!-- 规则 -->
+    <section>
+        <div class="box"></div>
+        <div class="rules">
+            <div class="rules-tit">
+                <div class="wow"></div>
+            </div>
+            <div class="rules-con">
+                <p>1.活动时间：2018年2月2日 12:00:00 - 2月6日 23:59:59；</p>
+                <p>2.活动期间内，在樱梦菲儿的直播间内，每送满3000个活动礼物——<strong>菲儿丫头</strong>，即可炸出守护红包，快来抢克拉吧！</p>
+                <p>3.活动期间请遵守星光直播文明公约；</p>
+                <p>4.本活动最终解释权归星光直播所有。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 问答 -->
+    <section class="question-con">
+        <div class="question-tit">
+            <div class="wow"></div>
+        </div>
+        <div class="question">
+            <ul class="clearfix">
+                <li>
+                    <div class="ask-img">
+                        <strong></strong>
+                        <span>星光小编</span>
+                    </div>
+                    <div class="ask-txt">经常看你在直播的时候流泪，你是一个爱哭的人吗？</div>
+                    <div class="answer-img">
+                        <strong></strong>
+                        <span>樱梦菲儿</span>
+                    </div>
+                    <div class="answer-txt">在生活中不是一个爱哭的女孩，直播的时候经常哭是因为，面对素未谋面的陌生人，带给我太多的感动和惊喜。我是一个感性的女孩，情到深处真的难以控制自己的情绪。</div>
+                </li>
+                <li>
+                    <div class="ask-img">
+                        <strong></strong>
+                        <span>星光小编</span>
+                    </div>
+                    <div class="ask-txt">你现在还是学生，在课余时间喜欢做什么？</div>
+                    <div class="answer-img">
+                        <strong></strong>
+                        <span>樱梦菲儿</span>
+                    </div>
+                    <div class="answer-txt">现在是一名即将走向社会岗位的大学生，这四年除了学习，电视剧和兼职是我的精神食粮，而今，直播和你们的认可是我前进的动力！</div>
+                </li>
+                <li>
+                    <div class="ask-img">
+                        <strong></strong>
+                        <span>星光小编</span>
+                    </div>
+                    <div class="ask-txt">有什么想对粉丝说的话？</div>
+                    <div class="answer-img">
+                        <strong></strong>
+                        <span>樱梦菲儿</span>
+                    </div>
+                    <div class="answer-txt">菲儿是一个非常普通的女孩，却被你们宠成小公主，130天，谢谢你们带给菲儿的每一份惊喜和感动，如果说菲儿的成长是一个奇迹，那么陪伴菲儿长大的每一个你都是奇迹的创造者！感恩你们的认可、支持、陪伴和青睐，茫茫人海，你选择菲儿，这是一种缘分更是一种眷顾，我始终坚信，缘不是来的早就好，而是来了不再离开！菲儿会越来越努力，不让爱我的你们失望，感恩遇见，感谢有你，最后我和家人们非常欢迎也非常期待您的加入！菲儿等着你！</div>
+                </li>
+            </ul>
+        </div>
+        <p>本活动最终解释权归星光直播所有</p>
+    </section>
+</main>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '星光女神',
+        content: '女神驾到，霸气全开！',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/yingmeng/share.png")}'
+    });
+</script>

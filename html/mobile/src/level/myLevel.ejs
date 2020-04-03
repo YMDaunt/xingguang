@@ -1,0 +1,46 @@
+<div id="app" v-cloak>
+    <bg-layout :bgs=3></bg-layout>
+    <page-content>
+        <div class="avatar-wrap">
+            <img :src="userInfo.head_pic_1" class="avatar" alt="头像">
+        </div>
+        <div class="level">Lv.{{userInfo.level}}</div>
+        <div class="currentExperience">当前经验值：{{userInfo.level_consume_coin}}</div>
+        <div class="level-progress">
+            <div class="current-progress" :style="{width:currentProgress}"></div>
+        </div>
+        <div class="level-text">
+            <div class="tip fl" v-if="tipInfo.on">经验值：2经验值=1克拉</div>
+            <div class="tip fl" v-else>经验值：1经验值=1克拉</div>
+            <div class="need fr">距离升级：{{userInfo.next_level_need_more}}</div>
+        </div>
+        <p class="tips" style="color: #ff0071;text-align: center;font-size: 0.34rem;margin: 0.2rem 0;" v-if="tipInfo.on">{{tipInfo.text}}</p>
+        <div :class="[!isIOSAppInVerify?'':'marginTop','level-panel'] ">
+            <p class="title">如何升级</p>
+            <ul>
+                <li>
+                    <div class="gift-img fl"></div>
+                    <div class="gift fl">
+                        <div class="title">赠送礼物</div>
+                        <div class="detail">礼物刷起来，经验蹭蹭蹭<br>上涨</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="baojian-img fl"></div>
+                    <div class="baojian fl">
+                        <div class="title">获得大宝剑</div>
+                        <div class="detail">你今天大宝剑了吗</div>
+                    </div>
+                </li>
+                <li v-if="!isIOSAppInVerify">
+                    <div class="shouhu-img fl"></div>
+                    <div class="shouhu fl">
+                        <div class="title">开通守护</div>
+                        <div class="detail">守护一人心，永世不分离</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </page-content>
+</div>
+

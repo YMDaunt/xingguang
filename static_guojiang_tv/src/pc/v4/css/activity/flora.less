@@ -1,0 +1,165 @@
+// ../../img/activity/flora
+
+@activityName: 'activity/flora';
+@bf: 1px*10/6;
+@imgUrl: '../../img/activity/flora';
+
+@import '../../../../mobile/v2/css/activity/flora.mixin.less';
+
+.btn,
+.headpic,
+.flora-avatar,
+.segs-tab-i {
+    cursor: pointer;
+}
+
+/* 定义普通样式 S */
+/* 背景图 */
+.page-bgs {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+
+    .page-bg {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 225px;
+        background-image: url('@{imgUrl}/bg1.jpg');
+    }
+
+    .bg2 {
+        height: 225px;
+        background-image: url('@{imgUrl}/bg2.jpg');
+    }
+
+    .bg3 {
+        height: 225px;
+        background-image: url('@{imgUrl}/bg3.jpg');
+    }
+
+    .bg4 {
+        height: 225px;
+        background-image: url('@{imgUrl}/bg4.jpg');
+    }
+
+    .bg5 {
+        height: 800px;
+        background-image: url('@{imgUrl}/bg5.jpg');
+    }
+
+    .bg6 {
+        height: 1480px;
+        background-image: url('@{imgUrl}/bg6.jpg');
+    }
+
+    .bg7 {
+        height: 1659px;
+        background-image: url('@{imgUrl}/bg7.jpg');
+    }
+}
+
+/* 页面内容 */
+.page-content {
+    width: 754px;
+    margin: 0 auto;
+    padding-top: 1040px;
+}
+
+.banner-pic,
+.banner-txt {
+    display: none;
+}
+
+.txt-hsd {
+    margin-bottom: 20px;
+}
+
+.flora-item {
+    margin: 34px 0;
+}
+
+.flora-name {
+    margin-left: 26px;
+    margin-right: 26px;
+}
+
+.deco-sep {
+    margin-top: 44px;
+    margin-bottom: 44px;
+}
+
+.floater {
+    left: 50%;
+    right: auto;
+    transform: translateX(440%) scale(1.25);
+
+    .btn {
+        margin: 10px 0;
+    }
+}
+
+.layer-inner, .modal-inner {
+    width: 710px;
+}
+
+.icon-qs {
+    cursor: pointer;
+    position: relative;
+
+    &:hover .qs-info {
+        display: block;
+    }
+
+    .qs-info {
+        display: none;
+        position: absolute;
+        width: 400px;
+        font-size: 16px;
+        color: #fff;
+        transform: translate(-45%, -110%);
+        background: #962cf2;
+        padding: 6px 10px;
+        border-radius: 12px;
+        border: 1px solid #fff;
+
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            border-top: 10px solid #fff;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            bottom: -10px;
+            left: 45%;
+            transform: translateX(34%);
+        }
+    }
+}
+
+.toast-container .toast-table {
+    width: 1080/@bf;
+}
+
+.rank-row .nickname-holder {
+    width: 240px;
+}
+
+.rank-listc.user .rank-row .headpic .avatar,
+.rank-center .headpic.no-deco .avatar {
+    border-width: 3px;
+}
+
+/* SVG动画层 */
+.svg-layer {
+    .svg-container {
+        width: 1080/@bf;
+        margin: 0 auto;
+        position: relative;
+    }
+}

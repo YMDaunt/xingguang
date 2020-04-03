@@ -1,0 +1,49 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/pc/v4/img/activity/foolsDay19" */ -->
+    <div class="page-bgs">
+        <!-- bgs -->
+        <div class="page-bg bg1"></div>
+        <div class="page-bg bg2"></div>
+    </div>
+
+    <%= content %>
+</div>
+
+<script type="text/template" id="cus-table">
+    <div class="table">
+        <div class="th">
+            <div
+                v-for="(thd, thi) in th.length"
+                :class="'fl-box td-cell td-' + (thi+1)">{{ th[thi] }}</div>
+        </div>
+        <div v-for="(tr, tri) in tdata" class="tr" :key="'_row' + tri">
+            <div v-if="tr.length === 1"
+                class="fl-box td-cell td-oneline">
+                <div v-if="typeof tr[0] === 'object'" :class="tr[0].className"></div>
+                <template v-else>{{ tr[0] }}</template>
+            </div>
+            <div
+                v-else
+                v-for="(td, tdi) in th.length"
+                :class="'fl-box td-cell td-' + td">
+                <div v-if="typeof tr[tdi] === 'object'" :class="tr[tdi].className"></div>
+                <template v-else>{{ tr[tdi] }}</template>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script>
+(function adaptation () {
+    let href = window.location
+    if (/Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone|SymbianOS/i.test(navigator.userAgent)) {
+        if (href.host.indexOf('www') >= 0) {
+            window.location.href = '//m.tuho.tv/dist' + href.pathname
+        }
+    } else {
+        if (href.host.indexOf('www') < 0) {
+            window.location.href = '//www.tuho.tv' + href.pathname.replace('/dist', '')
+        }
+    }
+}())
+</script>

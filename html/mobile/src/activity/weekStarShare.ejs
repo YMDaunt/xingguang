@@ -1,0 +1,149 @@
+<main id="app" v-cloak>
+	<section class="mod_report_page" v-if="showWitch">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide slide1">
+					<div class="info">
+						<div class="avatar_box">
+							<div class="avatar_wrap">
+								<img :src="userInfo.head_pic_1" class="avatar">
+							</div>
+						</div>
+						<p class="nickname">{{userInfo.nickname}}</p>
+						<p class="about">
+							<span class="time">{{startLiveTime}}</span>
+							<br> 我第一次来到星光直播开播。
+							<br> 之后的日子里，
+							<br> 我获得过 <em>{{userInfo.top1Times}}</em> 次周星。
+							<br> 曾经 <em>{{userInfo.top3Times}}</em> 次登陆周星榜单前3名。
+						</p>
+					</div>
+					<div class="swiper-container2" v-if="banner.length > 0">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide" v-for="(item,index) in banner" :key="index">
+								<img class="modImg" :src="'//static.guojiang.tv/mobile/v2/img/activity/weekStarByYear/banner/'+item+'.jpg'">
+							</div>
+						</div>
+						<div class="swiper-pagination2"></div>
+					</div>
+				</div>
+				<div class="swiper-slide slide2">
+					<div class="info">
+						<div class="avatar_box">
+							<div class="avatar_wrap">
+								<img :src="userInfo.head_pic_1" class="avatar">
+							</div>
+						</div>
+						<p class="nickname">{{userInfo.nickname}}</p>
+						<p class="about">
+							在我争夺周星的过程中，
+							<br>
+							<div class="supporter">
+								<div :class="'sup'+(index+1)" v-for="(item,index) in bigFans" :key="index">
+									<div class="avatar_box">
+										<div class="avatar_wrap">
+											<img v-if="item" :src="item.head_pic_1" class="avatar">
+										</div>
+									</div>
+									<p class="name" v-if="item">{{item.nickname}}</p>
+								</div>
+							</div>
+							<br> 给了我最多的支持与贡献，
+							<br> 谢谢家人们的陪伴。
+						</p>
+					</div>
+				</div>
+				<div class="swiper-slide slide3">
+					<div class="avatar_wrap">
+						<img :src="userInfo.head_pic_1" class="avatar">
+					</div>
+					<p class="ribbon"></p>
+					<div class="prize_msg">
+						<p class="nickname">{{userInfo.nickname}}：</p>
+						<p style="text-indent:2em;">
+							在星光直播 周星大作战 活动中，德、智、体、美、劳全面发展，被评为
+							<em>{{userInfo.awardComment}}</em> 特发此奖，以资鼓励。
+						</p>
+					</div>
+					<button class="share" @click="share"></button>
+				</div>
+			</div>
+			<div class="swiper-pagination"></div>
+		</div>
+	</section>
+	<section class="user_report_page" v-if="!showWitch">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide slide1">
+					<div class="info">
+						<div class="avatar_box">
+							<div class="avatar_wrap">
+								<img :src="userInfo.head_pic_1" class="avatar">
+							</div>
+						</div>
+						<p class="nickname">{{userInfo.nickname}}</p>
+						<p class="about">
+							<span class="time">{{registerTime}}</span>
+							<br> 我第一次来到星光直播。
+							<br> 之后的日子里，
+							<br> 我获得过 <em>{{userInfo.top1Times}}</em> 次护星者。
+							<br> 曾经 <em>{{userInfo.top3Times}}</em> 次登陆护星榜单前3名。
+						</p>
+					</div>
+				</div>
+				<div class="swiper-slide slide2">
+					<div class="info">
+						<div class="avatar_box">
+							<div class="avatar_wrap">
+								<img :src="userInfo.head_pic_1" class="avatar">
+							</div>
+						</div>
+						<p class="nickname">{{userInfo.nickname}}</p>
+						<p class="about">
+							我心中的最佳周星是：
+							<br>
+							<div class="supporter">
+								<div class="sup1" >
+									<div class="avatar_box">
+										<div class="avatar_wrap">
+											<img v-if="godness.head_pic_1" :src="godness.head_pic_1" class="avatar">
+										</div>
+									</div>
+									<p class="name" v-if="godness.nickname">{{godness.nickname}}</p>
+								</div>
+							</div>
+							<div class="msg">
+								终于遇见你，
+								<br> 还好我没放弃。
+							</div>
+						</p>
+					</div>
+				</div>
+				<div class="swiper-slide slide3">
+					<div class="avatar_wrap">
+						<img :src="userInfo.head_pic_1" class="avatar">
+					</div>
+					<p class="ribbon"></p>
+					<div class="prize_msg">
+						<p class="nickname">{{userInfo.nickname}}：</p>
+						<p style="text-indent:2em;">
+							在星光直播 周星大作战 活动中，德、智、体、美、劳全面发展，被评为
+							<em>星光最帅护星者</em> 特发此奖，以资鼓励。
+						</p>
+					</div>
+					<button class="share" @click="share"></button>
+				</div>
+			</div>
+			<div class="swiper-pagination"></div>
+		</div>
+	</section>
+</main>
+<script src="//static.guojiang.tv/src/mobile/v2/js/component/swiper.min.js"></script>
+<script>
+	var gjShareParam = JSON.stringify({
+		title: '我的年度周星成绩出炉啦！',
+		content: '谢谢家人们的支持。',
+		link: location.href,
+		imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/weekStarByYear/share.png")}'
+	});
+</script>

@@ -1,0 +1,241 @@
+<div class="page-content">
+    <!-- banner -->
+    <div class="banner"></div>
+
+    <!-- gift 七夕限定 -->
+    <div class="sprite-b gifts-h h-bg">
+        <div class="sprite-b txt-xd h-txt">浪漫七夕</div>
+        <div class="sprite-b bird-b"></div>
+        <div class="sprite-b bird-a"></div>
+    </div>
+    <div class="gifts fl-box">
+        <div class="g-i">
+            <div class="g-i-icon">
+                <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/qixi/qixi19/gift-birdfly.png')}" alt="比翼双飞">
+                <span class="sprite-b badge-xd"></span>
+            </div>
+            <p class="g-i-name">比翼双飞</p>
+            <p class="g-i-price">9999克拉/个</p>
+            <div class="g-i-opt fl-box">
+                <div class="sprite-b btn btn-preview" @click="preview('coupleFly')">预览</div>
+                <div :class="['sprite-b btn', stage === 1 ? 'btn-buy' : 'btn-buy-dis']" @click="stage === 1 && goBuy()">购买</div>
+            </div>
+        </div>
+        <div class="g-i">
+            <div class="g-i-icon">
+                <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/qixi/qixi19/gift-card.png')}" alt="浪漫七夕">
+                <span class="sprite-b badge-xd"></span>
+            </div>
+            <p class="g-i-name fl-box">浪漫七夕<span class="sprite-b btn icon-qs" @click="pageType === 'mobile' && showToast('通过活动玩法获得，主播无分成，5200距离值。')">?<i>通过活动玩法获得，主播无分成，5200距离值。</i></span></p>
+            <p class="g-i-price">10克拉/个</p>
+            <div class="g-i-opt fl-box">
+                <div class="sprite-b btn btn-preview" @click="preview('romanticDay')">预览</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- game 浪漫七夕 -->
+    <div class="sprite-b game-h h-bg">
+        <div class="sprite-b txt-lmqixi h-txt">浪漫七夕</div>
+    </div>
+    <div class="game">
+        <div class="deco-box">
+            <div class="deco-inner game-info">
+                <div class="h-info fl-box">
+                    <p class="title">集齐四个字块，即可合成一张“浪漫七夕”卡</p>
+                    <span :class="['status', !card.allFinished && 'undone']">今日{{ card.allFinished ? '已' : '未' }}完成</span>
+                </div>
+                <div class="info-content">
+                    <div class="gift-pic">
+                        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/qixi/qixi19/gift-card.png')}" alt="浪漫七夕">
+                    </div>
+                    <div class="sub-info">集齐字块会自动合成“浪漫七夕”卡，放入背包，10克拉/个，价值5200距离值哦。获得的字块仅限当日有效，次日清空。</div>
+                </div>
+            </div>
+        </div>
+        <div class="sprite-b icon-cloud-a"></div>
+        <div class="sprite-b bird-a"></div>
+        <!-- card collection 集字列表 -->
+        <div class="deco-box">
+            <div class="deco-inner game-list">
+                <div class="card-i fl-box">
+                    <div class="card-pic">
+                        <span :class="'sprite-a card-lang' + ((card.lang || card.allFinished) ? '' : '-dark')"></span>
+                        <span v-if="!card.allFinished" class="state">{{ card.lang }}</span>
+                    </div>
+                    <p class="info">每日首次送出活动礼物</p>
+
+                    <span v-if="card.lang || card.allFinished" class="status status-done">已完成</span>
+                    <span v-else class="sprite-b btn btn-complete" @click="goRandomRoom('lang')">去完成</span>
+                </div>
+                <div class="card-i fl-box">
+                    <div class="card-pic">
+                        <span :class="'sprite-a card-man' + ((card.man || card.allFinished) ? '' : '-dark')"></span>
+                        <span v-if="!card.allFinished" class="state">{{ card.man }}</span>
+                    </div>
+                    <p class="info">每日首次充值任意金额</p>
+
+                    <span v-if="card.man || card.allFinished" class="status status-done">已完成</span>
+                    <span v-else class="sprite-b btn btn-complete" @click="goChargeProxy('man')">去完成</span>
+                </div>
+                <div class="card-i fl-box">
+                    <div class="card-pic">
+                        <span :class="'sprite-a card-qi' + ((card.qi || card.allFinished) ? '' : '-dark')"></span>
+                        <span v-if="!card.allFinished" class="state">{{ card.qi }}</span>
+                    </div>
+                    <p class="info">每日累计观看直播20min</p>
+                    <span class="value">{{ Math.min(card.watchTime, 20) }}/20</span>
+
+                    <span v-if="card.qi || card.allFinished" class="status status-done">已完成</span>
+                    <span v-else class="sprite-b btn btn-complete" @click="goRandomRoom('qi')">去完成</span>
+                </div>
+                <div class="card-i fl-box">
+                    <div class="card-pic">
+                        <span :class="'sprite-a card-xi' + ((card.xi || card.allFinished) ? '' : '-dark')"></span>
+                        <span v-if="!card.allFinished" class="state">{{ card.xi }}</span>
+                    </div>
+                    <div class="info-block">
+                        <p class="info">1. 每日累计送出活动礼物克拉值达7777<span class="value">{{ Math.min(card.score, 7777) }}/7777</span></p>
+                        <p class="info">2. 完成鹊桥搭建时的抽奖</p>
+                    </div>
+
+                    <span v-if="card.xi || card.allFinished" class="status status-done">已完成</span>
+                    <span v-else class="sprite-b btn btn-complete" @click="goRandomRoom('xi')">去完成</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- lover rank 鹊桥榜 -->
+    <div class="sprite-b rank-h h-bg">
+        <div class="sprite-b txt-queqiao h-txt">鹊桥榜</div>
+    </div>
+    <div class="lover-rank">
+        <div class="cor cor-a"></div>
+        <div class="cor cor-b"></div>
+        <div class="cor cor-c"></div>
+        <div class="cor cor-d"></div>
+        <div class="sprite-b bird-b"></div>
+        <div class="sprite-b icon-cloud-a"></div>
+        <div class="sprite-b bird-a"></div>
+        <div class="r-content">
+            <div class="ranklist">
+                <div v-for="(ri, rind) in 10" :key="'rank_i_' + rind" :class="'fl-box lover-i lover-i-' + rind">
+                    <div class="mod">
+                        <div class="headpic">
+                            <div :class="'sprite-b cown cown' + ri"></div>
+                            <div v-show="ranklist[rind].isPlaying" class="sprite-b icon-live"></div>
+                            <img v-if="!ranklist[rind]._holder" class="avatar" :src="ranklist[rind].headPic" :alt="ranklist[rind].nickname" @click="goRoom(ranklist[rind])">
+                            <span v-else class="avatar avatar-holder"></span>
+                        </div>
+                        <p class="nickname txt-of">{{ ranklist[rind].nickname }}</p>
+                    </div>
+                    <div class="bridge">
+                        <p v-if="rind === 0" class="vals">距离值: {{ ranklist[rind].score }}</p>
+                        <p v-else class="vals">
+                            <span class="txt">距离值</span>
+                            <span class="txt txt-of">{{ ranklist[rind].score }}</span>
+                        </p>
+                    </div>
+                    <div class="user">
+                        <div class="headpic">
+                            <img v-if="!ranklist[rind]._holder" class="avatar" :src="ranklist[rind].mostScoreUser.headPic" :alt="ranklist[rind].mostScoreUser.nickname">
+                            <span v-else class="avatar avatar-holder"></span>
+                        </div>
+                        <p class="nickname txt-of">{{ ranklist[rind].mostScoreUser.nickname }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-if="isMod && rank.meCenter" class="rank-center fl-box">
+            <div class="info">
+                <div class="headpic">
+                    <div v-show="rank.meCenter.isPlaying" class="sprite-b icon-live"></div>
+                    <img class="avatar" :src="rank.meCenter.headPic" :alt="rank.meCenter.nickName" @click="goRoom(rank.meCenter)">
+                </div>
+                <p class="nickname">{{ rank.meCenter.nickName }}</p>
+            </div>
+            <div class="pairinfos fl-box">
+                <div v-for="(pi, pind) in [0, 2, 1, 3]" :key="'rank-mc-' + pind" class="status-i">
+                    <p class="key status">{{ rank.meCenter.pairInfos[pi].name }}</p>
+                    <p class="value txt-of">{{ rank.meCenter.pairInfos[pi].value }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- copyright -->
+    <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+</div>
+
+<!-- floater -->
+<div class="floater btn sprite-b btn-rule" @click="toggleRule">活动规则</div>
+
+<!-- rules -->
+<div class="layer layer-rules" v-show="ruleState" @click="toggleRule">
+    <div class="layer-inner" @click.stop="">
+        <div class="sprite-b bird-c"></div>
+        <div class="sprite-b icon-cloud-b"></div>
+        <div class="layer-wrapper">
+            <div class="sprite btn btn-close" @click="toggleRule">X</div>
+            <div class="sprite-b h-rule h-bg">
+                <div class="sprite-b txt-rule h-txt">活动规则</div>
+            </div>
+            <component
+                ref="rules-scroller"
+                class="layer-content"
+                :is="scroller"
+                :right="4"
+                :thumb-color="'#B9C8E9'">
+                <div class="rule-i"><span class="ind">1</span>活动时间：2019/8/2 12:00:00 — 8/7 23:59:59。</div>
+                <div class="rule-i"><span class="ind">2</span>活动礼物</div>
+                <div class="rule-gift">
+                    <img class="rule-gift-i gift-bird" src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/qixi/qixi19/gift-bird.png')}" alt="喜鹊">
+                    <img class="rule-gift-i gift-double" src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/qixi/qixi19/gift-birdfly.png')}" alt="比翼双飞">
+                    <img class="rule-gift-i gift-qixi" src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/qixi/qixi19/gift-card.png')}" alt="浪漫七夕">
+                </div>
+                <div class="rule-i"><span class="ind">3</span>鹊桥榜单为收到活动礼物主播，配对的用户为给前十名主播送出活动礼物最多的用户。</div>
+                <div class="rule-i"><span class="ind">4</span>玩法介绍：</div>
+                <div class="rule-i">玩法1：集字块 玩转距离值</div>
+                <div class="rule-i">1）集齐四个字块，即可合成“浪漫七夕”卡，放入背包，10克拉/个，无分成，有简单动效，而且价值5200距离值哦。获得的字块仅限的当日有效，次日清空。</div>
+                <div class="rule-i">2）获得字块方式如下：</div>
+                <div class="rule-i">- 每日首次送出活动礼物获得1个“浪”</div>
+                <div class="rule-i">- 每日首次充值获得1个“漫”</div>
+                <div class="rule-i">- 每日累计观看直播20min获得1个“七”</div>
+                <div class="rule-i">- 每日累计送出活动礼物克拉值达7777，获得一个“夕”</div>
+                <div class="rule-i">- 炸房中奖，会有一定概率，抽中一个“夕”</div>
+                <div class="rule-i">注：一个设备号/ip每日仅限1个id获得字块。</div>
+                <div class="rule-i">玩法2：喜鹊传情 鹊桥相会</div>
+                <div class="rule-i">1. 活动期间，每个直播间都有一座待搭建的鹊桥，每天前四次鹊桥搭建送出指定数量的“喜鹊”；从第五次开始，每次搭建需送出3000个“喜鹊”，且触发特效——鹊桥相会。</div>
+                <div class="rule-stage"></div>
+                <div class="rule-i">2. 每次鹊桥搭建完成可触发全站飘屏，由送出每次搭建鹊桥最后一只喜鹊的用户冠名。点击飘屏可有机会抢到活动礼物-喜鹊和字块“夕”。</div>
+                <div class="rule-i">3. 每天0点直播间当前鹊桥搭建完成后，从第一座鹊桥（500只喜鹊）开始搭建。</div>
+                <div class="rule-i">玩法3：七夕当日 爱意翻倍</div>
+                <div class="rule-i">8月7日0点-24点，送出活动礼物：喜鹊、比翼双飞、浪漫七夕，用户经验值翻倍哦！想要升级的用户大大，可别错过这个机会！</div>
+                <div class="rule-i">注：主播经验值、星光值、收益以及粉丝亲密度不翻倍。</div>
+                <div class="rule-i"><span class="ind">5</span>鹊桥榜前5名主播获得奖励，若有相同成绩，按照先到先得排名。奖励将于活动结束的5个工作日内发放。</div>
+                <div class="rule-rw"></div>
+                <div class="rule-i">注：第一名奖励的情侣靓号为收到活动礼物价值最高的主播和其中贡献最大的用户。</div>
+                <div class="rule-info">
+                    <div class="rule-i">app端默认搜索为新上线奖励，需更新版本至V5.2.7才可体验。点击大厅的搜索按钮，即会出现默认主播信息，点击搜索按钮具体如下所示：</div>
+                    <div class="rule-info-pic"></div>
+                </div>
+            </component>
+        </div>
+    </div>
+</div>
+
+<!-- modal 购买弹框 -->
+<buy-modal ref="buyModal" :price="9999" @purchase="purchase"></buy-modal>
+
+<!-- modal 充值弹框 -->
+<charge-modal :show="chargeShow" @hide="hideCharge"></charge-modal>
+
+<!-- toast msg层 -->
+<toast ref="toast"></toast>
+
+<!-- loading -->
+<loading ref="loading"></loading>
+
+<!-- 动画效果 -->
+<svg-player ref="svgPlayer"></svg-player>

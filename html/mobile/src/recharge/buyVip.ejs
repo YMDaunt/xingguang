@@ -1,0 +1,50 @@
+<article>
+	<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/recharge/buyVip/bg.png')}" class="bg_1">
+	<span class="crown_icon"></span>
+	<p class="page_title" v-cloak v-html="title"></p>
+
+	<div class="buy_list_wap" v-if="!buySuccess && isTimeToShowBlock" v-cloak>
+		<h2>VIP会员尊享，让你收获机会与甜蜜</h2>
+		<ul class="buy_list" v-cloak>
+			<li class="clearfix" :class="key == activeRechargeIndex ? 'active':''" v-for="(item, key) in items" @click="selectVipType(key)">
+				<span class="time fl">{{item.month}}个月</span>
+				<span class="average_money fl">日均{{item.dayFee}}元</span>
+				<span class="check_icon fr"></span>
+				<span class="unit_price fr">￥{{item.fee}}</span>
+			</li>
+		</ul>
+
+		<button class="btn" @click="goBuy()">确认购买</button>
+	</div>
+
+	<div class="success_inform" v-if="buySuccess && isTimeToShowBlock" v-cloak>
+		<h2>欢迎您<br>成为VIP会员</h2>
+		<P>有效期至：{{endDate}}</P>
+	</div>
+
+	<div class="vip_rights">
+		<p class="title">专属VIP会员权益</p>
+		<ul>
+			<li>
+				<span class="icon_1"></span>		
+				<p>畅聊全站<br>美女</p>
+			</li>
+			<!-- <li>
+				<span class="icon_2"></span>		
+				<p>置顶聊天<br>你的消息</p>
+			</li> -->
+			<li>
+				<span class="icon_3"></span>		
+				<p>用户等级<br>飞升</p>
+			</li>
+			<!-- <li>
+				<span class="icon_4"></span>		
+				<p>交友板块<br>优先展示</p>
+			</li> -->
+		</ul>
+	</div>
+
+	<button class="btn back" v-if="buySuccess && isTimeToShowBlock" v-cloak @click="back()">回到首页</button>
+
+	<pay-type v-show="showPayType" v-on:closelayer="showPayType=!showPayType" :money="items[activeRechargeIndex]['fee']"></pay-type>
+</article>

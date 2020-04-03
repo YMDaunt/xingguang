@@ -1,0 +1,413 @@
+<!-- 全局layout -->
+<div class="page-content">
+    <!-- 阶段tab -->
+    <time-tab
+        :show-stage="showStage"
+        :stage="timeRangeStage"
+        @change="changeRoute"></time-tab>
+
+    <!-- 主视图 -->
+    <keep-alive>
+        <transition name="fade" mode="out-in" appear>
+            <router-view ref="page" class="page"></router-view>
+        </transition>
+    </keep-alive>
+
+    <!-- copyright -->
+    <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+</div>
+
+<!-- floater活动奖励规则&大人物榜 -->
+<div class="floater">
+    <div class="global-s btn btn-rule" @click="toggleRule">奖励&规则</div>
+    <div class="global-s btn btn-user" @click="toggleURank">大人物榜</div>
+</div>
+
+<!-- svg layer -->
+<div class="svg-layer" v-show="svgLayer" @click="stopSvg">
+    <div class="svg-container"></div>
+</div>
+
+<!-- rules & rewards -->
+<div class="layer layer-rules" v-show="ruleState" @click="toggleRule">
+    <div class="layer-inner" @click.stop="">
+        <div class="global-s btn-close btn" @click="toggleRule"></div>
+        <div class="tab-rr fl-box">
+            <div
+                :class="['tab-rr-i btn rule-s', ruleTab === 'reward' ? 'tab-reward-a' : 'tab-reward']"
+                @click="changeRTab('reward')">活动奖励</div>
+            <div
+                :class="['tab-rr-i btn rule-s', ruleTab === 'rule' ? 'tab-rule-a' : 'tab-rule']"
+                @click="changeRTab('rule')">活动规则</div>
+        </div>
+        <div v-if="ruleTab === 'reward'" class="tab-rw fl-box">
+            <div
+                :class="['tab-rw-i btn rule-s', rwTab === 'mod' ? 'tab-rw-mod-a' : 'tab-rw-mod']"
+                @click="changeRWTab('mod')">主播奖励</div>
+            <div
+                :class="['tab-rw-i btn rule-s', rwTab === 'user' ? 'tab-rw-user-a' : 'tab-rw-user']"
+                @click="changeRWTab('user')">用户奖励</div>
+        </div>
+        <component
+            ref="rules-scroller"
+            :class="['layer-content', ruleTab]"
+            :is="scroller"
+            :right="4"
+            :thumb-color="'#e7ca62'">
+            <!-- 活动规则 S -->
+            <template v-if="ruleTab === 'rule'">
+                <time-tab
+                    class="rule-timetab"
+                    :show-stage="ruleStage"
+                    :stage="5"
+                    @change="changeRuleStage"></time-tab>
+                <component
+                    ref="r-i-scroller"
+                    class="rule-wrap"
+                    :is="scroller"
+                    :right="3"
+                    :thumb-color="'#e7ca62'">
+                    <!-- 活动礼物 -->
+                    <div class="rw-h rule-d-s rw-h-bg gift" v-show="ruleStage !== 2">
+                        <div class="user-rw-h-txt rule-txt-s txt-hdlw">活动礼物</div>
+                    </div>
+                    <div class="rule-gifts fl-box" v-show="ruleStage !== 2">
+                        <div class="rule-g-i">
+                            <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/annual19S1/rule-ndp.png')}" alt="年度票 1张年度票=10克拉=1荣耀值">
+                        </div>
+                        <div class="rule-g-i">
+                            <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/annual19S1/rule-rocket.png')}" alt="盛典火箭 1个盛典火箭=18800克拉=1880荣耀值">
+                        </div>
+                        <div class="rule-g-i">
+                            <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/annual19S1/rule-zlp.png')}" alt="助力票 1张助力票=10克拉=1荣耀值">
+                        </div>
+                    </div>
+                    <!-- 预选赛规则 -->
+                    <div class="qua" v-show="ruleStage === 1">
+                        <div class="rw-h rule-d-s rw-h-bg gz">
+                            <div class="user-rw-h-txt rule-txt-s txt-yxsgz">预选赛规则</div>
+                        </div>
+                        <p class="rule-p flex">
+                            <span class="label">参赛时间：</span>
+                            <span class="text">6.12 12:00:00 - 6.14 23:59:59。</span>
+                        </p>
+                        <p class="rule-p flex">
+                            <span class="label">参赛范围：</span>
+                            <span class="text">平台所有主播无需报名，即可参赛。</span>
+                        </p>
+                        <p class="rule-p flex">
+                            <span class="label">赛制说明：</span>
+                            <span class="text">按主播累计荣耀值排名，晋级前100名主播。若荣耀值相同，则按先到先得排名。预选赛结束后，主播荣耀值清零，用户贡献荣耀值活动全程累计。</span>
+                        </p>
+                        <div class="wf-h rule-s h-mod-wf">主播玩法</div>
+                        <p class="rule-p">
+                            <span class="label">1.日榜：</span>
+                            <span class="text">日榜的前五名主播将奖励荣耀值，每日23:59:59结算。自动算入主播当日活动日榜，以及预选赛榜。奖励的荣耀值不计算主播收益，仅计入排行榜。</span>
+                        </p>
+                        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/annual19S1/rule-yxs-mod.png')}" alt="预选赛日榜-主播奖励" class="rule-pic yxs-mod">
+                        <p class="rule-p">
+                            <span class="label">2.特殊推荐：</span>
+                            <span class="text">每日的前100强主播次日24小时奖励年度特殊推荐标签。<i class="rule-badge rule-txt-s label-100">年度100强标签</i>最终晋级单项赛的100位主播，推荐标签有效期：6月16日 00:00:00-6月17日 23:59:59。</span>
+                        </p>
+                        <div class="wf-h rule-s h-user-wf">用户玩法</div>
+                        <p class="rule-p">用户可通过以下来源获取年度礼物：</p>
+                        <p class="rule-p">- 观看福利：用户每日首次进入直播间，获得1张助力票，自动下发在背包。在线累计观看直播满5分钟，获得1张助力票，需手动领取。每日上限5张。6张票仅当日有效，次日清空。（在大人物榜榜首显示观看福利领取详情；一个设备/IP每日仅限一个ID获得观看福利；仅记录在直播间时间，大厅停留时间不累计）</p>
+                        <p class="rule-p">- 充值福利：每日单笔充值30元及以上金额，可获得一次抽取年度礼物的机会，单笔最高可获1000张助力票！<a href="../annual19S1Charge.html" target="_blank">点击跳转充值活动>>></a></p>
+                        <p class="rule-p">- 红包雨福利：用户一次性送出1880张年度票或赠送一个盛典火箭，触发直播间红包雨。掉落助力票。</p>
+                    </div>
+                    <!-- 赛道报名 -->
+                    <div class="sign" v-show="ruleStage === 2">
+                        <p class="rule-p flex">
+                            <span class="label">报名时间：</span>
+                            <span class="text">6.15 00:00:00 - 6.15 19:59:59。</span>
+                        </p>
+                        <p class="rule-p flex">
+                            <span class="label">报名范围：</span>
+                            <span class="text">预选赛晋级的100强主播。</span>
+                        </p>
+                        <p class="rule-p flex">
+                            <span class="label">报名说明：</span>
+                            <span class="text">1. 100位主播可自由报名人气/娱乐赛道，每个赛道最多只能报名50位主播，若在报名时间内有主播未报名，则由系统随机分配到未满赛道。<br/><i class="text-sep"></i>2. 确认报名后，将不可变更赛道。每个主播只能参加其中一条赛道，请谨慎操作！<br/><i class="text-sep"></i>3. 6月15日22:00:00将公布所有赛道主播。</span>
+                        </p>
+                    </div>
+                    <!-- 晋级赛  -->
+                    <div class="levelup" v-show="ruleStage === 3">
+                        <div class="rw-h rule-d-s rw-h-bg gz">
+                            <div class="user-rw-h-txt rule-txt-s txt-jjsgz">晋级赛规则</div>
+                        </div>
+                        <p class="rule-p flex">
+                            <span class="label">参赛时间：</span>
+                            <span class="text">6.16 00:00:00 - 6.20 23:59:59。</span>
+                        </p>
+                        <p class="rule-p flex">
+                            <span class="label">参赛范围：</span>
+                            <span class="text">预选赛晋级的100强主播。</span>
+                        </p>
+                        <p class="rule-p flex">
+                            <span class="label">赛制说明：</span>
+                            <span class="text">人气和娱乐赛道的比赛同时进行，按照荣耀值排名，每个赛道的前3名主播晋级决赛，其余被淘汰主播进入复活赛。若荣耀值相同，则按先到先得排名。晋级赛结束后，主播荣耀值清零，用户贡献荣耀值活动全程累计。</span>
+                        </p>
+                        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/annual19S1/rule-jj-sz.png')}" alt="晋级赛-赛制" class="rule-pic jj-sz">
+                        <div class="wf-h rule-s h-mod-wf">主播玩法</div>
+                        <p class="rule-p">1. 每轮比赛结束后，赛道未淘汰的主播将奖励荣耀值至下一轮，只奖励前3轮，奖励的荣耀值不计算主播收益，仅计入排行榜。</p>
+                        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/annual19S1/rule-jj-mod.png')}" alt="晋级赛-主播玩法" class="rule-pic jj-rw">
+                        <p class="rule-p">2. 特殊推荐：每轮未淘汰在下一轮进行期间奖励年度特殊推荐标签。<i class="rule-badge rule-txt-s label-rq-20">人气20强标签图</i>最终晋级决赛的6位主播，推荐标签有效期：6月21日 00:00:00-6月24日 23:59:59。</p>
+                        <div class="wf-h rule-s h-user-wf">用户玩法</div>
+                        <p class="rule-p">用户可通过以下来源获取年度礼物：</p>
+                        <p class="rule-p">- 观看福利：用户每日首次进入直播间，获得1张助力票，自动下发在背包。在线累计观看直播满5分钟，获得1张助力票，需手动领取。每日上限5张。6张票仅当日有效，次日清空。（在大人物榜榜首显示观看福利领取详情；一个设备/IP每日仅限一个ID获得观看福利；仅记录在直播间时间，大厅停留时间不累计）</p>
+                        <p class="rule-p">- 充值福利：每日单笔充值30元及以上金额，可获得一次抽取年度礼物的机会，单笔最高可获1000张助力票！<a href="../annual19S1Charge.html" target="_blank">点击跳转充值活动>>></a></p>
+                        <p class="rule-p">- 红包雨福利：用户一次性送出1880张年度票或赠送一个盛典火箭，触发直播间红包雨。掉落助力票。</p>
+                        <div class="wf-h rule-s h-mod-rw">晋级赛主播奖励</div>
+                        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/annual19S1/rule-jj-modrw.png')}" alt="晋级赛-主播奖励" class="rule-pic jj-mod">
+                    </div>
+                    <!-- 复活赛规则 -->
+                    <div class="repe" v-show="ruleStage === 4">
+                        <div class="rw-h rule-d-s rw-h-bg gz">
+                            <div class="user-rw-h-txt rule-txt-s txt-fhsgz">复活赛规则</div>
+                        </div>
+                        <p class="rule-p flex">
+                            <span class="label">参赛时间：</span>
+                            <span class="text">6.21 00:00:00 - 6.22 23:59:59。</span>
+                        </p>
+                        <p class="rule-p flex">
+                            <span class="label">参赛范围：</span>
+                            <span class="text">人气、娱乐赛道在晋级赛中被淘汰的主播。</span>
+                        </p>
+                        <p class="rule-p flex">
+                            <span class="label">赛制说明：</span>
+                            <span class="text">人气和娱乐赛道的比赛同时进行，按照荣耀值排名，每个赛道的前3名主播晋级决赛。若荣耀值相同，则按先到先得排名。复活赛结束后，主播荣耀值清零，用户贡献荣耀值活动全程累计。</span>
+                        </p>
+                        <div class="wf-h rule-s h-mod-wf">主播玩法</div>
+                        <p class="rule-p">1.特殊推荐：晋级决赛的每个赛道前3名主播奖励年度特殊推荐标签。<i class="rule-badge rule-txt-s label-repe-3">复活3强标签图</i>推荐标签有效期：6月23日 00:00:00 - 6月24日 23:59:59。</p>
+                        <div class="wf-h rule-s h-user-wf">用户玩法</div>
+                        <p class="rule-p">用户可通过以下来源获取年度礼物：</p>
+                        <p class="rule-p">- 观看福利：用户每日首次进入直播间，获得1张助力票，自动下发在背包。在线累计观看直播满5分钟，获得1张助力票，需手动领取。每日上限5张。6张票仅当日有效，次日清空。（在大人物榜榜首显示观看福利领取详情；一个设备/IP每日仅限一个ID获得观看福利；仅记录在直播间时间，大厅停留时间不累计）</p>
+                        <p class="rule-p">- 充值福利：每日单笔充值30元及以上金额，可获得一次抽取年度礼物的机会，单笔最高可获1000张助力票！<a href="../annual19S1Charge.html" target="_blank">点击跳转充值活动>>></a></p>
+                        <p class="rule-p">- 红包雨福利：用户一次性送出1880张年度票或赠送一个盛典火箭，触发直播间红包雨。掉落助力票。</p>
+                        <div class="wf-h rule-s h-mod-rw2">复活赛主播奖励</div>
+                        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/annual19S1/rule-jj-modrw.png')}" alt="复活赛-主播奖励" class="rule-pic jj-mod">
+                    </div>
+                    <!-- 决赛规则 -->
+                    <div class="final" v-show="ruleStage === 5">
+                        <div class="rw-h rule-d-s rw-h-bg gz">
+                            <div class="user-rw-h-txt rule-txt-s txt-jsgz">决赛规则</div>
+                        </div>
+                        <p class="rule-p flex">
+                            <span class="label">参赛时间：</span>
+                            <span class="text">6.24 00:00:00 - 6.25 23:59:59。</span>
+                        </p>
+                        <p class="rule-p flex">
+                            <span class="label">参赛范围：</span>
+                            <span class="text">人气、娱乐赛道在晋级赛和复活赛中晋级的主播。</span>
+                        </p>
+                        <p class="rule-p flex">
+                            <span class="label">赛制说明：</span>
+                            <span class="text">人气和娱乐赛道的比赛同时进行，按照荣耀值排名，若荣耀值相同，则按先到先得排名。最后产生年度人气冠军和年度娱乐冠军。</span>
+                        </p>
+                        <!-- 赛制如下 -->
+                        <div class="rule-txt-s final-sz final-sz-6-3"></div>
+                        <div class="rule-txt-s final-sz final-sz-3"></div>
+                        <div class="wf-h rule-s h-user-wf">用户玩法</div>
+                        <p class="rule-p">1. 年度特惠  经验翻倍</p>
+                        <p class="rule-p">- 决赛赛期间，用户送出年度票、助力票、盛典火箭，产生的经验值为双倍，这个年度，助力用户等级飞升</p>
+                        <p class="rule-p">例：用户A送给主播B一个盛典火箭，价值18800克拉。活动榜单超级冠军榜主播A累计1880荣耀值，大人物榜用户A累计1880荣耀值。主播B直播间累计18800星光值。用户A的用户等级经验值累计18800*2=37600。主播B的主播等级经验值累计18800。粉丝亲密度：1克拉=1亲密度不变。</p>
+                        <br/>
+                        <p class="rule-p">2. 用户可通过以下来源获取年度礼物：</p>
+                        <p class="rule-p">- 观看福利：用户每日首次进入直播间，获得1张助力票，自动下发在背包。在线累计观看直播满5分钟，获得1张助力票，需手动领取。每日上限5张。6张票仅当日有效，次日清空。（在大人物榜榜首显示观看福利领取详情；一个设备/IP每日仅限一个ID获得观看福利；仅记录在直播间时间，大厅停留时间不累计）</p>
+                        <p class="rule-p">- 充值福利：每日单笔充值30元及以上金额，可获得一次抽取年度礼物的机会，单笔最高可获1000张助力票！<a href="../annual19S1Charge.html" target="_blank">点击跳转充值活动>>></a></p>
+                        <p class="rule-p">- 红包雨福利：用户一次性送出1880张年度票或赠送一个盛典火箭，触发直播间红包雨。掉落助力票。</p>
+                    </div>
+                    <!-- 温馨提示 -->
+                    <div class="rule-tips">
+                        <div class="rule-tips-h rule-txt-s h-wxts-tips">温馨提示</div>
+                        <div class="rule-tips-p">1. 背包中获得的年度礼物有效期至2019年9月30日23:59:59，逾期清空，请及时送出。其中助力票主播无分成。非赛事期间送出年度礼物，仅增加主播直播间星光值，对年度活动所有榜单不生效。年度结束后，送出盛典火箭，仅有特效，无红包雨效果。</div>
+                        <div class="rule-tips-p">2. 因年度盛典期间，送礼量大，服务器会有一定程度的延迟，请提前10秒偷塔，以免成绩未记录榜单。若发生因服务器延迟，造成成绩未记录榜单情况，平台不予补偿，请谅解！</div>
+                        <div class="rule-tips-p">3. 为给大家提供更好的直播体验，赛事期间每日最后10分钟，全平台送出盛典火箭，无特效显示，红包雨效果不变，对您造成的困扰，请谅解！</div>
+                    </div>
+                </component>
+            </template>
+            <!-- 活动规则 E -->
+            <!-- 主播奖励 S -->
+            <template v-if="ruleTab === 'reward' && rwTab === 'mod'">
+                <div
+                    v-for="(mrSec, msi) in modRewards"
+                    :key="'mod-rw-sec-' + msi"
+                    class="mod-rw-section">
+                    <div class="rw-h rule-d-s rw-h-u-bg">
+                        <div :class="['mod-rw-h-txt rule-txt-s', mrSec.hIcon]">{{ mrSec.name }}</div>
+                    </div>
+                    <div class="rw-list">
+                        <div
+                            v-for="(g, gi) in mrSec.rws"
+                            :key="'mod-rw-'+ msi +'-g-' + gi"
+                            class="rw-i">
+                            <div class="rw-icon rule-d-s rw-gift-bg">
+                                <div :class="['gift-icon g-mod-s', g.icon]"></div>
+                            </div>
+                            <div class="rw-name">
+                                <span class="txt" v-html="g.name"></span>
+                                <span v-if="g.tips" class="global-s icon-qs">?</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rw-tips">
+                    <p class="rw-tips-i">注：</p>
+                    <p class="rw-tips-i">1. 奖励将于2019年7月31日之前发放完毕，其中开屏、形象礼物和广告位奖励由主播提供照片时间决定。</p>
+                    <p class="rw-tips-i">2. 开播飘屏自活动结束的次日起每日首次开播下发，每日下发一次。</p>
+                    <p class="rw-tips-i">3. 荣耀殿堂展示需在2019年度盛典所有赛事结束后，统一展示。</p>
+                </div>
+            </template>
+            <!-- 主播奖励 E -->
+            <!-- 用户奖励 S -->
+            <template v-if="ruleTab === 'reward' && rwTab === 'user'">
+                <div
+                    v-for="(urSec, usi) in userRewards"
+                    :key="'user-rw-sec-' + usi"
+                    class="user-rw-section">
+                    <div class="rw-h rule-d-s rw-h-bg">
+                        <div :class="['user-rw-h-txt rule-txt-s', urSec.hIcon]">{{ urSec.name }}</div>
+                    </div>
+                    <div class="rw-list">
+                        <div
+                            v-for="(g, gi) in urSec.rws"
+                            :key="'user-rw-'+ usi +'-g-' + gi"
+                            class="rw-i">
+                            <div
+                                class="rw-icon rule-d-s rw-gift-bg"
+                                @click="g.animation && playSvg(usi)">
+                                <div :class="['gift-icon g-user-s', g.icon]"></div>
+                                <div v-if="g.animation" class="global-s icon-play"></div>
+                            </div>
+                            <div class="rw-name">
+                                <span @click="pageType === 'mobile' && g.tips && showToast(g.tips, 'tips')" class="txt" v-html="g.name"></span>
+                                <span v-if="g.tips" @click="pageType === 'mobile' && showToast(g.tips, 'tips')" class="global-s icon-qs">?</span>
+                                <span v-if="pageType === 'pc' && g.tips" class="qs-tips">{{ g.tips }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="user-rw-tips">注：奖励将于活动结束后次日零点即时下发。</p>
+            </template>
+            <!-- 用户奖励 E -->
+        </component>
+    </div>
+</div>
+
+<!-- urank -->
+<div class="layer layer-urank" v-show="urankState" @click="toggleURank">
+    <div class="layer-inner" @click.stop="">
+        <div class="global-s btn-close btn" @click="toggleURank"></div>
+        <div class="urank-s urank-h"></div>
+        <component
+            ref="urank-scroller"
+            class="layer-content l-list"
+            :is="scroller"
+            :right="4"
+            :thumb-color="'#e7ca62'">
+            <div class="ticket-drawer">
+                <div class="urank-s icon-ticket1"></div>
+                <div class="prog">{{ (tickInfos.inDrawTime && tickInfos.first === 2) ? '1' : '0' }}/1</div>
+                <div class="label">今日首次进入直播间</div>
+                <div
+                    v-if="!tickInfos.inDrawTime"
+                    class="urank-s btn btn-get-d"></div>
+                <div
+                    v-else
+                    :class="['urank-s btn', tickInfos.first !== 2 ? 'btn-get' : 'btn-got']"
+                    @click="tickInfos.first !== 2 && drawTicket(1)"></div>
+            </div>
+            <div class="ticket-drawer">
+                <div class="urank-s icon-ticket2"></div>
+                <div class="prog">{{ tickInfos.inDrawTime ? tickInfos.received : '0' }}/{{ tickInfos.cumTotal }}</div>
+                <div class="label">今日已累计观看直播{{ tickInfos.inDrawTime ? Math.min(tickInfos.watchTime, 25) : '0' }}分钟</div>
+                <div
+                    v-if="!tickInfos.inDrawTime"
+                    class="urank-s btn btn-get-d"></div>
+                <div
+                    v-else
+                    :class="['urank-s btn', tickInfos.received >= tickInfos.cumTotal ? 'btn-got' : 'btn-get']"
+                    @click="tickInfos.received < tickInfos.cumTotal && drawTicket(2)"></div>
+                <div
+                    class="btn global-s icon-qs"
+                    @click="pageType === 'mobile' && showToast('每日首次进入直播间以及观看直播赠送助力票，仅当日有效，次日清零。')">
+                    ?
+                    <span v-if="pageType === 'pc'" class="pc-tips">每日首次进入直播间以及观看直播赠送助力票，仅当日有效，次日清零。</span>
+                </div>
+            </div>
+
+            <div class="l-thead global-s l-head-bg">
+                <div class="l-th cell-1"><div class="global-s txt-pm">排名</div></div>
+                <div class="l-th cell-2"><div class="urank-s txt-user">用户</div></div>
+                <div class="l-th cell-3"><div class="urank-s txt-gx-value">贡献荣耀值</div></div>
+            </div>
+
+            <div
+                v-for="(item, ind) in 10"
+                :key="'ur_' + ind"
+                :class="['l-tr', 'l-tr-' + ind]">
+                <div class="l-td cell-1">{{ (ind + 1) | rankIndex }}</div>
+                <div class="l-td cell-2">
+                    <div class="headpic">
+                        <img
+                            v-if="userRank.list[ind]"
+                            :src="userRank.list[ind].headPic"
+                            :alt="userRank.list[ind].nickname"
+                            class="avatar">
+                        <span v-else class="avatar-holder" />
+                    </div>
+                    <div class="infos">
+                        <div :class="['ubadge-s', getUserBadge(ind)]"></div>
+                        <div class="names fl-ver">
+                            <p class="nick txt-of">{{ userRank.list[ind] ? userRank.list[ind].nickname : '虚位以待' }}</p>
+                            <span
+                                v-if="userRank.list[ind]"
+                                :class="'level_icon u_level_icon_' + userRank.list[ind].level"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="l-td cell-3 txt-of">{{ userRank.list[ind] ? userRank.list[ind].score : '-' }}</div>
+            </div>
+
+            <!-- sep -->
+            <div class="urank-s txt-10-user"></div>
+            <!-- me-center -->
+            <div v-if="userRank.meCenter" class="me-center fl-box">
+                <div class="lefter">
+                    <div class="headpic">
+                        <img
+                            :src="userRank.meCenter.headPic"
+                            :alt="userRank.meCenter.nickName"
+                            class="avatar">
+                    </div>
+                    <span v-if="userRank.meCenter.rank <= 10" :class="['ubadge-s', userRankBadge[userRank.meCenter.rank]]"></span>
+                    <div class="nick fl-box">
+                        <div class="name txt-of">{{ userRank.meCenter.nickName }}</div>
+                        <span :class="'level_icon u_level_icon_' + userRank.meCenter.level"/>
+                    </div>
+                </div>
+                <div class="status fl-box">
+                    <div
+                        v-for="(s, si) in [0, 2, 1, 3]"
+                        :key="'ur_' + si"
+                        class="status-i">
+                        <div class="name">{{ userRank.meCenter.pairInfos[s].name }}</div>
+                        <div class="value txt-of">{{ userRank.meCenter.pairInfos[s].value }}</div>
+                    </div>
+                </div>
+            </div>
+        </component>
+    </div>
+</div>
+
+<!-- toast msg层 -->
+<div class="toast-container" v-show="toastState" @click="hideToast">
+    <div class="toast-msg">{{ toastMsg }}</div>
+</div>
+
+<!-- svg layer -->
+<div class="svg-layer" v-show="svgLayer" @click="stopSvg">
+    <div class="svg-container" ref="svgContainer"></div>
+</div>
+
+<loading ref="loading" />

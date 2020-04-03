@@ -1,0 +1,162 @@
+@activityName: 'activity/ceremony2018';
+@bf: 1px*10/6;
+@imgUrl: '../../../img/activity/ceremony2018';
+
+html, body, #app {
+    // overflow-x: hidden;
+    background-color: #000;
+}
+
+.linear-txt {
+    position: relative;
+    color: #bf9a42;
+
+    &:before{
+        content: attr(text);
+        position: absolute;
+        z-index: 10;
+        width: 100%;
+        color:#ffd87d;
+        mask: linear-gradient(to right, transparent, #ffd87d 50%, transparent);
+        white-space: nowrap;
+    }
+}
+
+// TOAST
+.toast-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 30;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+
+    .info {
+        padding: 12/@bf 30/@bf;
+        border-radius: 10/@bf;
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 32/@bf;
+        color: #fff;
+        max-width: 860/@bf;
+
+        .txt {
+            font-size: 32/@bf;
+            margin: 20/@bf 0;
+        }
+    }
+}
+
+/* 背景图 */
+.page-bgs {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+
+    .page-bg {
+        width: 100%;
+        background-size: auto;
+        background-position: center;
+    }
+
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 900px;
+        background-image: url('@{imgUrl}/preState/banner.jpg');
+    }
+
+    .bg2 {
+        height: 4100px;
+        background-image: url('@{imgUrl}/preState/bg.jpg');
+        background-position-y: 0px;
+    }
+
+    .bg3 {
+        height: 1500px;
+        background-image: url('@{imgUrl}/preState/bg.jpg');
+        background-position-y: -728px;
+    }
+
+    .bg2-rank {
+        height: 2300px;
+        background-image: url('@{imgUrl}/preState/bg.jpg');
+        background-position-y: 0px;
+    }
+
+    .bg3-sign {
+        height: 240px;
+        background-image: url('@{imgUrl}/preState/bg.jpg');
+        background-position-y: -728px;
+    }
+
+    .bg2-single {
+        height: 3400px;
+        background-image: url('@{imgUrl}/preState/bg.jpg');
+        background-position-y: 0px;
+
+        &.single-0 {
+            height: 3600px;
+        }
+
+        &.single-1 {
+            height: 2600px;
+        }
+
+        &.single-4 {
+            height: 2300px;
+        }
+
+        &.single-2 {
+            height: 1800px;
+        }
+
+        &.single-3 {
+            height: 1400px;
+        }
+    }
+
+    .bg2-final {
+        height: 1600px;
+        background-image: url('@{imgUrl}/preState/bg.jpg');
+        background-position-y: 0px;
+
+        &.final-1 {
+            height: 2600px;
+        }
+
+        &.final-3 {
+            height: 1250px;
+        }
+    }
+}
+
+.svg-layer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    z-index: 40;
+
+    .svg-container {
+        width: 40%;
+        height: 90%;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* 页面内容 */
+.page-content {
+    position: relative;
+    z-index: 2;
+    padding-top: 870px;
+}

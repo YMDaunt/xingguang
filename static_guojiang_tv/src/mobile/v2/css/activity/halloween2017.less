@@ -1,0 +1,743 @@
+@imgUrl: "../../img/activity/halloween2017/";
+@bf: 108rem;
+[v-cloak] {
+    display: none
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+}
+
+.bg(@url) {
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+
+.sprite1 {
+    background-image: url('@{imgUrl}sprite1.png');
+    background-repeat: no-repeat;
+    background-size: 866/@bf 269/@bf;
+}
+
+.sprite2 {
+    background-image: url('@{imgUrl}sprite2.png');
+    background-repeat: no-repeat;
+    background-size: 1080/@bf 1200/@bf;
+}
+
+.sprite3 {
+    background-image: url('@{imgUrl}sprite3.png');
+    background-repeat: no-repeat;
+    background-size: 646/@bf 479/@bf;
+}
+
+#app {
+    background-color: #43228d;
+}
+
+.banner {
+    height: 1096/@bf;
+    overflow: hidden;
+    .bg('banner.jpg');
+    background-size: 1080/@bf 1096/@bf;
+    .active-time {
+        margin-top: 80/@bf;
+        font-size: 40/@bf;
+        color: #fff;
+        font-weight: bold;
+        .num {
+            padding-left: 310/@bf;
+        }
+    }
+}
+
+.package {
+    height: 1152/@bf;
+    .bg('package.jpg');
+    background-size: 1080/@bf 1152/@bf;
+    overflow: hidden;
+    .price {
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 335/@bf;
+        font-size: 27/@bf;
+        color: #ff75d4;
+        overflow: hidden;
+        p {
+            width: 50%;
+            text-align: center;
+        }
+    }
+    .btn-group1 {
+        width: 80%;
+        margin: 50/@bf auto 0;
+        overflow: hidden;
+        .gift-btn {
+            width: 50%;
+            display: flex;
+            justify-content: space-around;
+        }
+        .preview {
+            width: 182/@bf;
+            height: 80/@bf;
+            .sprite1;
+            background-position: 0 0;
+            &:active {
+                background-position: -190/@bf 0;
+            }
+        }
+    }
+    .animate {
+        position: relative;
+        width: 382/@bf;
+        height: 360/@bf;
+        .corner {
+            position: absolute;
+            top: 10/@bf;
+            left: 260/@bf;
+            width: 91/@bf;
+            height: 70/@bf;
+            .sprite1;
+            background-position: -775/@bf -5/@bf;
+            animation: fadeIn 1s linear infinite;
+        }
+        .little-ghost {
+            position: absolute;
+            top: 130/@bf;
+            left: 100/@bf;
+            width: 64/@bf;
+            height: 73/@bf;
+            .sprite1;
+            background-position: -727/@bf -100/@bf;
+            animation: move 2s linear infinite;
+        }
+    }
+    .btn-group2 {
+        .inlive {
+            width: 270/@bf;
+            height: 83/@bf;
+            margin-left: 520/@bf;
+            .sprite1;
+            background-position: -1/@bf -186/@bf;
+            &:active {
+                background-position: -300/@bf -186/@bf;
+            }
+        }
+        .follow_btn {
+            width: 189/@bf;
+            height: 83/@bf;
+            margin-left: 30/@bf;
+            .sprite1;
+            background-position: -1/@bf -90/@bf;
+            &:active {
+                background-position: -207/@bf -90/@bf;
+            }
+        }
+        .following {
+            width: 189/@bf;
+            height: 83/@bf;
+            margin-left: 30/@bf;
+            .sprite1;
+            background-position: -413/@bf -90/@bf;
+            &:active {
+            background-position: -413/@bf -90/@bf;
+            }
+        }
+    }
+}
+
+.close {
+    float: right;
+    position: absolute;
+    right: 40/@bf;
+    top: 30/@bf;
+    width: 108/@bf;
+    height: 108/@bf;
+    .sprite1;
+    background-position: -619/@bf -161/@bf;
+}
+
+.purchase {
+    width: 182/@bf;
+    height: 80/@bf;
+    .sprite1;
+    background-position: -380/@bf 0;
+    &:active {
+        background-position: -570/@bf 0;
+    }
+}
+
+.purchase_box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 962/@bf;
+    height: 424/@bf;
+    padding-top: 60/@bf;
+    .bg('pop-bg.png');
+    background-size: 962/@bf 424/@bf;
+    z-index: 9999;
+    .close {
+        display: block;
+        right: 40/@bf;
+        top: 40/@bf;
+    }
+    .rows {
+        color: #fef722;
+        font-size: 50/@bf;
+        width: 450/@bf;
+        margin: 20/@bf auto;
+    }
+    .giftNum {
+        color: #000;
+        width: 200/@bf;
+        height: 50/@bf;
+        padding-left:5px;
+        font-size: 34/@bf;
+    }
+    .purchase_btn {
+        .purchase;
+        display: block;
+        margin: 40/@bf auto 0;
+    }
+}
+
+
+
+.layer-smash,
+.mask,
+.s_layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #000;
+    opacity: .6;
+    filter: alpha(opacity=60);
+    z-index: 9998;
+}
+#svgContainer {
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    overflow: hidden
+}
+
+.list {
+    position: relative;
+    .title {
+        width: 480/@bf;
+        height: 157/@bf;
+        margin: 20/@bf auto;
+        .sprite2;
+        background-position: 0 -360/@bf;
+    }
+    .handler {
+        // width: 1100/@bf;
+        height: 218/@bf;
+        margin-top: 30/@bf;
+        .witch,
+        .ghost {
+            .sprite2;
+            width: 351/@bf;
+            float: left;
+        }
+        .witch {
+            height: 139/@bf;
+            margin: 70/@bf 0 0 100/@bf;
+            background-position: -53/@bf 0;
+        }
+        .witch-on {
+            width: 478/@bf;
+            height: 215/@bf;
+            margin: 10/@bf 0 0 90/@bf;
+            background-position: 0 -139/@bf;
+        }
+        .ghost {
+            height: 142/@bf;
+            margin: 75/@bf 0 0 42/@bf;
+            background-position: -509/@bf 0;
+        }
+        .ghost-on {
+            width: 478/@bf;
+            height: 218/@bf;
+            margin: 10/@bf 0 0 40/@bf;
+            background-position: -478/@bf -142/@bf;
+        }
+    }
+    .handler-content {
+        position: absolute;
+        top: 340/@bf;
+        left: 50%;
+        width: 1050/@bf;
+        height: 2054/@bf;
+        transform: translate(-50%, 0);
+        .bg('list-bg.png');
+        background-size: 1050/@bf 2054/@bf;
+        z-index: 1;
+    }
+    .rules_btn {
+        width: 692/@bf;
+        height: 149/@bf;
+        margin: 2054/@bf auto 0;
+        .sprite2;
+        background-position: 0 -784/@bf;
+        &:active {
+            background-position: 0 -624/@bf;
+        }
+    }
+}
+
+.witch-list,
+.ghost-list {
+    .prev-list {
+        li {
+            float: left;
+            width: 400/@bf;
+            margin: 30/@bf 0 0 100/@bf;
+            .avatar_wrap {
+                position: relative;
+                width: 164/@bf;
+                margin: 0 auto;
+                height: 174/@bf;
+                color: #fff;
+                .sprite3;
+                background-position: -4/@bf -246/@bf;
+                transform: scale(1.8);
+                .crown {
+                    position: absolute;
+                    top: -2/@bf;
+                    left: 46/@bf;
+                    width: 86/@bf;
+                    height: 51/@bf;
+                    z-index: 3;
+                    .sprite3;
+                    background-position: -4/@bf -428/@bf;
+                }
+                .avatar_box {
+                    position: absolute;
+                    top: 40/@bf;
+                    left: 27/@bf;
+                    width: 124/@bf;
+                    height: 124/@bf;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    z-index: 1;
+                    .avatar {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .live {
+                    position: absolute;
+                    left: 28/@bf;
+                    top: 122/@bf;
+                    width: 40/@bf;
+                    height: 20/@bf;
+                    .sprite3;
+                    background-position: -485/@bf -75/@bf;
+                    z-index: 3;
+                }
+                .index {
+                    position: absolute;
+                    left: -2/@bf;
+                    top: 148/@bf;
+                    width: 178/@bf;
+                    height: 39/@bf;
+                    line-height: 32/@bf;
+                    text-align: center;
+                    font-size: 22/@bf;
+                    font-weight: bold;
+                    .sprite3;
+                    background-position: -102/@bf -440/@bf;
+                    z-index: 3;
+                }
+            }
+            .info {
+                margin-top: 100/@bf;
+                p {
+                    color: #fff;
+                    overflow: hidden;
+                    height: 55/@bf;
+                    line-height: 55/@bf;
+                    font-size: 35/@bf;
+                }
+                .nickname,
+                .gift_num {
+                    display: block;
+                    width: 60%;
+                    text-align: right;
+                    float: left;
+                    padding-right: 20/@bf;
+                    .ellipsis;
+                }
+                .level_icon {
+                    margin-top: 10/@bf;
+                }
+            }
+        }
+        .follow_btn {
+            width: 100/@bf;
+            height: 20/@bf;
+            line-height: 20/@bf;
+            font-size: 26/@bf;
+            padding: 5/@bf 25/@bf;
+            color: #fff;
+            border-radius: 20/@bf;
+            font-weight: bold;
+            background: #e200bf;
+        }
+        .following {
+            width: 100/@bf;
+            height: 20/@bf;
+            line-height: 20/@bf;
+            font-size: 26/@bf;
+            padding: 5/@bf 25/@bf;
+            color: #fff;
+            border-radius: 20/@bf;
+            font-weight: bold;
+            background-color: #959595;
+        }
+        li.no0 {
+            float: none;
+            width: 600/@bf;
+            margin: 150/@bf auto 50/@bf;
+            .avatar_wrap {
+                width: 403/@bf;
+                height: 234/@bf;
+                background-position: 0 0;
+                .crown {
+                    top: -10/@bf;
+                    left: 135/@bf;
+                    width: 118/@bf;
+                    height: 70/@bf;
+                    background-position: -422/@bf -117/@bf;
+                }
+                .avatar_box {
+                    top: 50/@bf;
+                    left: 110/@bf;
+                    width: 170/@bf;
+                    height: 170/@bf;
+                }
+                .live {
+                    left: 115/@bf;
+                    top: 165/@bf;
+                    width: 52/@bf;
+                    height: 26/@bf;
+                    background-position: -419/@bf -72/@bf;
+                }
+                .index {
+                    left: 74/@bf;
+                    top: 200/@bf;
+                    width: 243/@bf;
+                    height: 52/@bf;
+                    line-height: 45/@bf;
+                    font-size: 26/@bf;
+                    background-position: -403/@bf 0;
+                }
+            }
+            .info {
+                margin-top: 130/@bf;
+                p {
+                    font-size: 40/@bf;
+                }
+                .follow_btn {
+                    width: 150/@bf;
+                    height: 60/@bf;
+                    line-height: 60/@bf;
+                    font-size: 28/@bf;
+                    padding: 5/@bf 25/@bf;
+                    border-radius: 30/@bf;
+                }
+            }
+        }
+        li.no2 {
+            float: right;
+            margin: 30/@bf 100/@bf 0 0;
+            .avatar_wrap {
+                background-position: -177/@bf -245/@bf;
+                .crown {
+                    background-position: -297/@bf -428/@bf;
+                    ;
+                }
+            }
+        }
+    }
+    .last-list {
+        width: 820/@bf;
+        height: 855/@bf;
+        margin: 0 auto;
+        overflow: auto;
+        li {
+            padding: 25/@bf 0 15/@bf;
+            overflow: hidden;
+            border-bottom: 2/@bf solid #937b8c;
+        }
+        .index {
+            float: left;
+            width: 90/@bf;
+            height: 80/@bf;
+            line-height: 100/@bf;
+            text-align: center;
+            // padding-left: 20/@bf;
+            font-size: 37/@bf;
+            font-weight: bold;
+            color: #fef722;
+        }
+        .avatar_wrap {
+            float: left;
+            position: relative;
+            line-height: 120/@bf;
+            .avatar_box {
+                width: 80/@bf;
+                height: 80/@bf;
+                border: 2/@bf solid #b5b5b5;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+            .live {
+                position: absolute;
+                bottom: -10/@bf;
+                left: 50%;
+                margin-left: -35/@bf;
+                width: 71/@bf;
+                height: 23/@bf;
+                .sprite3;
+                background-position: -410/@bf -211/@bf;
+            }
+        }
+        .info {
+            float: left;
+            height: 80/@bf;
+            line-height: 80/@bf;
+            color: #fff;
+            margin-left: 40/@bf;
+            float: left;
+            font-size: 30/@bf;
+            p{
+                float: left;
+            }
+            span {
+                display: block;
+                float: left;
+            }
+            .nickname {
+                width: 200/@bf;
+                .ellipsis;
+            }
+            .level_icon {
+                margin-top: 20/@bf;
+            }
+            .gift_num {
+                color: #fff;
+                margin-left: 30/@bf;
+            }
+        }
+    }
+}
+
+.ghost-list {
+    .prev-list {
+
+        .info .gift_num {
+            width: 100%!important;
+            text-align: center!important;
+        }
+    }
+}
+
+
+.s_layer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    z-index: 99;
+    opacity: 1;
+    background: rgba(0, 0, 0, .6);
+    .rules {
+        position: relative;
+        margin:100/@bf auto;
+        width: 1074/@bf;
+        height: 2846/@bf;
+        .bg('rules-bg.png');
+        background-size: 1074/@bf 2846/@bf;
+        color: #fef722;
+        font-size: 38/@bf;
+        overflow: hidden;
+        // z-index: 99;
+        .close{
+            top:60/@bf;
+            right:60/@bf;
+        }
+        .content {
+            margin: 250/@bf auto 0;
+            width: 900/@bf;
+            li {
+                margin: 20/@bf 10/@bf;
+            }
+        }
+        .gift {
+            margin: 680/@bf auto 0;
+            width: 950/@bf;
+            // font-size: 14/@bf;
+            li {
+                float: left;
+                margin: 50/@bf auto 400/@bf;
+                width: 475/@bf;
+                text-align: center;
+            }
+        }
+    }
+}
+
+
+.ghost-live {
+    overflow: hidden;
+    .title {
+        width: 499/@bf;
+        height: 230/@bf;
+        margin: 50/@bf auto 0;
+        .sprite2;
+        background-position: -492/@bf -367/@bf;
+    }
+    ul {
+        margin-top: 80/@bf;
+        overflow: hidden;
+    }
+    .ghost-live-list {
+        width: 90%;
+        margin: 0 auto 80/@bf;
+        overflow: hidden;
+        .avatar_wrap {
+            float: left;
+            position: relative;
+            width: 464/@bf;
+            height: 373/@bf;
+            .bg('ghost-bg.png');
+            background-size: 464/@bf 373/@bf;
+            .avatar {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 256/@bf;
+                height: 256/@bf;
+            }
+        }
+        .live {
+            position: absolute;
+            top: 70/@bf;
+            right: 130/@bf;
+            width: 71/@bf;
+            height: 23/@bf;
+            transform: scale(1.6);
+            .sprite3;
+            background-position: -410/@bf -211/@bf;
+        }
+        .info {
+            float: left;
+            margin-left: 30/@bf;
+            .nickname {
+                font-size: 60/@bf;
+                width:400/@bf;
+                .ellipsis;
+                color: #fef722;
+                font-weight: bold;
+                margin-bottom: 20/@bf;
+            }
+            .content {
+                color: #fff;
+                font-size: 40/@bf;
+                width: 450/@bf;
+                overflow: hidden;
+            }
+            .bold {
+                font-weight: bold;
+            }
+            .time {
+                font-size: 40/@bf;
+                color: #fff;
+            }
+            .follow_btn {
+                width: 189/@bf;
+                height: 83/@bf;
+                margin-top: 20/@bf;
+                .sprite1;
+                background-position: -1/@bf -90/@bf;
+                &:active {
+                    background-position: -207/@bf -90/@bf; // background-position: -812/@bf -183/@bf;
+                }
+            }
+            .following {
+                width: 189/@bf;
+                height: 83/@bf;
+                margin-top: 20/@bf;
+                .sprite1;
+                background-position: -416/@bf -90/@bf; // background-position: -812/@bf -183/@bf;
+                &:active {
+                background-position: -416/@bf -90/@bf; // background-position: -812/@bf -183/@bf;
+                }
+            }
+        }
+    }
+    .bottom {
+        width: 960/@bf;
+        height: 242/@bf;
+        margin: 50/@bf auto 120/@bf;
+        .sprite2;
+        background-position: 0 -941/@bf;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@keyframes fadeIn {
+    30% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes move {
+    0% {
+        transform: translate3d(0, 0, 0)
+    }
+    25% {
+        transform: translate3d(0, -50%, 0)
+    }
+    50% {
+        transform: translate3d(0, 0, 0)
+    }
+    75% {
+        transform: translate3d(0, 50%, 0)
+    }
+    100% {
+        transform: translate3d(0, 0, 0)
+    }
+}

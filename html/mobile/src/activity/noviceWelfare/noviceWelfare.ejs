@@ -1,0 +1,74 @@
+<article v-show="isTimeShowPage" >
+    <div id="app" v-cloak>
+        <div class='top'>
+            <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/noviceWelfare/top1.jpg?v=0825')}" alt="">
+        </div>
+        <div class='mid'>
+            <div class="newinfo">
+                <div v-for='(item,index) in fish' class='clearfix'>
+                    <div class="item_num">{{index+1}}</div>
+                    <div class="item_info" v-html="item">{{item}}</div>
+                </div>
+            </div>
+            <div class="go clearfix">
+                <div class="one fl" v-on:click="purchase_one">
+                    <div class="go_top">
+                    </div>
+                    <div class="go_txt">
+                        <p><span class="yellow">20个</span>大宝剑</p>
+                        <span>&yen;1</span>
+                    </div>
+                    <div class="wrap">
+                        <div class="go_purchase">
+                        立即购买
+                    </div>
+                    </div>
+                </div>
+                <div class="ten fl" v-on:click="purchase_ten">
+                    <div class="go_top">
+                    </div>
+                    <div class="go_txt">
+                        <p><span class="yellow">99个</span>大宝剑</p>
+                        <span>&yen;9.9</span>
+                    </div>
+                    <div class="wrap">
+                        <div class="go_purchase red=ok" v>
+                        立即购买
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='infor'>
+            <div class="infor_bj">
+                <span class='text'>大宝剑说明</span>
+            </div>
+            <div v-for='(item,index) in info' class='clearfix'>
+                <div class="item_num">{{index+1}}</div>
+                <div class="item_info">{{item}}</div>
+            </div>
+            <div class="warning">
+                <p v-once>{{official}}</p>
+            </div>
+        </div>
+    </div>
+</article>
+
+<script>
+// 支付成功之后回调函数
+    function payResultCallback(code,errMsg){
+        if(code){
+            hasUnpayOrder = 0;
+            layer.closeAll();
+            vm.succussBuy();
+            vm.reportSucc();
+        }
+    }
+
+    var gjShareParam = JSON.stringify({
+        title: '炫酷大宝剑带你飞！',
+        content: '星光@你来领取大宝剑啦~',
+        link: location.href + '?packageId=2' ,
+        imgLink: '//static.guojiang.tv/mobile/v2/img/activity/noviceWelfare/share.jpg?v=0825'
+    });
+</script>

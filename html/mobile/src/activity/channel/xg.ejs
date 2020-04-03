@@ -1,0 +1,91 @@
+<main class="main_box" id="app" v-cloak>
+    <section class="part-1">
+    	   	<img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/channel/xg/1.jpg')}">
+    </section>
+	<section class="part-2">
+	    <div class="register-box">
+			<div class="input_wrap">
+				<label for="tel" class="w-190">手机号码</label>
+				<input type="tel" name="tel" id="tel" placeholder="请输入手您的手机号" 
+					v-model.trim="tel"
+					@input="restrictTel($event.target.value)"
+					@blur="verifyTel($event.target.value)"
+				>
+				<P class="err_hint">{{telErrMsg}}</P>
+			</div>
+			<div class="input_wrap">
+			    <label for="tel" class="w-190">验证码</label>
+				<input type="text" name="authCode" id="authCode" placeholder="请输入短信验证码"
+					v-model.trim="authCode"
+					@input="restrictAuthCode($event.target.value)"
+				>
+				<label @click="getAuthCode()" v-show="!getingVcode" class="getingVcode">获取验证码</label>
+				<label v-show="getingVcode" class="geting_vcode">请稍等{{ countDownNum }}秒</label>
+			</div>
+			<div class="input_wrap">
+				<label for="nickname" class="w-190">昵称</label>
+				<input type="text" name="nickname" id="nickname" placeholder="请输入昵称（2~10字符）"
+					v-model.trim="nickname"
+					@focus="restrictNickname($event.target.value)"
+					@blur="verifyNickname($event.target.value)"
+				>
+				<P class="err_hint">{{nickNameErrMsg}}</P>
+			</div>
+			<div class="input_wrap">
+				<label for="nickname" class="w-190">密码</label>
+				<input type="password" name="password" id="password" placeholder="请输入密码（6~22位字母或数字）"
+					v-model.trim="password"
+					@focus="restrictPassword($event.target.value)"
+					@blur="verifyPassword($event.target.value)"
+				>
+				<P class="err_hint">{{passwordErrMsg}}</P>
+			</div>
+			<div class="input_wrap sex_wrap clearfix">
+			    <label for="nickname" class="w-190">性别</label>
+	            <div class="sex_label">
+	                <input name="sex" type="radio" value="1" id="male" 
+	                v-model="sex"
+					@click="selectGender($event.target.value)"
+	                > 
+	                <label for="male"></label>
+	                <span>男</span>
+	            </div>
+	            <div class="sex_label">
+	                <input  name="sex" type="radio" value="2" id="female"
+	                v-model="sex"
+					@click="selectGender($event.target.value)"
+	                > 
+	                <label for="female"></label>
+	                <span>女</span>
+	            </div>
+	        </div>
+	        <div class="i-agreement">
+	        	<p><i class="agree-btn active"></i>我已阅读并允许<span>直播用户协议</span></p>
+	        </div>
+
+	        <div class="register-btn" @click="registerSubmit()">注册并领取流量</div>
+			
+	    </div>		
+	</section>
+
+    <section class="part-3">
+		<div class="title"></div>
+		<div class="content">
+			<p>1.活动时间：2017.09.27-2017.10.08；</p>
+			<p>2.在本页面注册，下载安装星光直播APP，用本页面注册账号登录，最高可得5G流量，所获流量均会在注册并成功登录APP后的24小时内发送到您的注册手机号中（移动用户需要在运营商官网查询流量到账情况）</p>
+			<p>3.活动期间，一台设备只能领取一次流量，一台设备多个账号领取视为无效。</p>
+			<p>4.本活动仅限安卓手机用户参与。</p>
+		</div>
+    </section>
+</main>
+
+<script type="text/javascript" src="//static.guojiang.tv/mobile/v2/js/lib/gt.js"></script>
+<script>
+	var gjShareParam = JSON.stringify({
+        title: '喜迎国庆最高领取5G流量',
+        content: '喜迎国庆最高领取5G流量',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/channel/xg/share.jpg")}'
+    });
+</script>
+

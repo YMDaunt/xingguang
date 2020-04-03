@@ -1,0 +1,15 @@
+{
+  "name": "xingguang",
+  "version": "1.0.0",
+  "description": "source code of xingguang",
+  "main": "index.js",
+  "scripts": {
+    "ci": "node ../node_modules/cz-customizable/standalone.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.guojiang.tv:frontend/source/xingguang.git"
+  },
+  "author": "Jesse",
+  "license": "ISC"
+}

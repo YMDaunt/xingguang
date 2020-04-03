@@ -1,0 +1,49 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../../static_guojiang_tv/src/mobile/v2/img/activity/statement/statement" */ -->
+
+    <div class="xg-container banner"></div>
+
+    <div class="xg-container rules">
+        <div class="xg-content">
+            <p class="phrase main-t">尊敬的用户，您好！</p>
+            <div class="section">
+                <p class="phrase">根据国家网络文明公约规定及星光直播文明公约相关规定，</p>
+                <p class="phrase txt-bold">第二项-11条、12条、18条规定：</p>
+                <p class="phrase">• 严禁冒犯性、侮辱性、歧视性的语言和行为；</p>
+                <p class="phrase">• 严禁进行各类广告宣传，恶意发布广告的行为，严禁在平台招收主播等损害官方利益行为；</p>
+                <p class="phrase">• 本平台的视频聊天，直播内容适用于文明公约中所有条款；</p>
+            </div>
+            <div class="section">
+                <p class="phrase txt-bold">第三项-不准原则4条、6条、7条规定：</p>
+                <p class="phrase">• 煽动民族仇恨、民族歧视、破坏民族团结的；</p>
+                <p class="phrase">• 散布谣言，扰乱社会秩序，破坏社会稳定的；</p>
+                <p class="phrase">• 散播淫秽、色情、赌博、暴力、恐怖或者教唆犯罪的；</p>
+            </div>
+            <div class="section">
+                <p class="phrase txt-bold">第三项-底线2条、5条规定：</p>
+                <p class="phrase">• 社会主播制度底线</p>
+                <p class="phrase">• 社会公共秩序底线</p>
+            </div>
+            <div class="section sec-martop">
+                <p class="phrase">平台用户及主播必须遵守相对应规则。</p>
+                <p class="phrase">平台声明：不干涉用户之间的正常社交，不破坏平台正常的社交环境与体系，但坚决维护平台公约规定。若发现有违规主播/用户，影响平台的正常生态环境，平台有权依据其情节轻重予以1天、7天、30天、1年禁言或立即下线、禁播1天、7天、30天、永久封号处理，情节严重者将追究法律责任。</p>
+                <p class="phrase">本声明自上线起即生效，平台巡管客服24小时为您服务，地球不爆炸，我们不休假。</p>
+            </div>
+            <p class="main-author phrase txt-right sec-martop">星光直播-运营部</p>
+        </div>
+    </div>
+
+    <div class="xg-container footer">
+        <div class="xg-btn btn-go" @click="goPage">点击跳转至文明公约</div>
+    </div>
+    <!-- 上线日期2018/10/18 -->
+</div>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '星光直播声明',
+    content: '平台不干涉用户之间的正常社交，不破坏平台正常的社交环境与体系，但坚决维护平台公约规定。',
+    link: location.href,
+    imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/statement/statement/share.jpg")}' // eslint-disable-line
+})
+</script>

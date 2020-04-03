@@ -1,0 +1,42 @@
+// ../../img/activity/childrensDay19
+
+@activityName: 'activity/childrensDay19';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+@imgUrl: '../../img/activity/childrensDay19';
+
+@import './childrensDay19.mixin.less';
+
+/* 定义普通样式 S */
+/* 背景图 */
+.page-bgs {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+
+    .page-bg {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 369/@bf;
+        background-image: url('@{imgUrl}/bg0.jpg');
+    }
+
+    .bg2 {
+        height: 464/@bf;
+        background-image: url('@{imgUrl}/bg1.jpg');
+    }
+
+    .bg3 {
+        height: 7104/@bf;
+        background-image: url('@{imgUrl}/bg2.jpg');
+    }
+}
+
+.pc-tips {
+    display: none;
+}

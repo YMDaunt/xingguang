@@ -1,0 +1,70 @@
+<!-- 年度盛典 12.5 - 12.21 -->
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../../static_guojiang_tv/src/mobile/v2/img/activity/ceremony2018/" */ -->
+    <div class="page-bgs">
+        <!-- bgs -->
+        <div class="page-bg bg1"></div>
+    </div>
+
+    <div class="page-content">
+        <!-- 赛程进度 -->
+        <timeline :stage="page.stage" :curr-stage="page.currStage"></timeline>
+
+        <!-- 主视图 -->
+        <keep-alive>
+            <router-view name="mviewer" :global="page"></router-view>
+        </keep-alive>
+    </div>
+
+    <!-- floater视图 -->
+    <router-view name="floater"></router-view>
+
+    <!-- 弹窗视图 -->
+    <router-view name="layer"></router-view>
+
+    <!-- TOAST -->
+    <div class="toast-box" v-show="ui.toast">
+        <div class="info">{{ ui.toastMsg }}</div>
+    </div>
+
+    <!-- TOAST Modal -->
+    <div class="toast-box" v-show="ui.modal" @click="closeModal">
+        <template v-if="typeof ui.modalMsg === 'string'">
+            <div class="info">{{ ui.modalMsg }}</div>
+        </template>
+        <template v-else><!-- 数组 -->
+            <div class="info">
+                <p class="txt" v-for="msg in ui.modalMsg">{{ msg }}</p>
+            </div>
+        </template>
+    </div>
+
+    <!-- svg layer -->
+    <div class="svg-layer" v-show="ui.svgLayer" @click="stopSvg">
+        <div class="svg-container"></div>
+    </div>
+</div>
+
+<script>
+(function adaptation () {
+    let href = window.location
+    if (/Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone|SymbianOS/i.test(navigator.userAgent)) {
+        if (href.host.indexOf('www') >= 0) {
+            window.location.href = '//m.tuho.tv/dist' + href.pathname
+        }
+    } else {
+        if (href.host.indexOf('www') < 0) {
+            window.location.href = '//www.tuho.tv' + href.pathname.replace('/dist', '')
+        }
+    }
+}())
+</script>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '2018星光年度盛典',
+    content: '2018星光年度盛典',
+    link: location.href,
+    imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/ceremony2018/preState/share.jpg")}' // eslint-disable-line
+})
+</script>

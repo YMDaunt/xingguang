@@ -1,0 +1,36 @@
+<main class='main-box' id='app' v-cloak>
+	<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/redPacket/invite_01.png')}" class="fadeIn animated">	
+	<section class="content">
+	<div class="success-box">
+			<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/redPacket/invite_03.png')}" class="fadeIn animated">	
+			<div class="success-content">
+				<div class="invite-1">
+					<h2>领取成功</h2>
+					<p>红包已存入你的账户中</p>
+					<div class="btn-wrap">
+					    <span class="invite-code" @click="setCnzzOfCopyCode">邀请码 ：<span>{{code}}</span></span>
+					</div>
+					<div class="tips">
+					tips：1.长按邀请码复制<br/>
+					2.请到app-直播间-领取红包-邀请朋友页面填写邀请码哦，填写完即可获得现金红包~
+					<br/>邀请码有效期为7天，请尽快使用~
+					</div>
+				</div>
+				
+				<div class="invite-2">
+					<a v-bind:href='downUrl' class="load-btn" @click="setCnzzOfDownLoad"></a>
+					<p>app里还有更多现金红包等你领取哦</p>
+				</div>
+
+			</div>
+		</div>
+	</section>
+</main>
+<script>
+	var gjShareParam = JSON.stringify({
+            title: '快来和我一起领现金红包',
+            content: "这个直播APP真奇葩，边看还能边领钱。没见过吧，快来玩玩看~",
+            link:window.location.href,
+            imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/redPacket/share.jpg")}'
+        }); 
+</script>

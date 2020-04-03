@@ -1,0 +1,274 @@
+@activityName: 'jinchenchen';
+@bf: 108rem;
+
+
+//水平居中对齐
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+//多余的字符用省略号显示
+.ellipsis() {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+//头像是正方形100%填满
+.avatar {
+    width: 100%;
+    height: 100%;
+}
+
+//滚动更流畅
+body {
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+}
+
+@keyframes show {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
+}
+
+.bgm(@imgName) {
+    background-image: url('../../../img/activity/queen/@{activityName}/@{imgName}');
+}
+
+.sprite1 {
+    background-image: url('../../../img/activity/queen/@{activityName}/css_sprites1.png');
+    background-repeat: no-repeat;
+    background-size: 814/@bf 618/@bf;
+}
+
+
+/***************common end************/
+
+#app {
+    height: 6902/@bf;
+    background: url('../../../img/activity/queen/jinchenchen/bg1.jpg') no-repeat center 0 scroll,
+    url('../../../img/activity/queen/jinchenchen/bg2.jpg') no-repeat center 889/@bf scroll,
+    url('../../../img/activity/queen/jinchenchen/bg3.jpg') no-repeat center 2395/@bf scroll,
+    url('../../../img/activity/queen/jinchenchen/bg4.jpg') no-repeat center 3909/@bf scroll,
+    url('../../../img/activity/queen/jinchenchen/bg5.jpg') no-repeat center 5400/@bf scroll;
+    background-size: 1080/@bf 889/@bf, 1080/@bf 1508/@bf, 1080/@bf 1516/@bf, 1080/@bf 1491/@bf, 1080/@bf 1504/@bf;
+    background-color: #FFF;
+    overflow: hidden;
+    animation: show 1s;
+}
+
+.activity-gift {
+    width: 800/@bf;
+    margin: 900/@bf auto 0;
+    text-align: center;
+    .gift-img {
+        width: 384/@bf;
+        height: 392/@bf;
+        .sprite1;
+        margin: 0 auto 20/@bf;
+        background-position: -10/@bf -10/@bf;
+    }
+    .price {
+        font-size: 40/@bf;
+        color: #ff4a68;
+    }
+    .gift-num {
+        font-size: 36/@bf;
+        color: #f37878;
+    }
+    .inlive-btn {
+        width: 284/@bf;
+        height: 92/@bf;
+        margin: 20/@bf auto;
+        .sprite1;
+        background-position: -414/@bf -10/@bf;
+        &:active {
+            background-position: -414/@bf -122/@bf;
+        }
+    }
+}
+
+.svgContainerWrap,
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9;
+}
+
+#svgContainer {
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 10;
+    .svgPng{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width:300px;
+        transform: translate(-50%, -50%);
+        animation: show 1s;
+    }
+}
+
+.purchase-wrap {
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    width: 759/@bf;
+    height: 510/@bf;
+    border: 4/@bf solid #ff3769;
+    border-radius: 10/@bf;
+    background-color: #fff;
+    overflow: hidden;
+    z-index: 10;
+    .close {
+        position: absolute;
+        right: 20/@bf;
+        top: 20/@bf;
+        width: 87/@bf;
+        height: 87/@bf;
+        .sprite1;
+        background-position: -718/@bf -10/@bf;
+        &:active {
+            background-position: -718/@bf -116/@bf;
+        }
+    }
+    .title {
+        text-align: center;
+        font-size: 36/@bf;
+        color: #fe1f4d;
+        margin: 80/@bf auto 20/@bf;
+    }
+    .input {
+        position: relative;
+        width: 500/@bf;
+        margin: 0 auto;
+        input {
+            display: block;
+            width: 400/@bf;
+            height: 86/@bf;
+            margin: 0 auto;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #ff77a4;
+        }
+        span {
+            position: absolute;
+            top: 0;
+            width: 100/@bf;
+            height: 86/@bf;
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            line-height: 86/@bf;
+            border-radius: 5px;
+            background-color: #ff0054;
+            &:active {
+                background-color: #d50322;
+            }
+        }
+        .subtraction {
+            left: 0;
+        }
+        .addition {
+            right: 0;
+        }
+    }
+    .totalPrice{
+        text-align: center;
+        font-size: 36/@bf;
+        color: #ff95b4;
+        margin:40/@bf auto;
+    }
+    .submitOrder {
+        display: block;
+        margin:0 auto;
+        width: 223/@bf;
+        height: 92/@bf;
+        .sprite1;
+            background-position: -10/@bf -422/@bf;
+        &:active {
+            background-position: -414/@bf -234/@bf;
+        }
+    }
+}
+
+.gift-list {
+    width: 852/@bf;
+    height:4050/@bf;
+    margin: 250/@bf auto 0;
+    overflow: hidden;
+    li {
+        float: left;
+        width: 50%;
+        height: 680/@bf;
+        text-align: center;
+    }
+    .gift-img {
+        width: 400/@bf;
+        height: 400/@bf;
+        margin: 0 auto;
+    }
+
+    .gift-name {
+        font-size: 40/@bf;
+        color: #ff4a68;
+        font-weight: bold;
+    }
+    .gift-price {
+        font-size: 36/@bf;
+        color: #f37878;
+    }
+    .preview-btn {
+        float: left;
+        width: 168/@bf;
+        height: 74/@bf;
+        margin: 20/@bf 0 20/@bf 30/@bf;
+        .sprite1;
+        background-position: -10/@bf -534/@bf;
+        &:active {
+            background-position: -197/@bf -534/@bf;
+        }
+    }
+    .purchase-btn {
+        float: right;
+        width: 167/@bf;
+        height: 74/@bf;
+        .sprite1;
+        margin: 20/@bf 30/@bf 20/@bf 0;
+        background-position: -253/@bf -422/@bf;
+        &:active {
+            background-position: -441/@bf -422/@bf;
+        }
+    }
+}
+
+.rules {
+    width: 995/@bf;
+    margin: 250/@bf auto;
+    overflow: hidden;
+    li {
+        font-size: 36/@bf;
+        color: #ff4a68;
+        line-height: 50/@bf;
+        margin: 20/@bf auto;
+    }
+}

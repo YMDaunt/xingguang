@@ -1,0 +1,41 @@
+<article>
+<div class="level_wrap u_level">
+    <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/family/level_header.png')}" class="bg_logo">
+
+    <span class="level_icon_img" v-cloak>Lv.{{level}}</span>
+
+    <P class="level_hint">距离升级还差<span v-cloak>{{gapScore}}</span>活跃值</P>
+    <p class="process" v-cloak>
+        <i class="pro_left_level">Lv.{{level}}</i>
+        <span :style="getProcessWidth()"></span>
+        <i class="pro_right_level">Lv.{{nextLevel}}</i>
+    </p>
+</div>
+
+<section class="level_desc_wrap">
+    <h2></h2>
+
+    <p class="level_desc">1.家族等级越高，家族成员上限越高</p>
+    <p class="level_desc">2.家族等级越高，家族专属礼物越丰富</p>
+    <p class="level_desc">3.家族等级越高，家族徽章越炫酷豪华</p>
+
+    <table>
+        <tr>
+            <th>家族<br>等级</th>
+            <th>成员上<br>线人数</th>
+            <th>家族<br>徽章</th>
+            <th>家族<br>礼物</th>
+            <th>副会长<br>个数</th>
+        </tr>
+
+        <tr class="u_level_tr" v-for="(item, key) in familyLevelDetail" v-cloak>
+            <td>{{key+1}}</td>
+            <td>{{item.members}}</td>
+            <td><span class="family_medals_icon" :class="fMedalIcon(item.medalLevel)"></span></td>
+            <td>{{item.giftName[familyType-1]}}</td>
+            <td>{{item.leaderNum}}</td>
+        </tr>
+        
+    </table>
+</section>
+</article>

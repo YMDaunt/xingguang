@@ -1,0 +1,50 @@
+<main class="main_box" id="app" v-cloak>
+    <section><img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/chenchen/1.jpg')}"></section>
+    <section><img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/chenchen/2.jpg')}"></section>
+    <section>
+        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/chenchen/3.jpg')}">
+        <span class="go_room_btn" @click="goRoom()"></span>
+    </section>
+    <section>
+        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/chenchen/4.jpg')}">
+    </section>
+    <section>
+        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/chenchen/5.jpg')}">
+    </section>
+    <section>
+        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/chenchen/6.jpg')}">
+
+        <table class="table_header">
+            <tr>
+                <th>名次</th>
+                <th>用户昵称</th>
+                <th>贡献值</th>
+            </tr>
+        </table>
+        <div class="table_content">            
+            <table class="innerbox">
+                <tr v-for="(list, index) in rankList">
+                    <td>{{index+1}}</td>
+                    <td class="ellipsis nick">{{list['nickname']}}</td>
+                    <td>{{list['num']}}</td>
+                </tr>
+            </table>         
+        </div>
+    </section>
+    <section>
+        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/chenchen/7.jpg')}">
+        <img src="${require('../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/chenchen/8.jpg')}">
+    </section>
+    <div class="copyright_box">
+        本活动最终解释权归人气直播所有
+    </div>
+</main>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '头顶桂冠，尽显女王风范',
+        content: '权杖已在女王手中，速来跪舔！',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/chenchen/share.jpg")}'
+    });
+</script>

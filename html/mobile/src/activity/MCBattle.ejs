@@ -1,0 +1,35 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/mobile/v2/img/activity/MCBattle" */ -->
+    <div class="page-bgs">
+        <!-- bgs -->
+        <div class="page-bg bg1"></div>
+        <div class="page-bg bg2"></div>
+        <div class="page-bg bg3"></div>
+    </div>
+
+    <%= content %>
+</div>
+
+<script>
+(function adaptation () {
+    var href = window.location
+    if (/Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone|SymbianOS/i.test(navigator.userAgent)) {
+        if (href.host.indexOf('www') >= 0) {
+            window.location.href = '//m.tuho.tv/dist' + href.pathname
+        }
+    } else {
+        if (href.host.indexOf('www') < 0) {
+            window.location.href = '//www.tuho.tv' + href.pathname.replace('/dist', '')
+        }
+    }
+}())
+</script>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '来聊天！赢取百万克拉大礼！',
+    content: '来聊天就有上万克拉大礼相送！全新陌生人社交交友模式，帮你更快找到志同道合的人，帮你拉近距离，让聊天变得更有趣！',
+    link: location.href,
+    imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/MCBattle/share.jpg")}' // eslint-disable-line
+})
+</script>

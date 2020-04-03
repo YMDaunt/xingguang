@@ -1,0 +1,638 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="wrap">
+        <!-- 充值 -->
+        <!-- <div class="recharge">
+            <h2></h2>
+            <div class="btn-cz" @click="goCz()"></div>
+            <div class="recharge-con">
+                <div class="btn-desc" @click="flBox = true"></div>
+            </div>
+        </div> -->
+
+        <!-- 热门对战 -->
+        <section v-if="hotPkArr.length == 0 && activityStatus != 2" class="hot-none"></section>
+        <section v-else-if="activityStatus == 2" class="hot-past"></section>
+        <section v-else class="hot-f">
+            <div class="hot-con">
+                <ul>
+                    <li>
+                        <img :src="hotPkArr.fromHeadPic" v-bind:data-rid="hotPkArr.fromMid" @click="inlive($event)" alt="" />
+                        <div class="hot-mes">
+                            <span>{{hotPkArr.fromNick}}</span>
+                            <b :class="'level_icon m_level_icon_' + hotPkArr.fromLevel"></b>
+                        </div>
+                    </li>
+                    <li>
+                        <img :src="hotPkArr.toHeadPic" v-bind:data-rid="hotPkArr.toMid" @click="inlive($event)" alt="" />
+                        <div class="hot-mes">
+                            <span>{{hotPkArr.toNick}}</span>
+                            <b :class="'level_icon m_level_icon_' + hotPkArr.toLevel"></b>
+                        </div>
+                    </li>
+                </ul>
+                <div class="hot-line">
+                    <span class="l-num">{{hotPkArr.fromScore}}</span>
+                    <span class="r-num">{{hotPkArr.toScore}}</span>
+                    <div class="y-line" :style="{width: (hotPkArr.fromScore * 100 / (Number(hotPkArr.fromScore) + Number(hotPkArr.toScore)) ) + '%'}"></div>
+                    <div class="b-line" :style="{width: (hotPkArr.toScore * 100 / (Number(hotPkArr.fromScore) + Number(hotPkArr.toScore)) ) + '%'}"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 荣耀而战 -->
+        <section class="honer">
+            <h2 class="big-c-tit"></h2>
+            
+            <!-- 播报 -->
+            <div class="mes-scroll">
+                <div class="scroll-con">
+                    <div id="scrollEle">
+                        <span v-for="(item, index) in broadArr">{{item}}</span>
+                    </div>
+                    <div id="scrollEle2"></div>
+                </div>
+            </div>
+
+            <div class="mych-btn" @click="ch()"></div>
+        </section>
+
+        <!-- 称号列表 -->
+        <section class="ch-list">
+            <div class="common-out">
+                <div class="ch-out">
+                    <div class="ch-con">
+                        <b></b>
+                    </div>
+                    <div class="xl-btn">
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 奖励列表 -->
+        <section class="reward-list">
+            <div>
+                <div class="pksvg1" @click="doPkSvg()"></div>
+                <div class="pksvg2" @click="doLbSvg()"></div>
+            </div>
+        </section>
+
+
+        <!-- 排行榜 -->
+        <section class="rank">
+            <div class="big-c-tit"></div>
+
+            <!-- 二级tab -->
+            <div class="tab-tit">
+                <div :class="{'choose': tabCon}" @click="tab('choose')"></div>
+                <div :class="{'choose': !tabCon}" @click="tab('')"></div>
+            </div>
+            <div class="tab-con">
+                <div class="mod-rank" v-show="tabCon">
+                    <div class="sec-tit">
+                        <div :class="{'sec-choose': secTab[0]}" data-index="0" @click="secTabShow($event)">
+                            总榜
+                            <b data-index="0"></b>
+                        </div>
+                        <div :class="{'sec-choose': secTab[1]}" data-index="1" @click="secTabShow($event)">
+                            王者
+                            <b data-index="1"></b>
+                        </div>
+                        <div :class="{'sec-choose': secTab[2]}" data-index="2" @click="secTabShow($event)">
+                            钻石
+                            <b data-index="2"></b>
+                        </div>
+                        <div :class="{'sec-choose': secTab[3]}" data-index="3" @click="secTabShow($event)">
+                            精英
+                            <b data-index="3"></b>
+                        </div>
+                        <div :class="{'sec-choose': secTab[4]}" data-index="4" @click="secTabShow($event)">
+                            新星
+                            <b data-index="4"></b>
+                        </div>
+                    </div>
+
+                    <div class="top-three">
+                        <p class="no-rank-tips" v-show="modArr.length == 0">支持TA就给TA上分，一起赢！</p>
+                        <div class="step">
+                            <div v-for="(item, index) in modArr" v-if="index < 3">
+                                <div class="cover-pic" v-bind:data-rid="item.id"  @click="inlive($event)"></div>
+                                <a v-if="item.isPlaying" v-bind:data-rid="item.id"  @click="inlive($event)"></a>
+                                <div class="dw">
+                                    <i :class="item.scoreLevel"></i>
+                                </div>
+                                <div class="mes">
+                                    <h3>{{item.nickname}}</h3>
+                                    <strong @click="showGift($event)" v-bind:data-mid="item.id" >总积分:{{item.score}}</strong>
+                                    <strong class="no-line">目前连胜：<span>{{item.comboWinTimes}}</span></strong>
+                                    <div v-if="!item.isLoved" v-bind:data-id="item.id" class="care" @click="attention($event,index)"></div>
+                                    <div v-else class="cared"></div>
+                                </div>
+                            </div>
+                            <ul>
+                                <li v-for="(item, index) in modArr" v-if="index < 3">
+                                    <div class="img-area">
+                                        <img :src="item.headPic" alt="" />
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="sm-tit">
+                        <span>排名</span>
+                        <span>主播</span>
+                        <span>段位</span>
+                        <span>积分</span>
+                    </div>
+
+                    <!-- mod 4+ -->
+                    <div class="top-other">
+                        <div class="rank-out other-mod">
+                            <ul>
+                                <li  v-for="(item, index) in modArr" v-if="index >= 3">
+                                    <div class="number">{{index+1}}</div>
+                                    <div class="rank-img">
+                                        <img :src="item.headPic" alt="" v-bind:data-rid="item.id"  @click="inlive($event)"/>
+                                        <b v-if="item.isPlaying" v-bind:data-rid="item.id"  @click="inlive($event)"></b>
+                                    </div>
+                                    <div class="rank-name">
+                                        <strong>{{item.nickname}}</strong>
+                                        <span>目前连胜：<b>{{item.comboWinTimes}}</b></span>
+                                    </div>
+                                    <div class="dw">
+                                        <b :class="item.scoreLevel"></b>
+                                    </div>
+                                    <div class="rank-mark" @click="showGift($event)" v-bind:data-mid="item.id">{{item.score}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="rank-tips" v-if="secTab[0] || secTab[4]">当前只展示前100名主播</div>
+                    <div class="rank-tips" v-else> </div>
+                    <!-- 我的主播排名 -->
+                    <div class="mines mine-mod" v-if="uid != false && myModArr">
+                        <div v-if="myModArr.rank" class="my-rank">{{myModArr.rank}}</div>
+                        <div v-else class="my-rank">未上榜</div>
+                        <div class="my-img">
+                            <img v-if="myModArr.rid == null" :src="myModArr.headPic" alt="" />
+                            <img v-else :src="myModArr.headPic" v-bind:data-rid="myModArr.uid" @click="inlive($event)" alt="" />
+                            <b v-if="myModArr.isPlaying"></b>
+                            <strong>{{myModArr.nickName}}</strong>
+                            <div class="dw">
+                                <i :class="myModArr.scoreLevel"></i>
+                            </div>
+                        </div>
+                        <div class="my-mes" v-if="myModArr.pairInfos != undefined">
+                            <strong>{{myModArr.pairInfos[0].name}}
+                                <br /><i>{{myModArr.pairInfos[0].value}}</i>
+                            </strong>
+                            <strong>{{myModArr.pairInfos[1].name}}
+                                <br /><em  @click="showGift($event)" v-bind:data-mid="myModArr.uid">{{myModArr.pairInfos[1].value}}</em>
+                            </strong>
+                        </div>
+                        <div class="my-mes" v-if="myModArr.pairInfos != undefined">
+                            <strong>{{myModArr.pairInfos[2].name}}<br />{{myModArr.pairInfos[2].value}}</strong>
+                            <strong>{{myModArr.pairInfos[3].name}}<br />{{myModArr.pairInfos[3].value}}</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user-rank" v-show="!tabCon">
+                    <div class="top-three">
+                        <p class="no-rank-tips" v-show="userArr.length == 0">支持TA就给TA上分，一起赢！</p>
+                        <div class="step">
+                            <div v-for="(item, index) in userArr" v-if="index < 3">
+                                <div class="cover-pic" v-bind:data-rid="item.rid"></div>
+                                <div class="mes">
+                                    <h3>{{item.nickname}}</h3>
+                                    <strong v-bind:data-mid="item.id" >贡献值:{{item.score}}</strong>
+                                </div>
+                            </div>
+                            <ul>
+                                <li v-for="(item, index) in userArr" v-if="index < 3">
+                                    <div class="img-area">
+                                        <img :src="item.headPic" alt="" />
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="sm-tit">
+                        <span>排名</span>
+                        <span>用户</span>
+                        <span></span>
+                        <span>贡献值</span>
+                    </div>
+
+                    <!-- mod 4+ -->
+                    <div class="top-other">
+                        <div class="rank-out other-user">
+                            <ul>
+                                <li  v-for="(item, index) in userArr" v-if="index >= 3">
+                                    <div class="number">{{index+1}}</div>
+                                    <div class="rank-img">
+                                        <img :src="item.headPic" alt="" />
+                                    </div>
+                                    <div class="rank-name">
+                                        <strong>{{item.nickname}}</strong>
+                                    </div>
+                                    <div class="dw"></div>
+                                    <div class="rank-mark">{{item.score}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="rank-tips">当前只展示前100名用户</div>
+                    <!-- 我的用户排名 -->
+                    <div class="mines mine-user" v-show="uid != false">
+                        <div class="my-img">
+                            <img :src="myUserArr.headPic" alt="" />
+                            <strong>{{myUserArr.nickName}}</strong>
+                        </div>
+                        <div class="my-mes">
+                            <strong v-if="myUserArr.pairInfos != undefined">{{myUserArr.pairInfos[0].name}}<br />{{myUserArr.pairInfos[0].value}}</strong>
+                            <strong v-if="myUserArr.pairInfos != undefined">{{myUserArr.pairInfos[1].name}}<br /><em>{{myUserArr.pairInfos[1].value}}</em></strong>
+                        </div>
+                        <div class="my-mes">
+                            <strong v-if="myUserArr.pairInfos != undefined">{{myUserArr.pairInfos[2].name}}<br />{{myUserArr.pairInfos[2].value}}</strong>
+                            <strong v-if="myUserArr.pairInfos != undefined">{{myUserArr.pairInfos[3].name}}<br />{{myUserArr.pairInfos[3].value}}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="copyright">本次活动最终解释权归平台运营团队所有</div>
+        <!-- 规则按钮 -->
+        <div class="rule-btn" @click="ruleShow"></div>
+
+        
+        <!-- 弹窗 -->
+        <div class="posi rulebox" v-show="ruleBox">
+            <div class="com-box">
+                <div class="close" @click="ruleBox = !ruleBox"></div>
+                <h2 class="common-tit"></h2>
+                <div class="rule-con">
+                    <div class="rule-out">
+                        <ul>
+                            <li class="clearfix">
+                                <span>1</span>
+                                <strong>活动时间：2月25日 11:00:00-2月29日 23:59:59</strong>
+                            </li>
+                            <li class="clearfix">
+                                <span>2</span>
+                                <strong>参与方式：</strong>
+                                <strong>团战PK和普通PK都可参与</strong>
+                            </li>
+                            <!-- <li class="clearfix">
+                                <div class="entry"></div>
+                            </li> -->
+                            <li class="clearfix">
+                                <span>3</span>
+                                <strong>积分规则</strong>
+                                <br />
+                                <strong>1) PK积分算法如下：</strong>
+                            </li>
+                            <li class="clearfix">
+                                <div class="tb1">
+                                    <ul>
+                                        <li>
+                                            <span>段位</span>
+                                            <span>积分</span>
+                                        </li>
+                                        <li>
+                                            <span>同段位PK</span>
+                                            <span>胜+30，负-10</span>
+                                        </li>
+                                        <li>
+                                            <span>相差1-3个段位</span>
+                                            <span>
+                                                <i>高段位方：胜+20，负-12</i>
+                                                <i>低段位方：胜+40，负-8</i>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span>相差4-6个段位</span>
+                                            <span>
+                                                <i>高段位方：胜+10，负-15</i>
+                                                <i>低段位方：胜+60，负-6</i>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span>相差7-9个段位</span>
+                                            <span>
+                                                <i>高段位方：胜+5，负-30</i>
+                                                <i>低段位方：胜+90，负-4</i>
+                                            </span>
+                                        </li>
+                                        <li>注：若出现平局，双方均-5积分</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <strong>2）额外奖励积分算法如下：</strong>
+                                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;连胜/终结连胜，额外奖励积分：</strong>
+                            </li>
+                            <li class="clearfix">
+                                <div class="tb1 tb2">
+                                    <ul>
+                                        <li>
+                                            <span>连胜</span>
+                                            <span>连胜额外积分</span>
+                                            <span>终结连胜场次</span>
+                                            <span>终结连胜积分</span>
+                                        </li>
+                                        <li>
+                                            <span>5</span>
+                                            <span>10</span>
+                                            <span>5</span>
+                                            <span>10</span>
+                                        </li>
+                                        <li>
+                                            <span>10</span>
+                                            <span>20</span>
+                                            <span>6-10</span>
+                                            <span>20</span>
+                                        </li>
+                                        <li>
+                                            <span>20</span>
+                                            <span>30</span>
+                                            <span>11-20</span>
+                                            <span>30</span>
+                                        </li>
+                                        <li>
+                                            <span>30</span>
+                                            <span>60</span>
+                                            <span>21-30</span>
+                                            <span>60</span>
+                                        </li>
+                                        <li>
+                                            注：达到30连胜之后再重新累计连胜场次
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PK克拉和场次达到指定额度，额外奖励积分：</strong>
+                            </li>
+                            <li class="clearfix">
+                                <div class="tb1">
+                                    <ul>
+                                        <li>
+                                            <span>奖励情况</span>
+                                            <span>额外积分</span>
+                                        </li>
+                                        <li>
+                                            <span>单场PK克拉值每达10000</span>
+                                            <span>30</span>
+                                        </li>
+                                        <li>
+                                            <span>每日PK每累计达3场</span>
+                                            <span>10 (每日上限80积分)</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <span>4</span>
+                                <strong>段位介绍</strong>
+                                <strong>1) 段位标准</strong>
+                                <b class="dw-pic"></b>
+                                <strong>2）段位规则</strong>
+                                <strong class="long-s">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 每次段位晋级将会触发房间飘屏，精英II及以上段位晋级将触发全站飘屏+祝贺红包！</strong>
+                                <strong class="long-s">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 注：精英II及以上段位主播奖励只可获得一次，若段位下降后再次回到该等级，则无法再次获得段位升级全站飘屏+祝贺红包奖励。</strong>
+                            </li>
+                            <li class="clearfix">
+                                <span>5</span>
+                                <strong>
+                                    PK达到指定成就时，即可获得相应称号，详情见活动页面
+                                </strong>
+                                <strong class="long-s">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主播获得称号时，会立即在本直播间飘屏通知，用户获得称号时，会立即在其所在直播间飘屏通知，并出现祝贺特效</strong>
+                                <strong class="long-s">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;集齐指定数量的的称号，即可获得对应奖励！</strong>
+                            </li>
+                            <li class="clearfix">
+                                <span>6</span>
+                                <strong>
+                                    注意事项：
+                                </strong>
+                                <strong class="long-s">1）双方PK分值总和≥5000，本场PK记为有效PK，否则双方都无成绩；PK双方任意一方手动结束PK或者异常中断，双方都无成绩但在集称号中有效；这两种情况中，用户若有贡献值，会计入PK守护榜以及在集称号中有效；</strong>
+                                <strong class="long-s">2）PK积分为0时，PK失败不扣积分；不足扣分数，则扣减至0；</strong>
+                                <strong class="long-s">3）榜单若有相同成绩，按照先到先得排序；</strong>
+                                <strong class="long-s">4）若发现有恶意刷分情况，平台有权利取消其活动成绩。</strong>
+                            </li>
+                            <li class="clearfix">
+                                <span>7</span>
+                                <strong>活动奖励</strong>
+                            </li>
+                            <li class="clearfix">
+                                <div class="tb1 tb3">
+                                    <ul>
+                                        <li>
+                                            <span>名次</span>
+                                            <span>PK主播榜</span>
+                                            <span>PK守护榜</span>
+                                        </li>
+                                        <li>
+                                            <span>第一名</span>
+                                            <span>
+                                                <i>8W克拉、开播飘屏7条、</i>
+                                                <!-- <i>PK之王勋章（7日）    </i> -->
+                                                <b><em class="k-icon"></em><i>7日</i></b>
+                                            </span>
+                                            <span>
+                                                <i class="one-i">8W克拉</i>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span>第二名</span>
+                                            <span>
+                                                <i>6W克拉、开播飘屏5条、</i>
+                                                <!-- <i>PK亚军勋章（7日）    </i> -->
+                                                <b><em class="g-icon"></em><i>7日</i></b>
+                                            </span>
+                                            <span>
+                                                <i class="one-i">6W克拉</i>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span>第三名</span>
+                                            <span>
+                                                <i>4W克拉、开播飘屏4条、</i>
+                                                <!-- <i>PK季军勋章（7日）    </i> -->
+                                                <b><em class="y-icon"></em><i>7日</i></b>
+                                            </span>
+                                            <span>
+                                                <i class="one-i">4W克拉</i>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span>第四、五名</span>
+                                            <span>
+                                                <i>3W克拉、开播飘屏3条、</i>
+                                                <!-- <i>PK之星勋章（7日）    </i> -->
+                                                <b><em class="j-icon"></em><i>7日</i></b>
+                                            </span>
+                                            <span>
+                                                <i class="one-i">3W克拉</i>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <span>8</span>
+                                <strong>
+                                    奖励发放说明：
+                                </strong>
+                                <strong class="long-s">1）勋章奖励在活动结束后即时下发；</strong>
+                                <strong class="long-s">2）开播飘屏奖励会在活动结束的次日零点起，每日获奖主播首次开播下发，每日下发一次；</strong>
+                                <strong class="long-s">3）克拉奖励在活动结束后的5个工作日内发放。</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>    
+        </div>
+        
+        <!-- 称号统计 -->
+        <div class="posi chenghao" v-show="chBox">
+            <div class="com-box">
+                <div class="close" @click="chBox = !chBox"></div>
+                <h2 class="common-tit"></h2>
+                <div class="ch-con">
+                    <div class="ch-tit" v-show="myModTitle">
+                        <div :class="{'choose-tit': tabCh}" @click="tabTitle('choose-tit')"></div>
+                        <div :class="{'choose-tit': !tabCh}" @click="tabTitle('')"></div>
+                    </div>
+                    <p>*点击称号图，可查看获取详情</p>
+                    <div class="ch-tab">
+                        <div class="mod-ch" v-show="tabCh">
+                            <ul class="clearfix">
+                                <li class="clearfix" v-for="(item, index) in myModTitle">
+                                    <b :class="[item.own ? item.name +' alpha': item.name]" v-bind:data-name="item.name" @click="showChDetail($event, index, 'mod')"></b>
+                                    <div class="get-line" v-if="item.progress != null">
+                                        <div :style="{width: (item.progress.num * 100 / item.progress.target) + '%'}" class="now-line"></div>
+                                        <p>{{item.progress.num}}/{{item.progress.target}}</p>
+                                    </div>
+                                    <strong v-if="!item.own">未获得</strong>
+                                    <strong class="alpha" v-else>获得时间</strong>
+                                    <span :class="[item.own ? 'alpha': '']"><em v-if="item.time != '' ">{{item.time}}</em></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="user-ch" v-show="!tabCh">
+                            <ul>
+                                <li class="clearfix" v-for="(item, index) in myUserTitle">
+                                    <b :class="[item.own ? item.name +' alpha': item.name]" v-bind:data-name="item.name" @click="showChDetail($event, index, 'user')"></b>
+                                    <div class="get-line" v-if="item.progress != null">
+                                        <div :style="{width: (item.progress.num * 100 / item.progress.target) + '%'}" class="now-line"></div>
+                                        <p v-if="item.name == 'scjq' && item.progress.num <= 999">{{item.progress.num}}/{{item.progress.targetk}}</p>
+                                        <p v-else-if="item.name == 'scjq' && item.progress.num > 999">{{item.progress.numk}}/{{item.progress.targetk}}</p>
+                                        <p v-else>{{item.progress.num}}/{{item.progress.target}}</p>
+                                    </div>
+                                    <strong v-if="!item.own">未获得</strong>
+                                    <strong class="alpha" v-else>获得时间</strong>
+                                    <span :class="[item.own ? 'alpha': '']"><em v-if="item.time != '' ">{{item.time}}</em></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="posi detail" v-show="xqBox">
+            <div class="detail-out">
+                <div class="d-close" @click="xqBox = false"></div>
+                <h2></h2>
+                <div class="d-code">{{xqCode}}</div>
+                <div class="d-ms">
+                    <div class="ch-box">
+                        <div class="ch-spic">
+                            <b :class="xqName"></b>
+                        </div>
+                    </div>
+                    <div class="d-ms-text">{{xqText}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 积分统计 -->
+        <div class="posi integral" v-show="jfBox">
+            <div class="com-box">
+                <div class="close" @click="closeJfArr()"></div>
+                <div class="common-tit"></div>
+                <div class="inte-con">
+                    <p class="no-rank-tips" v-show="jfArr.length == 0">呜呜，还没有积分呢，快去PK获得积分吧~</p>
+                    <ul>
+                        <li v-for="(item, index) in jfArr">
+                            <div class="jf-time">{{item.time}}</div>
+                            <div class="jf-vs">
+                                <div class="left-vs">
+                                    <img :src="item.myHeadPic" alt="" />
+                                    <strong>{{item.myCoin}}</strong>
+                                </div>
+                                <b></b>
+                                <div class="right-vs">
+                                    <img :src="item.toHeadPic" alt="" />
+                                    <strong>{{item.toCoin}}</strong>
+                                </div>
+                            </div>
+                            <div class="jf-tab">
+                                <ul>
+                                    <li>
+                                        <span>积分</span>
+                                        <span>详情</span>
+                                        <span>本场最强助攻</span>
+                                    </li>
+                                    <li>
+                                        <span>{{item.score}}</span>
+                                        <span>
+                                            {{item.detail}}
+                                        </span>
+                                        <span>
+                                            <strong>{{item.assistUser}}</strong>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 返利区间 -->
+        <div class="posi flqj" v-show="flBox">
+            <div class="fl-box com-box">
+                <div class="close-btn" @click="flBox = false"></div>
+                <div class="fl-con">
+                    <h2></h2>
+                    <p>1000≤单笔充值&lt;2000元，返利比例为2%克拉</p>
+                    <p>2000≤单笔充值&lt;5000元，返利比例为3%克拉</p>
+                    <p>5000≤单笔充值&lt;20000元，返利比例为5%克拉</p>
+                    <p>20000≤24小时累计充值&lt;50000元，返利比例为8%克拉</p>
+                    <p>24小时累计充值≥50000元，返利比例为10%克拉</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- svg -->
+        <div class="posi svg-con" v-show="svgPlayer" @click="removeSvg()"><div class="inner-svg"></div></div>
+
+        <!-- tost -->
+        <div class="tost" v-show="tostBox">{{tostText}}</div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: 'PK荣耀赛S3赛季',
+        content: '我的主播我来守护！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/pc/v4/img/activity/pks3/share.png")}'
+    });
+</script>

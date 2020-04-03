@@ -1,0 +1,26 @@
+<main id="app" v-cloak>
+    <section class="list" v-if="noData">
+        <div class="noList">
+            <div class="img"></div>
+            <p>暂无充值记录</p>
+        </div>
+    </section>
+    <section v-else>
+        <ul class="historyList" v-if="historyList.length>0">
+            <li v-for="(item,index) in historyList" :key="index">
+                <p class="clearfix">
+                    <span class="fl">充值记录</span>
+                    <span class="fr">{{item.money}}</span>
+                </p>
+                <p class="clearfix">
+                    <span class="fl">{{item.add_time | regularTime}}</span>
+                    <span class="fr" v-if="item.status">{{item.status}}</span>
+                    <span class="fr" v-else>{{item.coin}}金币</span>
+                </p>
+            </li>
+            <p class="click_load_more get_more" @click="getRechargeHistoryList">
+                <span>{{getMoreTips}}</span>
+            </p>
+        </ul>
+    </section>
+</main>

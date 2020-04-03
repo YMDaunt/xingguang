@@ -1,0 +1,32 @@
+<article>
+	<div class="header clearfix" v-cloak>
+		<router-link to="/vehicle" class="fl"><span>座驾</span></router-link>
+		<router-link to="/gifts" class="fl"><span>礼物</span></router-link>
+		<router-link to="/prop" class="fl"><span>道具</span></router-link>
+	</div>
+
+	<router-view></router-view>
+</article>
+
+<script type="text/javascript">
+	//支付成功后回调，app调用
+	function payResultCallback(code, errMsg){
+
+		if(code){
+			hasUnpayOrder = 0
+
+			layer.closeAll()
+			app.goBuy(true)
+		}
+	}
+	//用于切换不同的页面时，重新调用自定义右上角信息的接口
+	function pageOnShow(){
+		setTimeout(function(){
+			try{
+				gBridge.changeMenuButton('商城',location.protocol + '//' + location.host + '/dist/store/list.html')
+			}catch(e){
+				console.log(e.name+ ':' +e.message)
+			}
+		}, 200)
+	}
+</script>

@@ -1,0 +1,113 @@
+// ../../img/noviceWelfare/fans
+
+@activityName: 'noviceWelfare/fans';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+@baseImgPath: '../../img/noviceWelfare/fans/';
+
+body, html, article{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0);
+    overflow: hidden;
+}
+article .mask{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.banner{
+    border-radius: 35/@bf;
+    background: linear-gradient(to right, #f27b72, #f04983, #ec3f74);
+    animation: slideTop 0.6s;
+}
+.banner, .bg{
+    position: absolute;
+    width: 100%;
+    height: 758/@bf;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.bg{
+    display: block;
+}
+.help{
+    font-size: 14px;
+    color:#ffffff;
+    text-align: center;
+    position: absolute;
+    top: 240/@bf;
+    width: 100%;
+    .help_icon{
+        display: inline-block;
+        vertical-align: middle;
+        width: 44/@bf;
+        height: 44/@bf;
+        margin-left: 8/@bf;
+        position: relative;
+        top: -2px;
+        img{
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.gift{
+    width:884/@bf;
+    height:184/@bf;
+    position:absolute;
+    top:330/@bf;
+    left:50%;
+    transform:translateX(-50%);
+    background:url('@{baseImgPath}/gift.png') no-repeat 0 0 scroll;
+    background-size:884/@bf 184/@bf;
+}
+.btn_wrap, .btn{
+    width: 610/@bf;
+    height: 120/@bf;
+    border-radius: 60/@bf;
+    background: #e7a02f;
+}
+.btn_wrap{
+    position: absolute;
+    bottom: 70/@bf;
+    left: 50%;
+    margin-left: -305/@bf;
+    border-bottom: 1px solid #b27b24;
+    box-shadow: 0 1px 5px #484848;
+    &:active{
+        opacity: 0.6;
+    }
+}
+.btn{
+    background: #fff457;
+    height: 111/@bf;
+    line-height: 115/@bf;
+    text-align: center;
+    font-size: 15px;
+    color: #e53e4d;
+}
+
+.tips{
+    font-size: 10px;
+    color: #ffffff;
+    text-align: center;
+    position: absolute;
+    bottom: 15/@bf;
+    width: 100%;
+}
+
+@keyframes slideTop{
+    0%{
+        transform: translate3d(0, 540/@bf, 0);
+    }
+    100%{
+        transform: translateY(0, 0, 0);
+    }
+}

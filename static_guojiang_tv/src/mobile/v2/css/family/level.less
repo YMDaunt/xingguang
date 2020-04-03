@@ -1,0 +1,44 @@
+.border-radius (@radius : 50%){
+    border-radius:  @radius;
+    -webkit-border-radius:  @radius;
+    -o-border-radius:  @radius;
+    -moz-border-radius:  @radius;
+    -ms-border-radius:  @radius;
+}
+@bf: 108rem;
+body{background: #f5f5f5;}
+.level_wrap, .level_desc_wrap{background: #fff;}
+.level_wrap{
+	position: relative;padding-bottom: 80/@bf;padding-top: 35/@bf;
+	.bg_logo{width: 743/@bf;height:309/@bf;margin:0 auto 0;display: block;position: relative;left: -15/@bf;}
+	.level_num{font-size: 14px;color:#ffffff;position: absolute;text-align: center;width: 100%;top: 280/@bf;}
+	.level_icon_img{position: absolute;top:175/@bf;    width: 100%;text-align: center;color:#006bbc;font-size: 20px;font-weight: bold;font-style: italic;}
+	.process{width: 660/@bf;height: 17/@bf;margin: 0 auto;background: #eeeeee;.border-radius(7/@bf);position: relative;
+		span{background: #ff0071;height: 100%;position: absolute;top:0px;left: 0px;display: block;.border-radius(7/@bf);}
+		i{font-size: 11px;color:#ff0071;font-style:italic;font-weight: bold;position: absolute;    top: -3px;}
+		.pro_left_level{left:-105/@bf;}
+		.pro_right_level{left:680/@bf;white-space: nowrap;}
+	}
+	&.u_level .process{background: #eeeeee;}
+	&.u_level .level_icon_img{color:#fff}
+	.level_hint{font-size: 12px;color:#333333;padding-bottom: 25/@bf;text-align: center;padding-top: 25/@bf;}
+}
+
+.level_desc_wrap{margin-top: 25/@bf;overflow: hidden;
+	.level_desc{padding-left: 34/@bf;font-size:14px;color: #666666;}
+}
+h2{background: url(../../img/family/level_title.png) no-repeat center top;background-size:599/@bf;height: 57/@bf;margin: 88/@bf 0 60/@bf;}
+table{
+	border-top: 1px solid #ededed;border-left:1px solid #ededed;width: 1014/@bf;margin:50/@bf auto 80/@bf;
+	th{font-size:14px;color:#666666;text-align: center;padding:0 5px;}
+	td{font-size:12px;color:#333333;text-align: center;}
+	th,td{height: 145/@bf;border-right:1px solid #ededed;border-bottom:1px solid #ededed;}
+}
+
+.content_bg{display: block;width: 100%;}
+
+.family_medals_icon{background: url(../../img/family/medals.png) no-repeat;background-size: 229/@bf 362/@bf;width: 229/@bf;height: 88/@bf;display: inline-block;}
+.family_medals_icon_0{background-position:  0 0;}
+.family_medals_icon_1{background-position:  0 -91/@bf;}
+.family_medals_icon_2{background-position:  0 -182/@bf;}
+.family_medals_icon_3{background-position:  0 -273/@bf;}

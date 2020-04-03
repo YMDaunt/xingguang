@@ -1,0 +1,246 @@
+<div class="page-content">
+    <!-- ranks tab 榜单tab -->
+    <div class="rank-tab fl-box">
+        <div
+            :class="['rank-tab-i btn sprite', rankTabType === 'host' ? 'tab-mc-a' : 'tab-mc']"
+            @click="changeRank('host')">主持人榜</div>
+        <div
+            :class="['rank-tab-i btn sprite', rankTabType === 'mod' ? 'tab-mod-a' : 'tab-mod']"
+            @click="changeRank('mod')">
+            主播榜
+            <div
+                class="qs"
+                @click.stop="!isPC && toastTips('主播榜记录的是主播作为嘉宾/主持人上麦时，收取的礼物对应的星光值排名，按照先到先得原则排名。')">
+                <div class="tooltips">主播榜记录的是主播作为嘉宾/主持人上麦时，收取的礼物对应的星光值排名，按照先到先得原则排名。</div>
+            </div>
+        </div>
+        <div
+            :class="['rank-tab-i btn sprite', rankTabType === 'user' ? 'tab-user-a' : 'tab-user']"
+            @click="changeRank('user')">金主榜</div>
+    </div>
+
+    <!-- ranks 榜单 -->
+    <div :class="['rank', currRank.loading && 'rank-loading']">
+        <!-- rank top 3 -->
+        <div v-if="currStage > 0" :class="['rank-top3', rankTabType]">
+            <div v-for="(item, i) in currRankList.slice(0, 3)" :class="['rank-top-i', 'rank-top-i' + i]">
+                <div class="headpic">
+                    <div class="triangle bg">
+                        <div class="triangle-inner bg"></div>
+                    </div>
+                    <div class="triangle avatar" @click="rankTabType === 'host' && item && item.isPlaying && goRoom(item)">
+                        <div class="triangle-inner">
+                            <img v-if="item" class="avatar-img" :src="item.headPic" alt="头像">
+                            <span v-else class="avatar-holder"></span>
+                        </div>
+                    </div>
+                    <div :class="['sprite cown', 'cown' + (i+1)]"></div>
+                    <div v-if="rankTabType === 'host' && item && item.isPlaying && item.isPlaying" class="sprite live"></div>
+                </div>
+                <div :class="['nickname sprite', i === 0 ? 'name-bg' : 'name-bg2']">
+                    <div class="txt-of name">{{ item ? item.nickname : '虚位以待' }}</div>
+                    <div v-if="item" :class="['level_icon', (rankTabType !== 'user' ? 'm_level_icon_' : 'u_level_icon_') + item.level]"></div>
+                </div>
+                <template v-if="rankTabType === 'host'">
+                    <div class="txt-of jifen">积分：{{ item ? item.score : '--' }}</div>
+                    <div class="txt-of rscore">房间星光值：{{ item ? item.coin : '--' }}</div>
+                </template>
+                <div v-if="rankTabType === 'mod'" class="txt-of score">星光值：{{ item ? item.score : '--' }}</div>
+                <div v-if="rankTabType === 'user'" class="txt-of score">贡献值：{{ item ? item.score : '--' }}</div>
+            </div>
+        </div>
+        <!-- 榜单列表 -->
+        <!-- <component
+            ref="rank-scroller"
+            :class="['rank-listc', currRank.type]"
+            :is="scroller"
+            :right="6"> -->
+            <!-- rank item -->
+            <template
+                v-if="currStage > 0"
+                v-for="(item, ind) in currRankList.slice(3)">
+                <div
+                    class="fl-box rank-row"
+                    :key="currRank.type + '_' + ind">
+                    <div class="rank-cell rank-cell-1">{{ ind+4 }}</div>
+                    <div class="fl-ver rank-cell rank-cell-2">
+                        <div class="headpic">
+                            <img
+                                v-if="item"
+                                :src="item.headPic"
+                                :alt="item.nickname"
+                                class="avatar"
+                                @click="rankTabType === 'host' && item && item.isPlaying && goRoom(item)">
+                            <span v-else class="avatar-holder"></span>
+                            <div v-if="rankTabType === 'host' && item && item.isPlaying" class="sprite live"></div>
+                        </div>
+                        <p class="fl-ver name">
+                            <span class="txt-of nickname">{{ item ? item.nickname : '虚位以待' }}</span>
+                            <span v-if="item" :class="['level_icon', (rankTabType !== 'user' ? 'm_level_icon_' : 'u_level_icon_') + item.level]"></span>
+                        </p>
+                    </div>
+                    <div class="rank-cell rank-cell-3">
+                        <template v-if="rankTabType === 'host'">
+                            <div class="txt-of jifen">积分：{{ item ? item.score : '--' }}</div>
+                            <div class="txt-of rscore">房间星光值：{{ item ? item.coin : '--' }}</div>
+                        </template>
+                        <div v-if="rankTabType === 'mod'" class="txt-of score">星光值：{{ item ? item.score : '--' }}</div>
+                        <div v-if="rankTabType === 'user'" class="txt-of score">贡献值：{{ item ? item.score : '--' }}</div>
+                    </div>
+                </div>
+            </template>
+        <!-- </component> -->
+        <div class="rank-tips txt-s">{{ rankTips[rankTabType] }}</div>
+        <div v-show="currRank.meCenter" class="rank-sep"></div>
+        <!-- 榜单个人中心 -->
+        <div class="fl-box rank-center" v-if="currRank.meCenter">
+            <div v-show="rankTabType === 'host'" class="badge">{{ currRank.meCenter.pairInfos[0].value }}</div>
+            <div class="intro">
+                <div class="headpic">
+                    <img
+                        :src="currRank.meCenter.headPic"
+                        :alt="currRank.meCenter.nickName"
+                        class="avatar"
+                        @click="rankTabType === 'host' && currRank.meCenter.isPlaying && goRoom(currRank.meCenter)">
+                    <div v-if="rankTabType === 'host' && currRank.meCenter.isPlaying" class="sprite live"></div>
+                </div>
+                <p class="fl-box name">
+                    <span class="txt-of nickname">{{ currRank.meCenter.nickName }}</span>
+                    <span :class="['level_icon', (rankTabType !== 'user' ? 'm_level_icon_' : 'u_level_icon_') + currRank.meCenter.level]"></span>
+                </p>
+            </div>
+            <div class="fl-box me-status">
+                <div v-for="(ki, kind) in (rankTabType !== 'host' ? [0, 2, 1, 3] : [1, 2, 4, 3])" :key="kind" class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[ki].name }}</h5>
+                    <p :class="[rankTabType === 'host' && kind === 0 && 'underline']" @click="rankTabType === 'host' && kind === 0 && showScore()">{{ currRank.meCenter.pairInfos[ki].value }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- copy -->
+    <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+</div>
+
+<!-- floater -->
+<div class="floater sprite btn btn-rules" @click="showRule">活动规则</div>
+
+<!-- rules -->
+<div class="layer layer-rules" v-show="ruleState" @click="capClick">
+    <div class="layer-inner">
+        <div class="sprite btn btn-close" @click="hideRule"></div>
+        <div class="sprite txt-rule">活动规则</div>
+        <component
+            ref="rules-scroller"
+            class="layer-content"
+            :is="scroller"
+            :right="2"
+            :thumb-color="'#cf9d7d'">
+            <p class="rule-i">1. 活动时间：<span class="txt-fff">5.8 12:00:00 - 5.12 23:59:59。</span></p>
+            <p class="rule-i">2. 平台所有的主播可以在开播时选择-多人视频交友成为主持人，成为主持人时，每日嘉宾的总时长每达到60min，加10积分，不足60min不加积分，若是每日19:00-24:00期间嘉宾总时长每累计60min，则额外奖励10积分。若有相同积分，按照先到先得原则。</p>
+            <p class="rule-i">开播流程如下：</p>
+            <div class="rule-img"></div>
+            <p class="rule-i">3. 主持人榜按照积分排名，前三名获得奖励；主播榜按照主持人/嘉宾获得礼物克拉值排名，前三名主播获得奖励；金主榜按照用户在多人直播间的贡献克拉排名，前三名获得奖励。</p>
+            <div class="rule-table t-rw">
+                <div class="th fl-box">
+                    <div class="td td-1">排名</div>
+                    <div class="td td-2">主持人榜</div>
+                    <div class="td td-3">主播榜</div>
+                    <div class="td td-4">金主榜</div>
+                </div>
+                <div class="tr fl-box">
+                    <div class="td td-1">第一名</div>
+                    <div class="td td-2">app端广告位3天</div>
+                    <div class="td td-3">返利3%<br/><span class="txt-small">(上限200000克拉)</span></div>
+                    <div class="td td-4">返利3%<br/><span class="txt-small">(上限200000克拉)</span></div>
+                </div>
+                <div class="tr fl-box">
+                    <div class="td td-1">第二名</div>
+                    <div class="td td-2">app端广告位2天</div>
+                    <div class="td td-3">返利2%<br/><span class="txt-small">(上限150000克拉)</span></div>
+                    <div class="td td-4">返利2%<br/><span class="txt-small">(上限150000克拉)</span></div>
+                </div>
+                <div class="tr fl-box">
+                    <div class="td td-1">第三名</div>
+                    <div class="td td-2">app端广告位1天</div>
+                    <div class="td td-3">返利1%<br/><span class="txt-small">(上限100000克拉)</span></div>
+                    <div class="td td-4">返利1%<br/><span class="txt-small">(上限100000克拉)</span></div>
+                </div>
+            </div>
+            <p class="rule-i">4. 活动结束后，房间收礼达到下表标准的主持人可获得额外奖励。</p>
+            <div class="rule-table t-extra">
+                <div class="th fl-box">
+                    <div class="td td-1">活动总收入克拉</div>
+                    <div class="td td-2">奖励克拉</div>
+                </div>
+                <div class="tr fl-box">
+                    <div class="td td-1">10000</div>
+                    <div class="td td-2">500</div>
+                </div>
+                <div class="tr fl-box">
+                    <div class="td td-1">20000</div>
+                    <div class="td td-2">1000</div>
+                </div>
+                <div class="tr fl-box">
+                    <div class="td td-1">30000</div>
+                    <div class="td td-2">1500</div>
+                </div>
+                <div class="tr fl-box">
+                    <div class="td td-1">50000</div>
+                    <div class="td td-2">2500</div>
+                </div>
+                <div class="tr fl-box">
+                    <div class="td td-1">100000</div>
+                    <div class="td td-2">5000</div>
+                </div>
+                <div class="tr fl-box">
+                    <div class="td td-1">300000</div>
+                    <div class="td td-2">15000</div>
+                </div>
+                <div class="tr fl-box">
+                    <div class="td td-1">500000</div>
+                    <div class="td td-2">25000</div>
+                </div>
+                <div class="tr fl-box">
+                    <div class="td td-1">1000000</div>
+                    <div class="td td-2">50000</div>
+                </div>
+                <div class="tr fl-box">
+                    <div class="td td-1">2000000及以上</div>
+                    <div class="td td-2">100000</div>
+                </div>
+            </div>
+            <p class="rule-i">5. 奖励发放说明：</p>
+            <p class="rule-i">1）主持人榜的广告位奖励，运营会在活动结束后，和奖励主播联系排期；</p>
+            <p class="rule-i">2）主播榜/金主榜的克拉奖励返利是根据对应榜单数据返利，会在活动结束后的5个工作日内发放至平台个人账户；</p>
+            <p class="rule-i">3）主持人房间收礼达标克拉奖励会在活动结束即时发放至平台个人账户。</p>
+        </component>
+    </div>
+</div>
+
+<!-- score list -->
+<div class="layer layer-score" v-show="scoreState" @click="capClick">
+    <div class="layer-inner score-inner">
+        <div class="sprite btn btn-close" @click="hideScore"></div>
+        <component
+            ref="score-scroller"
+            class="layer-content"
+            :is="scroller"
+            :right="4"
+            :thumb-color="'#cf9d7d'">
+            <div v-for="(rs, ri) in roomScore" :key="'_ri_' + ri" class="date-i">
+                <div :class="['sprite date-h', ['txt-0508', 'txt-0509', 'txt-0510', 'txt-0511', 'txt-0512'].indexOf(rs.icon) !== -1 ? rs.icon : 'txt-default' ]">{{ rs.date }}</div>
+                <p class="total-time">嘉宾总麦时：<span class="txt-fff">{{ rs.total || '-' }}</span>min</p>
+                <p class="range-time">今日19:00 - 24:00 嘉宾上麦总时长：<span class="txt-fff">{{ rs.hot || '-' }}</span>min</p>
+                <p class="score">今日积分：<span class="txt-fff">{{ rs.score || '-' }}</span></p>
+            </div>
+        </component>
+    </div>
+</div>
+
+<!-- toast msg层 -->
+<div class="toast-container" v-show="toastState" @click="hideToast">
+    <div class="toast-msg">{{ toastMsg }}</div>
+</div>
+
+<loading ref="loading" />

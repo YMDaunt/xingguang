@@ -1,0 +1,712 @@
+@activityName: 'taskCenter';
+@bf: 108rem;
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+html,body{
+    height:100%;
+}
+body {
+    background-color:#fff;
+    -webkit-overflow-scrolling: touch;
+}
+.sprite {
+    background-image: url('../../img/makeFriends/sign/css_sprites.png');
+    background-repeat: no-repeat;
+    background-size: 450/@bf 358/@bf;
+}
+
+
+/***************common end************/
+#app{
+    width:100%;
+    padding:0 36/@bf;
+    background-color: #fff;
+    overflow: hidden;
+}
+.newer-task,.everyday-task{
+    margin:40/@bf auto;
+}
+.title{
+    font-size:42/@bf;
+    color:#333333;
+    height:50/@bf;
+    line-height: 50/@bf;
+}
+
+ul{
+    overflow: hidden;
+}
+li{
+    margin:60/@bf 0;
+    overflow: hidden;
+    .task-icon{
+        width: 123/@bf;
+        height:123/@bf;
+        border-radius: 50%;
+        overflow: hidden;
+        img{
+            width:100%;
+            height:100%;
+        }
+    }
+    .task-info{
+        height:123/@bf;
+        margin-left:25/@bf;
+        p{
+            height: 60/@bf;
+            line-height: 60/@bf;
+        }
+        .info{
+            color:#333333;
+            font-size: 39/@bf;
+        }
+        .task-coin{
+            color:#fb8d40;
+            font-size:36/@bf;
+        }
+    }
+    .red{
+        color:#fa5644!important;
+    }
+    .task-btn{
+        width:210/@bf;
+        height:96/@bf;
+        color:#fb8d40;
+        border:1px solid #fb8d40;
+        border-radius:48/@bf;
+        font-size: 42/@bf;
+        text-align: center;
+        line-height: 96/@bf;
+    }
+    .task-btn-2{
+        color:#fff;
+        border:none;
+        background-image: linear-gradient(to right,#ffc271,#ff616d);
+    }
+    .task-btn-finish{
+        width:151/@bf;
+        height:127/@bf;
+        margin-right:30/@bf;
+        background: url('../../img/makeFriends/taskCenter/finish.png') no-repeat 0 0 scroll;
+        background-size: 151/@bf 127/@bf;
+    }
+}
+
+.task-red-package{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: rgba(0,0,0,0.4);
+    .red-package{
+        .transformCenter;
+        width:945/@bf;
+        height:876/@bf;
+        background: url('../../img/makeFriends/taskCenter/redPackage.png') no-repeat 0 0 scroll;
+        background-size: contain;
+        .lucky-msg{
+            font-size: 56/@bf;
+            text-align: center;
+            color: #ffff67;
+        }
+        .lucky{
+            font-size:87/@bf;
+            margin:120/@bf auto 40/@bf;
+        }
+        .open-btn{
+            width:325/@bf;
+            height:331/@bf;
+            margin:100/@bf auto;
+            background: url('../../img/makeFriends/taskCenter/open-btn.png') no-repeat 0 0 scroll;
+            background-size: contain;
+        }
+    }
+    .double-red-package{
+        .transformCenter;
+        width:945/@bf;
+        height:876/@bf;
+        background: url('../../img/makeFriends/taskCenter/taskPackage.png') no-repeat 0 0 scroll;
+        background-size: contain;
+        .lucky-msg{
+            font-size: 56/@bf;
+            text-align: center;
+            color: #ffff67;
+        }
+        .lucky{
+            font-size:51/@bf;
+            text-align:center;
+            color:#fff;
+            margin:150/@bf auto 140/@bf;
+        }
+        .open-btn{
+            width:325/@bf;
+            height:331/@bf;
+            margin:100/@bf auto;
+            background: url('../../img/makeFriends/taskCenter/open-btn.png') no-repeat 0 0 scroll;
+            background-size: contain;
+        }
+    }
+}
+.result-mask{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: rgba(0,0,0,0.4);
+    .red-package-result{
+        .transformCenter;
+        width:960/@bf;
+        height:1035/@bf;
+        padding-top: 240/@bf;
+        background: url('../../img/makeFriends/taskCenter/redPackageResult.png') no-repeat 0 0 scroll;
+        background-size: contain;
+        .lucky-coin {
+            font-size: 231/@bf;
+            color: #e53e4d;
+            text-align: center;
+            line-height: 200/@bf;
+        }
+
+        .unit {
+            color: #e53e4d;
+            font-size: 45/@bf;
+            text-align: center;
+        }
+
+        .lucky-msg {
+            font-size: 56/@bf;
+            text-align: center;
+            color: #ffff67;
+        }
+
+        .lucky {
+            margin: 120/@bf auto 30/@bf;
+            font-size: 87/@bf;
+        }
+
+        .lucky-tips {
+            font-size: 45/@bf;
+            text-align: center;
+            margin-top: 80/@bf;
+            color: #fff;
+        }
+
+        .radiation {
+            position: absolute;
+            top: -120/@bf;
+            left: 50%;
+            width: 897/@bf;
+            height: 910/@bf;
+            z-index: 1;
+            background: url('../../img/makeFriends/sign/radiation.png') no-repeat 0 0 scroll;
+            background-size: 897/@bf 910/@bf;
+            transform-origin: 50% 50%;
+            animation: rotate 8s infinite linear;
+        }
+    }
+    .double-red-package-result{
+        .transformCenter;
+        width:969/@bf;
+        height:987/@bf;
+        background: url('../../img/makeFriends/taskCenter/taskResult.png') no-repeat 0 0 scroll;
+        background-size: contain;
+        .lucky-coin {
+            font-size: 231/@bf;
+            color: #e53e4d;
+            text-align: center;
+            line-height: 200/@bf;
+            margin:20/@bf auto;
+        }
+
+        .unit {
+            color: #e53e4d;
+            font-size: 45/@bf;
+            text-align: center;
+        }
+
+        .lucky {
+            font-size: 63/@bf;
+            text-align: center;
+            color: #b04320;
+            margin: 168/@bf auto 30/@bf;
+        }
+
+        .lucky-tips {
+            font-size: 45/@bf;
+            text-align: center;
+            margin-top: 290/@bf;
+            color: #fff;
+        }
+
+        .radiation {
+            position: absolute;
+            top: -40/@bf;
+            left: 50%;
+            width: 897/@bf;
+            height: 910/@bf;
+            z-index: 1;
+            background: url('../../img/makeFriends/sign/radiation.png') no-repeat 0 0 scroll;
+            background-size: 897/@bf 910/@bf;
+            transform-origin: 50% 50%;
+            animation: rotate 8s infinite linear;
+        }
+    }
+}
+@keyframes rotate {
+    0% {
+        transform: translateX(-50%) rotate(0);
+    }
+
+    100% {
+        transform: translateX(-50%) rotate(360deg);
+    }
+}
+.playSvg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+}
+
+
+// 签到弹窗
+.sign-modal{
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.sign-box {
+    .transformCenter();
+    width: 966/@bf;
+    padding-top: 355/@bf;
+    height: 1149/@bf;
+    border-radius: 25/@bf;
+    background: #fff url('../../img/makeFriends/sign/banner.png') no-repeat 0 0 scroll;
+    background-size: 966/@bf 317/@bf;
+
+    .close {
+        position: absolute;
+        top: 40/@bf;
+        right: 40/@bf;
+        width: 36/@bf;
+        height: 37/@bf;
+        .sprite;
+        background-position: -111/@bf -257/@bf;
+    }
+
+    ul {
+        width: 912/@bf;
+        height:560/@bf;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .sign-item {
+        position: relative;
+        width: 204/@bf;
+        height: 240/@bf;
+        float: left;
+        margin: 0 12/@bf 35/@bf;
+        border-radius: 30/@bf;
+        background-color: #f5f5f5;
+
+        .signed-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 30/@bf;
+            background-color: rgba(0, 0, 0, 0.2);
+
+            .signed {
+                position: absolute;
+                right: 0;
+                top: 50/@bf;
+                width: 138/@bf;
+                height: 130/@bf;
+                .sprite;
+                background-position: -225/@bf -228/@bf;
+            }
+        }
+
+        .day {
+            color: #333333;
+            font-size: 30/@bf;
+            text-align: center;
+            margin: 15/@bf 0 0;
+        }
+
+        .award {
+            height: 120/@bf;
+            display: flex;
+            align-items: center;
+
+            .item1 {
+                width: 91/@bf;
+                height: 67/@bf;
+                margin: 0 auto;
+                .sprite;
+                background-position: -172/@bf -152/@bf;
+            }
+
+            .item2 {
+                .sprite;
+                margin: 0 auto;
+                width: 142/@bf;
+                height: 85/@bf;
+                background-position: -10/@bf -152/@bf;
+            }
+
+            .item3 {
+                .sprite;
+                margin: 0 auto;
+                width: 90/@bf;
+                height: 94/@bf;
+                background-position: -331/@bf -130/@bf;
+            }
+
+            .item4 {
+                .sprite;
+                margin: 0 auto;
+                width: 135/@bf;
+                height: 122/@bf;
+                background-position: -10/@bf -10/@bf;
+            }
+
+            .item5 {
+                .sprite;
+                margin: 0 auto;
+                width: 81/@bf;
+                height: 91/@bf;
+                background-position: -10/@bf -257/@bf;
+            }
+
+            .item6 {
+                .sprite;
+                margin: 0 auto;
+                width: 146/@bf;
+                height: 107/@bf;
+                background-position: -165/@bf -10/@bf;
+            }
+
+            .item7 {
+                .sprite;
+                margin: 0 auto;
+                width: 109/@bf;
+                height: 100/@bf;
+                background-position: -331/@bf -10/@bf;
+            }
+        }
+
+        .award-name {
+            color: #333333;
+            font-size: 33/@bf;
+            text-align: center;
+        }
+
+        .current-sign {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            .radiation {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1;
+                background: url('../../img/makeFriends/sign/radiation.png') no-repeat 0 0 scroll;
+                background-size: cover;
+                transform-origin: 50% 50%;
+                animation: rotate2 8s infinite linear;
+            }
+
+            .current-icon {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 2;
+                background: url('../../img/makeFriends/sign/currentSign.gif') no-repeat 0 0 scroll;
+                background-size: contain;
+            }
+        }
+    }
+
+    .sign-btn {
+        text-align: center;
+        font-size: 42/@bf;
+        color: #fff;
+        line-height: 128/@bf;
+        margin: 60/@bf auto 0;
+        width: 689/@bf;
+        height: 128/@bf;
+        border-radius: 64/@bf;
+        background-color: #7e28ff;
+    }
+
+    .signed-btn {
+        background-color: #d2d2d2;
+    }
+}
+.signResult{
+    .transformCenter();
+    width: 864/@bf;
+    height: 829/@bf;
+    border-radius:20/@bf;
+    background-color: #fff;
+    .title{
+        width: 532/@bf;
+        height: 326/@bf;
+        margin:-140/@bf auto 10/@bf;
+        background: url('../../img/makeFriends/sign/title.png') 0 0 no-repeat;
+        background-size: 532/@bf 326/@bf;
+    }
+    .result-tips{
+        text-align: center;
+        font-size:45/@bf;
+        color:#333333;
+    }
+    .coin{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width:268/@bf;
+        height:268/@bf;
+        margin:20/@bf auto 0;
+        .item1 {
+            width: 91/@bf;
+            height: 67/@bf;
+            .sprite;
+            transform: scale(2);
+            background-position: -172/@bf -152/@bf;
+        }
+
+        .item2 {
+            .sprite;
+            margin: 0 auto;
+            width: 142/@bf;
+            height: 85/@bf;
+            background-position: -10/@bf -152/@bf;
+        }
+
+        .item4 {
+            .sprite;
+            margin: 0 auto;
+            width: 135/@bf;
+            height: 122/@bf;
+            background-position: -10/@bf -10/@bf;
+        }
+
+        .item5 {
+            .sprite;
+            margin: 0 auto;
+            width: 81/@bf;
+            height: 91/@bf;
+            background-position: -10/@bf -257/@bf;
+        }
+
+        .item6 {
+            .sprite;
+            margin: 0 auto;
+            width: 146/@bf;
+            height: 107/@bf;
+            background-position: -165/@bf -10/@bf;
+        }
+
+    }
+    .current-sign{
+        position: absolute;
+        top: 180/@bf;
+        left: 50%;
+        transform: translateX(-50%);
+        width:500/@bf;
+        height:500/@bf;
+
+        .radiation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            background: url('../../img/makeFriends/sign/radiation.png') no-repeat 0 0 scroll;
+            background-size: contain;
+            transform-origin: 50% 50%;
+            animation: rotate2 8s infinite linear;
+        }
+        .current-icon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2;
+            background: url('../../img/makeFriends/sign/currentSign.gif') no-repeat 0 0 scroll;
+            background-size: contain;
+        }
+    }
+    .lucky-coin-num{
+        font-size:48/@bf;
+        color:#7166f9;
+        text-align: center;
+    }
+    .sure-btn{
+        width:698/@bf;
+        height: 128/@bf;
+        margin:40/@bf auto;
+        font-size:42/@bf;
+        text-align: center;
+        line-height: 128/@bf;
+        color:#fff;
+        border-radius:64/@bf;
+        background-image: linear-gradient(to right,#a37eff,#7871fb);
+    }
+}
+
+.redPackage {
+    .transformCenter();
+    width: 960/@bf;
+    height: 1035/@bf;
+    padding-top: 240/@bf;
+    background: url('../../img/makeFriends/sign/redPackage.png') no-repeat 0 0 scroll;
+    background-size: 960/@bf 1035/@bf;
+    overflow: hidden;
+
+    .lucky-coin {
+        font-size: 231/@bf;
+        color: #e53e4d;
+        text-align: center;
+        line-height: 200/@bf;
+    }
+
+    .unit {
+        color: #e53e4d;
+        font-size: 45/@bf;
+        text-align: center;
+    }
+
+    .lucky-msg {
+        font-size: 56/@bf;
+        text-align: center;
+        color: #ffff67;
+    }
+
+    .lucky {
+        margin: 120/@bf auto 30/@bf;
+        font-size: 87/@bf;
+    }
+
+    .lucky-tips {
+        font-size: 45/@bf;
+        text-align: center;
+        margin-top: 80/@bf;
+        color: #fff;
+    }
+
+    .radiation {
+        position: absolute;
+        top: -120/@bf;
+        left: 50%;
+        width: 897/@bf;
+        height: 910/@bf;
+        z-index: 1;
+        background: url('../../img/makeFriends/sign/radiation.png') no-repeat 0 0 scroll;
+        background-size: 897/@bf 910/@bf;
+        transform-origin: 50% 50%;
+        animation: rotate 8s infinite linear;
+    }
+}
+@keyframes rotate2 {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.openBox {
+    .transformCenter();
+    width: 942/@bf;
+    height: 929/@bf;
+    padding-top: 320/@bf;
+    background: url('../../img/makeFriends/sign/openBox.png') no-repeat 0 0 scroll;
+    background-size: 942/@bf 929/@bf;
+    overflow: hidden;
+
+    .lucky-coin {
+        font-size: 231/@bf;
+        color: #ffff67;
+        margin-top: 50/@bf;
+        text-align: center;
+        line-height: 200/@bf;
+    }
+
+    .unit {
+        color: #ffff67;
+        font-size: 45/@bf;
+        text-align: center;
+    }
+
+    .lucky-msg {
+        font-size: 48/@bf;
+        text-align: center;
+        color: #ab5911;
+    }
+
+    .lucky {
+        margin: 0 auto 10/@bf;
+        font-size: 78/@bf;
+    }
+
+    .lucky-tips {
+        font-size: 45/@bf;
+        text-align: center;
+        margin-top: 30/@bf;
+        color: #fff;
+    }
+
+    .radiation {
+        position: absolute;
+        top: 200/@bf;
+        left: 50%;
+        width: 897/@bf;
+        height: 910/@bf;
+        z-index: 1;
+        background: url('../../img/makeFriends/sign/radiation.png') no-repeat 0 0 scroll;
+        background-size: 897/@bf 910/@bf;
+        transform-origin: 50% 50%;
+        animation: rotate 8s infinite linear;
+    }
+}
+div.layui-m-layer .layui-m-layerchild .layui-m-layerbtn span[yes] {
+    background: #7e28ff!important;
+}

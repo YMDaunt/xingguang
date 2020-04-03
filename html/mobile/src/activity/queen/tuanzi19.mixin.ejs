@@ -1,0 +1,81 @@
+<div class="page-content">
+
+    <div class="gift-box">
+        <div class="sold-num fl-box">
+            <div class="sprite txt-num-pre">收到礼物</div>
+            <div class="f-num fl-box">
+                <i v-for="(pnum, pind) in (amber.giftNum + '')" :class="['sprite', 'rn-' + pnum]">{{ pnum }}</i>
+            </div>
+            <div class="sprite txt-num-af">个</div>
+        </div>
+        <div class="gift-opt fl-box">
+            <div :class="['sprite btn', amber.isLoved ? 'btn-atte-dis' : 'btn-atte']" @click="!amber.isLoved && atteAmber()"></div>
+            <div class="sprite btn btn-gor" @click="goRoom(amber)">进入直播间</div>
+        </div>
+    </div>
+
+    <div class="cus-gifts">
+        <div v-for="(gift, gind) in cusGifts" class="cus-gi">
+            <div :class="'gift-icon gift-' + cusGiftsCMap[gift.name]"></div>
+            <p :class="'gift-name sprite gtxt-' + cusGiftsCMap[gift.name]">{{ gift.name }}</p>
+            <p class="gift-price fl-box">
+                <span class="gift-p-num fl-box">
+                    <i v-for="(pnum, pind) in (gift.price + '')" :class="['sprite', 'bn-' + pnum]">{{ pnum }}</i>
+                </span>
+                <span class="gift-p-per sprite per-g">克拉/个</span>
+            </p>
+            <div class="gift-opt fl-box">
+                <div class="sprite btn btn-pw" @click="preview(gift)">预览</div>
+                <div class="sprite btn btn-buy" @click="goBuy(gift)">购买</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="rules"></div>
+
+    <!-- copyright -->
+</div>
+
+<!-- modal - 1 -->
+<div class="modal-layer buy" v-show="buyShow">
+    <div class="modal-content">
+        <div class="btn sprite btn-close" @click="hideBuy"></div>
+        <input class="buy-input" type="text" ref="buyInput" :value="forms.buyInput" @click="inputFocus" @input="buyInput" />
+        <p class="buy-price fl-box">
+            <span class="sprite txt-price-pre">价格:</span>
+            <span class="p-num fl-box">
+                <i v-for="(pnum, pind) in (forms.buyPrice + '')" :class="['sprite', 'rn-' + pnum]">{{ pnum }}</i>
+            </span>
+            <span class="sprite txt-price-af">克拉</span>
+        </p>
+        <div class="btn sprite btn-buy2" @click="purchase"></div>
+    </div>
+</div>
+
+<!-- modal - 2 -->
+<div class="modal-layer charge" v-show="chargeShow">
+    <div class="modal-content">
+        <div class="btn sprite btn-close" @click="hideCharge"></div>
+        <div class="btn-opt fl-box">
+            <div class="btn sprite btn-cancel" @click="hideCharge">不了</div>
+            <div class="btn sprite btn-charge" @click="goRecharge">充值</div>
+        </div>
+    </div>
+</div>
+
+<!-- svg layer -->
+<div class="svg-layer" v-show="svgShow" @click="stopSvg">
+    <div class="svg-container"></div>
+</div>
+
+<!-- svg img layer -->
+<div class="svg-layer" v-show="picShow" @click="hidePic">
+    <div :class="'pw-pic gift-icon gift-' + cusGiftsCMap[pwGift.name]"></div>
+</div>
+
+<!-- toast msg层 -->
+<div class="toast-container" v-show="toastState" @click="hideToast">
+    <div class="toast-msg">{{ toastMsg }}</div>
+</div>
+
+<loading ref="loading" />

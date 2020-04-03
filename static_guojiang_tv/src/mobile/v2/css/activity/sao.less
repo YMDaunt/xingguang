@@ -1,0 +1,489 @@
+@activityName: 'sao';
+@baseSize: 108rem; // 1080px -> fontSize -> 108px
+
+@fontDeafultColor: #f4c261;
+@fontLightColor: #56fdff;
+@fontBtnColor: #3e2f01;
+@fontBtnColor2: #765708;
+@fontBtnColor3: #f4be34;
+@fontSize: 36 / @baseSize;
+@fSMid: 45 / @baseSize;
+
+@keyframes fadein {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
+}
+
+.fadein {
+    animation: fadein .4s;
+}
+
+.fadeout {
+    animation: fadeout .4s;
+}
+
+
+.largeButton () {
+    display: block;
+    width: 612 / @baseSize;
+    height: 120 / @baseSize;
+    line-height: 120 / @baseSize;
+    margin: 0 auto;
+    background: url('../../img/activity/sao/btn_bg.png') no-repeat;
+    background-size: cover;
+    color: @fontBtnColor;
+    font-size: @fSMid;
+    font-weight: bold;
+    font-family: inherit;
+}
+
+//滚动更流畅
+body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+}
+
+#app button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+#app .button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    text-align: center;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+
+    &.disabled {
+        position: relative;
+    }
+
+    &.disabled:after {
+        content: '';
+        font-size: 0px;
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 102%;
+        background: #000;
+        opacity: 0.6;
+        top: -0.5px;
+        left: 0px;
+    }
+}
+
+#app img {
+    width: 100%;
+    height: 100%;
+}
+
+#app {
+    background: #000;
+    padding-bottom: 60px;
+}
+
+.banner {
+    // height: 1114 / @baseSize;
+    background: url('../../img/activity/sao/mobile_banner.jpg') no-repeat center 0;
+    background-size: 100% auto;
+    position: relative;
+    overflow: hidden;
+
+    .info {
+        margin: 618 / @baseSize auto 0;
+        width: 995 / @baseSize;
+        // height: 402 / @baseSize;
+        background: url('../../img/activity/sao/timg.png') repeat-y;
+        background-size: cover;
+        border: 6/@baseSize solid @fontDeafultColor;
+        border-radius: 20/@baseSize;
+        padding: 34 / @baseSize;
+        box-sizing: border-box;
+    }
+    .text {
+        color: @fontDeafultColor;
+        font-size: @fontSize;
+        line-height: 68 / @baseSize;
+    }
+}
+
+.article {
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:before,
+        &:after {
+            content: '';
+            width: 164 / @baseSize;
+            height: 1px;
+            margin: 0px 32 / @baseSize;
+            background-color: @fontDeafultColor;
+        }
+
+        padding: 90/@baseSize 0px 74/@baseSize;
+        font-size: 60/@baseSize;
+        color: @fontDeafultColor;
+    }
+}
+
+.gifts {
+    .info {
+        color: @fontDeafultColor;
+        font-size: @fontSize;
+        padding: 0px 80/@baseSize;
+        line-height: 58/@baseSize;
+
+        .text-light {
+            color: @fontLightColor;
+        }
+    }
+
+    .content {
+        margin-top: 60/@baseSize;
+
+        .avatar {
+            width: 346/@baseSize;
+            height: 346/@baseSize;
+            margin: 0 auto;
+            border: 6/@baseSize solid @fontDeafultColor;
+            border-radius: 16px;
+            background-color: #362e2b;
+            overflow: hidden;
+        }
+
+        .text-state {
+            color: @fontDeafultColor;
+            font-size: @fSMid;
+            font-weight: bold;
+            text-align: center;
+            margin: 40/@baseSize 0px 58/@baseSize;
+        }
+    }
+
+    .run {
+        display: block;
+        width: 612 / @baseSize;
+        height: 120 / @baseSize;
+        line-height: 120 / @baseSize;
+        margin: 0 auto;
+        background: url('../../img/activity/sao/btn_bg.png') no-repeat;
+        background-size: cover;
+        color: @fontBtnColor;
+        font-size: @fSMid;
+        font-weight: bold;
+        font-family: inherit;
+    }
+}
+
+.notice {
+    .content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        .items {
+            font-size: @fontSize;
+            color: @fontLightColor;
+            display: flex;
+            flex-direction: column;
+
+            .time {
+                line-height: 80/@baseSize;
+            }
+        }
+
+        .desc {
+            width: 540/@baseSize;
+            color: @fontDeafultColor;
+            font-size: @fontSize;
+            margin-left: 46/@baseSize;
+            line-height: 60/@baseSize;
+        }
+    }
+}
+
+.meetings {
+    .content {
+        .rooms {
+            display: flex;
+            justify-content: center;
+
+            .person {
+                margin: 0px 116/@baseSize;
+                position: relative;
+
+                &.live:after {
+                    position: absolute;
+                    content: "Live";
+                    display: inline-block;
+                    position: absolute;
+                    top: -5/@baseSize;
+                    left: 144/@baseSize;
+                    width: 122/@baseSize;
+                    height: 54/@baseSize;
+                    line-height: 54/@baseSize;
+                    background: #56fdff;
+                    font-size: @fontSize;
+                    // font-weight: bold;
+                    color: #362e2b;
+                    border-radius: 30/@baseSize;
+                    text-align: center;
+                }
+
+                .avatar {
+                    display: block;
+                    width: 270/@baseSize;
+                    height: 270/@baseSize;
+                    border: 6/@baseSize solid @fontDeafultColor;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    margin: 0 auto;
+                }
+
+                .name {
+                    display: block;
+                    color: @fontDeafultColor;
+                    font-size: @fSMid;
+                    text-align: center;
+                    padding: 32/@baseSize 0px;
+                    white-space: nowrap;
+                    max-width: 270/@baseSize;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+
+                .check {
+                    display: block;
+                    width: 260/@baseSize;
+                    height: 80/@baseSize;
+                    margin: 0 auto;
+                    color: @fontBtnColor;
+                    background: @fontBtnColor3;
+                    border-radius: 38/@baseSize;
+                    font-size: 42/@baseSize;
+                    font-family: inherit;
+
+                    &.in {
+                        color: @fontDeafultColor;
+                        background: @fontBtnColor2;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.invite {
+    display: block;
+    width: 612 / @baseSize;
+    height: 120 / @baseSize;
+    line-height: 120 / @baseSize;
+    margin: 110/@baseSize auto 0px;
+    background: url('../../img/activity/sao/btn_bg.png') no-repeat;
+    background-size: cover;
+    color: @fontBtnColor;
+    font-size: @fSMid;
+    font-weight: bold;
+    font-family: inherit;
+}
+
+.toastBox () {
+    display: none;
+    // z-index: -1;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    // opacity: 0;
+    // transition: all .4s;
+    // animation: fadeout .4s;
+
+    &.active {
+        // z-index: 99;
+        opacity: 1;
+        transition: all .4s;
+        display: block;
+        // animation: fadein .4s;
+    }
+
+    .masker {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        background: #000;
+        opacity: 0.6;
+    }
+}
+
+.toast {
+    .toastBox;
+
+    .content {
+        position: absolute;
+        top: 700/@baseSize;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 860/@baseSize;
+        height: 460/@baseSize;
+        background: #fff;
+        border-radius: 34/@baseSize;
+        position: relative;
+        display: none;
+
+        &.active {
+            display: block;
+        }
+
+        &.tips {
+            height: auto;
+
+            .title {
+                padding: 102/@baseSize 0px;
+            }
+        }
+
+        .close {
+            content: '';
+            display: block;
+            width: 98/@baseSize;
+            height: 99/@baseSize;
+            background: url('../../img/activity/sao/icon_close.png') no-repeat center;
+            background-size: cover;
+            position: absolute;
+            top: -(98/2)/@baseSize;
+            right: -(99/4)/@baseSize;
+        }
+
+        .title {
+            font-size: @fSMid;
+            color: #333;
+            text-align: center;
+            padding-top: 102/@baseSize;
+        }
+
+        .fns {
+            text-align: center;
+            margin: 82/@baseSize auto 100/@baseSize;
+
+            button {
+                font-size: @fSMid;
+                padding: 38/@baseSize 98/@baseSize;
+                border-radius:  64/@baseSize;
+                margin: 0px 16/@baseSize;
+            }
+
+            .cancel {
+                color: #ffffff;
+                background: #bbb;
+            }
+
+            .confirm {
+                color: #3e2f01;
+                background: #f6c437;
+            }
+        }
+    }
+}
+
+// .layer {
+//     .toastBox;
+
+//     #env-panel {
+//         position: absolute;
+//         top: 180/@baseSize;
+//         left: 50%;
+//         transform: translateX(-50%);
+//         width: 976/@baseSize;
+//         height: 1200/@baseSize;
+//         opacity: 1;
+//     }
+
+//     .invite-img {
+//         position: absolute;
+//         top: 180/@baseSize;
+//         left: 50%;
+//         transform: translateX(-50%);
+//         width: 976/@baseSize;
+//         height: 1200/@baseSize;
+//         display: none;
+//     }
+
+//     .content {
+//         display: none;
+//         position: absolute;
+//         top: 180/@baseSize;
+//         left: 50%;
+//         transform: translateX(-50%);
+//         width: 976/@baseSize;
+//         height: 1200/@baseSize;
+//         background: url('../../img/activity/sao/invite_bg.png') no-repeat center;
+//         background-size: cover;
+//         position: relative;
+//         overflow: hidden;
+//         text-align: center;
+//         font-size: 40/@baseSize;
+
+//         .avatar {
+//             display: block;
+//             width: 270/@baseSize;
+//             height: 270/@baseSize;
+//             border: 6/@baseSize solid @fontDeafultColor;
+//             border-radius: 50%;
+//             overflow: hidden;
+//             margin: 252/@baseSize auto 40/@baseSize;
+//         }
+
+//         .info {
+//             color: #000;
+//             line-height: 64/@baseSize;
+//         }
+
+//         .qrcode {
+//             margin-top: 105/@baseSize;
+
+//             img {
+//                 width: 204/@baseSize;
+//                 height: 204/@baseSize;
+//             }
+
+//             .text {
+//                 color: @fontDeafultColor;
+//                 margin-top: 50/@baseSize;
+//             }
+//         }
+//     }
+
+//     .save-invite {
+//         .largeButton;
+//         position: absolute;
+//         top: (180+1200)/@baseSize;
+//         left: 50%;
+//         transform: translateX(-50%);
+//         margin: 85/@baseSize auto 0px;
+//     }
+// }

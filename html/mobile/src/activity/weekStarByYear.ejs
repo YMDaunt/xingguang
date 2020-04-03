@@ -1,0 +1,370 @@
+<main id="app" v-cloak>
+	<section class="banner"></section>
+	<section class="rank">
+		<ul class="tab">
+			<li class="queen" :class="{'on':showQueen}" @click="change(0)"><span></span></li>
+			<li class="week_star" :class="{'on':showWeekStar}" @click="change(1)"><span></span></li>
+			<li class="new_star" :class="{'on':showNewStar}" @click="change(2)"><span></span></li>
+			<li class="star" :class="{'on':showStar}" @click="change(3)"><span></span></li>
+		</ul>
+		<div class="tab_content">
+			<div class="queen_box" :class="{'on':showQueen}">
+				<p class="header"><span class="index">排名</span><span class="mod">主播</span><span class="gift_name">女王奖杯</span><span class="score">总分</span></p>
+				<ul>
+					<li :class="'no'+(index+1)" v-for="(item,index) in queenRank" :key="index">
+						<div class="index">{{index+1}}</div>
+						<div class="modInfo">
+							<div class="avatar_wrap">
+								<span class="crown"></span>
+								<div class="avatar_box">
+									<img :src="item.head_pic_1" class="avatar" @click="inlive(item.rid)">
+								</div>
+							</div>
+							<div class="info">
+								<p class="nickname">{{item.nickname}}</p>
+								<div v-if="index < 3">
+									<button class="follow_btn nofollow" v-show="!item.is_love" @click="attention(item.id,'queenRank',index)"></button>
+									<button class="follow_btn following" v-show="item.is_love"></button>
+								</div>
+							</div>
+						</div>
+						<div class="giftnum">
+							<p>{{item.gift_score}}</p>
+							<p class="add" v-if="item.addition_score > 0">加成{{item.addition_score}}</p>
+						</div>
+						<div class="total">{{item.total_score}}</div>
+					</li>
+				</ul>
+				<p class="bottom">*总分=礼物数+加成分</p>
+			</div>
+			<div class="week_star_box" :class="{'on':showWeekStar}">
+				<p class="header"><span class="index">排名</span><span class="mod">主播</span><span class="gift_name">周星皇冠</span><span class="score">总分</span></p>
+				<ul>
+					<li :class="'no'+(index+1)" v-for="(item,index) in weekStarRank" :key="index" v-if="index < 5">
+						<div class="index">{{index+1}}</div>
+						<div class="modInfo">
+							<div class="avatar_wrap">
+								<span class="crown"></span>
+								<div class="avatar_box">
+									<img :src="item.head_pic_1" class="avatar" @click="inlive(item.rid)">
+								</div>
+							</div>
+							<div class="info">
+								<p class="nickname">{{item.nickname}}</p>
+								<button class="follow_btn nofollow" v-if="index < 3" v-show="!item.is_love" @click="attention(item.id,'weekStarRank',index)"></button>
+								<button class="follow_btn following" v-if="index < 3" v-show="item.is_love"></button>
+							</div>
+						</div>
+						<div class="giftnum">
+							<p>{{item.gift_score}}</p>
+							<p class="add">加成{{item.addition_score}}</p>
+						</div>
+						<div class="total">{{item.total_score}}</div>
+					</li>
+					<li v-else>
+						<div class="index">{{index+1}}</div>
+						<div class="modInfo">
+							<div class="avatar_wrap">
+								<div class="avatar_box">
+									<img :src="item.head_pic_1" class="avatar" @click="inlive(item.rid)">
+								</div>
+							</div>
+							<div class="info">
+								<p class="nickname">{{item.nickname}}</p>
+							</div>
+						</div>
+						<div class="giftnum">
+							<p>{{item.gift_score}}</p>
+							<p class="add">加成{{item.addition_score}}</p>
+						</div>
+						<div class="total">{{item.total_score}}</div>
+					</li>
+				</ul>
+				<p class="bottom">*总分=礼物数+加成分</p>
+			</div>
+			<div class="new_star_box" :class="{'on':showNewStar}">
+				<p class="header"><span class="index">排名</span><span class="mod">主播</span><span class="gift_name">新星奖章</span><span class="score">总分</span></p>
+				<ul>
+					<li :class="'no'+(index+1)" v-for="(item,index) in newStarRank" :key="index" v-if="index < 6">
+						<div class="index">{{index+1}}</div>
+						<div class="modInfo">
+							<div class="avatar_wrap">
+								<span class="crown"></span>
+								<div class="avatar_box">
+									<img :src="item.head_pic_1" class="avatar" @click="inlive(item.rid)">
+								</div>
+							</div>
+							<div class="info">
+								<p class="nickname">{{item.nickname}}</p>
+								<button class="follow_btn nofollow" v-if="index < 3" v-show="!item.is_love" @click="attention(item.id,'newStarRank',index)"></button>
+								<button class="follow_btn following" v-if="index < 3" v-show="item.is_love"></button>
+							</div>
+						</div>
+						<div class="giftnum">
+							<p>{{item.gift_score}}</p>
+							<p class="add">加成{{item.addition_score}}</p>
+						</div>
+						<div class="total">{{item.total_score}}</div>
+					</li>
+					<li v-else>
+						<div class="index">{{index+1}}</div>
+						<div class="modInfo">
+							<div class="avatar_wrap">
+								<div class="avatar_box">
+									<img :src="item.head_pic_1" class="avatar" @click="inlive(item.rid)">
+								</div>
+							</div>
+							<div class="info">
+								<p class="nickname">{{item.nickname}}</p>
+							</div>
+						</div>
+						<div class="giftnum">
+							<p>{{item.gift_score}}</p>
+							<p class="add">加成{{item.addition_score}}</p>
+						</div>
+						<div class="total">{{item.total_score}}</div>
+					</li>
+				</ul>
+				<p class="bottom">*总分=礼物数+加成分</p>
+			</div>
+			<div class="star_box" :class="{'on':showStar}">
+				<p class="header"><span class="index">排名</span><span class="mod">主播</span><span class="gift_name">星光勋章</span><span class="score">总分</span></p>
+				<ul class="star_scroll">
+					<li :class="'no'+(index+1)" v-for="(item,index) in starRank" :key="index" v-if="index < 8">
+						<div class="index">{{index+1}}</div>
+						<div class="modInfo">
+							<div class="avatar_wrap">
+								<span class="crown"></span>
+								<div class="avatar_box">
+									<img :src="item.head_pic_1" class="avatar" @click="inlive(item.rid)">
+								</div>
+							</div>
+							<div class="info">
+								<p class="nickname">{{item.nickname}}</p>
+								<button class="follow_btn nofollow" v-if="index < 3" v-show="!item.is_love" @click="attention(item.id,'starRank',index)"></button>
+								<button class="follow_btn following" v-if="index < 3" v-show="item.is_love"></button>
+							</div>
+						</div>
+						<div class="giftnum">
+							<p>{{item.gift_score}}</p>
+							<p class="add" v-if="item.addition_score > 0">加成{{item.addition_score}}</p>
+						</div>
+						<div class="total">{{item.total_score}}</div>
+					</li>
+					<li v-else>
+						<div class="index">{{index+1}}</div>
+						<div class="modInfo">
+							<div class="avatar_wrap">
+								<div class="avatar_box">
+									<img :src="item.head_pic_1" class="avatar" @click="inlive(item.rid)">
+								</div>
+							</div>
+							<div class="info">
+								<p class="nickname">{{item.nickname}}</p>
+							</div>
+						</div>
+						<div class="giftnum">
+							<p>{{item.gift_score}}</p>
+							<p class="add" v-if="item.addition_score > 0">加成{{item.addition_score}}</p>
+						</div>
+						<div class="total">{{item.total_score}}</div>
+					</li>
+				</ul>
+				<p class="bottom">*总分=礼物数+加成分</p>
+			</div>
+		</div>
+		<div class="report_card">
+			<button class="week_star_btn" @click="popup('weekStarReport')"></button>
+			<button class="my_report_btn" @click="popup('myReport')"></button>
+		</div>
+	</section>
+	<section class="week_star_report" v-show="showWeekStarReport">
+		<div class="report_content rules_content">
+			<p class="header">周星成绩单<span class="close" @click="close('weekStarReport')">X</span></p>
+			<p class="content_header">
+				<span class="index">排名</span>
+				<span class="nickname">主播</span>
+				<span class="queen_times">女王<br>次数</span>
+				<span class="week_star_times">周星<br>次数</span>
+				<span class="prev_three">前三<br>次数</span>
+				<span class="addition_score">加成<br>分</span>
+			</p>
+			<ul class="content">
+				<li v-for="(item,index) in weekStarReport" :key="index">
+					<span class="index">{{index+1}}</span>
+					<span class="nickname">{{item.nickname}}</span>
+					<span class="queen_times">{{item.queen}}</span>
+					<span class="week_star_times">{{item.top1}}</span>
+					<span class="prev_three">{{item.top3}}</span>
+					<span class="addition_score">{{item.addition}}</span>
+				</li>
+			</ul>
+			<div class="explain">
+				<p>周星数据计算期间：2017/02/22~12/10</p>
+				<p>加成分说明：获得1次女王加成2000分，获得1次周星加成300分，</p>
+				<p>获得榜单前3名，加成规则如下：</p>
+				<ul>
+					<li>获得榜单前3名1~5次，加成200分；</li>
+					<li>6~10次，加成400分；</li>
+					<li>10~20次，加成600分；</li>
+					<li>20~30次，加成1000分。</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<section class="report_page" v-show="showMyReport">
+		<span class="close" @click="close('myReport')">X</span>
+		<div class="btn">
+			<button class="mod" @click="seeModReport"></button>
+			<button class="user" @click="seeUserReport"></button>
+		</div>
+	</section>
+	<section class="pk">
+		<p class="title">榜单PK赛</p>
+		<div class="table_header"></div>
+		<div class="result" :class="{'toggle':!hideLast}" :style="{'height':selfHeight}">
+			<div :class="{'hide':index >= 2 && hideFirst}" v-for="(item,index) in pkList" :key="index">
+				<p class="result_title"><span class="index">第{{index+1}}名</span><span class="name">{{item.name}}</span><span class="income">PK收入：{{item.total_score}}</span></p>
+				<ul class="result_rank">
+					<li><span class="index">榜单排名</span><span class="name">主播</span><span class="income">奖励</span></li>
+					<li v-for="(li,i) in item.mids">
+						<span class="index">{{(i+1)}}</span>
+						<span class="name">{{li.nickname}}</span>
+						<span class="income">{{li.award}}</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<button class="open_btn" :class="{'hide_btn':!hideLast}" @click="open"></button>
+	</section>
+	<section class="prize">
+		<ul class="prize_name">
+			<li class="gift1">年度女王
+				<br>炸房活动</li>
+			<li class="gift2">卡西欧
+				<br>自拍神器</li>
+			<li class="gift3">飞利浦
+				<br>超声波导入仪</li>
+			<li class="gift4">YSL
+				<br>莹亮纯魅唇膏</li>
+			<li class="gift5">Dior
+				<br>烈艳蓝金唇膏</li>
+			<li class="gift6">Dior
+				<br>魅惑润唇蜜</li>
+			<li class="gift7">高额返利</li>
+		</ul>
+	</section>
+	<section class="week_star_rank">
+		<p class="title">年度周星榜</p>
+		<div class="table_header">
+			<span class="index">排名</span><span class="name">主播</span><span class="num">加成分</span><span class="prize">奖励</span>
+		</div>
+		<ul class="rank_content">
+			<li v-for="(item,index) in weekStarYear" :key="index">
+				<span class="index">{{(index+1)}}</span><span class="name">{{item.nickname}}</span><span class="num">{{item.addtionScore}}</span>
+				<span class="prize">{{item.prize}}</span>
+			</li>
+		</ul>
+	</section>
+	<section class="protect_star_rank">
+		<p class="title">年度护星榜</p>
+		<div class="table_header">
+			<span class="index">排名</span><span class="name">用户</span><span class="num">护星次数</span><span class="prize">奖励</span>
+		</div>
+		<ul class="rank_content">
+			<li v-for="(item,index) in protectStarYear" :key="index">
+				<span class="index">{{(index+1)}}</span><span class="name">{{item.nickname}}</span><span class="num">{{item.protectTimes}}</span>
+				<span class="prize" v-html="item.prize"></span>
+			</li>
+		</ul>
+	</section>
+	<div class="rules_btn" @click="popup('rules')"></div>
+	<section class="rules" v-show="showRules">
+		<div class="rules_content">
+			<p class="header">活动规则<span class="close" @click="close('rules')">X</span></p>
+			<ul class="content">
+				<li>1.活动时间：2017/12/13 12:30:00 ~ 12/18 23:59:59。</li>
+				<li>2.本次活动根据2017年度周星成绩（2017/02/22~12/10），分为4个榜单，每个榜单分别设置礼物，各个榜单之间进行PK，榜单前若干名主播的收入总和最高的，可获年度周星大礼。</li>
+				<li>3.根据2017年度周星成绩，给予女王榜、周星榜、新星榜的主播加成分，加成分规则见“查看周星成绩单”。周星总分=礼物数+加成分。</li>
+				<li>4.榜单分类及礼品设置如下：
+					<ul>
+						<li>* <span>女王榜</span>：上榜主播为2017年度获得过女王称号的主播，该榜单前3名主播活动收入总和计入榜单PK赛。</li>
+						<li>* <span>周星榜</span>：上榜主播为2017年度获得过周星称号的主播，该榜单前5名主播活动收入总和计入榜单PK赛。若该榜单在PK赛中排名前2（含第2名），则该榜单4~5名主播可获得榜单收入3%返利。</li>
+						<li>* <span>新星榜</span>：上榜主播为2017年度获得过周星榜单前3名的主播，该榜单前6名主播活动收入总和计入榜单PK赛。若该榜单在PK赛中排名前2（含第2名），则该榜单4~6名主播可获得榜单收入3%返利。</li>
+						<li>* <span>星光榜</span>：上榜主播为收到过周星礼物的其余所有主播，该榜单前8名主播活动收入总和计入PK赛。若该榜单在PK赛中排名前2（含第2名），则该榜单4~8名主播可获得榜单收入3%返利。</li>
+					</ul>
+				</li>
+				<li>5.榜单奖励：
+					<table class="table">
+						<thead>
+							<tr>
+								<th>榜单</th>
+								<th>榜单排名</th>
+								<th>奖励</th>
+							</tr>
+						</thead>
+						<tr>
+							<td rowspan="4">第1名榜单</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>年度周星定制炸房活动</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>卡西欧 自拍神器</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>飞利浦 超声波导入仪</td>
+						</tr>
+						<tr>
+							<td rowspan="4">第2名榜单</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>YSL 莹亮纯魅唇膏</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>Dior 烈艳蓝金唇膏</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>Dior魅惑润唇蜜</td>
+						</tr>
+						<tr>
+							<td rowspan="4">第3名榜单</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>榜单返利6%</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>榜单返利5%</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>榜单返利3%</td>
+						</tr>
+					</table>
+					<p>注：返利数量=主播榜单收入*返利额度</p>
+					<p>返利金额为克拉（非收益），将于活动结束后15个工作日内发放到主播账户内。</p>
+				</li>
+				<li>6.本次活动最终解释权归星光直播所有。</li>
+			</ul>
+		</div>
+	</section>
+	<section class="copyright">
+		本次活动最终解释权归星光直播所有
+	</section>
+</main>
+<script>
+	var gjShareParam = JSON.stringify({
+		title: '年度周星争夺赛',
+		content: '快来为自己心中的周星打call！',
+		link: location.href,
+		imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/weekStarByYear/share.png")}'
+	});
+</script>

@@ -1,0 +1,70 @@
+<div class="wrapper" id="app" v-cloak>
+    <div class="ban">
+        <img :src="banner" alt="" />
+    </div>
+    <main class="wrap">
+        <section class="mod-text">
+            <div class="mod-name">
+                <p></p><p></p><p></p><p></p>
+                <div class="text-posi" v-html="contentText">{{contentText}}</div>
+            </div>
+            <div class="tips">戳戳头像即可进入主播直播间，点击“关注”可收到主播开播提醒！</div>
+        </section>
+
+        <!-- 主播信息 -->
+        <section class="mod-mes">
+            <ul>
+                <li v-for="(item, index) in modArr" v-if="index < 3">
+                    <div class="common-mes-title">
+                        <strong>{{item.nickname}}</strong>
+                        <b></b>
+                        <span>{{item.rankName}}</span>
+                        <em></em>
+                    </div>
+                    <div class="mes-text clearfix">
+                        <b></b>
+                        <div class="img-area">
+                            <div class="img-box" v-bind:data-rid="item.rid" @click="inlive($event)" :style="{backgroundImage: 'url(' + item.head_pic_1 + ')'}">
+                                <!-- <img :src="item.head_pic_1" v-bind:data-rid="item.rid" @click="inlive($event)" alt="" /> -->
+                            </div>
+                            <span v-if="item.isPlay === '1'"></span>
+                            <strong>{{item.nickname}}</strong>
+                            <div class="care" v-if="!item.isAttention" v-bind:data-id="item.id" @click="attention($event, index)">关注</div>
+                            <div class="cared" v-else>已关注</div>
+                        </div>
+                        <div class="mes-area">
+                            <div class="mes-cover">
+                                <div>
+                                    <h3>直播特长</h3>
+                                    <p>{{item.skill}}</p>
+                                </div>
+                                
+                                <div>
+                                    <h3>爱好</h3>
+                                    <p>{{item.hobby}}</p>
+                                </div>
+                                
+                                <div>
+                                    <h3>直播时间</h3>
+                                    <p>{{item.time}}</p>
+                                </div>
+                            
+                                <h3>简介</h3>
+                                <p>{{item.text}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
+</div>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '星光直播',
+        content: '喜欢就聊，主播就在身边',
+        link: location.href,
+        imgLink: '${require("../../../../../../static_guojiang_tv/src/mobile/v2/img/activity/weekstar/spread/spread1/share.png")}'
+    });
+</script>

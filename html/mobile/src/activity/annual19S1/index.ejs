@@ -1,0 +1,35 @@
+<!-- 年度盛典 2019 S1 6.5 - 6.18 -->
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../../static_guojiang_tv/src/mobile/v2/img/activity/annual19S1/index" */ -->
+    <div class="page-bgs">
+        <!-- bgs -->
+        <div :class="['page-bg bg1', 'show-stage-' + showStage]"></div>
+    </div>
+
+    <%= content %>
+</div>
+
+<script>
+(function adaptation () {
+    var href = window.location
+    if (/Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone|SymbianOS/i.test(navigator.userAgent)) {
+        if (href.host.indexOf('www') >= 0) {
+            window.location.href = '//m.tuho.tv/dist' + href.pathname
+        }
+    } else {
+        if (href.host.indexOf('www') < 0) {
+            window.location.href = '//www.tuho.tv' + href.pathname.replace('/dist', '')
+        }
+    }
+}())
+</script>
+
+<script>
+var gjShareObj = { // eslint-disable-line
+    title: '2019星光年度盛典第一季',
+    content: '2019星光年度盛典第一季',
+    link: location.href,
+    imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/annual19S1/share.jpg")}' // eslint-disable-line
+}
+var gjShareParam = JSON.stringify(gjShareObj)
+</script>

@@ -1,0 +1,267 @@
+// ../../../img/activity/ceremony2018/charge
+
+@activityName: 'activity/ceremony2018/charge';
+@bf: 1px*10/6;
+@imgUrl: '../../../img/activity/ceremony2018/charge';
+
+/* 定义颜色字体大小 S */
+
+/* 定义颜色字体大小 E */
+
+/* 定义全局基值 S */
+#app .xg-content img {
+    width: 100%;
+    height: 100%;
+}
+/* 定义全局基值 E */
+
+/* 定义可复用样式 S */
+.getSprite (@w, @h, @posx, @posy) {
+    @pad: 5;
+    display: block;
+    background-position: (@posx + @pad)/@bf (@posy + @pad)/@bf;
+    width: (@w + @pad*2)/@bf;
+    height: (@h + @pad*2)/@bf;
+}
+.s-sprite {
+    background-image: url('@{imgUrl}/sprites.png');
+    background-size: 508/@bf 530/@bf;
+}
+.s-t2 {
+	.getSprite(488, 105, -10, -164);
+}
+.s-t1 {
+	.getSprite(463, 105, -10, -289);
+}
+.s-btn-charge {
+	.getSprite(297, 106, -10, -414);
+}
+.s-tbg-left {
+	.getSprite(267, 57, -10, -10);
+}
+.s-tbg-right {
+	.getSprite(265, 57, -10, -87);
+}
+/* 定义可复用样式 E */
+
+/* 定义普通样式 S */
+/* 背景图 */
+.page-bgs {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+
+    .page-bg {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 900px;
+        background-image: url('@{imgUrl}/banner.jpg');
+    }
+
+    .bg2 {
+        height: 2400px;
+        background-image: url('../../../img/activity/ceremony2018/preState/bg.jpg');
+        background-position-y: 0px;
+    }
+}
+
+/* 页面内容 */
+.page-content {
+    position: relative;
+    z-index: 2;
+}
+
+.section {
+    position: relative;
+    top: 0px;
+    left: 50%;
+    width: 1380/@bf;
+    transform: translateX(-50%);
+}
+
+// 渐变色字体
+.linear-txt {
+    position: relative;
+    color: #c09a42;
+
+    &:before {
+        content: attr(text);
+        position: absolute;
+        z-index: 10;
+        width: 100%;
+        color: #ffd87d;
+        mask: linear-gradient(to right, transparent, #ffd87d 50%, transparent);
+        white-space: nowrap;
+    }
+}
+
+// 标题背景
+.sec-title {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 80px auto 40px;
+    width: 84%;
+
+    &:before {
+        content: '';
+        .s-sprite;
+        .s-tbg-left;
+    }
+
+    &:after {
+        content: '';
+        .s-sprite;
+        .s-tbg-right;
+    }
+
+    .title-txt {
+        font-size: 0px;
+    }
+}
+
+.banner {
+    padding-top: 630px;
+}
+
+.banner-time {
+    width: 400px;
+    height: 80/@bf;
+    border: 5/@bf solid;
+    border-image: linear-gradient(to right, #c09a42, #ffda80 50%, #c09a42) 1;
+    font-size: 50/@bf;
+    text-align: center;
+    margin: 0 auto 130px;
+}
+
+.recoin {
+    margin-top: 190px;
+}
+
+.phrase {
+    font-size: 36/@bf;
+    color: #ffdb88;
+    margin: 40/@bf 0;
+    padding: 0px 68/@bf;
+    display: flex;
+    justify-content: flex-start;
+
+    .label {
+        width: 190/@bf;
+    }
+
+    .label-zhu {
+        width: 76/@bf;
+    }
+
+    .cont {
+        flex: 1;
+        line-height: 56/@bf;
+    }
+
+    &.with-pad {
+        padding-left: 140/@bf;
+    }
+}
+
+.bd-box {
+    border: 8/@bf solid;
+    border-image: linear-gradient(to right,#ffdd8c, #fff7e7 50%, #ffdd8c) 1;
+    margin: 40px 30/@bf;
+    padding: 6/@bf;
+}
+
+.table {
+    border: 1px solid;
+    border-image: linear-gradient(to right,#ffdd8c, #fff7e7 50%, #ffdd8c) 1;
+
+    .thead, .t-row {
+        display: flex;
+        align-items: center;
+    }
+
+    .t-cell {
+        font-size: 40/@bf;
+        color: #ffdd8c;
+
+        height: 110/@bf; // pc ie min-height fix
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .t-cell:last-child {
+        border-right: none;
+    }
+
+    &.table-1 {
+        .t-cell:first-child {
+            width: 260/@bf;
+        }
+    
+        .t-cell:nth-child(2) {
+            width: 380/@bf;
+        }
+    
+        .t-cell:nth-child(3) {
+            flex: 1;
+        }
+    }
+
+    &.table-2 {
+        .tbody .t-cell {
+            min-height: 140/@bf;
+        }
+
+        .t-cell:first-child {
+            width: 300/@bf;
+        }
+    
+        .t-cell:nth-child(2) {
+            flex: 1;
+            padding: 0px 60/@bf;
+            text-align: center;
+        }
+    }
+}
+
+// 单独样式 防止覆盖
+.t-row {
+    border-top: 1px solid;
+    border-image: linear-gradient(to right,#ffdd8c, #fff7e7 50%, #ffdd8c) 1;
+}
+
+.t-cell {
+    border-right: 1px solid;
+    border-image: linear-gradient(to right,#ffdd8c, #fff7e7 50%, #ffdd8c) 1;
+}
+
+.copyright {
+    text-align: center;
+    font-size: 40/@bf;
+    color: #685a39;
+    padding: 80/@bf 0;
+}
+
+.floater {
+    position: fixed;
+    bottom: 30%;
+    right: 50%;
+    transform: translateX(320%) scale(0.9);
+    transform-origin: right;
+
+    &.btn-charge {
+        .s-sprite;
+        .s-btn-charge;
+        font-size: 0;
+        cursor: pointer;
+    }
+}
+/* 定义普通样式 E */

@@ -1,0 +1,177 @@
+<!--
+ * @Date: 2018-08-14 17:49:04
+ * @LastEditors: Jesse
+ * @LastEditTime: 2019-08-30 18:43:25
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="wap-font-scale" content="no">
+<meta property="qc:admins" content="7261517777656512176375" />
+
+<meta name="keywords" content="星光直播,人气直播,美女直播,女主播,手机直播,美颜直播,土壕直播,直播间,才艺直播,秀场"/>
+<meta name="description" content="土豪最爱看的美女直播.一个美颜效果最好的聚集超高颜值明星大咖、美女帅哥、热门网红、校花校草、逗比萌妹的手机直播社交平台" />
+<meta name="baidu-site-verification" content="ulQb1ppmog" />
+
+<link rel="shortcut icon" href="//static.guojiang.tv/mobile/img/common/title_icon.png" type="image/x-icon">
+<link rel="apple-touch-icon" href="//static.guojiang.tv/mobile/img/common/logo_1.png" sizes="144x144">
+
+<title><%= app.pageTitle %></title>
+<style>
+    .user-head{
+        height: 60px;
+        width: 1200px;
+        margin: 0 auto;
+    }
+    .user-head::after{
+        content: "";
+        clear: both;
+        display: block;
+    }
+    .user-head-logo{
+        float: left;
+    }
+    .user-head-logo img{
+        margin-top: 7px;
+        display: block;
+        vertical-align: middle;
+        height: 45px;
+        width: auto;
+    }
+    .user-head-login{
+        float: right;
+        transform: scale(0.5);
+        -webkit-transform: scale(0.5);
+        margin-top: -11px;
+    }
+    .user-head-login::after{
+        content: "";
+        clear: both;
+        display: block;
+    }
+    .login-sprite{
+        display: block;
+        float: left;
+        width: 84px;
+        height: 84px;
+        background: url("//static.guojiang.tv/pc/v4/img/user/all_new.png") no-repeat;
+        background-size: 298px 84px;
+        margin-left: 32px;
+        cursor: pointer;
+    }
+    .user-login-qq{
+        background-position: 0 0;
+    }
+    .user-login-wx{
+        background-position: -107px 0;
+    }
+    .user-login-wb{
+        background-position: -214px 0;
+    }
+</style>
+<script type="text/javascript">
+var _czc = _czc || [];
+_czc.push(['_setAccount', '1255976554']);
+</script>
+</head>
+
+<body>
+    <!--[if lt IE 9]>
+      <p class="browsehappy">您正使用过时的浏览器访问，可能有安全风险。建议您<a href="//browsehappy.osfipin.com/#" target="_balnk">升级浏览器</a>来获得更好的用户体验，发现一个全新的
+      星光直播-真的能撩到主播的直播
+      </p>
+      <div class="update_browser_wrap">
+          <span class="mask" style="background: #000!important;z-index:99999;"></span>
+          <div class="content"style="z-index:999999;">
+              <p>hi，您当前的浏览器版本过低，可能存在重大安全漏洞！</p>
+              <h3>请立即<a href="//browsehappy.osfipin.com" target="_blank">升级浏览器</a></h3>
+              <a href="//se.360.cn/" target="_blank" class="skip_btn">360浏览器</a>
+          </div>
+      </div>
+    <![endif]-->
+    <div class="user-head">
+        <div class="user-head-logo">
+            <img src="//static.guojiang.tv/pc/v4/img/user/xingguang_logo.png">
+        </div>
+        <div class="user-head-login ">
+            <span class="user-login-qq login-sprite"></span>
+            <span class="user-login-wx login-sprite"></span>
+            <span class="user-login-wb login-sprite"></span>
+        </div>
+    </div>
+    <%= content %>
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+
+(function() {
+    function async_load_baidu(){
+        var hm = document.createElement('script');
+        hm.src = 'https://hm.baidu.com/hm.js?a17ccf7bc3d9be2ed6f415dfe67056f0';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    }
+    function async_load_cnzz(){
+        var cz = document.createElement('script')
+        cz.src = '//s11.cnzz.com/z_stat.php?id=1255976554&web_id=1255976554'
+        cz.async = true
+        document.getElementsByTagName('body')[0].appendChild(cz)
+    }
+
+    function async_tongdun(){
+        _fmOpt = {
+            partner: 'guojiang',
+            appName: 'guojiang_web',
+            token: '<?= md5(Yii::app()->getSession()->getSessionId()) ?>'
+        };
+        var cimg = new Image(1,1);
+        cimg.onload = function() {
+            _fmOpt.imgLoaded = true;
+        };
+        cimg.src = 'https://fp.fraudmetrix.cn/fp/clear.png?partnerCode=guojiang&appName=guojiang_web&tokenId=' + _fmOpt.token;
+        var fm = document.createElement('script'); fm.type = 'text/javascript'; fm.async = true;
+        fm.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'static.fraudmetrix.cn/fm.js?ver=0.1&t=' + (new Date().getTime()/3600000).toFixed(0);
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(fm, s);
+    }
+
+
+    async_load_cnzz();
+    async_tongdun();
+    async_load_baidu();
+
+})();
+
+/*渠道handler*/
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
+
+var callback = getQueryString("callback");
+
+//qq登陆
+document.querySelector(".user-login-qq").addEventListener("click",function(){
+    location.href = "/user/qqLogin?callback="+callback;
+},false);
+//微信登陆
+document.querySelector(".user-login-wx").addEventListener("click",function(){
+    location.href = "/user/wxLogin?callback="+callback;
+},false);
+//微博登陆
+document.querySelector(".user-login-wb").addEventListener("click",function(){
+    location.href = "/user/weiboLogin?callback="+callback;
+},false);
+</script>
+
+</body>
+</html>
+

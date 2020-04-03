@@ -1,0 +1,92 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/mobile/v2/img/download/iosGuide" */ -->
+    <div class="page-bgs">
+        <!-- bgs -->
+        <div class="page-bg bg-header"></div>
+        <div class="page-bg bg-footer"></div>
+    </div>
+    <div class="page-content">
+        <div class="content">
+            <div v-if="packageA" class="guide-i">
+                <div class="guide-qrcode">
+                    <img v-show="packageA.qrcode_url" :src="packageA.qrcode_url" :alt="packageA.display_name">
+                </div>
+                <div class="guide-name">{{ packageA.display_name || '' }}</div>
+                <div class="guide-info">{{ packageA.introduction || '' }}</div>
+                <div class="guide-tips">1：点击安装</div>
+                <div class="guide-btn btn-install" @click="goInstall(1)">点击安装</div>
+                <div class="guide-tips">2：安装完成后，<br/>立即信任</div>
+                <div class="guide-btn btn-cert" @click="goCert">立即信任</div>
+            </div>
+            <div v-if="packageB" class="guide-i">
+                <div class="guide-qrcode">
+                    <img v-show="packageB.qrcode_url" :src="packageB.qrcode_url" :alt="packageB.display_name">
+                </div>
+                <div class="guide-name">{{ packageB.display_name || '' }}</div>
+                <div class="guide-info">{{ packageB.introduction || '' }}</div>
+                <div class="guide-tips">1：点击安装</div>
+                <div class="guide-btn btn-install" @click="goInstall(2)">点击安装</div>
+                <div class="guide-tips">2：安装完成后，<br/>立即信任</div>
+                <div class="guide-btn btn-cert" @click="goCert">立即信任</div>
+            </div>
+        </div>
+        <div class="guide-btn btn-more" @click="getMoreInfo">详细图解教程</div>
+    </div>
+    <div class="tips-layer" v-show="showTips" @click="hideLayer">
+        <div class="tips" @click.stop=""></div>
+    </div>
+    <div class="op-layer" v-show="showOp">
+        <div class="op-content">
+            <div class="op-header">
+                安装详细教程
+                <span class="btn-close" @click="closeOp"></span>
+            </div>
+            <div class="op-inner">
+                <div class="op-item">
+                    <span class="badge">1</span>
+                    <img class="op-img op-img-1" src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/download/iosGuide/tip1.jpg')}" />
+                </div>
+                <div class="op-item">
+                    <span class="badge">2</span>
+                    <img class="op-img op-img-2" src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/download/iosGuide/tip2.jpg')}" />
+                </div>
+                <div class="op-item">
+                    <span class="badge">3</span>
+                    <img class="op-img op-img-3" src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/download/iosGuide/tip3.jpg')}" />
+                </div>
+                <div class="op-item">
+                    <span class="badge">4</span>
+                    <img class="op-img op-img-4" src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/download/iosGuide/tip4.jpg')}" />
+                </div>
+                <div class="op-item">
+                    <span class="badge">5</span>
+                    <img class="op-img op-img-5" src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/download/iosGuide/tip5.jpg')}" />
+                </div>
+                <div class="op-item">
+                    <span class="badge">6</span>
+                    <img class="op-img op-img-6" src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/download/iosGuide/tip6.jpg')}" />
+                </div>
+                <div class="op-item">
+                    <span class="badge">7</span>
+                    <img class="op-img op-img-7" src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/download/iosGuide/tip7.jpg')}" />
+                </div>
+                <div class="op-item">
+                    <span class="badge">8</span>
+                    <img class="op-img op-img-8" src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/download/iosGuide/tip8.jpg')}" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <loading ref="loading"></loading>
+    <toast ref="toast"></toast>
+</div>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '星光直播ios下载引导',
+    content: '星光直播ios下载引导',
+    link: location.href,
+    imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/download/iosGuide/share.png")}' // eslint-disable-line
+})
+</script>

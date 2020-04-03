@@ -1,0 +1,325 @@
+<div class="wrapper" id="app" v-cloak>
+    <div class="banner"></div>
+
+    <main class="weekstar-content">
+        <!-- 礼物 -->
+        <div class="gift-out">
+            <div class="common-tit act-gift"></div>
+            <div class="act-gift-list c_clearfix">
+                <div class="act-gift-item" v-for="item in giftInfo">
+                    <div class="act-gift-img">
+                        <img :src="item.img">
+                    </div>
+                    <p class="act-gift-name">{{item.name}}</p>
+                    <p>{{item.price}}克拉</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- 本周榜单 -->
+        <section class="sort-table current-sort-table">
+            <div class="common-tit"></div>
+            <div class="sort-table-body">
+                <ul class="sort-gift-lists c_clearfix" v-if="giftInfo.length > 0">
+                    <li class="gift-item gift-item-current" :class="{'gift-item-act':gift[0]}" @click="giftChange(0)">
+                        {{giftInfo[0]["name"]}}
+                    </li>
+                    <li class="gift-item gift-item-current" :class="{'gift-item-act':gift[2]}" @click="giftChange(2)">
+                        {{giftInfo[2]["name"]}}
+                    </li>
+                    <li class="gift-item gift-item-current" :class="{'gift-item-act':gift[1]}" @click="giftChange(1)">
+                        {{giftInfo[1]["name"]}}
+                    </li>
+                </ul>
+
+                <div class="btn-change-lists">
+                    <div class="btn-change-mod" :class="{'btn-change-act-mod':giftItem[0]}" @click="giftItemChange(0)"></div>
+                    <div class="btn-change-user" :class="{'btn-change-act-user':giftItem[1]}" @click="giftItemChange(1)"></div>
+                </div>
+                <div class="sort-wrap">
+                    <div class="mods" v-show="giftItem[0]">
+                        <!-- 前三 -->
+                        <ul class="top-three">
+                            <li v-for="(item,index) in currentShowList" v-if="index < 3">
+                                <div class="img-area">
+                                    <img :src="item.headPic" alt=""  @click="goRoom(item.id)" />
+                                    <b></b>
+                                    <span v-if="item.isPlaying" @click="goRoom(item.id)"></span>
+                                    <em></em>
+                                </div>
+                                <div class="mes-area">
+                                    <div>
+                                        <strong>{{item.nickname}}</strong>
+                                        <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                    </div>
+                                    <span>收到：{{item.score}}</span>
+                                </div>
+                                <div :class="[item.isLoved||attendCurrent[index] ? 'cared' : 'care']" @click="addAttend(item.id,index)"></div>
+                            </li>
+                        </ul>
+
+                        <!-- 4~12 -->
+                        <div class="other-out" v-show="currentShowList.length > 3">
+                            <div class="top-other">
+                                <ul class="clearfix">
+                                    <li v-for="(item,index) in currentShowList" v-if="index >= 3">
+                                        <div class="number">{{index+1}}</div>
+                                        <img :src="item.headPic" alt="" @click="goRoom(item.id)" />
+                                        <b v-if="item.isPlaying" @click="goRoom(item.id)"></b>
+                                        <strong>{{item.nickname}}</strong>
+                                        <span>收到: {{item.score}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 我的 -->
+                        <div class="mine c_clearfix" v-if="currentMyList != null">
+                            <div class="mine-img">
+                                <img :src="currentMyList.headPic" alt="" @click="goRoom(currentMyList.id)" />
+                                <b v-if="currentMyList.isPlaying" @click="goRoom(currentMyList.id)"></b>
+                                <p>{{currentMyList.nickname}}</p>
+                            </div>
+                            <div class="mine-rank" v-if="currentMyList.pairInfos != undefined">
+                                <p class="mine-text_1">{{currentMyList.pairInfos[0].name}}</p>
+                                <p class="mine-text_2">{{currentMyList.pairInfos[0].value}}</p>
+                                <p class="mine-text_1">{{currentMyList.pairInfos[2].name}}</p>
+                                <p class="mine-text_2">{{currentMyList.pairInfos[2].value}}</p>
+                            </div>
+                            <div class="mine-rank-num" v-if="currentMyList.pairInfos != undefined">
+                                <p class="mine-text_1">{{currentMyList.pairInfos[1].name}}</p>
+                                <p class="mine-text_2">{{currentMyList.pairInfos[1].value}}</p>
+                                <p class="mine-text_1">{{currentMyList.pairInfos[3].name}}</p>
+                                <p class="mine-text_2">{{currentMyList.pairInfos[3].value}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="users" v-show="giftItem[1]">
+                        <!-- 前三 -->
+                        <ul class="top-three">
+                            <li v-for="(item,index) in currentShowList" v-if="index < 3">
+                                <div class="img-area">
+                                    <img :src="item.headPic" alt="" />
+                                    <b></b>
+                                    <em></em>
+                                </div>
+                                <div class="mes-area">
+                                    <div>
+                                        <strong>{{item.nickname}}</strong>
+                                        <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                    </div>
+                                    <span>送出：{{item.score}}</span>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- 4~12 -->
+                        <div class="other-out" v-show="currentShowList.length > 3">
+                            <div class="top-other">
+                                <ul class="clearfix">
+                                    <li v-for="(item,index) in currentShowList" v-if="index >= 3">
+                                        <div class="number">{{index+1}}</div>
+                                        <img :src="item.headPic" alt="" />
+                                        <strong>{{item.nickname}}</strong>
+                                        <span>送出: {{item.score}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 我的 -->
+                        <div class="mine c_clearfix" v-if="currentMyList != null">
+                            <div class="mine-img">
+                                <img :src="currentMyList.headPic" alt="" />
+                                <p>{{currentMyList.nickname}}</p>
+                            </div>
+                            <div class="mine-rank" v-if="currentMyList.pairInfos != undefined">
+                                <p class="mine-text_1">{{currentMyList.pairInfos[0].name}}</p>
+                                <p class="mine-text_2">{{currentMyList.pairInfos[0].value}}</p>
+                                <p class="mine-text_1">{{currentMyList.pairInfos[2].name}}</p>
+                                <p class="mine-text_2">{{currentMyList.pairInfos[2].value}}</p>
+                            </div>
+                            <div class="mine-rank-num" v-if="currentMyList.pairInfos != undefined">
+                                <p class="mine-text_1">{{currentMyList.pairInfos[1].name}}</p>
+                                <p class="mine-text_2">{{currentMyList.pairInfos[1].value}}</p>
+                                <p class="mine-text_1">{{currentMyList.pairInfos[3].name}}</p>
+                                <p class="mine-text_2">{{currentMyList.pairInfos[3].value}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 上周榜单 -->
+        <section class="sort-table prev-sort-table">
+            <div class="common-tit"></div>
+            <div class="sort-table-body">
+                <ul class="sort-gift-lists c_clearfix" v-if="giftedInfo.length > 0">
+                    <li class="gift-item gift-item-current" :class="{'gift-item-act':gifted[0]}" @click="giftedChange(0)">
+                        {{giftedInfo[0]["name"]}}
+                    </li>
+                    <li class="gift-item gift-item-current" :class="{'gift-item-act':gifted[2]}" @click="giftedChange(2)">
+                        {{giftedInfo[2]["name"]}}
+                    </li>
+                    <li class="gift-item gift-item-current" :class="{'gift-item-act':gifted[1]}" @click="giftedChange(1)">
+                        {{giftedInfo[1]["name"]}}
+                    </li>
+                </ul>
+                <div class="prev-anchor-wrap">
+                    <div class="prev-half" v-if="currentLastWeekStar != null ">
+                        <div class="prev-avator anchor-avator" @click="goRoom(currentLastWeekStar[0].id)">
+                            <span class="live" v-if="currentLastWeekStar[0].isPlaying"></span>
+                            <img class="img-fill" :src="currentLastWeekStar[0].headPic">
+                        </div>
+                        <p class="prev-avator-nickname">{{currentLastWeekStar[0].nickname}}</p>
+                        <p class="prev-avator-giftnum">收到礼物:{{currentLastWeekStar[0].score}}</p>
+                    </div>
+                    <div class="prev-half" v-if="currentLastWeekStar != null ">
+                        <div class="prev-avator">
+                            <img class="img-fill" :src="currentLastWeekStar[1].headPic">
+                        </div>
+                        <p class="prev-avator-nickname">{{currentLastWeekStar[1].nickname}}</p>
+                        <p class="prev-avator-giftnum">送出礼物:{{currentLastWeekStar[1].score}}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <p class="foot-declar"></p>
+        <!-- 弹框 -->
+        <!-- <div class="msg-box" @click="closeMsgBox" style="display: none;" v-show="msgBox">
+            <div class="show-msg" @click.stop="">{{msgBoxContent}}</div>
+        </div> -->
+        <!-- 活动规则 -->
+        <div class="rules-btn" @click="showRule"></div>
+        <div class="cover-bg" v-show="ruleStatus" style="display:none;">
+            <section class="sort-table rules-wrap">
+                <div class="common-tit"></div>
+                <div class="rules-close" @click="closeRule"></div>
+                <div class="rules-content">
+                    <div class="rule-cover">
+                        <div class="rules-box">
+                            <p class="rule-text">1.活动时间：<b>每周一12:00:00 -- 每周日23:59:59</b>。</p>
+                            <p class="rule-text">2.活动期间，全平台上线三个活动礼物，每个活动礼物都产生对应榜单。收到对应活动礼物数量最多的主播，即为该榜单周星。榜单只显示前12名主播和用户。</p>
+                            <p class="rule-text">3.推荐位福利：截止到每周五17:00:00的三个榜单前3名，以及活动结束后最终榜单前3名，都能获得热门推广机会。
+                            <br />周五榜单前3名推广时间：周五17:00:01~周六17:00:00
+                            <br />最终榜单前3名推广时间：次周一00:00:00~周二23:59:59
+                            </p>
+                            <p class="rule-text">
+                                4.同时夺得三个周星的主播，将被冠以<b>“星光女神/男神”</b>称号，获得专属定制炸房推广活动。
+                            </p>
+                            <p class="rule-text">
+                                5.周星需主动联系官方工作人员（QQ：3230851644）提供个人照片以作广告位推广，<b>未主动联系工作人员视为放弃推广机会。</b>
+                            </p>
+                        </div>
+                        <div class="common-tit"></div>
+                        <div class="rules-box" v-if="giftInfo.length > 0">
+                            <h2 class="prize-title">周星榜单奖励</h2>
+                            <div class="prize-table anchor-prize">
+                                <div class="prize-item c_clearfix" >
+                                    <span>排名</span>
+                                    <span>{{giftInfo[0]["name"]}}榜</span>
+                                    <span>{{giftInfo[1]["name"]}}榜</span>
+                                    <span>{{giftInfo[2]["name"]}}榜</span>
+                                </div>
+                                <div class="prize-item c_clearfix" >
+                                    <span>第一名(周星)</span>
+                                    <span>广告位推广</span>
+                                    <span>广告位推广</span>
+                                    <span>广告位推广</span>
+                                </div>
+                                <div class="prize-item c_clearfix" >
+                                    <span>第二名</span>
+                                    <span>30000克拉</span>
+                                    <span>40000克拉</span>
+                                    <span>60000克拉</span>
+                                </div>
+                                <div class="prize-item c_clearfix" >
+                                    <span>第三名</span>
+                                    <span>20000克拉</span>
+                                    <span>30000克拉</span>
+                                    <span>50000克拉</span>
+                                </div>
+                            </div>
+                            <p class="rules-tips">
+                                注：广告位推广时间：每周四12:00:00- 每周一23:59:59。
+                            </p>
+                            
+                            <!-- 周星冠名 -->
+                            <div class="weekstar-winner">
+                                <b></b>
+                                <div class="weekstar-gift"></div>
+                            </div>
+
+                            <h2 class="prize-title">护星榜单奖励</h2>
+                            <div class="prize-table user-prize">
+                                <div class="prize-item c_clearfix font-bold" >
+                                    <span>排名</span>
+                                    <span>{{giftInfo[0]["name"]}}榜</span>
+                                    <span>{{giftInfo[1]["name"]}}榜</span>
+                                    <span>{{giftInfo[2]["name"]}}榜</span>
+                                </div>
+                                <div class="prize-item c_clearfix" >
+                                    <span>第一名</span>
+                                    <span>
+                                        <p>30000克拉+</p>
+                                        <p>上头条*10</p>
+                                    </span>
+                                    <span>
+                                        <p>40000克拉+</p>
+                                        <p>上头条*12</p>
+                                    </span>
+                                    <span>
+                                        <p>50000克拉+</p>
+                                        <p>上头条*15</p>
+                                    </span>
+                                </div>
+                                <div class="prize-item c_clearfix" >
+                                    <span>第二名</span>
+                                    <span>
+                                        <p>20000克拉+</p>
+                                        <p>上头条*8</p>
+                                    </span>
+                                    <span>
+                                        <p>30000克拉+</p>
+                                        <p>上头条*10</p>
+                                    </span>
+                                    <span>
+                                        <p>40000克拉+</p>
+                                        <p>上头条*12</p>
+                                    </span>
+                                </div>
+                                <div class="prize-item c_clearfix" >
+                                    <span>第三名</span>
+                                    <span>
+                                        <p>15000克拉+</p>
+                                        <p>上头条*5</p>
+                                    </span>
+                                    <span>
+                                        <p>20000克拉+</p>
+                                        <p>上头条*8</p>
+                                    </span>
+                                    <span>
+                                        <p>30000克拉+</p>
+                                        <p>上头条*10</p>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="rules-tips">注："上头条"用于提升主播热门排名，效果是普通礼物的2倍，但不参与分成。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</div>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '周星大作战 全新改版',
+        content: '周星争夺大战，一触即发，给你好看！',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/weekstar/queen5/share.jpg")}'
+    });
+</script>

@@ -1,0 +1,418 @@
+/* 定义全局基值 S */
+#app {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+/* 定义全局基值 E */
+
+/* 定义可复用样式 S */
+.fl-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fl-ver {
+    display: flex;
+    align-items: center;
+}
+.txt-of {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.btn {
+    &:active {
+        opacity: 0.85;
+    }
+}
+/* 定义可复用样式 E */
+
+/* 定义普通样式 S */
+.getSpritePad (@w, @h, @posx, @posy, @pad) {
+    background-position: (@posx + @pad)/@bf (@posy + @pad)/@bf;
+    width: (@w + @pad*2)/@bf;
+    height: (@h + @pad*2)/@bf;
+}
+.getSprite (@w, @h, @posx, @posy) {
+    .getSpritePad(@w, @h, @posx, @posy, 5);
+}
+
+
+.SET_SPRITE () {
+    .sprite {
+        background: url('@{imgUrl}/sprites.png') no-repeat;
+        background-size: 721/@bf 662/@bf;
+        font-size: 0px;
+        display: block;
+    }
+
+    .rn-6 {
+        .getSprite(29, 43, -666, -355);
+    }
+    .rn-7 {
+        .getSprite(27, 42, -521, -104);
+    }
+    .rn-8 {
+        .getSprite(29, 43, -615, -418);
+    }
+    .rn-9 {
+        .getSprite(29, 43, -664, -418);
+    }
+    .txt-num-af {
+        .getSprite(38, 39, -615, -296);
+    }
+    .txt-price-pre {
+        .getSprite(122, 44, -10, -452);
+    }
+    .txt-price-af {
+        .getSprite(89, 44, -615, -77);
+    }
+    .bn-0 {
+        .getSprite(23, 35, -568, -166);
+    }
+    .bn-2 {
+        .getSprite(21, 34, -521, -392);
+    }
+    .txt-num-pre {
+        .getSprite(164, 40, -10, -392);
+    }
+    .bn-3 {
+        .getSprite(23, 35, -521, -228);
+    }
+    .bn-4 {
+        .getSprite(25, 35, -673, -296);
+    }
+    .bn-1 {
+        .getSprite(9, 35, -552, -446);
+    }
+    .bn-5 {
+        .getSprite(22, 34, -521, -338);
+    }
+    .bn-6 {
+        .getSprite(23, 35, -564, -228);
+    }
+    .bn-7 {
+        .getSprite(22, 34, -563, -338);
+    }
+    .bn-8 {
+        .getSprite(23, 35, -521, -283);
+    }
+    .bn-9 {
+        .getSprite(23, 35, -564, -283);
+    }
+    .btn-atte {
+        .getSprite(166, 90, -310, -120);
+    }
+    .btn-atte-dis {
+        .getSprite(166, 90, -10, -230);
+    }
+    .btn-buy {
+        .getSprite(136, 74, -196, -230);
+    }
+    .btn-buy2 {
+        .getSprite(191, 90, -10, -120);
+    }
+    .btn-cancel {
+        .getSprite(96, 47, -615, -10);
+    }
+    .btn-charge {
+        .getSprite(191, 90, -310, -10);
+    }
+    .btn-close {
+        .getSprite(74, 74, -521, -10);
+    }
+    .btn-gor {
+        .getSprite(280, 90, -10, -10);
+    }
+    .btn-pw {
+        .getSprite(136, 74, -352, -230);
+    }
+    .gtxt-antz {
+        .getSprite(134, 31, -10, -516);
+    }
+    .gtxt-bqk {
+        .getSprite(100, 33, -10, -619);
+    }
+    .gtxt-htjc {
+        .getSprite(134, 32, -307, -452);
+    }
+    .gtxt-jysj1 {
+        .getSprite(148, 32, -194, -392);
+    }
+    .gtxt-ch {
+        .getSprite(65, 32, -615, -141);
+    }
+    .gtxt-jysj2 {
+        .getSprite(157, 32, -268, -340);
+    }
+    .gtxt-jzyy {
+        .getSprite(135, 32, -362, -392);
+    }
+    .gtxt-mt {
+        .getSprite(66, 31, -615, -245);
+    }
+    .gtxt-nmtz {
+        .getSprite(134, 31, -164, -516);
+    }
+    .gtxt-rsrx {
+        .getSprite(135, 32, -152, -452);
+    }
+    .gtxt-xq {
+        .getSprite(65, 32, -615, -193);
+    }
+    .gtxt-ywhdtz {
+        .getSprite(238, 32, -10, -340);
+    }
+    .per-g {
+        .getSprite(127, 32, -10, -567);
+    }
+    .rn-0 {
+        .getSprite(29, 43, -615, -481);
+    }
+    .rn-2 {
+        .getSprite(27, 42, -568, -104);
+    }
+    .rn-1 {
+        .getSprite(11, 43, -521, -446);
+    }
+    .rn-3 {
+        .getSprite(27, 43, -664, -481);
+    }
+    .rn-5 {
+        .getSprite(27, 42, -521, -166);
+    }
+    .rn-4 {
+        .getSprite(31, 43, -615, -355);
+    }
+}
+
+.SET_SPRITE();
+
+/* 页面内容 */
+.page-content {
+    position: relative;
+    z-index: 2;
+    padding-top: 753/@bf;
+}
+
+.gift-box {
+    width: 755/@bf;
+    padding-top: 576/@bf;
+    margin: 0 auto;
+
+    .f-num {
+        .sprite {
+            margin: 0 -6/@bf;
+            transform: scale(0.7931);
+        }
+    }
+
+    .gift-opt {
+        margin-top: 10/@bf;
+
+        .sprite {
+            margin: 0 10/@bf;
+        }
+    }
+}
+
+.cus-gifts {
+    width: 754/@bf;
+    height: 2880/@bf;
+    margin: 346/@bf auto 0;
+}
+
+.cus-gi {
+    display: inline-block;
+    width: 336/@bf;
+    height: 450/@bf;
+    margin-top: 26/@bf;
+
+    &:nth-child(2n+1) {
+        margin-right: 45/@bf;
+    }
+
+    .gift-icon {
+        display: block;
+        width: 180/@bf;
+        height: 180/@bf;
+        margin: 44/@bf auto 54/@bf;
+    }
+
+    .gift-p-num {
+        .sprite {
+            margin: 0 -2/@bf;
+            transform: scale(0.9);
+        }
+    }
+
+    .gift-name {
+        margin: 0 auto;
+    }
+}
+
+.gift-icon {
+    background-size: cover;
+    background-repeat: no-repeat;
+    &.gift-nmtz {
+        background-image: url('@{imgUrl}/425x400.png');
+    }
+    &.gift-htjc {
+        background-image: url('@{imgUrl}/426x400.png');
+    }
+    &.gift-antz {
+        background-image: url('@{imgUrl}/475x400.png');
+    }
+    &.gift-mt {
+        background-image: url('@{imgUrl}/522x400.png');
+    }
+    &.gift-ywhdtz {
+        background-image: url('@{imgUrl}/562x400.png');
+    }
+    &.gift-bqk {
+        background-image: url('@{imgUrl}/2007x400.png');
+    }
+    &.gift-ch {
+        background-image: url('@{imgUrl}/2014x400.png');
+    }
+    &.gift-xq {
+        background-image: url('@{imgUrl}/2017x400.png');
+    }
+    &.gift-jzyy {
+        background-image: url('@{imgUrl}/2059x400.png');
+    }
+    &.gift-jysj2 {
+        background-image: url('@{imgUrl}/2078x400.png');
+    }
+    &.gift-jysj1 {
+        background-image: url('@{imgUrl}/2079x400.png');
+    }
+    &.gift-rsrx {
+        background-image: url('@{imgUrl}/2097x400.png');
+    }
+}
+
+.rules {
+    height: 660/@bf;
+}
+
+.modal-layer,
+.svg-layer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    z-index: 20;
+}
+
+.modal-layer {
+    .modal-content {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .btn-close {
+        position: absolute;
+        top: 0px;
+        right: -20/@bf;
+    }
+
+    &.buy .modal-content {
+        width: 820/@bf;
+        height: 629/@bf;
+        background: url('@{imgUrl}/buy-bg.png') no-repeat;
+        background-size: cover;
+
+        .buy-input {
+            width: 385/@bf;
+            height: 90/@bf;
+            background: #e13460;
+            border: 3/@bf solid #000;
+            border-radius: 16/@bf;
+            text-align: center;
+            font-size: 46/@bf;
+            color: #fff;
+            margin-top: 165/@bf;
+            margin-left: 270/@bf;
+            box-sizing: border-box;
+        }
+
+        .buy-price {
+            margin-top: 30/@bf;
+        }
+
+        .p-num {
+            margin: 0px 14/@bf;
+        }
+
+        .btn-buy2 {
+            margin: 50/@bf auto 0;
+        }
+    }
+
+    &.charge .modal-content {
+        width: 820/@bf;
+        height: 481/@bf;
+        background: url('@{imgUrl}/charge-bg.png') no-repeat;
+        background-size: cover;
+        padding-top: 260/@bf;
+        box-sizing: border-box;
+
+        .btn-opt {
+            .btn {
+                margin: 0 40/@bf;
+            }
+        }
+    }
+}
+
+.svg-layer {
+    .svg-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .pw-pic {
+        display: block;
+        width: 400/@bf;
+        height: 400/@bf;
+        margin: 0 auto;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+.toast-container {
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 50;
+
+    .toast-msg {
+        position: fixed;
+        z-index: 20;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 16/@bf 26/@bf;
+        font-size: 38/@bf;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 12/@bf;
+        max-width: 70%;
+
+        &.tips {
+            width: 70%;
+        }
+    }
+}

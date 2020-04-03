@@ -1,0 +1,21 @@
+@bf: 108rem;
+.border-radius (@radius : 50%){
+    border-radius:  @radius;
+    -webkit-border-radius:  @radius;
+    -o-border-radius:  @radius;
+    -moz-border-radius:  @radius;
+    -ms-border-radius:  @radius;
+}
+body{background: #fff;}
+section{
+	padding-top: 220/@bf;
+	p{font-size:16px;color:#959595;padding-bottom: 66/@bf;text-align: center;}
+	button{width: 800/@bf;height: 136/@bf;line-height: 136/@bf;text-align: center;.border-radius(65/@bf);background: #ff0071;display: block;margin: 0 auto 236/@bf;font-size:18px;color:#ffffff;border:none;
+		&:active{opacity:0.6;}
+	}
+
+	h2{font-size: 18px;text-align: center;font-weight: normal;}
+	input{width: 800/@bf;height: 136/@bf;line-height: 1;text-align: center;.border-radius(65/@bf);border:1px solid #313131;margin:50/@bf auto 135/@bf;display: block;font-size: 14px;color:#313131;
+		&::-webkit-input-placeholder {color:#959595;}
+	}
+}

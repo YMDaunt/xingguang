@@ -1,0 +1,109 @@
+@imgUrl:"../../img/user/";
+@bf:75rem;
+.fontDpr(@fontSize){
+    font-size: @fontSize;
+    [data-dpr="2"] & {
+        font-size: @fontSize*2;
+    }
+    [data-dpr="3"] & {
+        font-size: @fontSize*3;
+    }
+}
+/*背景图居中覆盖cover*/
+.bCover(@url){
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+/*背景图居中contain*/
+.bContain(@url){
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+/*背景图填满100%*/
+.bfill(@url){
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+}
+/*背景图Y轴复制*/
+.backgroundRepeat(@url){
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: repeat;
+    background-size: contain;
+}
+.c_clearfix::after{
+    display: block;
+    clear: both;
+    content: "";
+}
+em{
+    font-style: normal;
+}
+header{
+    border: none;
+}
+html,body{
+    height: 100%;
+}
+body{
+    overflow: hidden;
+}
+.wrapper{ 
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    overflow: hidden;
+    .bfill("bg.jpg");
+}
+.sprite{
+    background:url("@{imgUrl}sprite.png") no-repeat;
+    background-size: 601/@bf 560/@bf;
+}
+.user-logo{
+    width: 548/@bf;
+    height: 257/@bf;
+    margin: 550/@bf auto 0;
+    .sprite;
+    background-position: -24/@bf -6/@bf;
+}
+.login-block{
+    width: 550/@bf;
+    margin: 110/@bf auto 0;
+    div{
+        float: left;
+        width: 115/@bf;
+        height: 115/@bf;
+        margin-right: 100/@bf;
+        .sprite;
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+    .qq-login{
+        background-position: -25/@bf -419/@bf;
+    }
+    .wx-login{
+        background-position: -240/@bf -419/@bf;
+    }
+    .wb-login{
+        background-position: -455/@bf -419/@bf;
+    }
+}
+
+.user-num{
+    text-align: center;
+    margin-top: 20/@bf;
+    color: #fff;
+    font-size: 14px;
+    em{
+        color: #e31d7b;
+        font-size: 16px;
+        font-weight: bold;
+    }
+}
+

@@ -1,0 +1,35 @@
+<style type="text/css">
+	body{background: #f6f1ea;}
+	article{padding-left: 10px;}
+	article h2{font-size:12px;color:#da500e;line-height: 36px;}
+	article p{font-size:13px;color:#333333;line-height: 18px;padding-bottom: 10px;}
+</style>
+
+<article>
+	<h2>1，领取红包的次数</h2>
+	<p>第一天可以领取7次红包，以后每天可领取6次红包。</p>
+
+	<h2>2，红包领取</h2>
+	<p>在任一直播间，当红包图案处出现“可领取”时，即可点击领取到红包现金。<br>
+	每天最后一次领完红包时，还可以邀请朋友注册我们app，受邀者成功注册app后您将获得红包奖励，最高20元。</p>
+
+	<div id="thirdRule">
+		
+	</div>
+	
+</article>
+<script type="text/javascript">
+var rule_1 = '<h2>3，提现</h2>\
+	<p>当红包余额满50元时可提现。每天最多可提金额为200元。<br>\
+		每一笔红包的有效期为90天,在有效期内尽快提走哦。<br>\
+		首次提现需要进行实名认证，并绑定微信公众号。\
+	</p>',
+	rule_2 = '<h2>3，红包规则说明</h2><p>每天凌晨5:00:00重置当天红包领取的次数。</p>'
+var isRoom = location.hash.indexOf('my') == -1,
+	dom = document.getElementById('thirdRule')
+if(isRoom){
+	dom.innerHTML = rule_2
+}else{
+	dom.innerHTML = rule_1
+}
+</script>

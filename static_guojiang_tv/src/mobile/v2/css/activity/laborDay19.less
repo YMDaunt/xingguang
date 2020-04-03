@@ -1,0 +1,31 @@
+// ../../img/activity/laborDay19
+@activityName: 'activity/laborDay19';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+@imgUrl: '../../img/activity/laborDay19';
+
+@import './laborDay19.mixin.less';
+
+/* 背景图 */
+.page-bgs {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+
+    .page-bg {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 1760/@bf;
+        background-image: url('@{imgUrl}/bg_0.jpg');
+    }
+}
+
+.page-content {
+    padding-top: 998/@bf; // banner height
+}
+/* 定义普通样式 E */

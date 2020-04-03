@@ -1,0 +1,341 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="ban1"></div>
+    <div class="ban2"></div>  
+    <div class="wrap">
+        
+        <section class="gb-gift">
+            <div class="common-tit">
+                <b class="xianding"></b>
+            </div>
+
+            <div class="posi-box">
+                <ul>
+                    <li>
+                        <b></b>
+                        <strong>赛龙舟（7天座驾）</strong>
+                        <span>2999克拉/个</span>
+                        <div class="gift-btns">
+                            <div class="yl" @click="doLoveSvg()"></div>
+                            <div class="buy" @click="buySeven($event)" data-value="2999" data-id="521"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <b></b>
+                        <strong>粽情端午</strong>
+                        <span>6666克拉/个</span>
+                        <div class="gift-btns">
+                            <div class="yl"  @click="doTianShiSvg()"></div>
+                            <div class="buy" @click="buy($event)" data-value="6666" data-id="520"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="runway">
+            <div class="common-tit">
+                <b class="rungame"></b>
+            </div>
+            <div class="runway-wrap">
+                <div class="runway-bg"></div>
+                <canvas width="756" height="910" id="canvas"></canvas>
+                <canvas width="756" height="910" id="move-canvas"></canvas>
+            </div>
+            <div class="tips">*前四个赛段只显示前五名主播，第五赛段显示所有主播。*1个“小肉粽”帮助主播前进1米。</div>
+        </section>
+
+        <!-- 赛事速报 -->
+        <section class="run-mes">
+            <div class="common-tit">
+                <b class="runmes"></b>
+            </div>
+            <div class="rank-run">
+                <div class="top-three">
+                    <ul>
+                        <li v-for="(item, index) in modTopArr">
+                            <div class="img-area">
+                                <b v-bind:data-rid="item.id" @click="inlive($event)"></b>
+                                <span v-if="item.isPlaying" v-bind:data-rid="item.id" @click="inlive($event)"></span>
+                                <img :src="item.headPic" alt="" />
+                            </div>
+                            <div class="mes">
+                                <div>
+                                    <strong>{{item.nickname}}</strong>
+                                </div>
+                                <span>成绩: {{item.score}}米</span>
+                            </div>
+                            <div v-if="!item.isLoved" class="care" v-bind:data-id="item.id" @click="love($event, index)"></div>
+                            <div class="cared" v-else></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="step-all">
+                    <div class="step5">
+                        <h3 class="hide-h3">
+                            <strong>第五赛段</strong>
+                            <span><i>展开排名</i> <b>></b></span>
+                        </h3>
+                        <div class="step-con">
+                            <ul v-if="modArrFivLen">
+                                <li class="clearfix" v-for="(item, index) in modArrFiv">
+                                    <div class="number">{{item.rank}}</div>
+                                    <div class="img-con">
+                                        <img :src="item.headPic" alt="" v-bind:data-rid="item.id" @click="inlive($event)"/>
+                                        <span v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></span>
+                                    </div>
+                                    <div class="mes-con">
+                                        <div>
+                                            <strong>{{item.nickname}}</strong>
+                                        </div>
+                                        <span>成绩：{{item.score}}米</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="none" v-else>阿哦！还没有龙舟划到这里！</div>
+                        </div>
+                    </div>
+                    <div class="step4">
+                        <h3 class="hide-h3">
+                            <strong>第四赛段</strong>
+                            <span><i>展开排名</i> <b>></b></span>
+                        </h3>
+                        <div class="step-con">
+                            <ul v-if="modArrForLen">
+                                <li class="clearfix" v-for="(item, index) in modArrFor">
+                                    <div class="number">{{item.rank}}</div>
+                                    <div class="img-con">
+                                        <img :src="item.headPic" alt="" v-bind:data-rid="item.id" @click="inlive($event)" />
+                                        <span v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></span>
+                                    </div>
+                                    <div class="mes-con">
+                                        <div>
+                                            <strong>{{item.nickname}}</strong>
+                                        </div>
+                                        <span>成绩：{{item.score}}米</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="none" v-else>阿哦！还没有龙舟划到这里！</div>
+                        </div>
+                    </div>
+                    <div class="step3">
+                        <h3 class="hide-h3">
+                            <strong>第三赛段</strong>
+                            <span><i>展开排名</i> <b>></b></span>
+                        </h3>
+                        <div class="step-con">
+                            <ul v-if="modArrThiLen">
+                                <li class="clearfix" v-for="(item, index) in modArrThi">
+                                    <div class="number">{{item.rank}}</div>
+                                    <div class="img-con">
+                                        <img :src="item.headPic" alt="" v-bind:data-rid="item.id" @click="inlive($event)"/>
+                                        <span v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></span>
+                                    </div>
+                                    <div class="mes-con">
+                                        <div>
+                                            <strong>{{item.nickname}}</strong>
+                                        </div>
+                                        <span>成绩：{{item.score}}米</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="none" v-else>阿哦！还没有龙舟划到这里！</div>
+                        </div>
+                    </div>
+                    <div class="step2">
+                        <h3 class="hide-h3">
+                            <strong>第二赛段</strong>
+                            <span><i>展开排名</i> <b>></b></span>
+                        </h3>
+                        <div class="step-con">
+                            <ul v-if="modArrTwoLen">
+                                <li class="clearfix" v-for="(item, index) in modArrTwo">
+                                    <div class="number">{{item.rank}}</div>
+                                    <div class="img-con">
+                                        <img :src="item.headPic" alt=""  v-bind:data-rid="item.id" @click="inlive($event)"/>
+                                        <span v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></span>
+                                    </div>
+                                    <div class="mes-con">
+                                        <div>
+                                            <strong>{{item.nickname}}</strong>
+                                        </div>
+                                        <span>成绩：{{item.score}}米</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="none" v-else>阿哦！还没有龙舟划到这里！</div>
+                        </div>
+                    </div>
+                    <div class="step1">
+                        <h3 class="hide-h3">
+                            <strong>第一赛段</strong>
+                            <span><i>展开排名</i> <b>></b></span>
+                        </h3>
+                        <div class="step-con">
+                            <ul v-if="modArrOneLen">
+                                <li class="clearfix" v-for="(item, index) in modArrOne">
+                                    <div class="number">{{item.rank}}</div>
+                                    <div class="img-con">
+                                        <img :src="item.headPic" alt="" v-bind:data-rid="item.id" @click="inlive($event)" />
+                                        <span v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></span>
+                                    </div>
+                                    <div class="mes-con">
+                                        <div>
+                                            <strong>{{item.nickname}}</strong>
+                                        </div>
+                                        <span>成绩：{{item.score}}米</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="none" v-else>阿哦！还没有龙舟划到这里！</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mine" v-show="uid">
+                    <div class="img-mes">
+                        <div class="mine-img">
+                            <img v-if="myModArr.mid != null" :src="myModArr.headPic" v-bind:data-rid="myModArr.mid"  @click="inlive($event)" alt="" />
+                            <img v-else :src="myModArr.headPic" alt="" />
+                            <span v-if="myModArr.isPlaying" @click="inlive($event)"></span>
+                        </div>
+                        <div class="mine-mes">
+                            <strong>{{myModArr.nickName}}</strong>
+                        </div>
+                    </div>
+                    <div class="mine-mark">
+                        <span>我的排名: <strong>{{myModArr.rank}}</strong></span>
+                        <span>成绩: <strong>{{myModArr.score}}米</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 用户 -->
+        <section class="run-ass">
+            <div class="common-tit">
+                <b class="user-ass"></b>
+            </div>
+            <div class="rank-run">
+                <div class="top-three">
+                    <ul>
+                        <li v-for="(item, index) in userArr" v-if="index < 3">
+                            <div class="img-area">
+                                <b></b>
+                                <img :src="item.headPic" alt="" />
+                            </div>
+                            <div class="mes">
+                                <div>
+                                    <strong>{{item.nickname}}</strong>
+                                </div>
+                                <span>送出: {{item.score}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 4+ -->
+                <div class="top-other">
+                    <div class="other-list">
+                        <div class="other-out">
+                            <ul class="clearfix">
+                                <li v-for="(item, index) in userArr" v-if="index >= 3">
+                                    <div class="number">{{index+1}}</div>
+                                    <img :src="item.headPic" alt="" />
+                                    <strong>{{item.nickname}}</strong>
+                                    <span>送出: {{item.score}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mine" v-show="uid">
+                    <div class="img-mes">
+                        <div class="mine-img">
+                            <img :src="myUserArr.headPic" @ alt="" />
+                        </div>
+                        <div class="mine-mes">
+                            <strong>{{myUserArr.nickName}}</strong>
+                        </div>
+                    </div>
+                    <div class="mine-mark">
+                        <span>我的排名: <strong>{{myUserArr.rank}}</strong></span>
+                        <span>送出: <strong>{{myUserArr.score}}</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 文案提示 -->
+        <div class="posi ts" v-show="buyTips">
+            <div class="tip-txt">
+                <b @click="buyTips = !buyTips"></b>
+                <p>{{buyText}}</p>
+            </div>
+        </div>
+
+        <!-- 购买 -->
+        <div class="posi buybox" v-show="buyBox">
+            <div>
+                <b @click="buyBox= !buyBox"></b>
+                <h3>购买个数</h3>
+                <div class="buy-num">
+                    <div class="dev" @click="dev()"></div>
+                    <input id="totalMoney" type="number" maxlength="8" value="1" @input="inputNumber()" />
+                    <div class="add" @click="add()"></div>
+                </div>
+                <strong>价格: {{buyTotal}}克拉</strong>
+                <div class="sure-buy" @click="sureBuy" v-bind:data-id="goodId"></div>
+            </div>
+        </div>
+
+        <!-- 确认购买提示 -->
+        <div class="posi surebuy" v-show="sureBox">
+            <div>
+                <b @click="sureBox= !sureBox"></b>
+                <p>您是否确定购买赛龙舟（7天座驾）？</p>
+                <div class="sure-btn">
+                    <div class="quit" @click="sureBox= !sureBox"></div>
+                    <div class="sure" @click="sureBuyIt()"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- svg -->
+        <div class="posi svg-con" v-show="svgPlayer" @click="removeSvg()"></div>
+
+        <div class="copybeta"></div>
+
+        <div class="rule-btn" @click="showRules()"></div>
+
+        <!-- 规则 -->
+        <div class="posi rule" v-show="showRule">
+            <div class="rule-con">
+                <b  @click="showRule = !showRule"></b>
+                <div class="rule-out">
+                    <div class="rule-text">
+                        <h3></h3>
+                        <p>1.活动时间：<strong>2018/06/13 12:00:00—06/18 23:59:59。</strong></p>
+                        <p>2.此次活动分阶段炸房，每天前五次炸房送出指定数量的“小肉粽”即可炸房，从第六次炸房起，每次炸房需送出3000个“小肉粽”。</p>
+                        <span></span>
+                        <p>3.每天0点刷新进度条，0点后，直播间当前进度条炸完，再从第一轮炸房（500个“小肉粽”）开始炸房。</p>
+                        <p>4.主播每收到1个“小肉粽”，即可在河道上跑1米。河道分为五个赛段，前四个赛段只显示该赛段上的前五名主播，第五赛段显示所有进入该赛段的主播。</p>
+                        <p>5.主播收到“小肉粽”数量相同的，按照ID降序排名。</p>
+                        <p>6.主播排名前5名（总榜，非赛段榜单）及用户排名前5名可获得端午节奖励，礼品将于活动结束后15个工作日内发放。</p>
+                        <p>7.本次活动最终解释权归星光直播所有。</p>
+                        <h3 class="reward"></h3>
+                        <i>注：返利数量=用户榜单送出*返利额度</i>
+                        <p>返利金额为克拉（非收益），将于活动结束后15个工作日内发放到用户账户内。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '星光龙舟赛',
+        content: '“粽”意她，就来为她加油助威吧！',
+        link: location.href,
+        imgLink: "${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/dragonBoat/share.png')}"
+    });
+</script>

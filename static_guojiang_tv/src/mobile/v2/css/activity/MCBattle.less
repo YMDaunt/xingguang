@@ -1,0 +1,71 @@
+// ../../img/activity/MCBattle
+
+@activityName: 'activity/MCBattle';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+@imgUrl: '../../img/activity/MCBattle';
+
+@import './MCBattle.mixin.less';
+
+/* 定义普通样式 S */
+/* 背景图 */
+.page-bgs {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+
+    .page-bg {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 360/@bf;
+        background-image: url('@{imgUrl}/bg_0.jpg');
+    }
+
+    .bg2 {
+        height: 570/@bf;
+        background-image: url('@{imgUrl}/bg_1.jpg');
+    }
+
+    .bg3 {
+        height: 3586/@bf;
+        background-image: url('@{imgUrl}/bg_2.jpg');
+    }
+}
+
+/* 页面内容 */
+.page-content {
+    position: relative;
+    z-index: 2;
+}
+
+.rank-row .rank-cell-3 .rscore {
+    width: 135%;
+    text-align: center;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+}
+
+@media screen and (max-width: 340px) {
+    .rank-row .rank-cell-3 .score {
+        width: 110%;
+        text-align: center;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%) scale(0.9);
+    }
+
+    .rank-row .rank-cell-3 .rscore {
+        width: 150%;
+    }
+
+    .t-rw .txt-small {
+        transform: scale(0.8);
+    }
+}
+/* 定义普通样式 E */

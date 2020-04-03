@@ -1,0 +1,140 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/pc/v4/img/activity/karen" */ -->
+
+    <!-- banner -->
+    <div class="banner"></div>
+    <!-- 活动专属礼物 -->
+    <div class="section gifts">
+        <div class="content">
+            <div class="title"></div>
+            <div class="gifts-pic">
+                <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/karen/avatar_400.png')}" alt="礼物图" />
+            </div>
+            <p class="gifts-info">
+                <span class="name">凯家大院</span>
+                <span class="price">10克拉/个</span>
+            </p>
+            <button class="button go-room" @click="goToRoom">进入直播间</button>
+        </div>
+    </div>
+    <!-- 你问我答 -->
+    <div class="section questions">
+        <div class="content">
+            <div class="title"></div>
+            <div class="qlist">
+                <div class="qitem-box">
+                    <div class="item question">
+                        <div class="avatar">
+                            <span class="pic"><img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/karen/avatar_ask.png')}" alt="星光小编"></span>
+                            <span class="name">星光小编</span>
+                        </div>
+                        <span class="word">Q：作为第一个斩获星光男神的男主播，你有什么感想呢？</span>
+                    </div>
+                    <div class="item answer">
+                        <div class="avatar">
+                            <span class="pic"><img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/karen/avatar_400.png')}" alt="凯伦"></span>
+                            <span class="name">凯伦</span>
+                        </div>
+                        <span class="word">A：不管到什么时候我牢记16字真言：不忘初心，方得始终，天道酬勤，厚德载物！</span>
+                    </div>
+                </div>
+                <div class="qitem-box">
+                    <div class="item question">
+                        <div class="avatar">
+                            <span class="pic"><img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/karen/avatar_ask.png')}" alt="星光小编"></span>
+                            <span class="name">星光小编</span>
+                        </div>
+                        <span class="word">Q：平时除了直播，还喜欢做些什么呢？</span>
+                    </div>
+                    <div class="item answer">
+                        <div class="avatar">
+                            <span class="pic"><img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/karen/avatar_400.png')}" alt="凯伦"></span>
+                            <span class="name">凯伦</span>
+                        </div>
+                        <span class="word">A：平时最大的爱好就是钓鱼以及看优秀主播直播。学习优质直播内容和直播元素。</span>
+                    </div>
+                </div>
+                <div class="qitem-box">
+                    <div class="item question">
+                        <div class="avatar">
+                            <span class="pic"><img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/karen/avatar_ask.png')}" alt="星光小编"></span>
+                            <span class="name">星光小编</span>
+                        </div>
+                        <span class="word">Q：有什么想对粉丝说的？</span>
+                    </div>
+                    <div class="item answer">
+                        <div class="avatar">
+                            <span class="pic"><img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/karen/avatar_400.png')}" alt="凯伦"></span>
+                            <span class="name">凯伦</span>
+                        </div>
+                        <span class="word">A：一路走来谢谢一直陪伴我走过的兄弟姐妹。谢谢咱们凯家大院的所有人。有你们我才拿到男神， 这份荣誉属于我们大家！我输你们陪我东山再起，我赢咱们一起君临天下！</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 凯伦的加油榜单 -->
+    <div class="section billboard">
+        <div class="content">
+            <div class="title"></div>
+            <div class="bill-box">
+                <div class="cowns-list">
+                    <div :class="['throne second', !listThrone[1].nickname && !listThrone[1].id ? 'noshow' : '']">
+                        <div class="cown"></div>
+                        <div class="avatar">
+                            <img :src="listThrone[1].head_pic_1" :alt="listThrone[1].nickname">
+                        </div>
+                        <p class="nickname">{{ listThrone[1].nickname }}</p>
+                        <p class="contribute">贡献值：{{ listThrone[1].num }}</p>
+                    </div>
+                    <div :class="['throne first', !listThrone[0].nickname && !listThrone[0].id ? 'noshow': '']">
+                        <div class="cown"></div>
+                        <div class="avatar">
+                            <img :src="listThrone[0].head_pic_1" :alt="listThrone[0].nickname">
+                        </div>
+                        <p class="nickname">{{ listThrone[0].nickname }}</p>
+                        <p class="contribute">贡献值：{{ listThrone[0].num }}</p>
+                    </div>
+                    <div :class="['throne third', !listThrone[2].nickname && !listThrone[2].id ? 'noshow' : '']">
+                        <div class="cown"></div>
+                        <div class="avatar">
+                            <img :src="listThrone[2].head_pic_1" :alt="listThrone[2].nickname">
+                        </div>
+                        <p class="nickname">{{ listThrone[2].nickname }}</p>
+                        <p class="contribute">贡献值：{{ listThrone[2].num }}</p>
+                    </div>
+                </div>
+                <div class="sep"></div>
+                <div class="bill-list-h">
+                    <div class="i-index">排名</div>
+                    <div class="i-nickname">昵称</div>
+                    <div class="i-contribute">贡献值</div>
+                </div>
+                <div ref="billlist" class="bill-list scrollbar">
+                    <div class="bill-item" v-for="(bitem, bind) in listLefed" :key="bind">
+                        <span class="i-index">{{ bind + 4 }}</span>
+                        <span class="i-nickname">
+                            <span class="i-avatar">
+                                <img :src="bitem.head_pic_1" :alt="bitem.nickname">
+                            </span>
+                            <span class="name">{{ bitem.nickname }}</span>
+                        </span>
+                        <span class="i-contribute">{{ bitem.num }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 活动规则 -->
+    <div class="section rules">
+        <div class="content">
+            <div class="title"></div>
+            <div class="rule-info">
+                <p class="desc">1.活动时间：2018/08/29 12:00:00 -- 09/02 23:59:59。</p>
+                <p class="desc">2.活动期间内，在主播凯伦的直播间内，每送满3000个活动礼物——凯家大院，即可炸出加油红包，快来抢克拉吧！</p>
+            </div>
+        </div>
+    </div>
+
+    <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+</div>

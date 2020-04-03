@@ -1,0 +1,199 @@
+@activityName: 'matching';
+@bf: 108rem;
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+body {
+    /*ios*/
+    -webkit-overflow-scrolling: touch;
+    background-color:transparent;
+}
+.bgms(@imgName) {
+    background-image: url('../../img/makeFriends/@{activityName}/@{imgName}');
+}
+
+/***************common end************/
+html,body{
+    height: 100%;
+}
+div.layui-m-layer .layui-m-layerchild .layui-m-layerbtn span[yes]{
+    background:#7e28ff!important;
+}
+#app{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    min-height: 1920/@bf;
+    .bgms('bg.jpg');
+    background-repeat:no-repeat;
+    background-size:cover;
+    overflow: hidden;
+}
+.header{
+    height:132/@bf;
+}
+.move{
+    margin:100/@bf auto 0;
+    width:850/@bf;
+    height: 854/@bf;
+    .bgms('img.png');
+    background-size: 850/@bf 854/@bf;
+}
+#svgContainer{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    z-index: 1;
+}
+.liao-btn{
+    position:absolute;
+    top:1480/@bf;
+    left:50%;
+    transform: translateX(-50%);
+    width:768/@bf;
+    height: 144/@bf;
+    font-size: 46/@bf;
+    color:#fff;
+    text-align: center;
+    line-height: 144/@bf;
+    .bgms('liao_btn.png');
+    background-size: 768/@bf 144/@bf;
+    &:active{
+        opacity: 0.6;
+    }
+}
+.cancel-btn{
+    position:absolute;
+    top:1480/@bf;
+    left:50%;
+    transform: translateX(-50%);
+    width: 300/@bf;
+    height:144/@bf;
+    border:2px solid #fff;
+    border-radius:72/@bf;
+    line-height: 144/@bf;
+    text-align: center;
+    color: #fff;
+    font-size: 42/@bf;
+    z-index: 2;
+}
+.tips{
+    color: #fff;
+    text-align: center;
+    font-size: 42/@bf;
+}
+.matching{
+    margin-top:1200/@bf;
+}
+
+.result{
+    .title{
+        color:#fff;
+        font-size:48/@bf;
+        text-align: center;
+        margin:90/@bf auto 60/@bf;
+    }
+    .userInfo{
+        position: relative;
+        width:796/@bf;
+        height: 792/@bf;
+        margin:0 auto;
+        border-radius:20/@bf 20/@bf 0 0;
+        overflow: hidden;
+        img{
+            width:100%;
+            height:100%;
+        }
+        .mask{
+            position:absolute;
+            bottom:0;
+            left:0;
+            height:160/@bf;
+            width:100%;
+            background-image:linear-gradient(to bottom,rgba(0,0,0,0),rgba(0,0,0,0.3));
+        }
+        .nickname{
+            position:absolute;
+            bottom:10/@bf;
+            left:10/@bf;
+            color:#fff;
+            font-size: 66/@bf;
+        }
+    }
+    .message{
+        width:796/@bf;
+        height:230/@bf;
+        margin: 0 auto;
+        color:#7e28ff;
+        font-size:45/@bf;
+        padding:30/@bf 30/@bf 0;
+        border-radius:0 0 20/@bf 20/@bf;
+        background-color: #fff;
+
+    }
+    .reMatching{
+        position:absolute;
+        top:1700/@bf;
+        left:50%;
+        transform: translateX(-50%);
+        font-size: 42/@bf;
+        text-align: center;
+        color:#fff;
+    }
+}
+.noChance{
+    .tips{
+        margin:190/@bf auto 220/@bf;
+        font-size:50/@bf;
+        color:#fff;
+        text-align:center;
+    }
+    ul{
+        margin:0 50/@bf;
+        display:flex;
+        align-items:center;
+        justify-content:space-around;
+    }
+    li{
+        width:210/@bf;
+        .avatar-box{
+            .avatar{
+                width:205/@bf;
+                height:205/@bf;
+                border-radius:50%;
+                overflow:hidden;
+                border:1px solid #fff;
+            }
+            img{
+                width:100%;
+                height:100%;
+            }
+            .nickname{
+                width:210/@bf;
+                font-size:39/@bf;
+                color:#fff;
+                text-align:center;
+                margin-top:20/@bf;
+                .ellipsis;
+            }
+        }
+        .no-liao-btn{
+            width:210/@bf;
+            height:96/@bf;
+            border-radius:48/@bf;
+            color:#fff;
+            line-height:96/@bf;
+            text-align:center;
+            margin-top:50/@bf;
+            background-image:linear-gradient(to bottom,#b4a1f0,#8e74dd);
+        }
+    }
+}
+
+div.layui-m-layer .layui-m-layerchild .layui-m-layerbtn span[yes]{
+    background:#7e28ff;
+}

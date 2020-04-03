@@ -1,0 +1,189 @@
+<div id="app" v-cloak>
+    <div class="rules-btn" @click="showRules = true;"></div>
+    <div class="giftbox">
+        <p class="title"></p>
+        <div class="gift1 fl">
+            <div class="gift1-img"></div>
+            <div class="gift1-btn">
+                <div class="preview" @click="preview('gift1')">预览</div>
+                <div class="purchase out" v-if="isActivityEnd">购买</div>
+                <div class="purchase"  v-else @click="openPurchaseBox">购买</div>
+            </div>
+        </div>
+        <div class="gift2 fr">
+            <div class="gift2-img"></div>
+            <div class="gift2-btn">
+                <div class="preview" @click="preview('gift2')">预览</div>
+            </div>
+        </div>
+    </div>
+    <div class="rankbox">
+        <p class="title"></p>
+        <div class="rank-wrap">
+            <div class="rank">
+                <ul class="prevlist">
+                    <li v-for="(item,index) in prevList()" :key="index">
+                        <div :class="['index'+(index+1)]">
+                            <div class="heard"></div>
+                            <div class="mod">
+                                <div class="crown"></div>
+                                <div class="live" v-if="item.isPlaying"></div>
+                                <div class="avatar-wrap">
+                                    <img :src="item.headPic" alt="" class="avatar" @click="goLiveRoom(item.id)">
+                                </div>
+                                <div class="index"></div>
+                                <div class="nickname">{{item.nickname}}</div>
+                            </div>
+                            <div class="user">
+                                <div class="crown"></div>
+                                <div class="avatar-wrap">
+                                    <img :src="item.uHeadPic" alt="" class="avatar">
+                                </div>
+                                <div class="index"></div>
+                                <div class="nickname">{{item.uNickname}}</div>
+                            </div>
+                            <p class="sweet"><span>NO.{{index+1}}</span> 甜蜜值 {{item.score}}</p>
+                        </div>
+                    </li>
+
+                </ul>
+                <ul class="lastlist">
+                    <li v-for="(item,index) in lastList()" :key="index">
+                        <div :class="['index'+(index+4)]">
+                            <div class="box">
+                                <div class="modbox">
+                                    <div class="live" v-if="item.isPlaying"></div>
+                                    <div class="mod">
+                                        <div class="avatar-wrap">
+                                            <img :src="item.headPic" alt="" class="avatar" @click="goLiveRoom(item.id)">
+                                        </div>
+                                    </div>
+                                    <div class="nickname">{{item.nickname}}</div>
+                                </div>
+                                <div class="heart"></div>
+                                <div class="userbox">
+                                    <div class="user">
+                                        <div class="avatar-wrap">
+                                            <img :src="item.uHeadPic" alt="" class="avatar">
+                                        </div>
+                                    </div>
+                                    <div class="nickname">{{item.uNickname}}</div>
+                                </div>
+                            </div>
+                            <p class="sweet"><span>NO.{{index+4}}</span> 甜蜜值 {{item.score}}</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="personal" v-show="showPersonal">
+                    <div class="personal-l">
+                        <div class="personalbox">
+                            <div class="avatar-wrap">
+                                <div class="live" v-if="myRank.isPlaying"></div>
+                                <img :src="myRank.headPic" alt="" class="avatar" @click="goLiveRoom(myRank.uid)">
+                            </div>
+                        </div>
+                        <div class="username">{{myRank.nickName}}</div>
+                    </div>
+                    <ul class="personal-r">
+                        <li>
+                            <div class="name">{{pairInfos[0].name}}</div>
+                            <div class="name">{{pairInfos[2].name}}</div>
+                        </li>
+                        <li>
+                            <div>{{pairInfos[0].value}}</div>
+                            <div>{{pairInfos[2].value}}</div>
+                        </li>
+                        <li>
+                            <div class="name">{{pairInfos[1].name}}</div>
+                            <div class="name">{{pairInfos[3].name}}</div>
+                        </li>
+                        <li>
+                            <div>{{pairInfos[1].value}}</div>
+                            <div>{{pairInfos[3].value}}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="platform"></p>
+    <div class="purchaseBox-wrap" v-show="showPurchase">
+        <div class="purchaseBox">
+            <div class="close" @click="closePurchaseBox"></div>
+            <div class="title">购买数量</div>
+            <div class="selectBox">
+                <div class="reduce-btn" @click="subtraction">-</div>
+                <input type="number" class="num" v-model.number="purchaseNum" @input="handleInput">
+                <div class="add-btn" @click="addition">+</div>
+            </div>
+            <div class="price">价格：{{sumPrice}}克拉</div>
+            <div class="purchase-btn" @click="purchase">购买</div>
+        </div>
+    </div>
+    <div class="svg-layer" v-show="showSvg" @click="destory">
+        <div id="svgContainer"></div>
+    </div>
+    <div class="rules-box" v-show="showRules">
+        <div class="rules-wrap">
+            <div class="rules">
+                <div class="close" @click="showRules=false;"></div>
+                <div class="title"></div>
+                <div class="rules-content">
+                    <ul>
+                        <li class="rules-item">1.活动时间：2019/02/12 12:00:00—02/16 23:59:59。</li>
+                        <li class="rules-item">2.活动礼物：
+                            <div class="gift-rules-box">
+                                <div class="gift1 fl">
+                                    <div class="gift"></div>
+                                    <div class="giftname">心意卡</div>
+                                    <div class="price">1个心意卡=10克拉=10甜蜜值</div>
+                                </div>
+                                <div class="gift2 fr">
+                                    <div class="gift"></div>
+                                    <div class="giftname">以爱之名</div>
+                                    <div class="price">1个以爱之名=9999克拉=9999甜蜜值</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="rules-item">3.甜蜜榜为收到活动礼物主播，配对的用户为给前十名主播送出活动礼物最多的用户。</li>
+                        <li class="rules-item">4.此次活动分阶段炸房，每天前五次炸房送出指定数量的“心意卡”即可炸房，从第六次炸房起，每次炸房需送出3000个“心意卡”。炸房可触发全站飘屏，由补满进度条的用户冠名。点击飘屏可有机会抢到活动礼物-心意卡。
+                            <br>
+                            <strong>注：抢到的心意卡，会放入背包。需在02/17 23:59:59前送出，逾期失效，请及时送出！</strong>
+                            <div class="boomrules"></div>
+                        </li>
+                        <li class="rules-item">5.每天0点刷新炸房次数，所有直播间当前进度条炸房后，从第一次炸房（500个“心意卡”）开始炸房。</li>
+                        <li class="rules-item">6.一次性送出99个心意卡，可以触发甜蜜特效哦~</li>
+                        <li class="rules-item">7.<strong>2月14日0点-24点，送出活动礼物，心意卡、以爱之名，经验值翻倍哦！想要升级的用户大大，可别错过这个机会！</strong>
+                            <br>
+                            例：用户A送给主播B一个以爱之名，价值9999克拉。活动榜单累9999甜蜜值。主播B直播间累计9999星光值。用户A的用户等级经验值累计9999*2=19998。主播B的主播等级经验值累计9999。粉丝亲密度：1克拉=1亲密度不变。</li>
+                        <li class="rules-item">8.甜蜜榜前5名主播可获得克拉奖励，将于活动结束的5个工作日内发放。</li>
+                        <li class="rules-item">9.所有排名有相同成绩，按照先到先得排名。
+                            <table class="table">
+                                <tr>
+                                    <th>甜蜜榜</th>
+                                    <th>奖励克拉</th>
+                                </tr>
+                                <tr>
+                                    <td>第一名</td>
+                                    <td>350000克拉</td>
+                                </tr>
+                                <tr>
+                                    <td>第二名</td>
+                                    <td>250000克拉</td>
+                                </tr>
+                                <tr>
+                                    <td>第三名</td>
+                                    <td>150000克拉</td>
+                                </tr>
+                                <tr>
+                                    <td>第四,五名</td>
+                                    <td>100000克拉</td>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<script src="//static.guojiang.tv/src/mobile/v2/js/lib/bodymovin.js"></script>
+<div id="svgContainer" @click="lotteryHandle" v-show="viewStat">
+    <div class="conver-bg" v-show="showBox">
+        <div class="center-bg" @click.stop="">
+            <p>{{lotteryMsg}}</p>
+            <div class="center-bg-btn" @click="sureBtn">确定</div>
+        </div>
+    </div>
+    <div class="close" @click.stop="closeWebView"></div>
+</div>
+
+<script>
+    // var virData = '{"pid":"209","activityId":"129","rid":"44444444","mid":"220", "batchId":"1", "activityType":"2", "nickname": "果酱的名字", "seconds": "600"}';
+    // setTimeout(function(){
+    //     showWebviewAnimation(virData);
+    // },1000);
+    // setTimeout(function(){
+    //     showWebviewAnimation(virData);
+    // },6000);
+    // setTimeout(function(){
+    //     showWebviewAnimation(virData);
+    // },3000);
+</script>

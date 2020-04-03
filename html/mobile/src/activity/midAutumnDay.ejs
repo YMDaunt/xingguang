@@ -1,0 +1,644 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/mobile/v2/img/activity/midAutumnDay" */ -->
+
+    <!-- 头部图 -->
+    <div class="xg-container banner">
+    </div>
+    <!-- 充值返利 -->
+    <div class="xg-container recharge">
+        <div class="xg-content recharge-content">
+            <div class="recharge-title"></div>
+            <div class="xg-bgbox">
+                <span class="recharge-btn" @click="goRecharge"></span>
+                <ul class="recharge-list">
+                    <li class="recharge-i">
+                        <span class="index">1</span>
+                        <span class="txt">活动期间，单笔充值达到相应金额，即可获得对应比例的克拉返利；</span>
+                    </li>
+                    <li class="recharge-i">
+                        <span class="index">2</span>
+                        <span class="txt">充值方式不限；</span>
+                    </li>
+                    <li class="recharge-i">
+                        <span class="index">3</span>
+                        <span class="txt">24小时内累计充值超过2万元的，可以按2万元以上的返利区间进行克拉返利。此类返利请联系客服发放哦！</span>
+                    </li>
+                    <li class="recharge-i recharge-i-none">
+                        <span class="index"></span>
+                        <span class="txt">请在APP内“我的”-“联系客服”中联系客服或者扫描微信公众号，在微信公众号中联系客服</span>
+                    </li>
+                </ul>
+                <div class="recharge-wx">
+                    <div class="qrcode">
+                        <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/midAutumnDay/wx_qrcode.png')}" alt="星光直播_微信公众号">
+                    </div>
+                    <div class="desc">
+                        <p>扫码关注微信公众号</p>
+                        <span class="checkin-btn" @click="goCheckRange"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="latern-1"></div>
+            <div class="latern-2"></div>
+        </div>
+    </div>
+    <!-- 限定礼物 -->
+    <div class="xg-container gifts">
+        <div class="xg-content gifts-content">
+            <div class="gifts-title"></div>
+            <div class="xg-bgbox">
+                <ul class="gifts-list">
+                    <li class="gifts-i gifts-flower">
+                        <div class="avatar">
+                            <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/midAutumnDay/flower_icon.png')}" alt="花好月圆">
+                            <span class="title"></span>
+                            <span class="limit"></span>
+                        </div>
+                        <p class="desc">6666克拉/个</p>
+                        <div class="btns">
+                            <span class="preview" @click="preview('flower')"></span>
+                            <span :class="['purchase', !times.canBuy && 'active']" @click="purchase('flower')"></span>
+                        </div>
+                    </li>
+                    <li class="gifts-i gifts-driver">
+                        <div class="avatar">
+                            <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/midAutumnDay/rabbit_icon.png')}" alt="月满中秋">
+                            <span class="title"></span>
+                            <span class="limit"></span>
+                        </div>
+                        <p class="desc">获取指定数量的字块可获得</p>
+                        <div class="btns">
+                            <span class="preview" @click="preview('moon')"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 送福 -->
+    <div class="xg-container cards">
+        <div class="xg-content cards-content">
+            <div class="cards-title"></div>
+            <div :class="['cards-msg', ui.fixedMsgBox && 'fixed']">
+                <span class="badge"></span>
+                <div class="msg-container">
+                    <ul ref="msgwrap" class="msg-list">
+                        <li class="msg-i" v-for="(msg, index) in msglist" :key="'msgA'+index">恭喜<span>{{ msg.name }}</span>集齐了一套字块，获得月满中秋座驾（7日）</li>
+                        <li class="msg-i" v-for="(msg, index) in msglist" :key="'msgB'+index">恭喜<span>{{ msg.name }}</span>集齐了一套字块，获得月满中秋座驾（7日）</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cards-msg-holder" v-show="ui.fixedMsgBox"></div>
+            <div class="xg-bgbox">
+                <div class="cards-progress">
+                    <span class="badge"></span>
+                    <div class="details">
+                        <p>当前进度<span>{{ this.contribute.contProress }}/5000</span></p>
+                        <span class="loading"><i :style="{width: (this.contribute.contProress/this.contribute.contTotal)*100+'%'}"></i></span>
+                    </div>
+                </div>
+                <div class="cards-btns">
+                    <span class="getOne-btn" @click="getLottery('one')"></span>
+                    <span class="getTen-btn" @click="getLottery('ten')"></span>
+                </div>
+                <div class="cards-info">
+                    <p class="cont">您的贡献值为<span class="val">{{ this.contribute.contValue }}</span></p>
+                    <p class="cont-cost">您已经领取了<span class="val">{{ this.contribute.contDraw }}</span>次</p>
+                    <p class="cont-left">您还可以领取<span class="val">{{ this.contribute.contLeft }}</span>次</p>
+                </div>
+                <div class="xg-sep"></div>
+                <ul class="cards-list">
+                    <li :class="['cards-i', this.contribute.packages[0] === 0 && 'none']">
+                        <div class="avatar">
+                            <span class="card-zi card-zhong"></span>
+                            <span class="num">x{{ this.contribute.packages[0] }}</span>
+                        </div>
+                        <span class="give-btn" @click="givePresent(0)"></span>
+                        <span class="ask-btn" @click="askPresent(0)"></span>
+                    </li>
+
+                    <li :class="['cards-i', this.contribute.packages[1] === 0 && 'none']">
+                        <div class="avatar">
+                            <span class="card-zi card-qiu"></span>
+                            <span class="num">x{{ this.contribute.packages[1] }}</span>
+                        </div>
+                        <span class="give-btn" @click="givePresent(1)"></span>
+                        <span class="ask-btn" @click="askPresent(1)"></span>
+                    </li>
+
+                    <li :class="['cards-i', this.contribute.packages[2] === 0 && 'none']">
+                        <div class="avatar">
+                            <span class="card-zi card-jie"></span>
+                            <span class="num">x{{ this.contribute.packages[2] }}</span>
+                        </div>
+                        <span class="give-btn" @click="givePresent(2)"></span>
+                        <span class="ask-btn" @click="askPresent(2)"></span>
+                    </li>
+
+                    <li :class="['cards-i', this.contribute.packages[3] === 0 && 'none']">
+                        <div class="avatar">
+                            <span class="card-zi card-kuai"></span>
+                            <span class="num">x{{ this.contribute.packages[3] }}</span>
+                        </div>
+                        <span class="give-btn" @click="givePresent(3)"></span>
+                        <span class="ask-btn" @click="askPresent(3)"></span>
+                    </li>
+
+                    <li :class="['cards-i', this.contribute.packages[4] === 0 && 'none']">
+                        <div class="avatar">
+                            <span class="card-zi card-le"></span>
+                            <span class="num">x{{ this.contribute.packages[4] }}</span>
+                        </div>
+                        <span class="give-btn" @click="givePresent(4)"></span>
+                        <span class="ask-btn" @click="askPresent(4)"></span>
+                    </li>
+                </ul>
+                <span :class="['cash-btn', (!hasASeries || !times.canExchange) && 'disabled']" @click="cashFor"></span>
+            </div>
+            <div class="latern-3"></div>
+        </div>
+    </div>
+    <!-- 排行榜 -->
+    <div class="xg-container board">
+        <div class="xg-content board-content">
+            <div class="board-title"></div>
+            <div :class="['board-tab', this.ui.boardTabType]">
+                <span class="tab-i tab-zhubo" @click="tabChange('zhubo')"></span>
+                <span class="tab-i tab-user" @click="tabChange('user')"></span>
+            </div>
+            <div :class="['xg-bgbox board-tab-content', this.ui.boardTabType]">
+                <div class="board-tab-c-zhubo">
+                    <ul class="cowns">
+                        <li :class="['first', 'second', 'third'][index]" v-for="(item, index) in zhuboList.list.slice(0, 3)" :key="index">
+                            <div class="avatar" @click="goRoom(item)">
+                                <div class="sexangle">
+                                    <div class="sexangle-a sexangle-i">
+                                        <div class="sexangle-b sexangle-i">
+                                            <div class="sexangle-c sexangle-i">
+                                                <img :src="item.headPic" :alt="item.nickname">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="hair"></span>
+                                <span class="live" v-show="item.isPlaying">LIVE</span>
+                            </div>
+                            <span class="name">{{ item.nickname }}</span>
+                            <span class="val">团圆值：{{ item.score }}</span>
+                            <span :class="['check-btn', item.isLoved && 'active']" @click="attent(index)"></span>
+                        </li>
+                        <li class="skeleton-li" v-for="(item, index) in skeletonli.slice(0, 3)" :key="index" v-if="skeletonliStateZhubo">
+                            <div class="s-avatar"></div>
+                            <span class="s-name"></span>
+                            <span class="s-val"></span>
+                        </li>
+                    </ul>
+                    <ul class="list" ref="zhuboList">
+                        <li class="item" v-for="(item, index) in zhuboList.list.slice(3)" :key="index">
+                            <span class="index">{{ index + 4 }}</span>
+                            <div class="avatar" @click="goRoom(item)">
+                                <img :src="item.headPic" :alt="item.nickname">
+                                <span class="live" v-show="item.isPlaying">LIVE</span>
+                            </div>
+                            <span class="name">{{ item.nickname }}</span>
+                            <span class="val">团圆值：{{ item.score }}</span>
+                        </li>
+                        <li class="skeleton-item" v-for="(item, index) in skeletonli.slice(3)" :key="index" v-if="skeletonliStateZhubo">
+                            <span class="s-index"></span>
+                            <div class="s-avatar"></div>
+                            <span class="s-name"></span>
+                            <span class="s-val"></span>
+                        </li>
+                    </ul>
+                    <p class="board-tab-desc">当前只展示前100名主播</p>
+                    <div class="xg-sep"></div>
+                    <div class="board-me">
+                        <template v-if="zhuboMe">
+                            <!-- <span class="badge">{{ zhuboMe.rank }}</span> -->
+                            <div class="avatar">
+                                <div class="pic" @click="goRoom(zhuboMe)">
+                                    <img :src="zhuboMe.headPic" :alt="zhuboMe.nickname">
+                                    <span class="live" v-show="zhuboMe.isPlaying">LIVE</span>
+                                </div>
+                                <p class="name">{{ zhuboMe.nickName }}</p>
+                            </div>
+                            <ul class="desc">
+                                <li>
+                                    <div class="rank">
+                                        <h5>{{ zhuboMe.pairInfos[0].name }}</h5>
+                                        <p>{{ zhuboMe.pairInfos[0].value }}</p>
+                                    </div>
+                                    <div class="info">
+                                        <h5>{{ zhuboMe.pairInfos[2].name }}</h5>
+                                        <p>{{ zhuboMe.pairInfos[2].value }}</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="value">
+                                        <h5>{{ zhuboMe.pairInfos[1].name }}</h5>
+                                        <p>{{ zhuboMe.pairInfos[1].value }}</p>
+                                    </div>
+                                    <div class="info">
+                                        <h5>{{ zhuboMe.pairInfos[3].name }}</h5>
+                                        <p>{{ zhuboMe.pairInfos[3].value }}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </template>
+                    </div>
+                </div>
+                <div class="board-tab-c-user">
+                    <ul class="cowns">
+                        <li :class="['first', 'second', 'third'][index]" v-for="(item, index) in userList.list.slice(0, 3)" :key="index">
+                            <div class="avatar">
+                                <div class="sexangle">
+                                    <div class="sexangle-a sexangle-i">
+                                        <div class="sexangle-b sexangle-i">
+                                            <div class="sexangle-c sexangle-i">
+                                                <img :src="item.headPic" :alt="item.nickname">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="hair"></span>
+                            </div>
+                            <span class="name">{{ item.nickname }}</span>
+                            <span class="val">贡献值：{{ item.score }}</span>
+                            <!-- <span class="check-btn"></span> -->
+                        </li>
+                        <li class="skeleton-li" v-for="(item, index) in skeletonli.slice(0, 3)" :key="index" v-if="skeletonliStateUser">
+                            <div class="s-avatar"></div>
+                            <span class="s-name"></span>
+                            <span class="s-val"></span>
+                        </li>
+                    </ul>
+                    <ul class="list" ref="userList">
+                        <li class="item" v-for="(item, index) in userList.list.slice(3)" :key="index">
+                            <span class="index">{{ index + 4 }}</span>
+                            <div class="avatar">
+                                <img :src="item.headPic" :alt="item.nickname">
+                            </div>
+                            <span class="name">{{ item.nickname }}</span>
+                            <span class="val">贡献值：{{ item.score }}</span>
+                        </li>
+                        <li class="skeleton-item" v-for="(item, index) in skeletonli.slice(3)" :key="index" v-if="skeletonliStateUser">
+                            <span class="s-index"></span>
+                            <div class="s-avatar"></div>
+                            <span class="s-name"></span>
+                            <span class="s-val"></span>
+                        </li>
+                    </ul>
+                    <p class="board-tab-desc">当前只展示前100名用户</p>
+                    <div class="xg-sep"></div>
+                    <div class="board-me">
+                        <template v-if="user.islogined">
+                            <!-- <span class="badge">{{ userMe.rank }}</span> -->
+                            <div class="avatar">
+                                <div class="pic">
+                                    <img :src="userMe.headPic" :alt="userMe.nickname">
+                                </div>
+                                <p class="name">{{ userMe.nickName }}</p>
+                            </div>
+                            <ul class="desc">
+                                <li>
+                                    <div class="rank">
+                                        <h5>{{ userMe.pairInfos[0].name }}</h5>
+                                        <p>{{ userMe.pairInfos[0].value }}</p>
+                                    </div>
+                                    <div class="info">
+                                        <h5>{{ userMe.pairInfos[2].name }}</h5>
+                                        <p>{{ userMe.pairInfos[2].value }}</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="value">
+                                        <h5>{{ userMe.pairInfos[1].name }}</h5>
+                                        <p>{{ userMe.pairInfos[1].value }}</p>
+                                    </div>
+                                    <div class="info">
+                                        <h5>{{ userMe.pairInfos[3].name }}</h5>
+                                        <p>{{ userMe.pairInfos[3].value }}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <div class="latern-3"></div>
+            <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+        </div>
+    </div>
+    <!-- 侧边悬浮按钮 -->
+    <div class="float-box">
+        <span class="rules-btn" @click="goRules"></span>
+        <span :class="['fus-btn', (cardsCenter.take.hasNew || cardsCenter.ask.hasNew) && 'hasnew']" @click="goCards"></span>
+    </div>
+    <!-- Modal对话框 -->
+    <div :class="['modal', this.ui.modalShow && 'active', this.ui.modalShowType]" ref="modal">
+        <!-- 返利区间 -->
+        <div class="modal-range">
+            <div class="modal-range-title"></div>
+            <div class="xg-bgbox">
+                <div class="modal-close" @click="closeModal"></div>
+                <div class="modal-range-content">
+                    <p class="range-txt">1000&lt;=单次充值&lt;2000元，返利比例为2%克拉;</p>
+                    <p class="range-txt">2000&lt;=单次充值&lt;5000元，返利比例为3%克拉;</p>
+                    <p class="range-txt">5000&lt;=单次充值&lt;20000元，返利比例为5%克拉;</p>
+                    <p class="range-txt">20000&lt;=单次充值&lt;50000元，返利比例为8%克拉;</p>
+                    <p class="range-txt">单次充值>=50000元，返利比例为12%克拉;</p>
+                </div>
+            </div>
+        </div>
+        <!-- 赠送字块 -->
+        <div class="modal-give">
+            <div class="modal-give-title"></div>
+            <div class="xg-bgbox">
+                <div class="modal-close" @click="closeModal"></div>
+                <div class="modal-give-content">
+                    <div class="card-bg">
+                        <span :class="'card-zi card-' + ['zhong', 'qiu', 'jie', 'kuai', 'le'][userInput.currentGiveType-1]"></span>
+                    </div>
+                    <div class="form">
+                        <label for="user-id" class="user-label">赠送给</label>
+                        <input id="user-id" class="user-input" ref="giveInput" type="text" placeholder="用户ID" @click="inputFocus" @input="idGiveInput">
+                        <span class="user-name">{{ userInput.giveInputName }}</span>
+                    </div>
+                    <!-- <p class="tips" v-show="!userInput.giveInputState">{{ userInput.giveInputTips }}</p> -->
+                    <p class="tips">{{ userInput.giveInputTips }}</p>
+                    <span class="btn-ok" @click="giveCard"></span>
+                </div>
+            </div>
+        </div>
+        <!-- 索要字块 -->
+        <div class="modal-ask">
+            <div class="modal-ask-title"></div>
+            <div class="xg-bgbox">
+                <div class="modal-close" @click="closeModal"></div>
+                <div class="modal-ask-content">
+                    <div class="card-bg">
+                        <span :class="'card-zi card-' + ['zhong', 'qiu', 'jie', 'kuai', 'le'][userInput.currentAskType-1]"></span>
+                    </div>
+                    <div class="form">
+                        <label for="user-id" class="user-label">向TA索要</label>
+                        <input id="user-id" class="user-input" ref="askInput" type="text" placeholder="用户ID" @click="inputFocus" @input="idAskInput">
+                        <span class="user-name">{{ userInput.askInputName }}</span>
+                    </div>
+                    <!-- <p class="tips" v-show="!userInput.askInputState">{{ userInput.askInputTips }}</p> -->
+                    <p class="tips">{{ userInput.askInputTips }}</p>
+                    <span class="btn-ok" @click="askCard"></span>
+                </div>
+            </div>
+        </div>
+        <!-- 字块中心 -->
+        <div class="modal-mywords">
+            <div class="modal-mywords-title"></div>
+            <div class="modal-close" @click="closeCardsCenterModal"></div>
+            <ul :class="['mywords-tab', this.ui.cardsTabType]">
+                <li :class="['tab-i tab-take', cardsCenter.take.hasNew && 'hasnew']" @click="tabChangeOfCards('take')"></li>
+                <li :class="['tab-i tab-ask', cardsCenter.ask.hasNew && 'hasnew']" @click="tabChangeOfCards('ask')"></li>
+                <li class="tab-i tab-give" @click="tabChangeOfCards('give')"></li>
+            </ul>
+            <div class="xg-bgbox">
+                <div class="mywords-content">
+                    <ul :class="['mywords-tab-c', this.ui.cardsTabType]">
+                        <li class="tab-c tab-c-take">
+                            <div class="table-row table-header">
+                                <span class="cell time">时间</span>
+                                <span class="cell type">收到字块</span>
+                                <span class="cell from">赠送人</span>
+                            </div>
+                            <div class="table-content" ref="cardsTake">
+                                <div class="table-row" v-for="(item, index) in cardsCenter.take.list" :key="index">
+                                    <span class="cell time">{{ item.date }}</span>
+                                    <span class="cell type">{{ item.block }}</span>
+                                    <span class="cell from">{{ item.nickname }}</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="tab-c tab-c-ask" ref="cardsAsk">
+                            <div class="tab-ask-i" v-for="(item, index) in cardsCenter.ask.list" :key="index">
+                                <p class="info" v-html="item.info"></p>
+                                <p class="time">{{ item.date }}</p>
+                                <div class="btns">
+                                    <span class="refuse" @click="refuse(item)"></span>
+                                    <span class="agree" @click="agree(item)"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="tab-c tab-c-give">
+                            <div class="table-row table-header">
+                                <span class="cell time">时间</span>
+                                <span class="cell type">送出字块</span>
+                                <span class="cell from">赠送对象</span>
+                            </div>
+                            <div class="table-content" ref="cardsGive">
+                                <div class="table-row" v-for="(item, index) in cardsCenter.give.list" :key="index">
+                                    <span class="cell time">{{ item.date }}</span>
+                                    <span class="cell type">{{ item.block }}</span>
+                                    <span class="cell from">{{ item.nickname }}</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 兑换字块抽奖 -->
+        <div class="modal-lottery">
+            <div class="modal-lottery-content">
+                <div class="desc">
+                    <p v-show="this.ui.lotteryType === 'one'">但愿人长久，千里共婵娟。</p>
+                    <p v-show="this.ui.lotteryType === 'ten'">海上生明月，天涯共此时。</p>
+                    <p>嫦娥仙子发福利啦！</p>
+                    <p>这是您抽中的字块~</p>
+                </div>
+                <ul class="cards-list">
+                    <li :class="['avatar', index === 4 && 'avatar-last']" v-for="(card, index) in lottery.list" :key="index">
+                        <span :class="'card-zi card-' + card.type"></span>
+                        <span class="num">x{{ card.num }}</span>
+                    </li>
+                </ul>
+            </div>
+            <span class="btn-confirm" @click="lotteryConfirm"></span>
+        </div>
+        <!-- 活动规则 -->
+        <div class="modal-rules">
+            <div class="modal-rules-title"></div>
+            <div class="xg-bgbox">
+                <div class="modal-close" @click="closeModal"></div>
+                <div class="modal-rules-content" ref="rules">
+                    <ul class="rules-list">
+                        <li class="rules-i">
+                            <p class="pre">
+                                <span class="index">1</span>
+                                <span class="txt">活动时间：9.19 12:00:00-9.24 23:59:59</span>
+                            </p>
+                        </li>
+                        <li class="rules-i">
+                            <p class="pre">
+                                <span class="index">2</span>
+                                <span class="txt">活动礼物：</span>
+                            </p>
+                            <div class="gifts-box">
+                                <div class="gift-i">
+                                    <span class="title title-mooncake"></span>
+                                    <span class="pic-mooncake"></span>
+                                    <div class="desc">
+                                        <p>=10克拉</p>
+                                        <p>=10团圆值</p>
+                                        <p>=10贡献值</p>
+                                    </div>
+                                </div>
+                                <div class="gift-i">
+                                    <span class="title title-flower"></span>
+                                    <span class="pic-flower"></span>
+                                    <div class="desc">
+                                        <p>=6666克拉</p>
+                                        <p>=6666团圆值</p>
+                                        <p>=6666贡献值</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="rules-i">
+                            <p class="pre">
+                                <span class="index">3</span>
+                                <span class="txt">玩法介绍：</span>
+                            </p>
+                            <div class="plays-list">
+                                <div class="plays-i">
+                                    <p class="p-title">玩法一：中秋邀赏月  加成享不停（9.20 12:00:00-9.24 23:59:59）</p>
+                                    <p class="p-txt">1.主播每小时榜单排名上升1个名次将获得“初级加速”，下小时前5分钟开启1.2倍buff加成;</p>
+                                    <p class="p-txt">2.主播每小时榜单排名上升≥2个名次将获得“高级加速”，下小时前10分钟开启1.2倍buff加成;</p>
+                                    <p class="p-txt">3.若主播榜单排名第一，直至本小时结束，还是第一名，则下小时前10分钟开启1.2倍buff加成;</p>
+                                    <p class="p-txt">4.主播每小时榜单排名上升会立即在本直播间飘屏通知;</p>
+                                    <p class="p-txt">例如：主播收到价值1000团圆值礼物，则活动榜单实际统计为1200团圆值值。但是加成部分（200团圆值）主播无分成。</p>
+                                </div>
+                                <div class="plays-i">
+                                    <p class="p-title">玩法二： 中秋送福利  集字兑好礼</p>
+                                    <p class="p-txt">1.活动期间，用户贡献值每达到5000，即可在活动页面嫦娥仙子处获取中秋祝福。祝福中随机获得 “中”、 “秋”、 “节”、 “快”、 “乐”字块数量的字块。选择领取1次时，可随机获得一块字块；选择领取10次时，可随机获得十块字块。</p>
+                                    <p class="p-txt">2.集齐一套字块，即可获得月满中秋座驾（7日）。每个ID仅限获得一次;</p>
+                                    <p class="p-txt">3.兑换时间：9.19 12:00:00-9.25 23:59:59;</p>
+                                    <p class="p-txt">4.用户之间可以互赠字块，传递福气，互利互赢！详见活动页面-字块中心;</p>
+                                </div>
+                                <div class="plays-i">
+                                    <p class="p-title">玩法三： 中秋许愿池  全民来许愿</p>
+                                    <p class="p-txt">1.活动期间，分阶段炸房，每天前五次炸房送出指定数量的“小月饼”即可炸房，从第六次炸房起，每次炸房需送出3000个“小月饼”;</p>
+                                    <div class="boom-box">
+                                        <div class="boom-stage-i">
+                                            <div class="avatar">
+                                                <span class="pic"></span>
+                                                <span class="num">x500</span>
+                                            </div>
+                                            <p class="desc">第一轮炸房</p>
+                                        </div>
+                                        <div class="boom-stage-i">
+                                            <div class="avatar">
+                                                <span class="pic"></span>
+                                                <span class="num">x1000</span>
+                                            </div>
+                                            <p class="desc">第二轮炸房</p>
+                                        </div>
+                                        <div class="boom-stage-i">
+                                            <div class="avatar">
+                                                <span class="pic"></span>
+                                                <span class="num">x1500</span>
+                                            </div>
+                                            <p class="desc">第三轮炸房</p>
+                                        </div>
+                                        <div class="boom-stage-i">
+                                            <div class="avatar">
+                                                <span class="pic"></span>
+                                                <span class="num">x2000</span>
+                                            </div>
+                                            <p class="desc">第四轮炸房</p>
+                                        </div>
+                                        <div class="boom-stage-i">
+                                            <div class="avatar">
+                                                <span class="pic"></span>
+                                                <span class="num">x3000</span>
+                                            </div>
+                                            <p class="desc">第五轮及以上炸房</p>
+                                        </div>
+                                    </div>
+                                    <p class="p-txt">2.每天0点刷新进度条，0点后，直播间当前进度条炸完，再从第一轮炸房（500个“小月饼”）开始炸房;</p>
+                                    <div class="reward-box">
+                                        <div class="reward-title"></div>
+                                        <div class="cowns">
+                                            <div class="cowns-i">
+                                                <span class="pic cowns-1"></span>
+                                                <div class="desc">
+                                                    <span class="name">主播第一名</span>
+                                                    <span class="value"><i class="diamond"></i>x350000</span>
+                                                </div>
+                                            </div>
+                                            <div class="cowns-i">
+                                                <span class="pic cowns-2"></span>
+                                                <div class="desc">
+                                                    <span class="name">主播第二名</span>
+                                                    <span class="value"><i class="diamond"></i>x250000</span>
+                                                </div>
+                                            </div>
+                                            <div class="cowns-i">
+                                                <p class="brief">主播第三名 x200000克拉</p>
+                                            </div>
+                                            <div class="cowns-i">
+                                                <p class="brief">主播第四、五名 x100000克拉</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 购买 -->
+        <div class="modal-buy">
+            <div class="xg-bgbox">
+                <div class="modal-close" @click="closeModal"></div>
+                <div class="modal-buy-content">
+                    <div class="form">
+                        <label for="user-id" class="user-label">购买</label>
+                        <input id="user-id" class="user-input"  ref="buyInput" type="text" placeholder="" @click="inputFocus" @input="buyInput">
+                        <span>个</span>
+                    </div>
+                    <p class="price">价格：{{ buyInfo.payMoney }}</p>
+                    <span class="btn-ok" @click="buyConfirm"></span>
+                </div>
+            </div>
+        </div>
+        <!-- recharge去充值 -->
+        <div class="modal-recharge">
+            <div class="xg-bgbox">
+                <div class="modal-close" @click="closeModal"></div>
+                <div class="modal-recharge-content">
+                    <p class="desc">余额不足，快去充值吧！</p>
+                    <div class="btns">
+                        <span class="btn-cancel" @click="rechargeCancel"></span>
+                        <span class="btn-recharge" @click="goRecharge"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 动画效果 -->
+    <div class="svg-layer" v-show="ui.svgShow" @click="stopSvg">
+        <div class="svg-container"></div>
+    </div>
+    <!-- TOAST -->
+    <div class="toast-box" v-show="ui.toastShow">
+        <div class="info">{{ ui.toastMsg }}</div>
+    </div>
+</div>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '浓情中秋',
+    content: '但愿和你长长久久',
+    link: location.href,
+    imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/midAutumnDay/share.jpg")}' // eslint-disable-line
+})
+</script>

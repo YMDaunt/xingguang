@@ -1,0 +1,146 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="wrap">
+        <div class="content">
+            <!-- 专属礼物 -->
+            <section class="gift">
+                <div class="com-box">
+                    <div class="com-tit">
+                        <b></b>
+                    </div>
+                    <div class="rainbow-gift">
+                        <b></b>
+                        <p>
+                            <strong>小彩虹</strong>
+                            <span>10克拉/个</span>
+                        </p>
+                        <div class="btns">
+                            <div class="care" v-if="!isLove" @click="love()"></div>
+                            <div class="cared" v-else>已关注</div>
+                            <div class="go-room" @click="inlive"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 问答 -->
+            <section class="question">
+                <div class="com-box">
+                    <div class="com-tit">
+                        <b></b>
+                    </div>
+                    <ul>
+                        <li class="ask clearfix">
+                            <div class="askimg">
+                                <b></b>
+                                <span>星光小编</span>
+                            </div>
+                            <div class="say-text">
+                                <div class="arrow"></div>
+                                <strong>生活中你是个什么样的人？</strong>
+                            </div>
+                        </li>
+                        <li class="answer clearfix">
+                            <b></b>
+                            <div class="say-text">
+                                <div class="arrow"></div>
+                                <strong>活泼开朗，积极向上的人。</strong>
+                            </div>
+                        </li>
+                        <li class="ask clearfix">
+                            <div class="askimg">
+                                <b></b>
+                                <span>星光小编</span>
+                            </div>
+                            <div class="say-text">
+                                <div class="arrow"></div>
+                                <strong>平时除了直播，还喜欢做什么呢？</strong>
+                            </div>
+                        </li>
+                        <li class="answer clearfix">
+                            <b></b>
+                            <div class="say-text">
+                                <div class="arrow"></div>
+                                <strong>喜欢下厨做美食。</strong>
+                            </div>
+                        </li>
+                        <li class="ask clearfix">
+                            <div class="askimg">
+                                <b></b>
+                                <span>星光小编</span>
+                            </div>
+                            <div class="say-text">
+                                <div class="arrow"></div>
+                                <strong>有什么想对粉丝说的？</strong>
+                            </div>
+                        </li>
+                        <li class="answer clearfix">
+                            <b></b>
+                            <div class="say-text">
+                                <div class="arrow"></div>
+                                <strong>遇见你们是我最大的幸福！</strong>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 榜单 -->
+            <section class="rank">
+                <div class="com-box">
+                    <div class="com-tit">
+                        <b></b>
+                    </div>
+                    <div class="rank-list-top">
+                        <ul>
+                            <li v-for="(item, index) in userRank" v-if="index < 3">
+                                <div class="top-img-area">
+                                    <img :src="item.headPic" alt="" />
+                                    <span></span>
+                                    <b></b>
+                                </div>
+                                <div class="mes">
+                                    <strong>{{item.nickname}}</strong>
+                                    <p>贡献值 {{item.score}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="rank-list-other">
+                        <ul>
+                            <li class="clearfix" v-for="(item, index) in userRank" v-if="index >= 3">
+                                <div class="num">{{index+1}}</div>
+                                <img :src="item.headPic" alt="" />
+                                <div class="name">{{item.nickname}}</div>
+                                <div class="mark">贡献值 {{item.score}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 规则 -->
+            <section class="rule">
+                <div class="com-box">
+                    <div class="com-tit">
+                        <b></b>
+                    </div>
+                    <div class="rule-text">
+                        <p>1.活动时间：2018/11/26  12:00:00 -- 11/30 23:59:59。</p>
+                        <p>2.活动期间内，在 My<b></b>遇见彩虹的直播间内，每送满3000个活动礼物——小彩虹，即可炸出守护红包，快来抢克拉吧！</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="copyright"></div>
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '星光女神',
+        content: '女神驾到，霸气全开！',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/rainbow/share.png")}'
+    });
+</script>

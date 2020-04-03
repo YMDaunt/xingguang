@@ -1,0 +1,49 @@
+<article>
+    <div class="info_wrap" v-if="!info['fansLevel'] && showLock" v-cloak>
+        <div class="avatar_wrap">
+            <img class="head_bg"
+                src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/fans/head_bg_2.png')}">
+            <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/fans/sorry.png')}"
+                class="avatar sorry">
+        </div>
+
+        <p class="sorry_hint_1">
+            您还未拥有任何粉丝徽章
+        </p>
+        <p class="sorry_hint_2">
+            去给喜欢的主播刷一枚粉丝徽章呗~
+        </p>
+
+    </div>
+
+    <div class="info_wrap " v-if="info['fansLevel'] && showLock" v-cloak>
+        <div class="avatar_wrap">
+            <img class="head_bg" src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/fans/head_bg.png')}">
+            <img :src="info['headPic'] " class="avatar" v-cloak>
+        </div>
+
+        <p class="nickname_wrap" v-cloak>
+            {{ info['nickname'] }}
+            <span class="level_icon " :class="formatLevelIconClass(info['level'])"></span>
+        </p>
+
+        <div class="fans_rank" v-cloak>
+            <img :src="info['medalPic'] | formatHeadpic" class="fans_medal">
+            <span class="line">|</span>排名：<span class="red">{{ info['rank'] }}</span>
+        </div>
+
+        <div class="progress_wrap" v-cloak>
+            <span class="progress_bar"
+                :style="barStyle(info['score'], info['currentLevelScore'], info['nextLevelScore'])"></span>
+            <span class="progress_left_level">Lv.{{ info['fansLevel'] }}</span>
+            <span class="progress_right_level">Lv.{{ info['nextLevel'] | formatLevel(info['fansLevel']) }}</span>
+        </div>
+
+        <P class="clearfix intimacy" v-cloak>
+            <span class="fl">本日亲密度上限：{{ info['dayLimit'] }}</span>
+            <span class="fr">今日亲密度：<i>+{{ info['dayScore'] }}</i></span>
+        </P>
+    </div>
+
+    <rule></rule>
+</article>

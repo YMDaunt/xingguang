@@ -1,0 +1,218 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="ban"></div> 
+    <div class="wrap">
+        <div class="db-box">
+            <b></b>
+            <div class="count-time clearfix" v-show="showTime">
+                <span>距售卖结束：</span>
+                <div class="time">
+                    <div v-for="item in restTime"  v-if="restTime[0] !== '-'">{{item}}</div>
+                </div>
+            </div>
+            <ul>
+                <li v-for="(item, index) in goodArr">
+                    <div>
+                        <b v-if="index <= 2"></b>
+                        <div class="img-area-out">
+                            <img :src="item.img" alt="" />
+                        </div>
+                        <strong>{{item.desc}}</strong>
+                        <div class="jd">
+                            <p>
+                                <span>{{item.num}}</span>/{{item.capacity}}
+                            </p>
+                            <div class="jd-line">
+                                <div class="now-line" :style="{width: (item.num * 100 / item.capacity) + '%'}"></div>
+                            </div>
+                        </div>
+                        <div v-if="canBuy" class="join" @click="buy($event)" v-bind:data-id="item.product_id" v-bind:data-img="item.img" v-bind:data-last="item.leftNum"></div>
+                        <div class="joined" v-else></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 记录 -->
+        <div class="recode">
+            <div class="tab-tit">
+                <span @click="tab('1')" :class="{'choose': tabCon1}"></span>
+                <span @click="tab('2')" :class="{'choose': tabCon2}"></span>
+                <span @click="tab('3')" :class="{'choose': tabCon3}"></span>
+            </div>
+            <div class="recode-out">
+                <!-- 已开奖 -->
+                <div class="code-ed" v-show="tabCon1">
+                    <div class="tit-txt">
+                        <span>昵称</span>
+                        <span>奖励宝贝</span>
+                        <span>中奖号码</span>
+                        <span>中奖时间</span>
+                    </div>
+                    <div class="list-out ed-out">
+                        <ul v-if="openArr.length > 0">
+                            <li :class="{'p-li': index % 2 == 0}" v-for="(item, index) in openArr">
+                                <span><b>{{item.nickname}}</b></span>
+                                <span><strong>{{item.prize_desc}}</strong></span>
+                                <span><b v-html="item.lottery_number"></b></span>
+                                <span><strong>{{item.award_time}}</strong></span>
+                            </li>
+                        </ul>
+                        <p class="com-tips" v-else>进度条集满，即可开奖！</p>
+                    </div>
+                </div>
+                
+                <!-- 我的中奖记录 -->
+                <div class="code-my" v-show="tabCon2">
+                    <div class="tit-txt">
+                        <span>奖励宝贝</span>
+                        <span>参与份数</span>
+                        <span>中奖号码</span>
+                        <span>中奖时间</span>
+                    </div>
+                    <div class="list-out my-out">
+                        <ul v-if="getAwardArr.length > 0">
+                            <li :class="{'p-li': index % 2 == 0}" v-for="(item, index) in getAwardArr">
+                                <span><b>{{item.prize_desc}}</b></span>
+                                <span><strong>{{item.numbers}}</strong></span>
+                                <span><b v-html="item.lottery_number"></b></span>
+                                <span><strong>{{item.award_time}}</strong></span>
+                            </li>
+                        </ul>
+                        <p class="com-tips" v-else>多试几次，你就是下一个夺宝锦鲤！</p>
+                    </div>
+                </div>
+
+                <!-- 我的夺宝记录 -->
+                <div class="treasure-my" v-show="tabCon3">
+                    <div class="tit-txt">
+                        <span><b>宝贝</b></span>
+                        <span><b>参与<br />份数</b></span>
+                        <span><b>幸运<br />号码</b></span>
+                        <span><b>购买<br />时间</b></span>
+                        <span><b>是否<br />中奖</b></span>
+                    </div>
+                    <div class="list-out treasure-out">
+                        <ul v-if="buyArr.length > 0">
+                            <li :class="{'p-li': index % 2 == 0}" v-for="(item, index) in buyArr">
+                                <span><b>{{item.prize_desc}}</b></span>
+                                <span><strong>{{item.numbers}}</strong></span>
+                                <span><b v-html="item.lottery_desc"></b></span>
+                                <span><strong>{{item.purchase_time}}</strong></span>
+                                <span>
+                                    <b>{{item.status_desc}}</b>
+                                </span>
+                            </li>
+                        </ul>
+                        <p class="com-tips" v-else>还没有夺宝记录哦，立即参与收获宝贝吧！</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="copyright"></div>
+        
+        <div class="refresh" @click="refresh"></div>
+        <div class="rule-btn" @click="ruleShow = ! ruleShow"></div>
+
+
+        <!-- 规则弹窗 -->
+        <div class="posi rules" v-show="ruleShow">
+            <div class="rule-out">
+                <b class="close-btn" @click="ruleShow = !ruleShow"></b>
+                <div class="rule-con">
+                    <h3></h3>
+                    <div class="rule-cover">
+                        <p class="clearfix">
+                            <span>1</span>
+                            <strong>活动时间: <b>4.9 12:00:00 — 4.14 23:59:59</b></strong>
+                        </p>
+                        <p class="clearfix">
+                            <span>2</span>
+                            <strong>如何购买：您可以选择自己喜欢的宝贝，并填写任意份数参与夺宝。每份数<b>仅需消耗10克拉</b> ，即可获得一个或多个幸运号码，等待开奖（号码非自选）。</strong>
+                        </p>
+                        <p class="clearfix">
+                            <span>3</span>
+                            <strong>开奖时间：当单品达到开奖份数则系统自动开奖，活动结束前5分钟停止售卖，如果宝贝在活动结束前5分钟未达到开奖份数，则全额返还用户购买时所花费的克拉数。</strong>
+                        </p>
+                        <p class="clearfix">
+                            <span>4</span>
+                            <strong>开奖规则：按照购买份数进行等概率随机，购买越多份数，获得幸运大奖的概率越高。例如：宝贝A需要700份数购买，用户B购买3份数，则中奖概率为3/700。</strong>
+                        </p>
+                        <p class="clearfix">
+                            <span>5</span>
+                            <strong>宝贝所需开奖份数为2000份及以上，中奖用户，可触发全站通知飘屏。</strong>
+                        </p>
+                        <p class="clearfix">
+                            <span>6</span>
+                            <strong>宝贝若是礼物将自动下发至您的背包，座驾请至个人中心—我的座驾手动装备。</strong>
+                        </p>
+                        <p class="clearfix">
+                            <span>7</span>
+                            <strong>您可在开奖记录表中查询中奖及参与记录。</strong>
+                        </p>
+                        <p class="clearfix">
+                            <span>8</span>
+                            <strong>本活动期间，如存在违规行为（包括但不限于恶意套取奖品、机器作弊等违反诚实信用原则行为），将取消您的中奖资格，必要时追究法律责任。</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 购买 -->
+        <div class="posi buybox" v-show="buyBox">
+            <div>
+                <b class="close-btn" @click="buyBox = false"></b>
+                <h3>请填写份数</h3>
+                <div class="gift-img-cover">
+                    <img :src="chooseImg" alt="" />
+                </div>
+                <div class="buy-num">
+                    <div class="dev" @click="dev()"></div>
+                    <input id="totalMoney" maxlength="8" value="1" @input="inputNumber()" />
+                    <div class="add" @click="add()"></div>
+                </div>
+                <p>最大可购买份数{{lastNum}}</p>
+                <strong>总共消耗<b>{{buyTotal}}</b>克拉</strong>
+                <div class="sure-buy" @click="sureBuy()" v-bind:data-id="goodId"></div>
+            </div>
+        </div>
+
+        <!-- 余额不足 -->
+        <div class="posi ye" v-show="yeBox">
+            <div class="no-enough">
+                <b class="close-btn" @click="yeBox = false"></b>
+                <div class="not-enough-tips">
+                    <p>余额不足，快去充值吧!</p>
+                    <div>
+                        <div class="not-cz" @click="yeBox = !yeBox"></div>
+                        <div class="do-cz" @click="charge()"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 幸运号码 -->
+        <div class="posi lucknum" v-show="luckNum">
+            <div class="luck">
+                <b class="close-btn" @click="luckNum = false"></b>
+                <p>恭喜您！参与成功！<br />你的幸运号码为</p>
+                <div class="number-txt">{{luckNumber}}</div>
+                <span>（单次购买多份数则获得连续的幸运号码）</span>
+            </div>
+        </div>
+
+        <!-- 文案提示 -->
+        <div class="tost" v-show="tostBox">{{tostText}}</div>
+    </div>
+</main>
+
+<script>
+    var gjShareParam = JSON.stringify({
+        title: '欢乐夺宝',
+        content: '10克拉赢上万克拉礼物，快来抢啊！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/treasure/share.png")}'
+    });
+</script>

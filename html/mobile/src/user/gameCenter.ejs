@@ -1,0 +1,36 @@
+<main id="app" v-cloak>
+    <p>
+    设置游戏appid
+    <input type="number" v-model="appid">
+    </p>
+    <div class="game-btn" @click="goLogin()">登录</div>
+    <p>
+    角色id
+    <input type="number" v-model="roleid">
+    </p>
+    <p>
+    角色名称
+    <input type="text" v-model="rolename">
+    </p>
+    <p>
+    角色等级
+    <input type="number" v-model="level">
+    </p>
+    <p>
+    角色余额
+    <input type="number" v-model="balance">
+    </p>
+    <div class="game-btn" @click="updateUser()">上传身份信息</div>
+    <p>
+    兑换金额
+    <input type="number" v-model="coin">
+    </p>
+    <p>
+    每次支付需更改订单号
+    <input type="number" v-model="orderid">
+    </p>
+    <div class="game-btn" @click="pay()">支付</div>
+</main>
+
+
+<script src='https://static.guojiang.tv/mobile/js/gameSDK.js'></script>

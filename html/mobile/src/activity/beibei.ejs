@@ -1,0 +1,29 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/mobile/v2/img/activity/beibei" */ -->
+
+    <!-- 一个背景图章节 -->
+    <div class="xg-container banner">
+        <div class="xg-content banner-content">
+            <div class="avatar">
+                <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/beibei/avatar.png')}" alt="北北">
+            </div>
+            <div class="goroom-btn" @click="goroom"></div>
+        </div>
+    </div>
+
+    <div class="xg-container txt">
+        <!-- <div class="xg-content txt-content">
+        </div> -->
+    </div>
+
+    <!-- <p class="copyright">本活动最终解释权归平台运营团队所有</p> -->
+</div>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '星光直播_北北3亿了',
+    content: '星光直播_北北3亿了',
+    link: location.href,
+    imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/beibei/share.jpg")}' // eslint-disable-line
+})
+</script>

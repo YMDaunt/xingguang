@@ -1,0 +1,149 @@
+<div id="app" @touchstart="initMusic" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/mobile/v2/img/activity/annualReport2018" */ -->
+    <div ref="page-loading" class="page-loading" v-swiper="swiperLoad" @transitionend="leaveLoading">
+        <div class="stars">
+            <div class="a-bounce">
+                <!-- 这边一个小图片转base64 -> 加载动画时就能够显示出来 -->
+                <div class="icon-star a-loading" style="background-image:url(data:image/png;base64,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)"></div>
+            </div>
+            <div class="sprite-icons icon-shadow"></div>
+        </div>
+        <div v-if="loading" class="progress">{{ progress }}</div>
+        <div v-else class="start">立即开启你的年度报告</div>
+    </div>
+
+    <!-- page-scroller -->
+    <div ref='page-scroller' :class="['page-scroller']" v-swiper="swiper" @transitionend="cancelTrans($event, 'page-scroller')">
+        <!-- 1 -->
+        <div :class="['page-section page-1', showStage === 0 && 'show']" data-page="0">
+            <div class="use-trans avatar">
+                <img :src="pages && pages.headPic" alt="用户头像" class="pic">
+            </div>
+
+            <p class="use-trans txt-blue txt-xl txt-1">2018, 你在星光的日子</p>
+            <p class="use-trans txt-blue txt-l txt-2">一路相伴，有你真好！</p>
+
+            <div class="use-trans sprite-deco1 page-1-deco-0 deco-0"></div>
+            <div class="use-trans sprite-deco1 page-4-deco-5 deco-2"></div>
+            <div class="use-trans sprite-deco1 page-1-deco-0 deco-1"></div>
+            <div class="use-trans sprite-deco1 page-1-deco-5 deco-house"></div>
+            <div class="use-trans sprite-icons page-men-1 deco-men"></div>
+        </div>
+
+        <!-- 2 -->
+        <div :class="['page-section page-2', showStage === 1 && 'show']" data-page="1">
+            <div class="use-trans center-txt">
+                <p class="txt-h txt-blue txt-l txt-3"><span class="txt-yl" v-if="pages">{{ pages.firstLogin | formatDate }}</span><br/>是2018年你第一次<br/>来到星光</p>
+                <p class="txt-h txt-blue txt-l txt-4" v-if="pages && pages.consumeMid">
+                    <span class="txt-yl">{{ pages.consumeMid }}</span>
+                    一定有个有趣的灵魂<br/>
+                    <span class="txt-yl">2018年{{ pages.firstSendGiftTime | formatDate }}</span><br/>
+                    你为TA送出了第一个礼物
+                </p>
+            </div>
+
+            <div class="use-trans deco-0"></div>
+            <div class="use-trans sprite-deco2 page-2-deco-2 gift-1"></div>
+            <div class="use-trans sprite-deco2 page-2-deco-1 gift-2"></div>
+            <div class="use-trans sprite-deco2 page-2-deco-3 gift-3"></div>
+            <div class="use-trans sprite-icons page-men-2 deco-men"></div>
+        </div>
+
+        <!-- 3 -->
+        <div :class="['page-section page-3', showStage === 2 && 'show']" data-page="2">
+            <div class="use-trans center-txt">
+                <p class="txt-h txt-blue txt-l txt-5">2018年<br/>你在星光度过了<span class="txt-yl">{{ pages && pages.activeDays }}个日子</span><br/>你喜欢在<span class="txt-yl">{{ pages && pages.preferDuration }}</span>回到星光<br/>和大家聊聊天、听听歌</p>
+            </div>
+
+            <div class="use-trans deco-0 sprite-icons page-3-deco-0"></div>
+            <div class="use-trans deco-1 sprite-deco1 page-7-deco-0"></div>
+            <div class="use-trans deco-2 sprite-icons page-3-deco-2"></div>
+            <div class="use-trans deco-3 sprite-icons page-3-deco-3"></div>
+            <div class="use-trans deco-4 sprite-icons page-3-deco-4"></div>
+            <div class="use-trans deco-6 sprite-deco1 page-3-deco-6"></div>
+            <div class="use-trans deco-5 sprite-icons page-3-deco-5"></div>
+        </div>
+
+        <!-- 4 -->
+        <div v-if="pages && pages.consumeMid" :class="['page-section page-4', showStage === 3 && 'show']" data-page="3">
+            <p class="use-trans txt-blue txt-l txt-h txt-6" v-if="pages && pages.consumeMid"><span class="txt-yl">{{ pages.consumeMid }}</span><br/>是相伴你在星光最久的主播<br/>你们一起度过了<span class="txt-yl">{{ pages.accompanyDays }}</span>天<br/>你为她送出<span class="txt-yl">{{ pages.consumeCoinForTa }}</span>克拉的心意</p>
+            <p class="use-trans txt-blue txt-l txt-h txt-7">TA说不出哪里好<br/>可就是谁都替代不了</p>
+
+            <div class="use-trans deco-1 sprite-deco1 page-4-deco-5"></div>
+            <div class="use-trans deco-2 sprite-deco2 page-4-deco-1"></div>
+            <div class="use-trans deco-3 sprite-deco2 page-4-deco-2"></div>
+            <div class="use-trans deco-4 sprite-deco2 page-4-deco-3"></div>
+            <div class="use-trans deco-5 sprite-deco2 page-4-deco-4"></div>
+            <div class="use-trans deco-men sprite-icons page-men-3"></div>
+        </div>
+
+        <!-- 5 -->
+        <div :class="['page-section page-5', showStage === 4 && 'show']" data-page="4">
+            <div class="use-trans center-txt">
+                <p class="txt-blue txt-l txt-h txt-8" v-if="pages && pages.firstSendGiftId">
+                    2018年<br/>
+                    <template v-for="(gift, ind) in pages.sendMostPids">
+                        你送出<span class="txt-yl">“{{ gift.name }}”{{ gift.val }}个</span><br/>
+                    </template>
+                </p>
+                <p class="txt-blue txt-l txt-h txt-9">你送出的礼物价值<span class="txt-yl">{{ pages && pages.consumeCoinAll }}</span>克拉<br/>打败<span class="txt-yl">{{ pages && pages.rank }}</span>的用户！<br/>堪称<span class="txt-yl">{{ pages && pages.rankTag }}！</span></p>
+            </div>
+
+            <div class="use-trans deco-1 sprite-deco2 page-5-deco-1"></div>
+            <div class="use-trans deco-2 sprite-deco2 page-5-deco-0"></div>
+        </div>
+
+        <!-- 6 -->
+        <div :class="['page-section page-6', showStage === 5 && 'show']" data-page="5">
+            <p class="use-trans txt-blue txt-l txt-h txt-10">感谢这一年的陪伴<br/>因为有你<br/>星光才能越来越好！</p>
+            <p class="use-trans txt-blue txt-l txt-h txt-11"><span class="txt-yl">2019</span>年让我们继续作伴<br/>一起望遍星光璀璨！</p>
+
+            <div class="use-trans deco-2019"></div>
+            <div class="use-trans deco-men sprite-icons page-men-1"></div>
+        </div>
+
+        <!-- 7 -->
+        <div :class="['page-section page-7', showStage === 6 && 'show']" data-page="6">
+            <p class="txt-blue txt-xl txt-12">我的星光年度称号</p>
+
+            <div class="use-trans deco-0 sprite-deco1 page-7-deco-0"></div>
+            <div class="use-trans deco-1 sprite-icons page-7-deco-1"></div>
+
+            <div :class="'use-trans badge-1 badge-bg sprite-txt txt-bg-ver-' + (pages ? (pages.tags[0].length > 2 ? 2 : 1) : 0)">
+                <div :class="['sprite-txt txt-' + txtMap[pages && pages.tags[0]]]"></div>
+            </div>
+            <div class="use-trans badge-2 badge-bg sprite-txt txt-bg-hor">
+                <div :class="['sprite-txt txt-' + txtMap[pages && pages.tags[1]]]"></div>
+            </div>
+            <div :class="'use-trans badge-3 badge-bg sprite-txt txt-bg-ver-' + (pages ? (pages.tags[2].length > 2 ? 2 : 1) : 1)">
+                <div :class="['sprite-txt txt-' + txtMap[pages && pages.tags[2]]]"></div>
+            </div>
+            <div :class="'use-trans badge-4 badge-bg sprite-txt txt-bg-ver-' + (pages ? (pages.tags[3].length > 2 ? 2 : 1) : 1)">
+                <div :class="['sprite-txt txt-' + txtMap[pages && pages.tags[3]]]"></div>
+            </div>
+        </div>
+
+        <!-- default -->
+        <div :class="['page-section page-default', showStage === 7 && 'show']" data-page="7">
+            <p class="use-trans txt-blue txt-l txt-h txt-13">你的2018<br/>星光不曾参与<br/>你的2019<br/>星光陪你到底</p>
+
+            <div class="use-trans deco-0 sprite-icons page-8-deco-1"></div>
+            <div class="use-trans deco-1"></div>
+            <div class="use-trans deco-men sprite-icons page-men-1"></div>
+        </div>
+    </div>
+
+    <!-- 全局元素 -->
+    <div :class="['sprite-icons icon-music', !musicPlay && 'disabled']" @click="toggleMusic" ref="musicIcon"></div>
+    <audio class="audio" src="//static.guojiang.tv/src/pc/video/music/spring_music.mp3" preload="metadata" loop ref="audio"></audio>
+    <div class="sprite-icons icon-uper"></div>
+</div>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '2018，你在星光的日子',
+    content: '一路相伴，有你真好！',
+    link: location.href,
+    imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/compete4carry/share.jpg")}' // eslint-disable-line
+})
+</script>

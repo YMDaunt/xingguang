@@ -1,0 +1,82 @@
+@bf: 108rem;
+body{
+    background: #e9e9e9;
+}
+[v-cloak] { display: none }
+.gary-btn{
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);     
+    filter: grayscale(100%);
+}
+.bg_all{
+	background:url("../../img/activity/bestYou/all.png") 0 0 no-repeat;
+	background-size:157/@bf 72/@bf; 
+}
+.transform_center{
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+img{
+    display: block;
+    width: 100%;
+    vertical-align: middle;
+    .fadeIn;
+    .animated;
+}
+.part-2{
+    position: relative;
+    .attention-wrap{
+        position: absolute;
+        left:125/@bf;
+        top:180/@bf;
+        padding:0 120/@bf;
+        width: 830/@bf;
+        height:100/@bf;
+        z-index: 1;
+        span{
+          display: inline-block;
+          margin: 0 30/@bf;
+          width: 160/@bf;
+          height: 72/@bf;
+          .bg_all;
+          background-position: 0 0;
+        }
+        &:active{
+            opacity: 0.6;
+        }
+    }
+}
+//图片淡入效果
+.fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+@keyframes fadeIn{
+    0% {
+    opacity: 0;
+}
+    100% {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes fadeIn{
+    0% {
+    opacity: 0;
+}
+    100% {
+        opacity: 1;
+    }
+}

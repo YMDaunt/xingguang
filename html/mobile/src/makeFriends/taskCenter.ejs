@@ -1,0 +1,70 @@
+<main id="app" v-cloak>
+    <section class="newer-task" v-if="newerTask.length>0">
+        <div class="title">新手任务</div>
+        <ul class="newer-list">
+            <li v-for="(item,index) in newerTask" :key="index">
+                <div class="task-icon fl">
+                    <img :src="item.taskIcon" alt="任务图标">
+                </div>
+                <div class="task-info fl">
+                    <p class="info">{{item.taskName}}{{item | progress}}</p>
+                    <p class="task-coin" v-if="item.mfCoin">+{{item.mfCoin}}金币</p>
+                    <p class="task-coin" v-if="item.incomeY">+{{item.incomeY}}元</p>
+                </div>
+                <div class="task-btn fr" v-if="item.status == 0" @click="goTask(item)">前往</div>
+                <div class="task-btn task-btn-2 fr" v-else-if="item.status == 1" @click="goRedPackage(item)">领红包</div>
+                <div class="task-btn-finish fr" v-else></div>
+            </li>
+        </ul>
+    </section>
+    <section class="everyday-task" v-if="everydayTask.length>0">
+        <div class="title">每日任务</div>
+        <ul class="everyday-list">
+            <li v-for="(item,index) in everydayTask" :key="index">
+                <div class="task-icon fl">
+                    <img :src="item.taskIcon" alt="任务图标">
+                </div>
+                <div class="task-info fl">
+                    <p :class="['info', item.taskType === 1001?'red':'']" >{{item.taskName}}{{item | progress}}</p>
+                    <p class="task-coin" v-if="item.mfCoin">+{{item.mfCoin}}金币</p>
+                    <p class="task-coin" v-if="item.incomeY">+{{item.incomeY}}元</p>
+                </div>
+                <div class="task-btn fr" v-if="item.status == 0" @click="goTask(item)">前往</div>
+                <div class="task-btn task-btn-2 fr" v-else-if="item.status == 1" @click="goRedPackage(item)">领红包</div>
+                <div class="task-btn-finish fr" v-else @click="goTask(item)"></div>
+            </li>
+        </ul>
+    </section>
+    <section class="task-red-package" v-show="showRedPackage">
+        <div class="red-package" v-show="showSingleRedPackage">
+            <div class="lucky-msg lucky">恭喜你</div>
+            <div class="lucky-msg">获得一个任务红包</div>
+            <div class="open-btn" @click="openRedPackage"></div>
+        </div>
+        <div class="double-red-package" v-show="!showSingleRedPackage">
+            <div class="lucky">恭喜你获得以下红包</div>
+            <div class="lucky-msg">任务红包 x{{redPackageNum}}</div>
+            <div class="open-btn" @click="openRedPackage"></div>
+        </div>
+    </section>
+    <section class="result-mask" v-show="showResult">
+        <div class="red-package-result" v-show="showSingleResult">
+            <div class="lucky-coin">{{ singleResult }}</div>
+            <div class="unit">{{unit}}</div>
+            <div class="lucky-msg lucky">恭喜你</div>
+            <div class="lucky-msg">获得一个任务红包</div>
+            <div class="lucky-tips" v-if="male">已发放至账户，快去和ta聊天吧</div>
+            <div class="lucky-tips" v-else>已发放至收益中</div>
+            <div class="radiation"></div>
+        </div>
+        <div class="double-red-package-result" v-show="showDoubleResult">
+            <div class="lucky">恭喜你获得以下红包</div>
+            <div class="lucky-coin">{{ doubleResult }}</div>
+            <div class="unit">金币</div>
+            <div class="lucky-tips">金币已发放至账户</div>
+            <div class="radiation"/>
+        </div>
+    </section>
+    <section id="signBox"></section>
+    <div :class="['red-package-container',showResult?'playSvg':'']"/>
+</main>

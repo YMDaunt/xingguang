@@ -1,0 +1,41 @@
+<main class="main_box fadeIn animated" id="app" v-cloak>
+	<section class="banner-box">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/xgRecall/1.png')}">
+		<p>成功邀请老用户，即可获得丰厚奖励。召回用户等级越高，奖励越丰厚哦！</p>
+	</section>
+	<section class="entrance-box">
+		<div class="entrance-1">
+			<span class="recall-btn" @click="getInviteCode"  v-bind:class="{'disable':beGray}"></span>
+			<p>剩余邀请机会：<span class="remain-chance">{{remainChance}}</span>次</p>
+		</div>
+		<div class="entrance-2">
+			<span class="recall-record"  @click="getMyRecallRecord"></span>
+			<span class="get-gift" @click="getGiftLayer"></span>
+		</div>
+	</section>
+	<section class="rule-box">
+		<h3>召回规则</h3>
+		<p><i>1</i>活动时间：2017.10.19 18:00:00—2017.11.08 23:59:59，活动结束则邀请码失效； </p>
+
+		<p><i>2</i>成功邀请老用户，奖励即可自动下发至邀请人账户<br/>
+		1）<span>何为老用户</span>：截止至2017.10.17 18:00:00前注册的账号，并且此日期前该账号大于30天未登录过平台；<br/>
+		2）<span>何为成功邀请</span>：符合召回条件的被邀请人登录平台，并于“礼包领取通道”成功填写召回码，即为成功；<br/>
+		3）<span>奖励多少</span>：根据成功召回的老用户的等级，给予对应级别的奖励；</p>
+		<p><i>3</i>每个账号活动期间有10次邀请机会，未成功兑换奖励不会扣除次数；<span>第一期召回活动的参与次数已计入在内，系统将自动予以扣除</span>；</p>
+		<p><i>4</i>若发现违规借用账号，恶意获利的行为，将扣除用户全部的违规所得。</p>
+		<p><i>5</i>本活动最终解释权归星光直播平台所有。</p>
+	</section>
+	<section class="reward-box">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/xgRecall/2.png')}">
+		<span class="reward-btn" @click="showAwardLayer"></span>
+	</section>
+</main>
+
+<script>
+	var gjShareParam = JSON.stringify({
+        title: '星光召回令！',
+        content: '星光直播邀您回家领取大礼包！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/xgRecall/share.png")}'
+    });
+</script>

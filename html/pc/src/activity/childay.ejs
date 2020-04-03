@@ -1,0 +1,327 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="wrap">
+        <div class="ban"></div>
+
+        <!-- 大富翁 -->
+        <section class="rich">
+            <div class="rich-con">
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+                <div class="step">
+                    <img :src="mesArr.headPic" alt="" />
+                </div>
+            </div>
+            <div class="sz gif"></div>
+            <div class="sz stop"></div>
+            <div class="go" @click="drew()"></div>
+            <div class="drew-mes">
+                <div class="now">
+                    当前进度: <strong>{{mesArr.currentNum}}</strong>/<span>{{mesArr.targetNum}}</span>
+                </div>
+                <div class="chance">
+                    剩余次数: <strong>{{mesArr.leftTimes}}</strong>/<span>次</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 中奖幸运榜 -->
+        <section class="luck">
+            <h2></h2>
+            <div class="luck-con">
+                <div class="ul-con">
+                    <ul class="scroll-out"></ul>
+                </div>
+            </div>
+            <div class="my-drew" @click="codes()"></div>
+        </section>
+
+        <!-- 榜单 -->
+        <section class="list-rank">
+            <div class="tab-btn">
+                <div :class="{'choose': tabCon}" @click="tab('choose')"></div>
+                <div :class="{'choose': !tabCon}" @click="tab('')"></div>
+            </div>
+            <div class="tab-con">
+                <div class="tab-con-tit1" v-show="tabCon"></div>
+                <div class="tab-con-tit2" v-show="!tabCon"></div>
+
+                <!-- 主播 -->
+                <div class="rank-top mods" v-show="tabCon">
+                    <ul class="three">
+                        <li v-for="(item,index) in modArr" v-if="index < 3">
+                            <div class="rank-img">
+                                <b></b>
+                                <span v-if="item.is_playing == 1" @click="inlive($event)" v-bind:data-rid="item.id"></span>
+                                <img :src="item.head_pic_1"  @click="inlive($event)" v-bind:data-rid="item.id" alt="" />
+                            </div>
+                            <div class="rank-name">
+                                <div>{{item.nickname}}</div>
+                                <b :class="'level_icon m_level_icon_' + item.level"></b>
+                            </div>
+                            <p>收到：{{item.num}}</p>
+                            <div v-if="!item.is_attention" v-bind:data-id="item.id" class="care" @click="attention($event,index)"></div>
+                            <div v-else class="cared"></div>
+                        </li>
+                    </ul>
+                    <!-- 4+ -->
+                    <div class="con-h2 clearfix" v-show="modArr.length != 0">
+                        <div>排名</div>
+                        <div>主播</div>
+                        <div>收到的礼物</div>
+                    </div>
+                    <div class="rank-other mod-other">
+                        <div class="rank-out other-mod">
+                            <ul>
+                                <li class="clearfix" v-for="(item,index) in modArr" v-if="index >= 3">
+                                    <div class="top-num">{{index+1}}</div>
+                                    <div class="top-img">
+                                        <img :src="item.head_pic_1"  @click="inlive($event)" v-bind:data-rid="item.id" alt="" />
+                                        <span v-if="item.is_playing == 1" @click="inlive($event)" v-bind:data-rid="item.id"></span>
+                                    </div>
+                                    <div class="top-mes">
+                                        <div>{{item.nickname}}</div>
+                                        <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                    </div>
+                                    <div class="top-mark">收到：{{item.num}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mine clearfix" v-show="uid != 0">
+                        <div class="mine-img">
+                            <img :src="myModArr.headPic" alt="" />
+                            <span v-if="myModArr.isPlaying"></span>     
+                        </div>
+                        <div class="mine-mes clearfix">
+                            <div class="mine-nickname">
+                                <strong>{{myModArr.nickName}}</strong>
+                                <b :class="'level_icon m_level_icon_' + myModArr.level"></b>
+                            </div>
+                            <div class="mine-ranks">
+                                <div>我的排名 : <span>{{myModArr.rank}}</span></div>
+                                <div>收到的礼物 : {{myModArr.score}}</div>
+                            </div>
+                        </div>
+                        <b></b>
+                    </div>
+                </div>
+
+                <!-- 用户 -->
+                <div class="rank-top users" v-show="!tabCon">
+                    <ul class="three">
+                        <li v-for="(item,index) in userArr" v-if="index < 3">
+                            <div class="rank-img">
+                                <b></b>
+                                <img :src="item.head_pic_1" v-bind:data-rid="item.rid" alt="" />
+                            </div>
+                            <div class="rank-name">
+                                <div>{{item.nickname}}</div>
+                                <b :class="'level_icon u_level_icon_' + item.level"></b>
+                            </div>
+                            <p>送出：{{item.num}}</p>
+                        </li>
+                    </ul>
+                    <!-- 4+ -->
+                    <div class="con-h2 clearfix" v-show="userArr.length != 0">
+                        <div>排名</div>
+                        <div>用户</div>
+                        <div>送出的礼物</div>
+                    </div>
+                    <div class="rank-other user-other">
+                        <div class="rank-out other-user">
+                            <ul>
+                                <li class="clearfix" v-for="(item,index) in userArr" v-if="index >= 3">
+                                    <div class="top-num">{{index+1}}</div>
+                                    <div class="top-img">
+                                        <img :src="item.head_pic_1" v-bind:data-rid="item.rid" alt="" />
+                                    </div>
+                                    <div class="top-mes">
+                                        <div>{{item.nickname}}</div>
+                                        <b :class="'level_icon u_level_icon_' + item.level"></b>
+                                    </div>
+                                    <div class="top-mark">送出：{{item.num}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- 我的排名 -->
+                    <div class="mine clearfix" v-show="uid != 0">
+                        <div class="mine-img">
+                            <img :src="myUserArr.headPic" alt="" />
+                        </div>
+                        <div class="mine-mes clearfix">
+                            <div class="mine-nickname">
+                                <strong>{{myUserArr.nickName}}</strong>
+                                <b :class="'level_icon u_level_icon_' + myUserArr.level"></b>
+                            </div>
+                            <div class="mine-ranks">
+                                <div>我的排名 : <span>{{myUserArr.rank}}</span></div>
+                                <div>送出的礼物 : {{myUserArr.score}}</div>
+                            </div>
+                        </div>
+                        <b></b>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 规则按钮 -->
+        <div class="btn-rule" @click="rules()"></div>
+
+        <!-- 规则弹窗 -->
+        <div class="posi rules" v-show="rule">
+            <div class="common-out">
+                <h2></h2>
+                <div class="common-con">
+                    <i class="close-btn" @click="rule = !rule"></i>
+                    <b class="arrow"></b>
+                    <div class="rule-out">
+                        <div class="rule-con">
+                            <p>1.活动时间：2018年5月28日12:00:00—6月2日 23:59:59。</p>
+                            <p>2.此次活动分阶段炸房，每天前五次炸房送出指定数量的“大富翁”即可炸房，从第六次炸房起，每次炸房需送出3000个“大富翁”。</p>
+                            <b class="step-pic"></b>
+                            <p>3.每天0点刷新进度条，0点后，直播间当前进度条炸完，再从第一轮炸房（500个“大富翁”）开始炸房。</p>
+                            <p>4.活动期间，每累计送出610个活动礼物——“大富翁”，即可参与大富翁游戏，有机会获得以下奖品<strong>(游戏抽奖时间截止至06/03 23:59:59）</strong>。</p>
+                            <h3></h3>
+                            <b class="drew-gift"></b>
+                            <p>6.童趣榜前5名主播可获得儿童节礼品，礼品将于活动结束后15个工作日内发放。</p>
+                            <p>7.本次活动最终解释权归星光直播所有。</p>
+                            <b class="reward-pic"></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+
+        <!-- 中奖纪录弹窗 -->
+        <div class="posi code" v-show="code">
+            <div class="common-out">
+                <h2></h2>
+                <div class="common-con">
+                    <i class="close-btn" @click="code = !code"></i>
+                    <h4 v-if="myLuckArr.length > 0">
+                        <span>时间</span>
+                        <span>奖品</span>
+                    </h4>
+                    <div class="code-con">
+                        <b class="arrow"></b>
+                        <div class="code-out">
+                            <div class="nonething" v-if="!myLuckJudge">啊哦，还未中奖哦！</div>
+                            <div class="per-code" v-for="(item, index) in myLuckArr" v-else>
+                                <span>{{item.addTime}}</span>
+                                <span>{{item.prizeName}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 中奖提示弹窗 -->
+        <div class="posi yes" v-show="win">
+            <div class="common-out">
+                <h2></h2>
+                <div class="common-con">
+                    <i class="close-btn" @click="win = !win"></i>
+                    <div>
+                        <b class="arrow"></b>
+                        恭喜您获得<span>{{yesThing}}！</span>
+                        <br />
+                        已放入您的{{yesPosi}}，请注意查收！
+                    </div>
+                </div>
+                <div class="know" @click="win = !win"></div>
+            </div>
+        </div>
+
+        <!-- 非中奖提示弹窗 -->
+        <div class="posi none" v-show="noWin">
+            <div class="common-out">
+                <div class="common-con">
+                    <i class="close-btn" @click="noWin = !noWin"></i>
+                    <p>{{noText}}</p>
+                </div>
+                <div class="know" @click="noWin = !noWin"></div>
+            </div>
+        </div>
+    </div>
+</main>
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '童年大富翁',
+        content: '玩转大富翁，奖励拿不停！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/pc/v4/img/activity/childay/share.png")}'
+    });
+</script>

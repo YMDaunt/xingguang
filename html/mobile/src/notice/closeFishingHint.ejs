@@ -1,0 +1,8 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/mobile/v2/img/notice/closeFishingHint" */ -->
+    <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/notice/closeFishingHint/1.jpg')}" v-show="showFlag==1" class="ios_img">
+    <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/notice/closeFishingHint/2.jpg')}" v-show="showFlag==0" class="android_img">
+
+    <span class="close"  :class="showFlag==0?'android':''" @click="close"></span>
+    
+</div>

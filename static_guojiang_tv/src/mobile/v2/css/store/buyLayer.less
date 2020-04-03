@@ -1,0 +1,61 @@
+@bf:108rem;
+
+.payLayer-ui-2{
+	background: none;
+	.pu2_top, .pl_paytype_wrap{background: #fff;}
+	h4{color:#ff0071;text-align: center;padding:66/@bf 0 50/@bf;}
+	.pu2_top{border-top-left-radius: 40/@bf;border-top-right-radius: 40/@bf;text-align: center;}
+	.buy_list{
+		li{width: 288/@bf;height: 115/@bf;font-size: 16px;color:#666666;text-align: center;line-height: 115/@bf;border:1px solid #999999;border-radius: 17/@bf;position: relative;float:left;
+			.check_icon{display: none;position: absolute;bottom: -1px;right: -1px;background: url(../../img/component/payLayer/check_icon.png) no-repeat 0 0;background-size:55/@bf 55/@bf;width: 55/@bf;height: 55/@bf;}
+			&.active{
+				border-color:#ff0071;color:#ff0071;
+				.check_icon{display: block;}
+			}
+		}
+	}
+
+	.pl_paytype_wrap{
+		border-bottom-left-radius: 40/@bf;border-bottom-right-radius: 40/@bf;padding:20/@bf 0 45/@bf;
+		.pay_icon{background: url(../../img/component/payLayer/type_v2.png?v=0703) no-repeat;background-size:593/@bf 328/@bf;display: inline-block;}
+		.pay_alipay{background-position:  0 0;width: 288/@bf;height: 120/@bf;
+			&:active{background-position: 0 -130/@bf;width: 288/@bf;height: 120/@bf;}
+		}
+		.pay_wechat{background-position:  -302/@bf 0;width: 288/@bf;height: 120/@bf;
+			&:active{background-position: -302/@bf -130/@bf;width: 288/@bf;height: 120/@bf;}
+		}
+		.pay_ios{background-position: -1/@bf -263/@bf;width: 50/@bf;height: 60/@bf;margin-right: 16/@bf;}
+		button{background: #ff0071;font-size: 15px;color:#ffffff;width: 612/@bf;height: 120/@bf;border-radius:65/@bf;margin:0 auto;line-height: 120/@bf;border:none;
+			&:active{    background: #ff0071;}
+		}
+		li[data-type="iospay"]{
+			width: 610/@bf;
+			height: 120/@bf;
+			border: 1px solid #000000;
+			border-radius: 60/@bf;
+			font-size: 22px;
+			color:#000000;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			&:active{
+				background: #cccccc;
+			}
+		}	
+	}
+
+	ul{display: flex;justify-content:space-around;-webkit-justify-content:space-around;}
+
+	.custom_content_wrap{
+		padding-bottom: 0;
+		small{font-size: 10px;color:#999999;}
+		p{font-size: 13px;color:#999999;}
+		h5{font-size: 15px;color:#666666;padding-top: 40/@bf;font-weight:normal;
+			span{color:#ff0071;}
+		}
+	}
+}
+.split_line_2{background: url(../../img/store/split_line.png) no-repeat;background-size:733/@bf 86/@bf;width:733/@bf;height:86/@bf;position: relative;left:0;top:0;display: block;}
+div.layui-m-layer div.payLayer{background: none;
+	.layui-m-layercont{padding: 0;}
+}

@@ -1,0 +1,19 @@
+<div class="wl_content">
+    <ul>
+        <li v-for="item in list" v-cloak>
+            <P class="clearfix">
+                <span class="fl">单次购买</span>
+                <span class="fr"></span>
+            </P>
+
+            <p class="clearfix">
+                <span class="fl">{{item.add_time}}</span>
+                <span class="fr"></span>
+            </p>
+        </li>
+    </ul>
+	<p class="click_load_more" v-cloak  v-show="list.length !== 0" @click="getList(page+1)">
+		<i v-show="!isEnd"></i><span v-show="isEnd">没有更多了哦 ㄒoㄒ~~</span>
+	</p>
+	<p class="no_incomeD_hint" v-show="list.length == 0">你还没有买过私信卡哦</p>
+</div>

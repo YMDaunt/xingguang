@@ -1,0 +1,279 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="ban"></div> 
+    <div class="wrap">
+        <!-- 个人团战信息 -->
+        <section class="fans-team">
+            <h2 class="commom-tit"></h2>
+            <div class="fans-con">
+                <div class="tab-btn" v-show="isMod">
+                    <div :class="{'choose': tabMes}" @click="tab('choose')"></div>
+                    <div :class="{'choose': !tabMes}" @click="tab('')"></div>
+                </div>
+                <div class="mod-con" v-show="tabMes">
+                    <div class="con-top">
+                        <div class="img-area clearfix">
+                            <div class="img-bt">
+                                <img :src="userInfo.headPic" alt="" />
+                                <b :class="'level_icon m_level_icon_' + userInfo.moderatorLevel"></b>
+                            </div>
+                            <p>{{userInfo.nickname}}</p>
+                        </div>
+                    </div>
+                    <div class="con-bt">
+                        <!-- 粉丝进度 -->
+                        <div class="team-line">
+                            <strong>单位： 克拉</strong>
+                            <div class="jd-line">
+                                <div v-for="(item, index) in jdArr">
+                                    <em><div class="arrow"></div>{{item * 50}}</em>
+                                    <span>{{item}}人</span>
+                                </div>
+                                <p class="present" :style="{width: (presentVal - jdArr[0]) / 40 * 100 + '%'}"></p>
+                            </div> 
+                        </div>
+
+                        <ul class="ul1 clearfix">
+                            <li><span>新增粉丝</span></li>
+                            <li><span>奖励克拉</span></li>
+                            <li>{{allCount}}</li>
+                            <li>{{asMod.coin_count}}</li>
+                        </ul>
+                        <ul class="ul2 clearfix">
+                            <li><span>今日送礼粉丝</span></li>
+                            <li class="point-wh" @click="TostTxt('今日目标送礼粉丝数=昨日粉丝团总人数*0.1+1，若有小数，则四舍五入为整数。若昨日的粉丝团总人数为0-4，则今日目标送礼粉丝数默认为1。')"><span>今日目标送礼粉丝数</span><b></b></li>
+                            <li class="point-wh" @click="TostTxt('当主播今日送礼粉丝数=今日目标送礼粉丝数时，已加积分=主播今日当时积分*0.1,若有小数，则四舍五入为整数。若主播今日当时积分为0-4，则已加积分默认加1分。')"><span>已加积分</span><b></b></li>
+                            <li>{{asMod.gift_num}}</li>
+                            <li>{{asMod.gift_target_num}}</li>
+                            <li>{{asMod.gift_target_score}}</li>
+                        </ul>
+                        <p>今日首次送礼粉丝数等于目标人数，今日当时真爱积分立即乘<b style="color: #fcd98b">1.1</b>倍</p>
+                    </div>
+                </div>
+                <div class="user-con" v-show="!tabMes">
+                    <div class="con-top">
+                        <div class="img-area clearfix">
+                            <div class="img-bt">
+                                <img :src="userInfo.headPic" alt="" />
+                                <b :class="'level_icon u_level_icon_' + userInfo.level"></b>
+                            </div>
+                            <p>{{userInfo.nickname}}</p>
+                            <div class="my-join"></div>
+                        </div>
+                    </div>
+                    <div class="con-bt">
+                        <div class="send-mes">每日首次送出除了比心、荧光棒、上头条的任意礼物，主播真爱积分加<strong>2</strong>。</div>
+                        <!-- 有粉丝团 -->
+                        <div class="with-fans" v-if="isCareAny">
+                            <ul>
+                                <li class="clearfix" v-for="(item, index) in tjArr">
+                                    <div class="fans-img">
+                                        <img :src="item.headPic" v-bind:data-rid="item.rid" @click="inlive($event)" alt="" />
+                                        <span v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></span>
+                                    </div>
+                                    <div class="fans-mes">
+                                        <strong>{{item.nickname}}</strong>
+                                        <div class="fan-hz" v-if="item.medal != null">{{item.medal}}</div>
+                                    </div>
+                                    <div class="send" v-if="!item.isSend" v-bind:data-rid="item.rid" @click="inlive($event)"></div>
+                                    <div class="sended" v-else></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 没有粉丝团 -->
+                        <div class="without-fans" v-else>
+                            <p v-if="!isInvalid">您还未加入粉丝团，以下是热门粉丝团推荐：</p>
+                            <div class="without-con">
+                                <ul v-if="!isInvalid">
+                                    <li class="clearfix" v-for="(item, index) in tjArr">
+                                        <div class="without-img">
+                                            <img :src="item.headPic" v-bind:data-rid="item.rid" @click="inlive($event)" alt="" />
+                                            <span v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></span>
+                                            <b :class="'level_icon m_level_icon_' + userInfo.level"></b>
+                                        </div>
+                                        <strong>{{item.nickname}}</strong>
+                                        <div class="fan-hz" v-if="item.medal != null">{{item.medal}}</div>
+                                    </li>
+                                </ul>
+                                <p v-else class="cant-join">您已有账号送过礼物【领证】，此号无法参与活动，请知悉！</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="jg-pic"></div>
+
+        <!-- 榜单 -->
+        <section class="rank">
+            <h2 class="commom-tit"></h2>
+            <div class="rank-con">
+                <div class="three">
+                    <ul>
+                        <li v-for="(item, index) in modArr" v-if="index < 3">
+                            <div class="rank-img">
+                                <img :src="item.headPic" v-bind:data-rid="item.rid" @click="inlive($event)" alt="" />
+                                <span v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></span>
+                                <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                <em></em>
+                            </div>
+                            <div class="rank-mes">
+                                <p>{{item.nickname}}</p>
+                                <div class="jf">
+                                    <span>积分：</span>
+                                    <strong v-bind:data-mid="item.id" @click="showJf($event)">{{item.score}}</strong>
+                                </div>
+                                <div v-if="item.medal != null " class="fan-hz">{{item.medal}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="jg-line"></div>
+                <h3 class="clearfix">
+                    <span v-show="modArr.length > 3">排名</span>
+                    <span v-show="modArr.length > 3">主播</span>
+                    <span v-show="modArr.length > 3">真爱积分</span>
+                </h3>
+                <div class="rank-list mod-other">
+                    <ul>
+                        <li v-for="(item, index) in modArr" v-if="index >= 3" class="clearfix">
+                            <div class="number">{{index + 1}}</div>
+                            <div class="rank-pic-mes">
+                                <div class="rank-other-img">
+                                    <img :src="item.headPic" v-bind:data-rid="item.rid" @click="inlive($event)" alt="" />
+                                    <span v-if="item.isPlaying" v-bind:data-rid="item.rid" @click="inlive($event)"></span>
+                                </div>
+                                <p>
+                                    <strong>{{item.nickname}}</strong>
+                                    <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                </p>
+                            </div>
+                            <div class="rank-jf" v-bind:data-mid="item.id" @click="showJf($event)">{{item.score}}</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="num-tips">仅显示前100名主播</div>
+                <div class="jg-line"></div>
+
+                <!-- 我的主播信息 -->
+                <div class="my-mod clearfix" v-if="myModArr != null">
+                    <div class="myrank-number"></div>
+                    <div class="my-message">
+                        <div class="my-img">
+                            <img v-if="myModArr.rid == null" :src="myModArr.headPic" alt="" />
+                            <img v-else :src="myModArr.headPic" v-bind:data-rid="myModArr.rid" @click="inlive($event)" alt="" />
+                            <b v-if="myModArr.isPlaying" v-bind:data-rid="myModArr.rid" @click="inlive($event)"></b> 
+                        </div>
+                        <div class="my-name">
+                            <strong>{{myModArr.nickName}}</strong>
+                            <span :class="'level_icon m_level_icon_' + myModArr.level"></span>
+                        </div>
+                    </div>
+                    <div class="my-mark" v-if="myModArr.pairInfos != undefined">
+                        <span>{{myModArr.pairInfos[0].name}}</span>
+                        <strong>{{myModArr.pairInfos[0].value}}</strong>
+                        <span>{{myModArr.pairInfos[1].name}}</span>
+                        <strong>{{myModArr.pairInfos[1].value}}</strong>
+                    </div>
+                    <div class="my-mark" v-if="myModArr.pairInfos != undefined">
+                        <span>{{myModArr.pairInfos[2].name}}</span>
+                        <strong>{{myModArr.pairInfos[2].value}}</strong>
+                        <span>{{myModArr.pairInfos[3].name}}</span>
+                        <strong>{{myModArr.pairInfos[3].value}}</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="jg-pic"></div>
+        <div class="copyright"></div>
+        
+        <!-- 规则 -->
+        <div class="rule-btn" @click="showRule = true"></div>
+        <div class="posi" v-show="showRule">
+            <div class="rule-con">
+                <div class="close-btn" @click="closeRule()"></div>
+                <div class="rule-cover">
+                    <div class="rule-outer">
+                        <strong>活动时间: <span>2019.1.8 12:00:00-2019.1.13 23:59:59</span></strong>
+                        <strong>活动玩法：</strong>
+                        <div class="max">
+                            <strong>玩法一：</strong>
+                            <span>粉丝进团奖克拉</span>  
+                        </div>
+                        <div class="lz">
+                            <span>a.活动期间，主播粉丝团每新增10位粉丝，该主播即获得500克拉奖励。（20位粉丝奖励1000克拉，30位粉丝奖励1500克拉，以此类推，奖励上限为新增200位粉丝）。
+                            <br>
+                            <span>b.活动期间取消某主播的粉丝徽章，再次加入，活动榜单不计为该主播新增的粉丝，但不影响直播间粉丝团新增粉丝。</span>
+                            <br>
+                            <span>c.未设置粉丝勋章的主播可在开播时，设置粉丝徽章，如下图所示：</span>
+                            <div class="zn-pic"></div>
+                        </div>
+                        <div class="max">
+                            <strong>玩法二：</strong>
+                            <span>真爱积分</span>  
+                        </div>
+                        <p>a.活动期间主播粉丝团每增加1个粉丝，主播积分加10</p>
+                        <p>b.活动期间，粉丝团所有粉丝每日首次送出除了比心、荧光棒、上头条的任意礼物，主播积分加2（每个粉丝送一次礼物积分加2，送一次以上的不再计入分数）</p>
+                        <p>c.完成粉丝团【今日送礼】任务的粉丝人数，等于昨天粉丝团总人数的10%，主播今日当时真爱积分立即翻1.1倍</p>
+                        <p>d.真爱积分前三名的主播获得奖励，若有相同积分，则按照先到先得排序</p>
+                        <ul class="clearfix">
+                            <li><strong>真爱积分榜</strong></li>
+                            <li><strong>主播克拉奖励</strong></li>
+                            <li>第一名</li>
+                            <li>99900</li>
+                            <li>第二名</li>
+                            <li>88800</li>
+                            <li>第三名</li>
+                            <li>66600</li>
+                        </ul>
+                        <strong>活动说明</strong>
+                        <p>a.为保证活动公平性，一个设备号/IP的ID在活动开始前已加入的粉丝团，在活动开始后依然有效，且只有一个ID在活动期间加入其他粉丝团，成绩计入活动；</p>
+                        <p>b.一个设备号/IP的ID在活动开始前未加入任何粉丝团，活动期间，仅限1个ID的成绩计入活动。一旦发现作弊行为，平台有权扣除主播活动期间所有奖励；</p>
+                        <p>c.所有克拉奖励将于活动结束的7-15个工作日内下发到账户，请注意官方小蜜消息通知。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 积分详情 -->
+        <div class="posi" v-show="jfShow">
+            <div class="jf-list">
+                <div class="close-btn" @click="jfShow = false"></div>
+                <ul class="clearfix">
+                    <li>新增粉丝</li>
+                    <li>{{scoreArr.fan_count}}</li>
+                    <li>今日送礼粉丝数</li>
+                    <li>{{scoreArr.gift_num}}</li>
+                    <li class="fans-num" @click="TostTxt('今日目标送礼粉丝数=昨日粉丝团总人数*0.1+1，若有小数，则四舍五入为整数。若昨日的粉丝团总人数为0-4，则今日目标送礼粉丝数默认为1。')"><span>今日送礼粉丝目标数</span><b></b></li>
+                    <li>{{scoreArr.gift_target_num}}</li>
+                    <li class="choose-day" @click="showDay = !showDay">
+                        <span>{{dayJfTxt}}</span>
+                        <em :class="{'arrow-up': showDay}"></em>
+                        <div class="day-list" v-show="showDay">
+                            <span v-for="(item, index) in scoreList" @click="chooseDay($event, index)">{{item.date_str}}真爱积分</span>
+                        </div>
+                    </li>
+                    <li>{{theDayJf}}</li>
+                </ul>
+                <p>1.今日首次送礼粉丝数等于目标人数，今日当时真爱积分立即乘1.1倍！</p>
+                <p>2.真爱积分=主播新增粉丝数*10+粉丝团所有粉丝每日首次送出除了比心、荧光棒、上头条的任意礼物的人数*2</p>
+            </div>
+        </div>
+
+        <!-- 文案提示 -->
+        <div class="tost-cover" v-show="tostBox" @click="tostBox = false">
+            <div class="tost">{{tostText}}<b>×</b></div>
+        </div>
+    </div>
+</main>
+
+<script>
+    var gjShareParam = JSON.stringify({
+        title: '集合，准备团战！',
+        content: '有你才有团，等你一起团！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/fans/share.jpg")}'
+    });
+</script>

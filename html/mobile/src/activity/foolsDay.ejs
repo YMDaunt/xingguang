@@ -1,0 +1,132 @@
+<main id="app" v-cloak>
+    <div class="recharge">
+        <div class="recharge-title"></div>
+        <a class="recharge-btn" href="/recharge"></a>
+    </div>
+    <Rank @attention="attention" @inlive="inlive"></Rank>
+    <section class="recommend">
+        <div class="title"></div>
+        <ul>
+            <li v-for="(item,index) in recommendList" :key="index">
+                <div class="avatar-box">
+                    <img :src="item.head_pic_1" class="avatar" @click="inlive(item.rid)">
+                    <div class="live" v-if="item.is_playing == 1">LIVE</div>
+                </div>
+                <div class="info">
+                    <p>
+                        <span class="nickname">{{item.nickname}}</span>
+                        <span :class="'level_icon fl m_level_icon_'+(item.level)"></span>
+                    </p>
+                    <div class="follow-btn following" v-show="item.is_attention">已关注</div>
+                    <div class="follow-btn nofollow" v-show="!item.is_attention" @click="attention(item.id,index)">+ 关注</div>
+                </div>
+            </li>
+        </ul>
+    </section>
+    <div class="rules-btn" @click="showRules = !showRules;"></div>
+    <div class="award-btn" @click="getInfo" v-show="showAwardBtn"></div>
+    <section class="rules-box" v-show="showRules">
+        <div class="rules">
+            <div class="close" @click="showRules = !showRules"></div>
+            <div class="rules-content">
+                <div class="title"></div>
+                <ul>
+                    <li>
+                        1.活动时间：<span class="special">2018/03/28 12:00:00—04/02 23:59:59。</span>
+                    </li>
+                    <li>
+                        2.此次活动分阶段炸房，每天前五次炸房送出指定数量的“你最辣”即可炸房，从第六次炸房后，每次炸房需送出3000个“你最辣”。
+                        <div class="times"></div>
+                    </li>
+                    <li>
+                        3.每天0点刷新炸房次数，所有直播间当前进度条炸房后，从第一次炸房（500个“你最辣”）开始炸房。
+                    </li>
+                    <li>
+                        4."搞笑推荐"为官方推荐的搞笑担当，将在愚人节期间直播搞笑的内容。
+                    </li>
+                    <li>
+                        5.兔女郎榜和愚乐家榜前5名可获得礼品，礼品将于活动结束后15个工作日内发放。
+                    </li>
+                    <li>
+                        6.用户可选择实物奖励或者返利，请于活动结束后3天之内在页面选择并填写地址，若未选择则默认返利。主播和用户奖励将于活动结束后15个工作日内发放。
+                    </li>
+                    <li>
+                        7.本次活动最终解释权归星光直播所有。
+                    </li>
+                </ul>
+                <div class="award-title"></div>
+                <ul class="award-content">
+                    <li>
+                        <div class="award-img-bg award-img-1">
+                        </div>
+                        <p class="award-name">兔女郎榜第一名
+                            <br><span class="special">九阳多功能破壁机</span></p>
+                    </li>
+                    <li>
+                        <div class="award-img-bg award-img-2"></div>
+                        <p class="award-name">愚乐家榜第一名
+                            <br><span class="special">返利5%或飞利浦空气净化器</span></p>
+                    </li>
+                    <li>
+                        <div class="award-img-bg award-img-3"></div>
+                        <p class="award-name">兔女郎榜第二名
+                            <br><span class="special">小米智能空气净化器</span></p>
+                    </li>
+                    <li>
+                        <div class="award-img-bg award-img-4"></div>
+                        <p class="award-name">愚乐家榜第二名
+                            <br><span class="special">返利4%或Beats入耳式耳机</span></p>
+                    </li>
+                    <li>
+                        <div class="award-img-bg award-img-5"></div>
+                        <p class="award-name">兔女郎榜第三-五名
+                            <br><span class="special">松下离子蒸汽美容器</span></p>
+                    </li>
+                    <li>
+                        <div class="award-img-bg award-img-6"></div>
+                        <p class="award-name">愚乐家榜第三-五名
+                            <br><span class="special">返利3%或飞利浦迷你榨汁机</span></p>
+                    </li>
+                </ul>
+                <p class="note1">注：返利数量=用户榜单送出*返利额度</p>
+                <p class="note2">返利金额为克拉（非收益），将于活动结束后15个工作日内发放到用户账户内。</p>
+            </div>
+        </div>
+    </section> 
+    <section class="award-box" v-show="showAward">
+        <div class="award">
+            <div class="close" @click="showAward = false;"></div>
+            <ul class="select-list">
+                <li>实物奖励<span class="select" :class="{active:isMatter}" @click="selectMatter" ></span></li>
+                <li>返利<span class="select" :class="{active:!isMatter}" @click="selectMoney"></span></li>
+            </ul>
+            <div class="input">
+                <p class="info-item">
+                    <label :class="{disabled:!isMatter}">收件人地址：</label>
+                    <input type="text" :class="{active:isMatter}" :disabled="!isMatter" v-model="info.address" @blur="validateAddress">
+                </p>
+                <p class="validate"><span v-show="noAddress">*收件人地址不能为空</span></p>
+                <p class="info-item">
+                    <label :class="{disabled:!isMatter}">收件人姓名：</label>
+                    <input type="text" :class="{active:isMatter}" :disabled="!isMatter" v-model="info.name" @blur="validateName">
+                </p>
+                <p class="validate"><span v-show="noName">*收件人姓名不能为空</span></p>
+                <p class="info-item">
+                    <label :class="{disabled:!isMatter}">手机号码：</label>
+                    <input type="number" :class="{active:isMatter}" :disabled="!isMatter" v-model="info.phone" @blur="validatePhone">
+                </p>
+                <p class="validate"><span v-show="fallPhone">*手机号码填写错误</span></p>
+            </div>
+            <div class="award-btn-sure" @click="commitInfo"></div>
+        </div>
+    </section>
+   
+</main>
+<script>
+    const gjShareParam = JSON.stringify({
+        title: '愚人节去哪里整人？',
+        content: '更多搞笑内容就在星光！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/foolsDay/share.jpg")}'
+    });
+</script>

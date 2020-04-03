@@ -1,0 +1,129 @@
+// ../../img/activity/foolsDay19
+
+@activityName: 'activity/foolsDay19';
+@bf: 1px*10/6;
+@imgUrl: '../../img/activity/foolsDay19';
+
+@import '../../../../mobile/v2/css/activity/foolsDay19.mixin.less';
+
+/* 背景图 */
+.page-bgs {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+
+    .page-bg {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 605px;
+        background-image: url('@{imgUrl}/bg1.jpg');
+    }
+
+    .bg2 {
+        height: 615px;
+        background-image: url('@{imgUrl}/bg2.jpg');
+    }
+}
+
+/* 页面内容 */
+.page-content {}
+
+.banner {
+    height: 905px;
+}
+
+.deco-sep {
+    border-bottom-width: 4px;
+}
+
+.deco-box .deco-inner {
+    top: -1px;
+    box-sizing: border-box;
+}
+
+.today-toper,
+.lottery {
+    width: 1040/@bf;
+    margin: 0 auto;
+}
+
+.today-toper {
+    padding-bottom: 24px;
+    margin-bottom: 60px;
+}
+
+.user-top-i1 .score, .user-top-i2 .score {
+    max-width: 190px;
+    transform: scale(0.9);
+}
+
+.rank-listc {
+    height: 1340/@bf;
+    padding-right: 16px;
+}
+
+.rank-listh .rank-cell-3 {
+    padding-right: 16px;
+}
+
+.copyright {
+    margin: 60px 0;
+}
+
+.btn,
+.btn-cancel,
+.ranks-tab-i,
+.rank-top-i .pic,
+.avatar {
+    cursor: pointer;
+}
+
+.floater {
+    left: 50%;
+    bottom: 28%;
+    transform: translateX(420%) scale(1.5);
+}
+
+/* SVG动画层 */
+.svg-layer {
+    .svg-container {
+        width: 1080/@bf;
+        margin: 0 auto;
+        position: relative;
+    }
+}
+
+.layer-inner {
+    height: 60%;
+}
+
+.r-gifts-desc {
+    transform: translateX(-50%) scale(0.96);
+}
+
+.modal-layer .form-i:after {
+    line-height: 45px;
+}
+
+.rank-row .rank-cell-1 {
+    margin-left: 0px;
+}
+
+.rank-row .rank-cell-2 {
+    margin-left: 16px;
+}
+
+.user-top-i1 .score, .user-top-i2 .score {
+    transform: scale(1);
+}
+
+.lottery-i {
+    border-width: 4px;
+}
+/* 定义普通样式 E */

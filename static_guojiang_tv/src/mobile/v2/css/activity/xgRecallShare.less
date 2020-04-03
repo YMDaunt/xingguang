@@ -1,0 +1,97 @@
+@bf: 108rem;
+body{
+    background: #ddd;
+}
+[v-cloak] { display: none }
+img{
+    display: block;
+    width: 100%;
+    vertical-align: middle;
+    .fadeIn;
+    .animated;
+}
+.main_box{
+    background: #000;
+}
+.banner-box{
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    p{
+        position: absolute;
+        bottom:0;
+        width: 100%;
+        color: #f7db62;
+        padding:0 50/@bf;
+        line-height:60/@bf;
+    }
+    span{
+        color:#fff;
+        margin-right: 5px;
+    }
+}
+.code-box{
+    text-align: center;
+    color: #f7db62;
+    padding:100/@bf;
+    font-size: 14px;
+    p:nth-child(2){
+        color:#fff;
+        font-size: 45px;
+        margin:40/@bf 0;
+        -moz-user-select: all;
+        -khtml-user-select: all;
+        user-select: all;
+    }
+    p:nth-child(3){
+        text-align: left;
+        line-height: 75/@bf;   
+        span{
+            color:#fff;
+        }
+    }
+}
+.download-box{
+    position: relative;
+    .bg_1{
+        margin-top: 108/@bf; 
+    }
+    .download-btn{
+        position: absolute;
+        top:-108/@bf;
+        left: 50%;
+        transform: translate(-50%,0;);
+        -webkit-transform: translate(-50%,0);
+        -moz-transform: translate(-50%,0);
+        -ms-transform: translate(-50%,0);
+        width: 647/@bf; 
+    }
+}
+
+//图片淡入效果
+.fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+@keyframes fadeIn{
+    0% {
+    opacity: 0;
+}
+    100% {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes fadeIn{
+    0% {
+    opacity: 0;
+}
+    100% {
+        opacity: 1;
+    }
+}

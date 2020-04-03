@@ -1,0 +1,374 @@
+@activityName: 'activity/ceremony2018/qualifier';
+@bf: 1px*10/6;
+@imgUrl: '../../../img/activity/ceremony2018';
+
+// 渐变边框
+.gradient-bd (@bW) {
+    border: @bW/@bf solid;
+    border-image: linear-gradient(to right,#bf9a42, #ffd87d 50%, #bf9a42) 1;
+}
+
+.getSprite (@w, @h, @posx, @posy) {
+    .getSpritePad(@w, @h, @posx, @posy, 5);
+}
+
+.getSpritePad (@w, @h, @posx, @posy, @pad) {
+    display: inline-block;
+    background-position: (@posx + @pad)/@bf (@posy + @pad)/@bf;
+    width: (@w + @pad*2)/@bf;
+    height: (@h + @pad*2)/@bf;
+    font-size: 0;
+}
+
+.SINGLE_SPRITES () {
+    .single-sps {
+        background-image: url('@{imgUrl}/final/pic.png');
+        background-repeat: no-repeat;
+        background-size: 1335/@bf 984/@bf;
+    }
+    .star {
+        .getSprite(28, 26, -1241, -316);
+    }
+    .tab_stage2_a {
+        .getSprite(351, 64, -870, -316);
+    }
+    .tab_stage2_d {
+        .getSprite(351, 64, -870, -400);
+    }
+    .btn_rules {
+        .getSprite(265, 228, -281, -367);
+    }
+    .tab_rank {
+        .getSprite(455, 94, -10, -743);
+    }
+    .tab_rank_a {
+        .getSprite(463, 94, -281, -615);
+    }
+    .tab_stage2 {
+        .getSprite(351, 64, -870, -484);
+    }
+    .tab_stage {
+        .getSprite(351, 64, -870, -568);
+    }
+    .tab_stage_a {
+        .getSprite(351, 64, -870, -652);
+    }
+    .tab_user_a {
+        .getSprite(455, 94, -870, -10);
+    }
+    .takein_disabled {
+        .getSprite(166, 56, -1157, -736);
+    }
+    .takein {
+        .getSprite(176, 66, -485, -743);
+    }
+    .tab_user {
+        .getSprite(455, 94, -870, -124);
+    }
+    .txt_holder {
+        .getSprite(122, 29, -206, -857);
+    }
+    .txt_banner {
+        .getSprite(840, 337, -10, -10);
+    }
+}
+.SINGLE_SPRITES();
+
+.floater {
+    position: fixed;
+    left: 50%;
+    bottom: 25%;
+    z-index: 10;
+    cursor: pointer;
+    transform: translateX(440px);
+
+    &.btn-rules {
+        width: 275/@bf;
+        height: 200/@bf;
+    }
+
+    &.btn-rules:before {
+        content: '';
+        .single-sps;
+        .btn_rules;
+        position: absolute;
+        bottom: 0px;
+    }
+}
+
+.banner-txt {
+    .single-sps;
+    .txt_banner;
+    display: block;
+    position: absolute;
+    margin-top: -526px;
+    left: 50%;
+    transform: scale(1.2) translateX(-41%);
+}
+
+.star-title {
+    .gradient-bd(6);
+    width: 830/@bf;
+    height: 80/@bf;
+    margin: 36/@bf auto 80/@bf;
+    font-size: 40/@bf;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:before,
+    &:after {
+        content: '';
+        .single-sps;
+        .star;
+        margin: 0px 10/@bf;
+    }
+}
+
+// 用户徽章
+.USER_BADGE() {
+    // 用户徽章
+    .badge-sprite {
+        background-image: url('@{imgUrl}/qualifier/badge.png');
+        background-repeat: no-repeat;
+        background-size: 215/@bf 1288/@bf;
+        font-size: 0;
+    }
+    .badge_2 {
+        .getSprite(195, 107, -10, -10);
+    }
+    .badge_3 {
+        .getSprite(195, 109, -10, -137);
+    }
+    .badge_4 {
+        .getSprite(195, 109, -10, -266);
+    }
+    .badge_5 {
+        .getSprite(195, 109, -10, -395);
+    }
+    .badge_6 {
+        .getSprite(195, 109, -10, -524);
+    }
+    .badge_7 {
+        .getSprite(195, 109, -10, -653);
+    }
+    .badge_8 {
+        .getSprite(195, 109, -10, -782);
+    }
+    .badge_9 {
+        .getSprite(195, 109, -10, -911);
+    }
+    .badge_10 {
+        .getSprite(195, 109, -10, -1040);
+    }
+    .badge_1 {
+        .getSprite(195, 109, -10, -1169);
+    }
+}
+.USER_BADGE();
+
+// 榜单
+.ranks {
+    .main-tab {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .mt-i {
+        .single-sps;
+        margin: 0 20/@bf;
+        cursor: pointer;
+    }
+
+    .mt-i:first-child {
+        .tab_rank;
+
+        &.active {
+            .tab_rank_a;
+        }
+    }
+
+    .mt-i:nth-child(2) {
+        .tab_user;
+
+        &.active {
+            .tab_user_a;
+        }
+    }
+
+    .mt-content {
+        .gradient-bd(10);
+        margin: 0px 40/@bf;
+        padding: 10/@bf;
+    }
+
+    .mt-c-inner {
+        .gradient-bd(4);
+    }
+
+    .ticket-status {
+        .o-sprite {
+            .single-sps;
+        }
+        
+        .takein {
+            // .takein;
+        }
+    
+        .takein_disabled {
+            // .takein_disabled;
+        }
+    }
+
+    // 日榜
+    .time-tab {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12/@bf 0;
+        border-bottom: 3/@bf solid #7e6b3d;
+
+        .tt-i {
+            background-color: #3a2f14;
+            width: 134/@bf;
+            height: 60/@bf;
+            color: #756234;
+            font-size: 42/@bf;
+            font-weight: bold;
+            margin: 0px 8/@bf;
+            transform: skewX(-20deg);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tt-i.active {
+            background-color: #000;
+            color: #fed77c;
+            border: 3/@bf solid #bf9a42;
+        }
+
+        .tt-i.disabled {
+            background: #080703;
+            color: #515151;
+            border: 1px solid #515151;
+        }
+    }
+
+    // 榜单内容高度 -> 数据量不多 不滚动
+    // .tt-content .xg-rank .rank-list,
+    // .game-ranks .rank-list,
+    .user-ranks .rank-list {
+        min-height: 5.65rem;
+        // max-height: 19.5rem;
+        // overflow-y: auto;
+        // -webkit-overflow-scrolling: touch;
+    }
+
+    // 分割线
+    .rank-sep {
+        font-size: 28/@bf;
+        color: #ffdb88;
+        text-align: center;
+        line-height: 100/@bf;
+        background: #000;
+        opacity: 0.5;
+    }
+
+    // 大人物榜 徽章
+    .cell-user {
+        .badge {
+            height: 70/@bf;
+        }
+        .badge:before {
+            content: '';
+            .badge-sprite;
+            position: relative;
+            top: -30/@bf;
+            left: -10/@bf;
+        }
+
+        .badge-0:before {
+            .badge_1;
+        }
+        .badge-1:before {
+            .badge_2;
+        }
+        .badge-2:before {
+            .badge_3;
+        }
+        .badge-3:before {
+            .badge_4;
+        }
+        .badge-4:before {
+            .badge_5;
+        }
+        .badge-5:before {
+            .badge_6;
+        }
+        .badge-6:before {
+            .badge_7;
+        }
+        .badge-7:before {
+            .badge_8;
+        }
+        .badge-8:before {
+            .badge_9;
+        }
+        .badge-9:before {
+            .badge_10;
+        }
+    }
+}
+
+.ranks {
+
+    // 单项赛程tab切换
+    .stage-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        border-bottom: 1px solid #6e5b2e;
+    }
+
+    .stage-i {
+        font-size: 0px;
+        margin-bottom: 10/@bf;
+        flex: 1;
+        text-align: center;
+
+        .time {
+            font-size: 34/@bf;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            color: #ffdb88;
+            margin: 15/@bf auto;
+        }
+
+        .btn-stage {
+            .single-sps;
+            transform: scale(0.95);
+            cursor: pointer;
+        }
+
+        .btn-stage.stage1 { .tab_stage; }
+        .btn-stage.stage1.active { .tab_stage_a; }
+        // .btn-stage.stage1.disable { .tab_stage_a; }
+
+        .btn-stage.stage2 { .tab_stage2; }
+        .btn-stage.stage2.active { .tab_stage2_a; }
+        .btn-stage.stage2.disable { .tab_stage2_d; }
+    }
+}
+
+// copyright
+.copyright {
+    text-align: center;
+    font-size: 36/@bf;
+    color: #685a39;
+    padding: 120/@bf 0;
+}

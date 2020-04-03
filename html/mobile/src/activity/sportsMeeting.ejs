@@ -1,0 +1,177 @@
+<div class="wrapper">
+    <!-- banner -->
+    <header class="banner">
+    </header>
+    <p class="banner-txt">星光冬季运动会开始啦！德智体美劳全面发展的小仙女</p>
+    <p class="banner-txt">当然体育也要达标啦！达标领奖励，一起动起来吧！</p>
+    <section class="part0">
+        <div class="bg0"></div>
+        <div class="balloon sprite"></div>
+        <div class="part0-head sprite"></div>
+        <div class="part0-bg sprite">
+            <div class="sort-btn sprite js-all-sort-btn" :class="{'sort-btn-act':allSortStatus}" @click="allSortToggle"></div>
+            <ul class="all-sort">
+                <li :class="'sport-man sport-man-'+index" v-for="(item,index) in allEightSortData">
+                    <div class="msg-box">
+                        <span class="msg-box-index">{{index+1}}</span>
+                        <span class="msg-box-avator"  :data-id="item['id']" :data-rid="item['rid']">
+                            <img :src="item['head_pic_1']" @click="common.goRoom(item['rid'],2)">
+                        </span>
+                        <span class="msg-box-detail">
+                            <p class="msg-box-nickname">{{item["nickname"]}}</p>
+                            <p class="msg-box-score">积分:{{item["num"]}}</p>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- 总榜积分 -->
+        <sorttable :toggle="allSortStatus" :sortdata="allSortData"></sorttable>
+    </section>
+    <section class="part1">
+        <div class="bg1"></div>
+        <div class="part1-head sprite"></div>
+        <p class="introduce">1.活动时间：2017年12月5日12:00:00--2017年12月10日 23:59:59；</p>
+        <p class="introduce">2.任务发布方式：主播参与“十项赛”和“隐藏关卡”需要在常规“任务发布栏”里找到活动对应的任务，选择发布，当任务完成则会引发炸房！并获得相应积分！<em>主播手动编辑任务视为无效</em>，请认准<em>#运动会#</em>及<em>#日期+隐藏#</em>标签！（<em>受功能限制，请先升级至4.0.5及以上版本，主播直播间可发布任务最多不超过15项，请忽视发布提醒6项的文案。因无法将发布的任务撤回，请将以前的任务完成或者谨慎发布新任务，以防止无法发布新任务！不便之处，敬请见谅！</em>）；</p>
+        <p class="introduce">3.积分规则：本次活动以综合积分为活动总榜排名依据，完成不同赛场的项目将获得相应的积分（项目分值请见积分表）；</p>
+        <div class="find-score-table-btn sprite" @click="scoreStatus = true"></div>
+        <p class="introduce">4.项目介绍：项目分为三类：十项赛、炸房赛、隐藏关卡。具体分值请查看“积分表”。完成每项任务都会引发炸房和全平台飘屏哦！（<em>特别说明：隐藏关卡仅在平台发布任务的当日完成有效（即0:00:00—23:59:59），若超时未完成，则不计入积分</em>）；</p>
+        <p class="introduce">5.奖励：总积分榜前三及分榜对应名次主播都有机会获得丰厚奖励！</p>
+        <div class="find-prize-btn sprite" @click="prizeStatus = true"></div>
+        <p class="introduce">6.本次活动最终解释权归星光直播所有。</p>
+    </section>
+    <section class="part2">
+        <div class="game-model clearfix" @click="mapSelect">
+            <span class="game-ten game-model-select sprite" :class="{act:mapArr[0]}" data-id="0"></span>
+            <span class="game-boom game-model-select sprite" :class="{act:mapArr[1]}" data-id="1"></span>
+            <span class="game-hide game-model-select sprite" :class="{act:mapArr[2]}" data-id="2"></span>
+        </div>
+        <div class="game-model-map">
+            <div class="toggle-sort sprite" :class="{'toggle-sort-act':itemSortStatus}" @click="itemSortToggle"></div>
+            <div class="game-model-ten sprite" v-show="mapArr[0]">
+                <ul class="game-ten-sport">
+                    <li :class="'sport-man sport-man-'+index" v-for="(item,index) in itemEightSortData">
+                        <div class="msg-box">
+                            <span class="msg-box-index">{{index+1}}</span>
+                            <span class="msg-box-avator">
+                                <img :src="item['head_pic_1']" @click="common.goRoom(item['rid'],2)">
+                            </span>
+                            <span class="msg-box-detail">
+                                <p class="msg-box-nickname">{{item["nickname"]}}</p>
+                                <p class="msg-box-score">积分:{{item["num"]}}</p>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="game-model-boom sprite" v-show="mapArr[1]">
+                <ul class="game-boom-sport">
+                    <li :class="'sport-man sport-man-'+index" v-for="(item,index) in itemEightSortData">
+                        <div class="msg-box">
+                            <span class="msg-box-index">{{index+1}}</span>
+                            <span class="msg-box-avator">
+                                <img :src="item['head_pic_1']" @click="common.goRoom(item['rid'],2)">
+                            </span>
+                            <span class="msg-box-detail">
+                                <p class="msg-box-nickname">{{item["nickname"]}}</p>
+                                <p class="msg-box-score">个数{{item["num"]}}</p>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="game-model-hide sprite" v-show="mapArr[2]">
+                <ul class="game-hide-sport">
+                    <li :class="'sport-man sport-man-'+index" v-for="(item,index) in itemEightSortData">
+                        <div class="msg-box">
+                            <span class="msg-box-index">{{index+1}}</span>
+                            <span class="msg-box-avator">
+                                <img :src="item['head_pic_1']" @click="common.goRoom(item['rid'],2)">
+                            </span>
+                            <span class="msg-box-detail">
+                                <p class="msg-box-nickname">{{item["nickname"]}}</p>
+                                <p class="msg-box-score">积分:{{item["num"]}}</p>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <sorttable :toggle="itemSortStatus" :sortdata="itemSortData"></sorttable>
+    </section>
+    <!-- 积分表 -->
+    <div class="cover-bg" :class="{'show-status':scoreStatus}">
+        <div class="score-box">
+            <div class="score-box-head sprite"></div>
+            <div class="score-box-table">
+                <div class="score-box-th clearfix">
+                    <div class="score-box-item">赛场</div>
+                    <div class="score-box-item">积分</div>
+                    <div class="score-box-item">特殊奖励</div>
+                    <div class="score-box-item"><em>特殊说明</em></div>
+                </div>
+                <div class="score-box-td clearfix">
+                    <div class="score-box-item"><span>十项赛</span></div>
+                    <div class="score-box-item">
+                        <span>
+                            <p>每完成一项</p>
+                            <p>+1000</p>
+                        </span>
+                    </div>
+                    <div class="score-box-item"></div>
+                    <div class="score-box-item">
+                        <span>完成项目也会有炸房特效，但不同价值抽奖概率不同。</span>
+                    </div>
+                </div>
+                <div class="score-box-td clearfix">
+                    <div class="score-box-item"><span>炸房赛</span></div>
+                    <div class="score-box-item">
+                        <span>
+                            <p>“隆冬锵”</p>
+                            <p>每炸房一次</p>
+                            <p>+300</p>
+                        </span>
+                    </div>
+                    <div class="score-box-item"></div>
+                    <div class="score-box-item">
+                        <span>有炸房特效</span>
+                    </div>
+                </div>
+                <div class="score-box-td clearfix">
+                    <div class="score-box-item"><span>隐藏关卡</span></div>
+                    <div class="score-box-item">
+                        <span>
+                            12月5日-12月8日期间，每完成当日发布的任务一项+1500
+                        </span>
+                    </div>
+                    <div class="score-box-item">
+                        <span>12月9日和12月10日的关卡，每完成一项+5000</span>
+                    </div>
+                    <div class="score-box-item">
+                        <span>仅在平台发布当日（即0:00—23:59）完成有效，<em>若超时则不计入积分</em></span>
+                    </div>
+                </div>
+            </div>
+            <div class="score-box-close sprite" @click="scoreStatus = false"></div>
+        </div>
+    </div>
+    <!-- 奖励 -->
+    <div class="cover-bg" :class="{'show-status':prizeStatus}">
+        <div class="prize-box">
+            <div class="prize-box-head sprite"></div>
+            <div class="prize-box-bg">
+                <div class="prize-bg"></div>
+            </div>
+            <div class="score-box-close sprite" @click="prizeStatus = false"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '星光运动会开始啦！',
+        content: '炸房、壕礼送不停！隐藏关卡等你通关！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/sportsMeeting/share.png?vs=1205")}'
+    });
+</script>

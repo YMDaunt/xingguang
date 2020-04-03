@@ -1,0 +1,41 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="wrap">
+        <div class="ban"></div>
+        <div class="con-step"></div>
+        <div class="tab">
+            <div class="tab-tit">
+                <div v-for="(item, index) in tabArr" :class="{'choose': index == stage - 1}" @click="tab(index)" >{{item}}</div>
+            </div>
+            <div class="tab-con">
+                <div v-if="isNew" v-show="stage == 1">
+                    <div class="set-img" v-if="!one.isUpload" @click="setImg"></div>
+                    <div v-else class="over">已完成</div>
+                    <div class="approve" v-if="!one.isTruePerson" @click="setAuth"></div>
+                    <div v-else class="over over-2">已完成</div>
+                </div>
+                <div class="old-1" v-else v-show="stage == 1">
+                    <div class="set-img" v-if="!s1" @click="setImg"></div>
+                    <div v-else class="over">已完成</div>
+                </div>
+                <div v-show="stage == 2">
+                    <div v-if="!s2" @click="sayHellow"></div>
+                    <div v-else class="over">已完成</div>
+                </div>
+                <div v-show="stage == 3">
+                    <div v-if="!s3" @click="voicePhone"></div>
+                    <div v-else class="over">已完成</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tost" v-show="tostBox">{{tostText}}</div>
+</main>
+
+<script type="text/javascript">
+    // var gjShareParam = JSON.stringify({
+    //     title: '如何赚钱',
+    //     content: '',
+    //     link: location.href,
+    //     imgLink: ''
+    // });
+</script>

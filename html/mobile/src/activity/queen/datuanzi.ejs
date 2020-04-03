@@ -1,0 +1,151 @@
+<main id="app" v-cloak>
+    <section class="banner"></section>
+    <section class="queen">
+        <div class="down"></div>
+        <div class="portrait">
+            <div class="diamond"></div>
+            <div class="speak"></div>
+        </div>
+        <div class="info">
+            <p class="message">大家好，我就是那个神经比较短的大团子，来到星光不长的时光里。感谢有你们的支持，你们的微笑就是我成长的动力，爱你们哟！</p>
+            <div class="blackstar"></div>
+            <div class="btn">
+                <div class="inlive" @click="inlive">进入直播间</div>
+                <div class="follow_btn nofollow" v-show="!isFollow" @click="attention">+关注</div>
+                <div class="follow_btn following" v-show="isFollow">已关注</div>
+            </div>
+        </div>
+    </section>
+    <section class="line1"></section>
+    <section class="gift">
+        <p class="title">一 年度专属礼物 一</p>
+        <div class="gift-content"></div>
+        <p class="gift-name">小团子
+            <br>10克拉/个</p>
+    </section>
+    <section class="line2"></section>
+    <section class="qa">
+        <p class="title">一 你问我答 一</p>
+        <div class="bg1"></div>
+        <div class="bg2"></div>
+        <ul class="qa-content">
+            <li>
+                <div class="por"></div>
+                <div class="question">生活中你是个什么样的人？</div>
+            </li>
+            <li>
+                <div class="answer">生活里，我是一个认真创作的设计师、文青＋不折不扣的吃货，也是一个努力生存、努力活得漂亮的人！</div>
+                <div class="por"></div>
+            </li>
+            <li>
+                <div class="por"></div>
+                <div class="question">获得星光直播年度女王，有什么感想呢？</div>
+            </li>
+            <li>
+                <div class="answer">能获此殊荣我并没想到！谢谢守护和各位管理的努力以及各位粉丝宝宝的支持！谢谢你们的疼爱！</div>
+                <div class="por"></div>
+            </li>
+            <li>
+                <div class="por"></div>
+                <div class="question">有什么想对粉丝说的？</div>
+            </li>
+            <li>
+                <div class="answer">是你们让我有了前行的动力，是你们让我一次次想用全部为你们声嘶力竭，没有眼泪的洗礼，只愿把阳光和欢乐留给你们！ </div>
+                <div class="por"></div>
+            </li>
+        </ul>
+    </section>
+    <div class="rule-btn" @click="showRules = !showRules"></div>
+    <section class="rules" v-show="showRules">
+        <div class="rules-content">
+            <div class="close" @click="showRules = !showRules">X</div>
+            <div class="title">一 活动规则 一</div>
+            <ul>
+                <li>1.活动时间：2018/01/11 12:00:00 -- 01/15 23:59:59。</li>
+                <li>2.活动期间内，在可耐滴大团子的直播间内，每送满3000个活动礼物——小团子，即可炸出守护红包，快来抢克拉吧！</li>
+                <li>3.大团子的守护榜单前5名可获得守护奖励，详情见“活动奖励”。</li>
+                <li>4.活动期间请遵守星光直播文明公约。</li>
+                <li>5.本活动最终解释权归星光直播所有。</li>
+            </ul>
+        </div>
+    </section>
+    <section class="line3"></section>
+    <section class="rank">
+        <p class="title">一 大团子的守护榜单 一</p>
+        <div class="list">
+            <ul class="prev">
+                <li :class="'no'+(index+1)" v-for="(item,index) in list" :key="index" v-if="index < 3">
+                    <div class="avatar-wrap">
+                        <div class="avatar-box">
+                            <img :src="item.head_pic_1" class="avatar">
+                        </div>
+                        <div class="index"></div>
+                    </div>
+                    <div class="info">
+                        <p class="nickname">{{item.nickname}}</p>
+                        <p class="contribution">贡献值：{{item.num}}</p>
+                    </div>
+                </li>
+            </ul>
+            <ul class="last-list-title">
+                <li class="index">排名</li>
+                <li class="nickname">昵称</li>
+                <li class="contribution">贡献值</li>
+            </ul>
+            <ul class="last">
+                <li v-for="(item,index) in list" :key="index" v-if="index >= 3">
+                    <div class="index">{{index+1}}</div>
+                    <div class="avatar-box">
+                        <img :src="item.head_pic_1" class="avatar">
+                    </div>
+                    <div class="nickname">{{item.nickname}}</div>
+                    <div class="contribution">{{item.num}}</div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="line2"></section>
+    <section class="award">
+        <div class="bg1"></div>
+        <div class="bg2"></div>
+        <p class="title">一 活动奖励 一</p>
+        <div class="prize">
+            <div class="prize1">
+                <div class="prize-img"></div>
+                <p class="prize-name">富士INSTAX
+                    <br>MINI7c 拍立得</p>
+            </div>
+            <div class="prize2">
+                <div class="prize-img"></div>
+                <p class="prize-name">先锋Singfun
+                    <br>DYT-Z2 取暖器 </p>
+            </div>
+            <div class="prize3">
+                <div class="prize-img"></div>
+                <p class="prize-name">古驰GUCCI
+                    <br>罪爱男士淡香水 50ml </p>
+            </div>
+        </div>
+        <ul class="award-list">
+            <li><span class="index">排名</span><span class="award-name">奖励</span></li>
+            <li><span class="index">1</span><span class="award-name">返利3%</span></li>
+            <li><span class="index">2</span><span class="award-name">返利3%</span></li>
+            <li><span class="index">3</span><span class="award-name">富士INSTAX MINI7c 拍立得</span></li>
+            <li><span class="index">4</span><span class="award-name">先锋Singfun DYT-Z2 取暖器</span></li>
+            <li><span class="index">5</span><span class="award-name">古驰GUCCI 罪爱男士淡香水 50ml</span></li>
+        </ul>
+        <p class="explain1">注：返利数量=用户榜单贡献值*返利额度</p>
+        <p class="explain2">返利金额为克拉，将于活动结束后15个工作日内发放到用户账户内。</p>
+    </section>
+    <section class="footer">
+        本活动最终解释权归星光直播所有
+    </section>
+</main>
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '星光女神',
+        content: '女神驾到，霸气全开！',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/datuanzi/share.jpg")}'
+    });
+</script>

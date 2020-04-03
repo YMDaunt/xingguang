@@ -1,0 +1,111 @@
+@bf: 108rem;
+.info_wrap{
+	position: relative;
+	background: #fff;
+	margin-bottom: 25/@bf;
+	border-bottom: 1px solid transparent;
+	.head_bg{
+		display: block;
+		position: relative;
+		width: 100%;
+		height: auto;
+	}
+	.avatar{
+		position: absolute;
+		width: 227/@bf;
+		height: 227/@bf;
+		display: block;
+		top: 45/@bf;
+		left: 50%;
+		margin-left: -113/@bf;
+		border-radius: 50%;
+		border:2px solid #ffffff;
+		&.sorry{
+			border-radius: 0;
+			width: 380/@bf;
+			height: auto;
+			top:25/@bf;
+			border: none;
+			margin-left: -190/@bf;
+		}
+	}
+	.nickname_wrap{
+		font-size: 14px;color:#333333;
+		text-align: center;
+		padding: 15/@bf 0 16/@bf;
+		span{
+			vertical-align: middle;
+			margin-left: 5px;
+		}
+	}
+	.fans_rank{
+		font-size: 11px;color:#666666;
+		text-align: center;
+		.fans_medal{
+			display: inline-block;
+			vertical-align: middle;
+			height: 66/@bf;
+		}
+		span.red{
+			color: #ff4385;
+			
+		}
+		.line{
+			padding: 0 35/@bf;
+		}
+	}
+	.progress_wrap{
+		width: 796/@bf;height: 14/@bf;
+		border-radius: 15/@bf;
+		background: #eeeeee;
+		position: relative;
+		margin: 55/@bf auto 22/@bf;
+		.progress_bar{
+			height: 100%;
+			position: absolute;
+			left:0;
+			top:0;
+			background: #ff0071;
+			border-radius: 15/@bf;
+		}
+		.progress_left_level, .progress_right_level{
+			position: absolute;
+			font-size:11px;
+			color:#ff0071;font-weight: bold;
+			top: -11/@bf;
+		}
+		.progress_left_level{
+			left: -95/@bf;
+		}
+		.progress_right_level{
+			right: -115/@bf;
+		}
+	}
+	.intimacy{
+		width: 796/@bf;
+		font-size: 11px;
+		color: #666666;
+		margin: 0 auto;
+		padding-bottom: 24/@bf;
+		i{
+			color: #ff0071;
+		}
+	}
+
+	.sorry_hint_1{
+		padding: 100/@bf 0 45/@bf;
+		font-size: 13px;
+		color:#666666;
+		text-align: center;
+	}
+	.sorry_hint_2{
+		border-radius: 40/@bf;
+		text-align: center;
+		font-size: 11px;
+		color:#666666;
+		background: #dcdcdc;
+		width: 650/@bf;
+		margin:0 auto 45/@bf;
+		padding: 10/@bf 0;
+	}
+}

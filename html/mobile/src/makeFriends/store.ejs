@@ -1,0 +1,30 @@
+<main id="app" v-cloak>
+    <p class="title">有趣的聊天背景代表有趣的灵魂哦~</p>
+    <ul class="product-list">
+        <li v-for="(item,index) in productList" :key="index">
+            <div class="bg-img">
+                <img :src="item.h5_bg_url" alt="背景图" @click="preview(item.thumb_url)">
+                <p class="price">{{item.coin}}金币</p>
+            </div>
+            <div class="name">{{item.title}}</div>
+            <div class="store-btn buy-btn" v-show="item.status === 0" @click="toBuy(item)">购买</div>
+            <div class="store-btn use-btn" v-show="item.status === 1 && item.in_use === 0" @click="use(item)">使用</div>
+            <div class="store-btn used-btn" v-show="item.status === 1 && item.in_use === 1">正在使用</div>
+        </li>
+    </ul>
+    <div class="mask" v-if="showPopup">
+        <div class="purchasePopup">
+            <p class="title">购买聊天背景</p>
+            <p class="name">购买背景：{{currentProduct.title}}</p>
+            <p class="price">价格：<span>{{currentProduct.coin}}金币</span></p>
+            <p class="balance">当前余额：{{balance}}</p>
+            <div class="purchase-btn">
+                <div class="fl cancel" @click="cancel">取消</div>
+                <div class="fr sure" @click="sureToBuy(currentProduct.id)">购买</div>
+            </div>
+        </div>
+    </div>
+    <div class="preview" v-if="showPreview">
+        <img :src="previewUrl" alt="预览图" @click="showPreview = false">
+    </div>
+</main>

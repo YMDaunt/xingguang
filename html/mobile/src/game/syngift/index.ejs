@@ -1,0 +1,11 @@
+<main id="app" v-cloak>
+    <keep-alive >
+        <router-view v-if="$route.meta.keepAlive"/>
+    </keep-alive>
+    <router-view 
+    v-if="!$route.meta.keepAlive" 
+    @report-move-arr="getMoveArr" 
+    :target-arr="moveArr"
+    @report-index="getIndex" 
+    :target-index="currentIndex"/>
+</main>

@@ -1,0 +1,124 @@
+/**
+ * @authors edge
+ */
+@bf: 1px * 10 / 6.6;
+@fr: 3;
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
+h1,h2,h3,strong {
+    font-weight: normal;
+}
+//滚动更流畅
+body {
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+    color: #fff891;
+}
+//水平居中对齐
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/*两端对齐*/
+.flex-justify-between(){
+    -webkit-box-pack:justify;
+    -moz-justify-content:space-between;
+    -webkit-justify-content:space-between;
+    justify-content: space-between;
+}
+/*上下居中*/
+.flex-align(){
+    -webkit-box-align:center;
+    -moz-align-items:center;
+    -webkit-align-items:center;
+    align-items: center;
+}
+// 顺序
+.flex-left(){
+    -webkit-box-align:flex-start;
+    -moz-align-items:flex-start;
+    -webkit-align-items:flex-start;
+    align-items: flex-start;
+}
+.flex-right(){
+    -webkit-box-align:flex-end;
+    -moz-align-items:flex-end;
+    -webkit-align-items:flex-end;
+    align-items: flex-end;
+}
+.flex(){
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.flex-justify-center(){
+    -webkit-box-pack:center;
+    -moz-justify-content:center;
+    -webkit-justify-content:center;
+    justify-content: center;
+}
+//多余的字符用省略号显示
+.ellipsis() {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+//头像是正方形100%填满
+.avatar {
+    width: 100%;
+    height: 100%;
+}
+// 倾斜
+.fontSkew() {
+    -webkit-transform: skew(-3deg,0deg);
+       -moz-transform: skew(-3deg,0deg);
+        -ms-transform: skew(-3deg,0deg);
+         -o-traninte-titsform: skew(-3deg,0deg);
+            transform: skew(-3deg,0deg);
+}
+.linear() {
+    background: -webkit-linear-gradient(left, #14284d, #6f0e3a);
+    background: -o-linear-gradient(left, #14284d, #6f0e3a);
+    background: linear-gradient(to right, #14284d, #6f0e3a);
+}
+
+.bg(@imgName) {
+    background-image: url('../../img/activity/rebate/@{imgName}');
+}
+.wrap {
+    height: 2050px;
+    padding-top: 834px;
+    box-sizing: border-box;
+    .bg('pc_bg.jpg');
+    background-size: 1920px 2050px;
+    background-repeat: no-repeat;
+    background-position: center top;
+    > div {
+        width: 748px;
+        margin: 0 auto;
+    }
+}
+.bx1 {
+    height: 716px;
+    .bg('pc_1.png');
+    background-size: 748px 716px;
+    background-repeat: no-repeat;
+}
+.bx2 {
+    // padding-top: 36px;
+    box-sizing: border-box;
+    height: 438px;
+    .bg('pc_2.png');
+    background-size: 748px 438px;
+    background-repeat: no-repeat;
+    .btn {
+        width: 453px;
+        height: 158px;
+        margin: 0 auto;
+        cursor: pointer;
+    }
+}

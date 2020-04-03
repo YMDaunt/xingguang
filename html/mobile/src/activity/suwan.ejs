@@ -1,0 +1,90 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/mobile/v2/img/activity/suwan" */ -->
+
+    <!-- banner -->
+    <div class="xg-container banner">
+        <div class="xg-content">
+            <div class="music" @click="toggleMusicState">
+                <div class="pic" :style="{animationPlayState: musicPlaying ? 'running' : 'paused'}"></div>
+                <span :class="['xg-btn', musicPlaying ? 'btn-play' : 'btn-pause']"></span>
+                <audio ref="audio" src="//static.guojiang.tv/src/pc/video/music/suwan_kezhan.mp3" style="display: none;" loop="loop"></audio>
+            </div>
+            <div class="btns">
+                <div class="xg-btn btn-goroom"  @click="goroom"></div>
+                <div :class="['xg-btn', isAttended ? 'btn-attended' : 'btn-attend']" @click="attend"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- summary -->
+    <div class="xg-container summary">
+        <div class="xg-content">
+            <div class="xg-title title-summary"></div>
+            <div class="desc-box">
+                <div class="desc-content">
+                    <p class="txt">一曲《客栈》，歌尽流华。</p>
+                    <p class="txt">我们的青春里，都曾有过这样的一个人，他也许只是路过，却未曾想，已然在生命中画上了最浓墨重彩的一笔。</p>
+                    <p class="txt">歌手素婉用她细腻而充满东方韵律的嗓音，轻盈跳动的声线，画龙点睛的一句戏腔，恰到好处地勾勒出了作品中风花雪月的柔情。所谓翩翩少年气；悠悠佳人心，当二者相遇所点燃的暗香情愫，在《客栈》中随着素婉的曲调袅袅升起时，似水好韶光，谁人肯辜负。</p>
+                    <p class="txt">“雨停后，天亮后，清醒后，你会不会走。”才子佳人，一曲风花雪月不置可否。只期待斗转星移后，你在我的岁月里，不只是过客。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- singer -->
+    <div class="xg-container singer">
+        <div class="xg-content">
+            <div class="xg-title title-singer"></div>
+            <div class="desc-box">
+                <div class="desc-content">
+                    <p class="txt">素婉，平台签约主播。凭借清亮的嗓音，扎实的唱功，对歌曲情感的细腻处理，以及多种曲风的准确驾驭，吸引了一批忠实的粉丝。她的全新单曲《客栈》全球首发上线，这首由专业音乐制作团队为其量身打造的古风歌曲，结合素婉个人的嗓音特色，同时又加入了许多中国风元素，将不一样的素婉呈现在喜爱她的粉丝面前。</p>
+                    <p class="txt">2019素婉诚意用音乐打动你！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- questions -->
+    <div class="xg-container questions">
+        <div class="xg-content">
+            <div class="xg-title title-ques"></div>
+            <div class="desc-box">
+                <div class="desc-content">
+                    <div class="asker mar-btn-20">
+                        <div class="avatar">
+                            <div class="pic"></div>
+                            <div class="name">星光小编</div>
+                        </div>
+                        <div class="msg">是什么原因让你这么热爱唱歌呢？</div>
+                    </div>
+                    <div class="replyer mar-btn-20">
+                        <div class="msg">因为从小喜欢，对于唱歌有点小小的天赋吧，不太难。</div>
+                        <div class="avatar"></div>
+                    </div>
+                    <div class="asker">
+                        <div class="avatar">
+                            <div class="pic"></div>
+                            <div class="name">星光小编</div>
+                        </div>
+                        <div class="msg">有什么想对粉丝说的？</div>
+                    </div>
+                    <div class="replyer">
+                        <div class="msg">所有的坚持都是因为热爱。</div>
+                        <div class="avatar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="copyright"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '星光主播签约主播素婉单曲《客栈》首发',
+    content: '2018歌手素婉全新力作，用她细腻而充满东方韵律的嗓音，轻盈跳动的声线，画龙点睛的一句戏腔，恰到好处地勾勒出了作品中风花雪月的柔情。',
+    link: location.href,
+    imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/suwan/share.jpg")}' // eslint-disable-line
+})
+</script>

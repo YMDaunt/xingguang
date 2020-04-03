@@ -1,0 +1,362 @@
+@bf: 108rem;
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
+//水平居中对齐
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+//多余的字符用省略号显示
+.ellipsis() {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+//头像是正方形100%填满
+.avatar {
+    width: 100%;
+    height: 100%;
+}
+.all {
+    background-image: url('../../../img/activity/queen/bobo/all.png');
+    background-repeat: no-repeat;
+    background-size: 500/@bf 914/@bf;
+}
+
+//滚动更流畅
+body {
+    -webkit-overflow-scrolling: touch;
+    background: #b90023;
+        animation: fadeIn 1.5s;
+    /*ios*/
+}
+.wow {
+    position: absolute;
+    .all;
+    background-position: 0 -831/@bf;
+    width: 125/@bf;
+    height: 83/@bf;
+    animation: move 2.5s infinite;
+}
+.ban {
+    position: relative;
+    padding-top: 680/@bf;
+    height: 1128/@bf;
+    background: url('../../../img/activity/queen/bobo/ban.jpg');
+    background-size: 100% 100%;
+    .wow {
+        top: 900/@bf;
+        left: 635/@bf;
+    }
+}
+.own-gift {
+    background: url('../../../img/activity/queen/bobo/bg_1.jpg') repeat;
+    background-size: 16/@bf 16/@bf;
+    padding-bottom: 30/@bf;
+    div {
+        margin: 0 auto 0;
+        .all;
+        background-position: 0 0;
+        width: 480/@bf;
+        height: 463/@bf;
+    }
+    p {
+        text-align: center;
+        color: #1b1b1b;
+        font-size: 48/@bf;
+        line-height: 118/@bf;
+        strong {
+            font-weight: bold;
+        }
+    }
+    a {
+        display: block;
+        margin: 0 auto;
+        .all;
+        background-position:0 -500/@bf;
+        width: 454/@bf;
+        height: 124/@bf;
+    }
+}
+
+.rank-tit {
+    position: relative;
+    img{
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .wow {
+        position: absolute;
+        top: 140/@bf;
+        left: 629/@bf;
+    }
+}
+.rank-con {
+    padding: 46/@bf 25/@bf 0;
+    background: url('../../../img/activity/queen/bobo/bg_2.jpg') repeat;
+    background-size: 16/@bf 16/@bf;
+}
+.rank-area {
+    width: 1022/@bf;
+    background: #fff;  
+    border: 4/@bf solid #000; 
+    box-shadow: inset 0 -8/@bf 0 0 #000;
+    border-radius: 14/@bf;
+    .user-img {
+        position: relative;
+        width: 336/@bf;
+        height: 350/@bf;
+        padding-top: 38/@bf;
+        margin: 105/@bf auto 0;
+        background: url('../../../img/activity/queen/bobo/avatar_bg.png');
+        background-size: 747/@bf 379/@bf;
+        img {
+            display: block;
+            width: 270/@bf;
+            height: 270/@bf;
+            margin: 0 auto;
+            border-radius: 50%;
+            border: 6/@bf solid #fff;
+        }
+        strong {
+            position: absolute;
+            left: 50%;
+            margin-left: -200/@bf;
+            bottom: -20/@bf;
+            display: block;
+            width: 400/@bf;
+            padding: 0 35/@bf;
+            height: 80/@bf;
+            text-align: center;
+            line-height: 80/@bf;
+            color: #fff;
+            font-size: 42/@bf;
+            font-weight: bold;
+            background: #dc0820;
+            border-radius: 40/@bf;
+            .ellipsis(); 
+        }
+    }
+    .rank-three {
+        li {
+            width: 400/@bf;
+            margin: 0 auto;
+            span {
+                display: block;
+                margin-top: 46/@bf;
+                text-align: center;
+                color: #dc0820;
+                font-size: 40/@bf;
+                font-weight: bold;
+             }
+        }
+        li:nth-child(2) {
+            float: left;
+            margin-left: 32/@bf;
+            .user-img img {
+                border: 6/@bf solid #cad6ee;
+            }
+        }
+        li:nth-child(3) {
+            float: right;
+            margin-right: 32/@bf;
+            .user-img img {
+                border: 6/@bf solid #f0aa71;
+            }
+        }
+        li:nth-child(2), li:nth-child(3) {
+            .user-img {
+                background: none;
+            }
+            .user-img strong {
+                bottom: -12/@bf;
+            }
+        }
+        b {
+            position: absolute;
+            display: block;
+        }
+        .icon-top0 {
+            top: -70/@bf;
+            .all;
+            background-position: -1/@bf -646/@bf;
+            width: 181/@bf;
+            height: 164/@bf;
+            left: 50%;
+            margin-left: -150/@bf;
+        }
+        .icon-top1 {
+            left: 42/@bf;
+            top: -64/@bf;
+            .all;
+            background-position: -195/@bf -645/@bf;
+            width: 153/@bf;
+            height: 140/@bf;
+        }
+        .icon-top2 {
+            left: 64/@bf;
+            top: -44/@bf;
+            .all;
+            background-position: -361/@bf -645/@bf;
+            width: 139/@bf;
+            height: 126/@bf;
+        }
+    }
+}
+
+.rank-area li:nth-child(1){
+    width: auto;
+    .user-img{
+        width: 747/@bf;
+        height: 379/@bf;
+        img{
+            margin-top: 25/@bf;
+        }
+    }
+} 
+// 其他榜单
+.rank-other {
+    width: 972/@bf;
+    margin: 64/@bf auto 0;
+    padding-top: 35/@bf;
+    padding-bottom: 36/@bf;
+    border-top: 1px solid #7d7d7d;
+    .other-cover {
+        height: 890/@bf;
+        overflow: scroll;
+    }
+    .rank-other-tit div, li div {
+        float: left;
+        color: #7d7d7d;
+        text-align: center;
+        line-height: 68/@bf;
+        font-weight: bold;
+        font-size: 42/@bf;
+    }
+    .rank-num {
+        width: 114/@bf;
+    }
+    .rank-name {
+        width: 486/@bf;
+    }
+    .rank-val {
+        width: 342/@bf;
+    }
+    li {
+        height: 142/@bf;
+        margin-bottom: 42/@bf;
+    }
+    li div:nth-child(2) {
+        text-align: left;
+    }
+    li div {
+        float: left;
+        font-weight: normal;
+        line-height: 144/@bf;
+        img {
+            float: left;
+            width: 134/@bf;
+            height: 134/@bf;
+            border-radius: 50%;
+            margin: 0 20/@bf 0 26/@bf;
+            border: 4/@bf solid #7d7d7d;
+        }
+        strong {
+            float: left;
+            width: 300/@bf;
+            height: 144/@bf;
+            .ellipsis();
+        }
+    }
+}
+
+// 规则
+.box {
+    height: 66/@bf;
+    background: url('../../../img/activity/queen/bobo/bg_2.jpg') repeat;
+    background-size: 16/@bf 16/@bf;
+}
+.rules-tit {
+    position: relative;
+    img{
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .wow {
+        position: absolute;
+        top: 150/@bf;
+        left: 645/@bf;
+    }
+}
+.rules-con {
+    padding-top: 64/@bf;
+    padding-bottom: 52/@bf;
+    background: url('../../../img/activity/queen/bobo/bg_1.jpg') repeat;
+    background-size: 16/@bf 16/@bf;
+    width: 100%;
+    height: 423/@bf;
+    p {
+        padding: 0 24/@bf;
+        color: #7d7d7d;
+        line-height: 66/@bf;
+        font-size: 38/@bf;
+        strong {
+            color: #ff5943;
+            font-weight: normal;
+        }
+    }
+}
+
+// 问答
+.question-con {
+    p { 
+        margin-top: 30/@bf;
+        padding: 10/@bf 0 50/@bf;
+        color: #1b1b1b;
+        font-size: 30/@bf;
+        text-align: center;
+    }
+}
+.question-tit {
+    position: relative;
+    img{
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .wow {
+        position: absolute;
+        top: 140/@bf;
+        left: 645/@bf;
+    }
+}
+.question {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+
+@keyframes move {
+    from {
+        transform: translate(0, 0) scale(0.4);
+    }
+    to {
+        transform: translate(5/@bf, 5/@bf);
+    }
+}
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

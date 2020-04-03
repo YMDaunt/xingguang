@@ -1,0 +1,37 @@
+/**
+ * @authors edge 
+ */
+@bf: 108rem;
+@fr: 3;
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
+h1,h2,h3,strong {
+    font-weight: normal;
+}
+[v-cloak] {
+    display: none;
+}
+//滚动更流畅
+body {
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+    color: #ffee9f;
+}
+.bgm(@imgName) {
+    background-image: url('../../img/activity/zhaomu/@{imgName}');
+}
+.ban {
+    height: 1288/@bf;
+    .bgm('ban.jpg');
+    background-size: 1080/@bf 1288/@bf;
+}
+.content1 {
+    height: 1120/@bf;
+    .bgm('1.jpg');
+    background-size: 1080/@bf 1120/@bf;
+}
+.content2 {
+    height: 1898/@bf;
+    .bgm('2.jpg');
+    background-size: 1080/@bf 1898/@bf; 
+}

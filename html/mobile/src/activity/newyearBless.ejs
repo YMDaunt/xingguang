@@ -1,0 +1,35 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/mobile/v2/img/activity/newyearBless" */ -->
+    <div class="page-bgs">
+        <!-- bgs -->
+        <div class="page-bg bg1"></div>
+        <div class="page-bg bg2"></div>
+    </div>
+
+    <div class="page-content">
+        <!-- section -->
+        <div class="video-container">
+            <div class="video" ref="video-wrapper">
+                <video ref="video" src="//static.guojiang.tv/src/pc/video/hpny2019.mp4" preload controls controlslist="nodownload" poster='${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/newyearBless/cover.jpg")}'></video>
+
+                <!-- <div class="controller">
+                    <div class="play" @click="toggle"></div>
+                    <div class="vol" @click="voice"></div>
+                    <div class="fullscreen" @click="fullscreen"></div>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- deco-box -->
+        <div class="deco-box"></div>
+    </div>
+</div>
+
+<script>
+var gjShareParam = JSON.stringify({ // eslint-disable-line
+    title: '2019，星光来了',
+    content: '大咖云集 祝你新年快乐',
+    link: location.href,
+    imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/springFestival2018/share.jpg")}' // eslint-disable-line
+})
+</script>

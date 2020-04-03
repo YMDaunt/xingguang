@@ -1,0 +1,86 @@
+@imgUrl:"../../../img/activity/staticPage/wangxuejing/";
+@bf:108rem;
+.fontDpr(@fontSize){
+    font-size: @fontSize;
+    [data-dpr="2"] & {
+        font-size: @fontSize*2;
+    }
+    [data-dpr="3"] & {
+        font-size: @fontSize*3;
+    }
+}
+/*背景图居中覆盖cover*/
+.bCover(@url){
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+/*背景图居中contain*/
+.bContain(@url){
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+/*背景图填满100%*/
+.bfill(@url){
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+}
+/*背景图Y轴复制*/
+.backgroundRepeat(@url){
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: repeat;
+    background-size: contain;
+}
+.wrapper{ 
+    display: block;
+    height: 8000/@bf;
+    .bfill("bg.jpg");
+}
+.add-btn{
+    position: absolute;
+    top: 1910/@bf;
+    right: 225/@bf;
+    width: 315/@bf;
+    height: 95/@bf;
+    line-height: 100/@bf;
+    text-align: center;
+    border-radius: 12/@bf;
+    background-color: #e1b08f;
+    color: #422311;
+    cursor: pointer;
+    font-size: 16px;
+    span{
+        display: inline;
+    }
+}
+.add-attent-copy{
+    position: absolute;
+    top: 4455/@bf;
+    right: 274/@bf;
+    width: 530/@bf;
+    height: 112/@bf;
+    line-height: 112/@bf;
+    text-align: center;
+    color: #422311;
+    font-size: 16px;
+    border-radius: 12/@bf;
+    cursor: pointer;
+    background-color: #e1b08f;
+    span{
+        display: inline-block;
+        vertical-align: middle;
+        margin-top: -1px;
+        &:last-child{
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-left: 10px solid #fff;
+            border-bottom: 10px solid transparent;
+        }
+    }
+}

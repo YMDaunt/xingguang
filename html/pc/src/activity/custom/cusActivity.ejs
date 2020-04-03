@@ -1,0 +1,378 @@
+<div  id="app" v-cloak>
+    <!-- banner -->
+    <div class="section banner">
+        <span class="banner-stage">{{ ui.qishu }}</span>
+        <span class="banner-sub">{{ ui.stageTime | timeDate }}之前开启，抢双倍奖励！限定礼物，新鲜上市</span>
+        <div class="bbox banner-info">
+            <div class="bbox-inner">
+                <p>在{{ ui.stageTime | timeAll }}之前开启热门宝箱加送10个“上头条”，在{{ ui.stageTime | timeAll }}之前开启广告位宝箱加送两天时限！先下手为强！（以开启时间为准。有延时的充值方式无法提前，请计算好充值周期。）</p>
+            </div>
+        </div>
+    </div>
+    <!-- 充值即送定制特权 -->
+    <div class="section tequan">
+        <div class="tequan-header"></div>
+
+        <div class="bbox tequan-content">
+            <div class="bbox-inner">
+                <p class="tequan-tip">鼠标靠近宝箱，即可查看特权内容哦</p>
+                <div class="treabox">
+                    <div :class="'tb-tline stage-' + app.boxesStage">
+                        <span class="tb-tdot"></span>
+                        <span class="tb-tdot"></span>
+                        <span class="tb-tdot"></span>
+                        <span class="tb-tdot"></span>
+                        <span class="tb-tdot"></span>
+                        <span class="tb-tdot"></span>
+                        <span class="tb-tdot"></span>
+                        <span class="tb-per"></span>
+                    </div>
+                    <div :class="['tb-box tb-box-1 left', boxesState[0] || '']" data-attr="1" @click="openBox(1)">
+                        <span class="price tb-price-30000">{{ app.boxes['1'] ? app.boxes['1'].money : '0' }}</span>
+                        <span class="tbox"></span>
+                        <span class="check"></span>
+                        <span class="hot"></span>
+                        <div :class="{'tb-box-toast': true, 'active': ui.bxInfoShowInd === '1'}">
+                            <div class="tb-t-h">
+                                <span class="tb-t-h-txt"></span>
+                            </div>
+                            <div class="tb-t-c">
+                                <p class="cond">开启条件：累计充值{{ app.boxes['1'] ? app.boxes['1'].money : '0' }}</p>
+                                <p class="main" v-html="app.boxes['1'] ? app.boxes['1'].remark : '0'"></p>
+                            </div>
+                            <div class="tb-t-btm"></div>
+                        </div>
+                    </div>
+                    <div :class="['tb-box tb-box-2 right', boxesState[1] || '']" data-attr="2" @click="openBox(2)">
+                        <span class="price tb-price-50000">{{ app.boxes['2'] ? app.boxes['2'].money : '0' }}</span>
+                        <span class="tbox"></span>
+                        <span class="check"></span>
+                        <span class="hot"></span>
+                        <span class="unhot"></span>
+                        <p class="desc">
+                            <span>移动端名额</span>
+                            <span>本月还剩下<i>{{ app.bannerBoxNum }}</i>个</span>
+                        </p>
+                        <div :class="{'tb-box-toast': true, 'active': ui.bxInfoShowInd === '2'}">
+                            <div class="tb-t-h">
+                                <span class="tb-t-h-txt"></span>
+                            </div>
+                            <div class="tb-t-c">
+                                <p class="cond">开启条件：累计充值{{ app.boxes['2'] ? app.boxes['2'].money : '0' }}</p>
+                                <p class="main" v-html="app.boxes['2'] ? app.boxes['2'].remark.replace('XXX', app.bannerBoxNum) : '0'"></p>
+                            </div>
+                            <div class="tb-t-btm"></div>
+                        </div>
+                    </div>
+                    <div :class="['tb-box tb-box-3 left', boxesState[2] || '']" data-attr="3" @click="openBox(3)">
+                        <span class="price tb-price-100000">{{ app.boxes['3'] ? app.boxes['3'].money : '0' }}</span>
+                        <span class="tbox"></span>
+                        <span class="check"></span>
+                        <span class="hot"></span>
+                        <div :class="{'tb-box-toast': true, 'active': ui.bxInfoShowInd === '3'}">
+                            <div class="tb-t-h">
+                                <span class="tb-t-h-txt"></span>
+                            </div>
+                            <div class="tb-t-c">
+                                <p class="cond">开启条件：累计充值{{ app.boxes['3'] ? app.boxes['3'].money : '0' }}</p>
+                                <p class="main" v-html="app.boxes['3'] ? app.boxes['3'].remark : '0'"></p>
+                            </div>
+                            <div class="tb-t-btm"></div>
+                        </div>
+                    </div>
+                    <div :class="['tb-box tb-box-4 right', boxesState[3] || '']" data-attr="4" @click="openBox(4)">
+                        <span class="price tb-price-200000">{{ app.boxes['4'] ? app.boxes['4'].money : '0' }}</span>
+                        <span class="tbox"></span>
+                        <span class="check"></span>
+                        <span class="hot"></span>
+                        <div :class="{'tb-box-toast': true, 'active': ui.bxInfoShowInd === '4'}">
+                            <div class="tb-t-h">
+                                <span class="tb-t-h-txt"></span>
+                            </div>
+                            <div class="tb-t-c">
+                                <p class="cond">开启条件：累计充值{{ app.boxes['4'] ? app.boxes['4'].money : '0' }}</p>
+                                <p class="main" v-html="app.boxes['4'] ? app.boxes['4'].remark : '0'"></p>
+                            </div>
+                            <div class="tb-t-btm"></div>
+                        </div>
+                    </div>
+                    <div :class="['tb-box tb-box-5 left', boxesState[4] || '']" data-attr="5" @click="openBox(5)">
+                        <span class="price tb-price-300000">{{ app.boxes['5'] ? app.boxes['5'].money : '0' }}</span>
+                        <span class="tbox"></span>
+                        <span class="check"></span>
+                        <span class="hot"></span>
+                        <div :class="{'tb-box-toast': true, 'active': ui.bxInfoShowInd === '5'}">
+                            <div class="tb-t-h">
+                                <span class="tb-t-h-txt"></span>
+                            </div>
+                            <div class="tb-t-c">
+                                <p class="cond">开启条件：累计充值{{ app.boxes['5'] ? app.boxes['5'].money : '0' }}</p>
+                                <p class="main" v-html="app.boxes['5'] ? app.boxes['5'].remark : '0'"></p>
+                            </div>
+                            <div class="tb-t-btm"></div>
+                        </div>
+                    </div>
+                    <div :class="['tb-box tb-box-6 right', boxesState[5] || '']" data-attr="6" @click="openBox(6)">
+                        <span class="price tb-price-400000">{{ app.boxes['6'] ? app.boxes['6'].money : '0' }}</span>
+                        <span class="tbox"></span>
+                        <span class="check"></span>
+                        <span class="hot"></span>
+                        <div :class="{'tb-box-toast': true, 'active': ui.bxInfoShowInd === '6'}">
+                            <div class="tb-t-h">
+                                <span class="tb-t-h-txt"></span>
+                            </div>
+                            <div class="tb-t-c" v-if="app.isNew">
+                                <p class="cond">开启条件：累计充值{{ app.boxes['6'] ? app.boxes['6'].money : '0' }}</p>
+                                <p class="main">此特权将为用户定制一辆永久虚拟座驾，在用户每次进入直播间时显示座驾特效。</p>
+                            </div>
+
+                            <div class="tb-t-c" v-else>
+                                <p class="cond">开启条件：累计充值{{ app.boxes['6'] ? app.boxes['6'].money : '0' }}</p>
+                                <p class="main" v-html="app.boxes['6'] ? app.boxes['6'].remark : '0'"></p>
+                            </div>
+                            <div class="tb-t-btm"></div>
+                        </div>
+                    </div>
+                    <div :class="['tb-box tb-box-7 left', boxesState[6] || '']" data-attr="7" @click="openBox(7)">
+                        <span class="price tb-price-500000">{{ app.boxes['7'] ? app.boxes['7'].money : '0' }}</span>
+                        <span class="tbox"></span>
+                        <span class="check"></span>
+                        <span class="hot"></span>
+                        <div :class="{'tb-box-toast': true, 'active': ui.bxInfoShowInd === '7'}">
+                            <div class="tb-t-h">
+                                <span class="tb-t-h-txt"></span>
+                            </div>
+                            <div class="tb-t-c" v-if="app.isNew">
+                                <p class="cond">开启条件：累计充值{{ app.boxes['7'] ? app.boxes['7'].money : '0' }}</p>
+                                <p class="main">此特权将为用户定制动态稀有勋章30日，6位永久靓号</p>
+                                <div class="cus-gif"></div>
+                            </div>
+                            <div class="tb-t-c" v-else>
+                                <p class="cond">开启条件：累计充值{{ app.boxes['7'] ? app.boxes['7'].money : '0' }}</p>
+                                <p class="main" v-html="app.boxes['7'] ? app.boxes['7'].remark : '0'"></p>
+                            </div>
+
+                            <div class="tb-t-btm"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rules">
+                    <div class="rule-i">
+                        <span class="rule-i-index">1</span>
+                        <span class="rule-i-c">单个账号月充值金额累计达到开启宝箱条件，即可开启宝箱获得定制特权（只计算用户充值金额，不包含后台下发、返利和用户领取的金额）。开启100%获取特权！</span>
+                    </div>
+                    <div class="rule-i">
+                        <span class="rule-i-index">2</span>
+                        <span class="rule-i-c">充值金额计算周期为 {{ this.app.startTime | formateDate }}-{{ this.app.endTime | formateDate }}；</span>
+                    </div>
+                    <div class="rule-i">
+                        <span class="rule-i-index">3</span>
+                        <span class="rule-i-c">手动开启宝箱后，请于宝箱弹框中填入用户信息。此后，官方人员将于2个工作日内与您联系。确认定制需求后，将于7-20个工作日内向您发放定制特权成品。需求一经确认，无法更改。（因用户个人原因填写信息错误或者不全，导致无法获得联系，后果由用户承担。若定制特权或者定制活动时间与全平台活动配置相冲突，以平台为先。若用户提出的需求，平台现有技术不支持，则以平台为先。所有定制内容不得包含任何商业广告。）</span>
+                    </div>
+                    <div class="rule-i">
+                        <span class="rule-i-index">4</span>
+                        <span class="rule-i-c">开启宝箱截止时间为{{ this.app.endTime | formateDate }}，若用户在截止日期前未领取，则视为自动放弃，不再补发；</span>
+                    </div>
+                    <div class="rule-i">
+                        <span class="rule-i-index">5</span>
+                        <span class="rule-i-c">本活动最终解释权归平台运营团队所有</span>
+                    </div>
+                </div>
+                <div class="mebox">
+                    <div class="border">
+                        <div class="iborder">
+                            <div class="avatar">
+                                <img :src="user.userHeadPic" alt="user">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <div class="progress"><span class="now">{{ user.getCost }}</span>/<span class="total">500000</span></div>
+                        <div class="counttime">充值倒计时：<span class="time">{{ countTime }}</span></div>
+                        <div class="check-btn" @click="showModal('tequan')"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 购买定制礼物 -->
+    <div class="section gifts">
+        <div class="gifts-header"></div>
+
+        <div class="bbox gifts-content">
+            <div class="bbox-inner">
+                <p class="gifts-info">我们为大额充值用户定制了精美的特权礼物，但如果英雄所见略同，你也钟爱这些礼物怎么办呢？答案是，戳这里，买买买啊！当定制礼物过了独享期之后，平台所有用户都可以购买在商城区出售的任何礼物。购买后，礼物将放入您的背包！</p>
+                <div class="tab-box">
+                    <div class="tabs">
+                        <span :class="['tab-i tab-total', ui.tabType === 'total' ? 'active' : '']" @click="tabChange('total')"></span>
+                        <span :class="['tab-i tab-spec', ui.tabType === 'spec' ? 'active' : '', ui.tabSpecHasNew ? 'new-badge' : '']" @click="tabChange('spec')"></span>
+                    </div>
+                    <div class="search">
+                        <input class="s-input placeholder needsclick" type="text" placeholder="主播ID或昵称" v-model="searchInput" />
+                        <span class="s-icon" @click="search"></span>
+                    </div>
+                </div>
+                <div ref="msgScrollBox" class="tab-content">
+                    <div :class="['tab-c-info', ui.fixedMsgBox ? 'fixed' : '']" v-show="ui.showMes">
+                        <span class="horn"></span>
+                        <div class="msg" ref="msgs">
+                            <span :style="app.msgStyle">
+                                <!-- 循环两次以兼容滚动时出现的间隔 -->
+                                <i v-for="msg in app.msgs">{{ msg }}</i>
+                                <i v-for="msg in app.msgs">{{ msg }}</i>
+                            </span>
+                        </div>
+                    </div>
+                    <div ref="alllist" :class="['tab-c-total', ui.tabType === 'total' ? 'active' : '', ui.fixedMsgBox ? 'fixed' : '']">
+                        <div class="tab-item" v-for="(item, ind) in alllist.list" :key="ind">
+                            <div class="avatar">
+                                <img :src="item.image" :alt="item.name">
+                                <span class="price">{{ item.price }}克拉/个</span>
+                            </div>
+                            <div class="info">
+                                <p class="name"><span class="label">名字：</span><span class="val">{{ item.name }}</span></p>
+                                <p class="person"><span class="label">定制者：</span><span class="val">{{ item.owner }}</span></p>
+                                <p class="sdate"><span class="label">开放售卖日：</span><span class="val">{{ item.releaseTime | transTime }}</span></p>
+                                <p class="snum"><span class="label">已售出：</span><span class="val">{{ item.salesVolume }}个</span></p>
+                                <p class="sreason"><span class="label">定制原因：</span><span class="val">{{ item.description }}</span></p>
+
+                                <div class="info-btn">
+                                    <span class="btn-buy" @click="buy(item)"></span>
+                                    <span class="btn-preview" @click="preview(item)"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ref="speclist" :class="['tab-c-spec', ui.tabType === 'spec' ? 'active' : '', ui.fixedMsgBox ? 'fixed' : '']">
+                        <div class="tab-item" v-for="(item, ind) in speclist.list" :key="ind">
+                            <div class="avatar">
+                                <img :src="item.image" :alt="item.name">
+                                <span class="price">{{ item.price }}克拉/个</span>
+                            </div>
+                            <div class="info">
+                                <p class="name"><span class="label">名字：</span><span class="val">{{ item.name }}</span></p>
+                                <p class="sdate"><span class="label">开放售卖日：</span><span class="val">{{ item.releaseTime | transTime }}</span></p>
+                                <p class="sdate"><span class="label">结束售卖日：</span><span class="val">{{ item.downTime | transTime }}</span></p>
+                                <p class="snum"><span class="label">已售出：</span><span class="val">{{ item.salesVolume }}个</span></p>
+
+                                <div class="info-btn">
+                                    <span class="btn-buy" @click="buy(item)"></span>
+                                    <span class="btn-preview" @click="preview(item)"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ref="slist" :class="['tab-c-search', ui.tabType === 'search' ? 'active' : '', ui.fixedMsgBox ? 'fixed' : '']">
+                        <div class="tab-item" v-for="(item, ind) in slist.list" :key="ind">
+                            <div class="avatar">
+                                <img :src="item.image" :alt="item.name">
+                                <span class="price">{{ item.price }}克拉/个</span>
+                            </div>
+                            <div class="info">
+                                <p class="name"><span class="label">名字：</span><span class="val">{{ item.name }}</span></p>
+                                <p class="person" v-show="item.type == 2"><span class="label">定制者：</span><span class="val">{{ item.owner }}</span></p>
+                                <p class="sdate"><span class="label">开放售卖日：</span><span class="val">{{ item.releaseTime | transTime }}</span></p>
+                                <p class="sdate" v-show="item.type == 20 || item.type == 30"><span class="label">结束售卖日：</span><span class="val">{{ item.downTime | transTime }}</span></p>
+                                <p class="snum"><span class="label">已售出：</span><span class="val">{{ item.salesVolume }}个</span></p>
+                                <p class="sreason" v-show="item.type == 2"><span class="label">定制原因：</span><span class="val">{{ item.description }}</span></p>
+
+                                <div class="info-btn">
+                                    <span class="btn-buy" @click="buy(item)"></span>
+                                    <span class="btn-preview" @click="preview(item)"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="tab-item-none" v-show="slist.list.length === 0">暂未搜索到结果</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+    </div>
+    <!-- toast -->
+    <div :class="['section toast', ui.toastShow ? 'active' : '']">
+        <!-- 达成特权 -->
+        <div :class="['t-tequan t-header-box', ui.toastType === 'tequan' ? 'active' : '']">
+            <div class="toast-close" @click="closeModal"></div>
+            <div class="toast-h">
+                <span class="t-tequan-h"></span>
+            </div>
+            <div class="toast-c">
+                <div class="tequan-list">
+                    <div :class="['tl-i tl-i-1', (app.boxes[7] && app.boxes[7].opened) ? 'active' : '']"></div>
+                    <div :class="['tl-i tl-i-2', (app.boxes[6] && app.boxes[6].opened) ? 'active' : '']"></div>
+                    <div :class="['tl-i tl-i-3', (app.boxes[5] && app.boxes[5].opened) ? 'active' : '']"></div>
+                    <div :class="['tl-i tl-i-4', (app.boxes[4] && app.boxes[4].opened) ? 'active' : '']"></div>
+                    <div :class="['tl-i tl-i-5', (app.boxes[3] && app.boxes[3].opened) ? 'active' : '']"></div>
+                    <div :class="['tl-i tl-i-6', (app.boxes[2] && app.boxes[2].opened) ? 'active' : '']"></div>
+                    <div :class="['tl-i tl-i-7', (app.boxes[1] && app.boxes[1].opened) ? 'active' : '']"></div>
+                </div>
+                <div :class="tequan.isAddOrMod ? 'btn-comp-info' : 'btn-mod-info'" @click="showModal('fillInfo')"></div>
+            </div>
+        </div>
+        <!-- 填写信息 -->
+        <div :class="['t-fill-info t-header-box', ui.toastType === 'fillInfo' ? 'active' : '']">
+            <div class="toast-close" @click="closeModal"></div>
+            <div class="toast-h">
+                <span class="t-fi-h"></span>
+            </div>
+            <div class="toast-c">
+                <div class="t-fi-form">
+                    <div class="t-fi-input t-fi-input-id">
+                        <input class="placeholder needsclick" type="text" placeholder="填写用户ID" v-model="tequanInfo.userId">
+                        <!-- <span class="tips">信息填写不正确，请重新填写</span> -->
+                    </div>
+                    <span class="t-fi-label-concat"></span>
+                    <div class="t-fi-input t-fi-input-phone">
+                        <input class="placeholder needsclick" type="text" placeholder="填写手机号码" v-model="tequanInfo.phone" @focus="clearPhoneInput">
+                        <span class="tips min-height">{{ phoneInputState }}</span>
+                    </div>
+                    <div class="t-fi-input t-fi-input-qq">
+                        <input class="placeholder needsclick" type="text" placeholder="填写QQ号码" v-model="tequanInfo.qqnumber" @focus="clearQQInput">
+                        <span class="tips min-height">{{ qqInputState }}</span>
+                    </div>
+                </div>
+                <div class="btn-confirm" @click="confirm"></div>
+            </div>
+        </div>
+        <!-- 购买数量 -->
+        <div :class="['t-buy t-header-box t-bg-box', ui.toastType === 'buy' ? 'active' : '']">
+            <div class="toast-close" @click="closeModal"></div>
+            <div class="toast-h"></div>
+            <div class="toast-c">
+                <div class="toast-bg">
+                    <div class="t-buy-form">
+                        <input ref="buyInput" class="placeholder needsclick" type="text" placeholder="填写购买数量" @input="buyInput">
+                        <p class="info"><span class="label">消耗：</span><span class="val">{{ buyInfo.payMoney }}</span></p>
+                    </div>
+                    <div class="btn-buy" @click="buyGifts"></div>
+                </div>
+            </div>
+        </div>
+        <!-- info toast -->
+        <div :class="['t-info t-header-box t-bg-box', ui.toastType === 'msg' ? 'active' : '']">
+            <div class="toast-close" @click="closeModal"></div>
+            <div class="toast-h"></div>
+            <div class="toast-c">
+                <div class="toast-bg">
+                    <div class="t-info-main">
+                        <p v-for="msg in ui.toastMsg">{{ msg }}</p>
+                    </div>
+                    <div class="btn-ok" @click="closeModal()"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- tooltip toast -->
+    <div class="tooltip" v-show="ui.tooltip">{{ ui.tooltipMsg }}</div>
+
+    <!-- svg container -->
+    <div class="svg-layer" v-show="ui.svgShow" @click="stopSvg">
+        <div class="svg-container" v-show="ui.svgShowType === 'svg'"></div>
+        <div class="img-container" v-show="ui.svgShowType === 'image'">
+            <img :src="ui.svgShowImg" alt="预览礼物">
+        </div>
+    </div>
+</div>

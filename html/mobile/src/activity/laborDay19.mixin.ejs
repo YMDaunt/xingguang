@@ -1,0 +1,360 @@
+<div class="page-content">
+    <!-- 抽奖池 -->
+    <div class="lottery-pool">
+        <div class="deco-cor-a"></div>
+        <div class="deco-cor-b"></div>
+        <div class="deco">
+            <!-- 抽奖池tab切换 -->
+            <div class="lot-tab fl-box">
+                <div :class="['lot-tab-i btn btn-s', lotTabType === 'mod' ? 'tab-draw-mod-a' : 'tab-draw-mod']" @click="changeLotT('mod')">劳模主播闯关赛</div>
+                <div :class="['lot-tab-i btn btn-s', lotTabType === 'user' ? 'tab-draw-user-a' : 'tab-draw-user']" @click="changeLotT('user')">标兵用户达标赛</div>
+            </div>
+            <div class="btn btn-s btn-rec" @click="showMyLotRec">我的中奖记录</div>
+            <!-- pool -->
+            <div class="turntable">
+                <div ref="turn-panel" :class="['turn-panel', lotTabType]" :style="turnAni" @transitionend="panelEnd">
+                    <div class="btn btn-qs" @click="showTips('送出可触发全平台红包，超稀有礼物，主播无提成，有效期至5.4 23:59:59。')"></div>
+                </div>
+                <div class="icon-s turn-pointer"></div>
+            </div>
+            <!-- result pool -->
+            <div v-show="lotResState" class="result-pool">
+                <div class="result-t fl-box">
+                    <span class="txt-s txt-gxhd"></span>
+                    <div class="btn btn-close fl-box" @click="closeLotRes"><span class="txt-s txt-x"></span></div>
+                </div>
+                <div class="result-l">
+                    <div v-for="(resItem, resI) in lotRes" :key="'result_' + resI" class="result-i">
+                        <div class="icon-s g-bg">
+                            <div :class="['icon-s', resItem ? resItem.icon : 'g-null']"></div>
+                        </div>
+                        <p class="result-name">{{ resItem ? resItem.name : '哎呀，没中！' }}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- pool info -->
+            <p class="lot-num fl-box">
+                <span class="txt-s txt-left-times">我的剩余抽奖次数：</span>
+                <span class="val">{{ this.lotTimes[lotTabType] }}</span>
+                <span class="txt-s txt-ci">次</span>
+            </p>
+            <p v-if="lotTabType === 'mod'" class="lot-stage txt-s txt-guanqia">当前关卡：第<span class="val">{{ progress }}</span>关</p>
+            <div class="lot-opt fl-box">
+                <div :class="['btn btn-s', currStage >= 3 ? 'btn-draw-dis' : (isDrawing ? 'btn-drawing' : 'btn-draw-once')]" @click="currStage < 3 && draw(1)">抽1次</div>
+                <div :class="['btn btn-s', currStage >= 3 ? 'btn-draw-ten-dis' : (isDrawing ? 'btn-drawing' : 'btn-draw-tentimes')]" @click="currStage < 3 && draw(10)">抽10次</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ranks 榜单内容 -->
+    <div class="rank rank-content">
+        <div class="deco-cor-a"></div>
+        <div class="deco-cor-b"></div>
+        <div class="deco">
+            <div class="rank-tab fl-box">
+                <div :class="['rank-tab-i btn btn-s', rankTabType === 1 ? 'tab-mod-a' : 'tab-mod']" @click="changeRankT(1)">劳模主播榜</div>
+                <div :class="['rank-tab-i btn btn-s', rankTabType === 2 ? 'tab-user-a' : 'tab-user']" @click="changeRankT(2)">标兵用户榜</div>
+            </div>
+            <!-- rank top 3 -->
+            <div v-if="currStage > 0" :class="['rank-top3', rankTabType === 1 ? 'mod' : 'user']">
+                <div v-for="(item, i) in currRank.list.slice(0, 3)" :class="['rank-top-i', 'rank-top-i' + i]">
+                    <div class="headpic">
+                        <img class="avatar" :src="item.headPic" alt="头像" @click="rankTabType === 1 && goRoom(item)">
+                        <div :class="['icon-s cown', 'cown-' + (i+1)]"></div>
+                        <div v-if="item.isPlaying" class="icon-s live"></div>
+                    </div>
+                    <div class="fl-box nickname">
+                        <div class="txt-of name">{{ item.nickname }}</div>
+                        <div :class="['level_icon', (rankTabType === 1 ? 'm_level_icon_' : 'u_level_icon_') + item.level]"></div>
+                    </div>
+                    <div class="txt-of score">{{ rankTabType === 2 ? '送出' : '收到' }}：{{ item.score }}</div>
+                    <div v-if="rankTabType === 1" :class="['btn btn-s btn-attend', item.isLoved ? 'btn-atte' : 'btn-atte-a']" @click="atte(item)">关注</div>
+                </div>
+            </div>
+            <div class="fl-box rank-listh">
+                <div class="rank-cell rank-cell-1 fl-box">
+                    <span class="txt-s txt-pm">排名</span>
+                </div>
+                <div class="rank-cell rank-cell-2 fl-box">
+                    <span class="txt-s txt-zb" v-if="rankTabType === 1">主播</span>
+                    <span class="txt-s txt-yh" v-if="rankTabType === 2">用户</span>
+                </div>
+                <div class="rank-cell rank-cell-3 fl-box">
+                    <span class="txt-s txt-sd" v-if="rankTabType === 1">收到</span>
+                    <span class="txt-s txt-sc" v-if="rankTabType === 2">送出</span>
+                </div>
+            </div>
+            <!-- 榜单列表 -->
+            <component
+                ref="rank-scroller"
+                :class="['rank-listc', currRank.type]"
+                :is="scroller"
+                :right="6">
+                <p class="rank-holder" v-if="currStage === 0">活动未开始！</p>
+                <p class="rank-holder" v-if="currStage > 0 && currRank.list.length === 0">快去直播间送出小蜜蜂，帮助劳模主播闯关吧！</p>
+                <!-- rank item -->
+                <template
+                    v-if="currStage > 0 && currRank.list.length > 0"
+                    v-for="(item, ind) in currRank.list.slice(3)">
+                    <div
+                        class="fl-box rank-row"
+                        :key="currRank.type + '_' + ind">
+                        <div class="rank-cell rank-cell-1">{{ ind+4 }}</div>
+                        <div class="fl-ver rank-cell rank-cell-2">
+                            <div class="headpic">
+                                <img
+                                    :src="item.headPic"
+                                    :alt="item.nickname"
+                                    class="avatar"
+                                    @click="rankTabType === 1 && goRoom(item)">
+                                <div v-if="item.isPlaying" class="icon-s live"></div>
+                            </div>
+                            <p class="fl-ver name">
+                                <span class="txt-of nickname">{{ item.nickname }}</span>
+                                <span :class="['level_icon', (rankTabType === 1 ? 'm_level_icon_' : 'u_level_icon_') + item.level]"></span>
+                            </p>
+                        </div>
+                        <div class="rank-cell rank-cell-3">{{ item.score }}</div>
+                    </div>
+                </template>
+            </component>
+            <div v-show="currRank.list.length !== 0 && rankTabType === 1" class="rank-tips txt-s txt-mod-tips">仅展示前100位主播</div>
+            <div v-show="currRank.list.length !== 0 && rankTabType === 2" class="rank-tips txt-s txt-user-tips">仅展示前100位用户</div>
+            <!-- 榜单个人中心 -->
+            <div class="fl-box rank-center" v-if="currRank.meCenter">
+                <div class="intro">
+                    <div class="headpic">
+                        <img
+                            :src="currRank.meCenter.headPic"
+                            :alt="currRank.meCenter.nickName"
+                            class="avatar"
+                            @click="rankTabType === 1 && goRoom(currRank.meCenter)">
+                        <div v-if="currRank.meCenter.isPlaying" class="icon-s live"></div>
+                    </div>
+                    <p class="fl-box name">
+                        <span class="txt-of nickname">{{ currRank.meCenter.nickName }}</span>
+                        <span :class="['level_icon', (rankTabType === 1 ? 'm_level_icon_' : 'u_level_icon_') + currRank.meCenter.level]"></span>
+                    </p>
+                </div>
+                <div class="fl-box me-status">
+                    <div v-for="(ki, kind) in [0, 2, 1, 3]" :key="kind" class="me-status-i">
+                        <h5 :text="currRank.meCenter.pairInfos[ki].name">{{ ki }}</h5>
+                        <p>{{ currRank.meCenter.pairInfos[ki].value }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- copyright -->
+    <p class="txt-s copy">本活动最终解释权归平台运营团队所有</p>
+</div>
+
+<!-- floater -->
+<div class="floater btn-s btn-rules btn" @click="showRule">活动规则</div>
+
+<!-- rules -->
+<div class="layer layer-rules" v-show="ruleState" @click="capClick">
+    <div class="layer-inner">
+        <div class="deco-cor-a"></div>
+        <div class="deco-cor-b"></div>
+        <div class="deco">
+            <div class="rule-title fl-box">
+                <span class="txt-s txt-rules"></span>
+                <div class="btn btn-close fl-box" @click="hideRule"><span class="txt-s txt-x"></span></div>
+            </div>
+
+            <p class="rule-i">1. 活动时间：4.29 12:00:00 - 5.3 23:59:59</p>
+            <p class="rule-i fl-ver">2. 活动礼物：小蜜蜂<span class="bee"></span>=10克拉/个</p>
+
+            <div class="rule-tab fl-box">
+                <div class="rule-tab-i" @click="changeRuleT('mod')">
+                    <span :class="['btn-s btn', ruleTab === 'mod' ? 'tab-draw-mod-a' : 'tab-draw-mod']">劳模主播闯关赛</span>
+                </div>
+                <div class="rule-tab-i" @click="changeRuleT('user')">
+                    <span :class="['btn-s btn', ruleTab === 'user' ? 'tab-draw-user-a' : 'tab-draw-user']">标兵用户达标赛</span>
+                </div>
+                <div :class="['rule-tab-i btn-s btn', ruleTab === 'rw' ? 'tab-rw-a' : 'tab-rw']" @click="changeRuleT('rw')">活动奖励</div>
+            </div>
+
+            <component
+                ref="rules-scroller"
+                class="layer-content"
+                :is="scroller"
+                :right="4">
+
+                <!-- 劳模主播闯关赛 -->
+                <div class="rule-mod" v-show="ruleTab === 'mod'">
+                    <p class="rule-i"><span class="rule-ind">1</span>主播每闯过1关，可获得1次从【闯关新人】奖池抽奖的机会，8关以后，每1关需要收到3000个小蜜蜂。</p>
+                    <div class="rule-t-wrap rule-t-wrap-mod">
+                        <div class="rule-table rule-table-mod">
+                            <div class="fl-box th">
+                                <div class="td tcell-1">关卡数</div>
+                                <div class="td tcell-2">收到小蜜蜂数量</div>
+                            </div>
+                            <div class="fl-box tr">
+                                <div class="td tcell-1">1</div>
+                                <div class="td tcell-2">100</div>
+                            </div>
+                            <div class="fl-box tr">
+                                <div class="td tcell-1">2</div>
+                                <div class="td tcell-2">150</div>
+                            </div>
+                            <div class="fl-box tr">
+                                <div class="td tcell-1">3</div>
+                                <div class="td tcell-2">300</div>
+                            </div>
+                            <div class="fl-box tr">
+                                <div class="td tcell-1">4</div>
+                                <div class="td tcell-2">500</div>
+                            </div>
+                            <div class="fl-box tr">
+                                <div class="td tcell-1">5</div>
+                                <div class="td tcell-2">1000</div>
+                            </div>
+                            <div class="fl-box tr">
+                                <div class="td tcell-1">6</div>
+                                <div class="td tcell-2">1500</div>
+                            </div>
+                            <div class="fl-box tr">
+                                <div class="td tcell-1">7</div>
+                                <div class="td tcell-2">2000</div>
+                            </div>
+                            <div class="fl-box tr">
+                                <div class="td tcell-1">8</div>
+                                <div class="td tcell-2">3000</div>
+                            </div>
+                            <div class="tr-td">自第9关开始每一关需要收到3000个小蜜蜂</div>
+                        </div>
+                    </div>
+                    <p class="rule-i"><span class="rule-ind">2</span>关卡每日0点更新，0点后，直播间当前关卡闯关成功，再从第1关（收到100个小蜜蜂）开始闯关。</p>
+                    <p class="rule-i"><span class="rule-ind">3</span>勤劳的小蜜蜂：每日累计开播时长180min，可获得1次抽奖机会，每日最多1次。</p>
+                    <p class="rule-i"><span class="rule-ind">4</span>交际小能手：每日作为多人直播间主持人开播累计时长120min，可获得1次抽奖机会，每日最多1次。</p>
+                    <p class="rule-i rule-tips">注：主播个人开播和多人直播间作为主持人开播的时长不重复计算。</p>
+                    <p class="rule-i"><span class="rule-ind">5</span>抽奖时间截止至5.4  23:59:59，逾期清空抽奖机会。</p>
+                </div>
+
+                <!-- 用户达标赛 -->
+                <div class="rule-user" v-show="ruleTab === 'user'">
+                    <p class="rule-i"><span class="rule-ind">1</span><span class="txt-blue">勤劳小蜜蜂</span>：用户每日观看直播10min，不含在多人直播间观看时间，可获得1次抽奖机会，每日最多1次。</p>
+                    <p class="rule-i"><span class="rule-ind">2</span><span class="txt-blue">劳模助攻者</span>：每累计送出510个小蜜蜂，获得一次抽奖机会。</p>
+                    <p class="rule-i"><span class="rule-ind">3</span><span class="txt-blue">幸运锦鲤</span>：用户每日暴鸡中奖20倍5次，可获得1次抽奖机会，每日最多1次。</p>
+                    <p class="rule-i"><span class="rule-ind">4</span><span class="txt-blue">交际小能手</span>：多人直播间上麦成为嘉宾每日累计时长30min，可获得1次抽奖机会，每日最多1次。</p>
+                    <p class="rule-i"><span class="rule-ind">5</span>抽奖时间截止至5.4  23:59:59，逾期清空抽奖机会。</p>
+                </div>
+
+                <!-- 活动奖励 -->
+                <div class="rule-rw" v-show="ruleTab === 'rw'">
+                    <div class="rule-t-wrap rule-t-wrap-rw">
+                        <div class="rule-table rule-table-rw">
+                            <div class="fl-box th">
+                                <div class="td tcell-1">劳模主播榜</div>
+                                <div class="td tcell-2">奖励</div>
+                                <div class="td tcell-3">标兵用户榜</div>
+                                <div class="td tcell-4">奖励</div>
+                            </div>
+                            <div class="fl-box tr">
+                                <div class="td tcell-1">第一名</div>
+                                <div class="td tcell-2">300000克拉</div>
+                                <div class="td tcell-3">第一名</div>
+                                <div class="td tcell-4">150000克拉、30个上头条</div>
+                            </div>
+                            <div class="fl-box tr">
+                                <div class="td tcell-1">第二名</div>
+                                <div class="td tcell-2">200000克拉</div>
+                                <div class="td tcell-3">第二名</div>
+                                <div class="td tcell-4">100000克拉、20个上头条</div>
+                            </div>
+                            <div class="fl-box tr">
+                                <div class="td tcell-1">第三名</div>
+                                <div class="td tcell-2">150000克拉</div>
+                                <div class="td tcell-3">第三名</div>
+                                <div class="td tcell-4">80000克拉、10个上头条</div>
+                            </div>
+                            <div class="fl-box tr">
+                                <div class="td tcell-1">第四、五名</div>
+                                <div class="td tcell-2">100000克拉</div>
+                                <div class="td tcell-3">第四、五名</div>
+                                <div class="td tcell-4">50000克拉、5个上头条</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="rule-i">奖励发放说明：</p>
+                    <p class="rule-i">1. 克拉奖励在活动结束的5个工作日内发放；</p>
+                    <p class="rule-i">2. 上头条奖励在活动结束后，即时下发至背包；</p>
+                    <p class="rule-i">3. 榜单有相同数据，按照先到先得排序。</p>
+                </div>
+            </component>
+        </div>
+    </div>
+</div>
+
+<!-- modal 我的中奖记录 -->
+<div class="modal modal-rec" v-show="modalState" @click="capClick">
+    <div class="modal-inner">
+        <div class="deco-cor-a"></div>
+        <div class="deco-cor-b"></div>
+        <div class="deco">
+            <div class="rule-title fl-box">
+                <span class="txt-s txt-rec">我的中奖记录</span>
+                <div class="btn btn-close fl-box" @click="hideMyLotRec"><span class="txt-s txt-x"></span></div>
+            </div>
+            <p class="m-tips">最多展示最新的50条中奖信息</p>
+
+            <!-- 中奖列表 -->
+            <div class="rec-list-h fl-box">
+                <div class="rec-list-i tli-1 fl-box">
+                    <span class="txt-s txt-jlnr">奖励内容</span>
+                </div>
+                <div class="rec-list-i tli-2 fl-box">
+                    <span class="txt-s txt-zjsj">中奖时间</span>
+                </div>
+            </div>
+            <component
+                ref="rec-scroller"
+                class="modal-content-a"
+                :is="scroller"
+                :right="4">
+                <p v-if="lotTabType === 'mod' && reclist[lotTabType].length === 0" class="rec-holder">每日开播180min，可以得到1次免费的抽奖机会哦～</p>
+                <p v-if="lotTabType === 'user' && reclist[lotTabType].length === 0" class="rec-holder">每日观看直播10min，可以得到1次免费的抽奖机会哦～</p>
+                <div v-for="(item, iind) in reclist[lotTabType]" :key="lotTabType + iind" class="rec-list-r fl-box">
+                    <div class="rec-list-i tli-1">{{ item['prize_name'] }}</div>
+                    <div class="rec-list-i tli-2">{{ item.time }}</div>
+                </div>
+            </component>
+
+            <div class="modal-sep"></div>
+
+            <!-- 奖励列表 -->
+            <component
+                ref="gift-scroller"
+                class="modal-content-b"
+                :is="scroller"
+                :right="4">
+                <div v-for="(rwItem, rwi) in rwlist[lotTabType]" :key="rwi" class="gift-row fl-box">
+                    <div class="gift-pic icon-s gift-bg">
+                        <div :class="['icon-s', rwItem.icon]"></div>
+                    </div>
+                    <div class="gift-info">
+                        <div :class="['name txt-s', rwItem.nameIcon]"></div>
+                        <div class="desc">{{ rwItem.desc }}</div>
+                    </div>
+                    <div class="gift-de">
+                        <div class="status">{{ rwItem.progress[0] >= rwItem.progress[1] ? '达标': '未达标' }}</div>
+                        <div class="progress">
+                            <div class="progress-i" :style="{ width: Math.min(1, (rwItem.progress[0] / rwItem.progress[1])) * 100 + '%' }"></div>
+                            <div class="progress-txt">{{ Math.min(rwItem.progress[0], rwItem.progress[1]) }}/{{ rwItem.progress[1] }}</div>
+                        </div>
+                    </div>
+                </div>
+            </component>
+        </div>
+    </div>
+</div>
+
+<!-- toast msg层 -->
+<div class="toast-container" v-show="toastState" @click="hideToast">
+    <div class="toast-msg">{{ toastMsg }}</div>
+</div>
+
+<loading ref="loading" />

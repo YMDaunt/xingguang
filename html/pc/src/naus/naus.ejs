@@ -1,0 +1,272 @@
+<main id="app" v-cloak>
+    <div class="bg">
+        <div class="top"></div>
+        
+        <canvas class="line-round lr1"  width="1920" height="6340"></canvas>
+        <canvas class="galaxy"></canvas>
+        <!-- <div class="bottom"></div> -->
+    </div>
+    <div class="f_top">NAUS.io</div>
+    <section class="sec-content">
+        <div class="header">
+            <div class="circle circle-little circle1"></div>
+            <div class="logo"></div>
+            <h3>基於區塊鏈的自演進式社交網絡生態</h3>
+
+            <p class="subscribe_title">訂閱電子報</p>
+            <div class="subscribe">
+                <input type="text" name="email" class="sbu_email" placeholder="輸入您的郵箱.." v-model="email">
+                <span class="sub_btn" @click="submitEmail()">提交</span>
+            </div>
+
+            <span class="arrow arrow_1"></span>
+
+            <p class="instruction">NAUS.io是壹個基於ETH區塊鏈基礎設施的互動式社交分發SAAS平臺，人們可以在這裏建立自己的去中心化社交網絡生態，比如：IM系統、多人語音視頻、直播、圖片/視頻Feed、社交遊戲等多種社交互動系統。</p>
+            
+        </div>
+        <div class="live clearfix">
+            <div class="circle circle-big circle2"></div>
+            <div class="phone_wrap fl">
+                <img class="tippin-pic tp_l hide" src="${require('../../../../static_guojiang_tv/src/pc/v4/img/naus/phone_1.png')}" />
+                <img class="tippin-pic tp_r hide" src="${require('../../../../static_guojiang_tv/src/pc/v4/img/naus/phone_2.png')}" />    
+            </div>
+            <div class="title fl">
+                <div class="tippin-logo"></div>
+                <p class="title-content">首席合作夥伴 Tippin Live</p>
+
+                <a class="download" href="#">白皮書PDF下載</a>
+            </div>
+        </div>
+        <span class="arrow arrow_2"></span>
+
+        <div class="part1">
+            <p class="title"><span class="linear">NAUS生態體系</span>的組成部分</p>
+            <div class="p1_content clearfix">
+                <ul class="fl">
+                    <li class="li_1">
+                        <div class="logo logo-1 fl"></div>
+                        <div class="content fl">
+                            <p class="li-title"><span class="linear">NAUS</span>基金會</p>
+                            <p class="content-text">負責NAUS Chain（底層鏈）、NAB（通證TOKEN）、NAUS數字錢包及數字錢包SDK、NAUS智能合約範本、NAUS區塊鏈瀏覽器的開發運營。</p>
+                        </div>
+                    </li>
+                    <li class="li_2">
+                        <div class="logo logo-2 fl"></div>
+                        <div class="content fl">
+                            <p class="li-title"><span class="linear">NAUS</span>認證基礎設施提供商</p>
+                            <p class="content-text">提供NAUS智能合約發售平臺、NAUS智能合 約交易商城的開發及運營。其中，發售平臺為 NAUS智能合約的壹級市場，用戶可在利用默 認範本設置好智能合約後在此首次發售給其它 用戶；交易商城為NAUS的二級市場，已經出
+                                售的智能合約可在此繼續流通並增值。
+                            </p>
+                        </div>
+                    </li>
+                    <li class="li_3">
+                        <div class="logo logo-3 fl"></div>
+                        <div class="content fl">
+                            <p class="li-title"><span class="linear">NAUS</span>商業合作夥伴</p>
+                            <p class="content-text">包括社交平臺、內容平臺、垂直交友平臺、語 聊平臺、IM系統、直播平臺、MCN機構、在 線視頻平臺、投資公司等，是NAUS上用戶進 行社交活動的APP承載，也是NAUS生態的資 源輸入者及價值傳遞者。
+                            </p>
+                        </div>
+                    </li>
+                    <li class="li_4">
+                        <div class="logo logo-4 fl"></div>
+                        <div class="content fl">
+                            <p class="li-title"><span class="linear">NAUS</span> Partner</p>
+                            <p class="content-text">社交網絡平臺參與的普通用戶，也包括網紅、 大V、知名學者、粉絲、投資人等個人參與者， 是 NAUS上智能合約的主體發行者。
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="market-bg fr"></div>
+            </div>
+        </div>
+        <span class="arrow arrow_3"></span>
+
+        <div class="part2">
+            <div class="circle circle-little circle3"></div>
+            <div class="circle circle-big circle4"></div>
+            <p class="text">
+                我們認為理想的社交網絡是由參與者（用戶）、內容、相互關系這三者為核心，並以其相互持續激蕩構成的生命體系，天然帶有自由的、去中心化的、公平的、私密的、靈活的、可保障的特征。同時社交網網絡的本質是匹配問題，包括個人與個人/團體長期的匹配、基於特定需求的匹配、基於特定場景的匹配，以個人/團隊與內容的匹配。
+            </p>
+            <div class="compare-content"></div>
+            
+        </div>
+
+        <span class="arrow arrow_4"></span>
+
+        <div class="compare">
+            <div class="title-bg">
+                <p class="title">NAUS与目前主流的中心化社交网络进行了如下对比：</p>
+            </div>
+            <ul class="explain">
+                <li class="th">
+                    <span class="special"></span>
+                    <span class="special">NAUS</span>
+                    <span class="special">FACEBOOk</span>
+                    <span class="special">WECHAT</span>
+                    <span class="special">TWITTER</span>
+                </li>
+                <li>
+                    <span><em class="linear">組織方式</em></span>
+                    <span>去中心化</span>
+                    <span>中心化</span>
+                    <span>中心化</span>
+                    <span>中心化</span>
+                </li>
+                <li>
+                    <span><em class="linear">社交分類</em></span>
+                    <span>熟人/陌生人社交</span>
+                    <span>熟人社交</span>
+                    <span>熟人社交</span>
+                    <span>陌生人社交</span>
+                </li>
+                <li>
+                    <span><em class="linear">特征提取</em></span>
+                    <span>小範圍群組共識+經濟調節</span>
+                    <span>用戶自分類<br>+中心化分配</span>
+                    <span>用戶自分類</span>
+                    <span>用戶自分類<br>+中心化分配</span>
+                </li>
+                <li>
+                    <span><em class="linear">匹配方式</em></span>
+                    <span>精確標簽匹配</span>
+                    <span>熟人關系匹配</span>
+                    <span>通訊錄匹配</span>
+                    <span>內容匹配</span>
+                </li>
+                <li>
+                    <span><em class="linear">產品形式</em></span>
+                    <span>DApp組合（SNS Feed+即時通訊+社區內容+語音/直播+輕遊戲）</span>
+                    <span>SNS Feed</span>
+                    <span>即時通訊</span>
+                    <span>社區內容</span>
+                </li>
+                <li>
+                    <span><em class="linear">代幣體系</em></span>
+                    <span>可流通代幣</span>
+                    <span>無代幣</span>
+                    <span>法幣</span>
+                    <span>無代幣   </span>
+                </li>
+                <li>
+                    <span><em class="linear">激勵方式</em></span>
+                    <span>資產化激勵</span>
+                    <span>自封閉激勵</span>
+                    <span>自封閉激勵</span>
+                    <span>自封閉激勵</span>
+                </li>
+                <li>
+                    <span><em class="linear">用戶擴展</em></span>
+                    <span>可為不同的DApp提供海量用戶的並集</span>
+                    <span>不可跨APP擴展</span>
+                    <span>不可跨APP擴展</span>
+                    <span>不可跨APP擴展</span>
+                </li>
+            </ul>
+        </div>
+
+        <span class="arrow arrow_5"></span>
+
+        <div class="maker">
+            <div class="circle circle-little circle5"></div>
+            <div class="circle circle-big circle6"></div>
+            
+            <p class="title">創始人</p>
+            <div class="info">
+                <div class="avatar-box"><div class="avatar"></div></div>
+                <div class="name-honor fr">
+                    <p class="name linear">Carl</p>
+                    <p class="honor linear">基金會名譽主席</p>
+                </div>
+            </div>
+            <p class="about">互聯網連續創業者，Tippen Live創始人，曾擔任與迅雷（NASDAQ： XNET）聯運的某實時社交產品運營VP，在互聯網產品的產品設計、 開發運營上有豐富經驗。崔陽曾擔任中視典（中國TOP VR公司） 大區銷售總負責人，有著豐富的政府公關、高校資源。</p>
+            
+        </div>
+
+        <span class="arrow arrow_6"></span>
+
+        <div class="institution">
+            <p class="title">基石投資機構</p>
+            <ul class="clearfix">
+                <li>
+                    <div class="logo logo_1">
+                        <span></span>
+                    </div>
+                    <div class="desc">
+                        <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/naus/bg_5.png')}" class="itds_bg">
+                        <P>
+                        微影時代旗下的微影資本募集基金規模近30億元。其中，由微影時代與諾亞財富共同成立的文化產業基金，初始規模近20億元。微影資本同時針對電影、演出展覽、體育三大領域的泛娛樂內容進行項目投資，以及針對原創內容、制作與發行營銷、場館等全產業鏈進行股權投資，在文化產業進行深度布局。
+                        </P>
+                    </div>
+                    <div class="li_footer"></div>
+                </li>
+                <li>
+                    <div class="logo logo_2">
+                        <span></span>
+                    </div>
+                    <div class="desc">
+                        <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/naus/bg_5.png')}" class="itds_bg">
+                        <P>
+                        梅花天使創投成立於2014年5月，是國內最活躍的、最懂互聯網的天使投資機構之壹，目前管理十二億元的人民幣基金，專註TMT領域的種子、天使期投資，單筆投資金額通常在 200-500 萬人民幣之間。<br>梅花天使創投目前共投資項目180余個，覆蓋各個垂直領域，湧現出大批知名案例。
+                        </P>
+                    </div>
+                    <div class="li_footer"></div>
+                </li>
+                <li>
+                    <div class="logo logo_3">
+                        <span></span>
+                    </div>
+                    <div class="desc">
+                        <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/naus/bg_5.png')}" class="itds_bg">
+                        <P>
+                        創新谷是中國最活躍的互聯網孵化器和天使投資基金之壹。目前，創新谷在中國孵化項目數百個，在全球投資項目60余家。創新谷管理團隊有著豐富的互聯網和移動互聯網從業經驗，創新谷的投資方向聚焦於互聯網及移動互聯網領域，並與創新谷家族的創業團隊們壹起共同飛速成長。
+                        </P>
+                    </div>
+                    <div class="li_footer"></div>
+                </li>
+                <li>
+                    <div class="logo logo_4">
+                        <span></span>
+                    </div>
+                    <div class="desc">
+                        <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/naus/bg_5.png')}" class="itds_bg">
+                        <P>
+                        中美創投成立於2014年,目前設有深圳、北京、美國矽谷三個分部，以中美兩國雙地輻射的模式來尋找更好的創新項目。重點關註中美互聯網、移動互聯網等TMT行業,主要 投資目標為種子期、初創期及成長期的優秀創業公司。
+                        </P>
+                    </div>
+                    <div class="li_footer"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="contact">
+            <div class="share">            
+                <a target="_blank" href="https://t.me/NausGlobal"><button class="share-btn v"></button></a>
+                <a target="_blank" href="https://twitter.com/NausGlobal"><button class="share-btn t" ></button></a>
+                <a target="_blank" href="https://www.facebook.com/NausGlobal"><button class="share-btn f"></button></a>
+                <button class="share-btn w" @click="showWechatLayer()"></button>
+                <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=a6279d0353c1a90c02840d6d4316944e91e9b9bf848699e0a07f7f34837785a8"><button class="share-btn q"></button></a>
+            </div>
+            <p class="linear">聯系我們：NAUS亞洲區官方唯壹指定接受信息郵箱 : cuiyyss@gmail.com </p>
+        </div>
+        <p class="copyright">Private Policy Copyright © 2018 NAUS.io, All Rights Reserved</p>
+        <div class="popup" v-show="showPopUp">
+            <div class="content">
+                <div class="share-text">
+                    <p class="title"><span class="linear">链接已复制</span>成功</p>
+                    <p class="text">{{shareLink}} </p>
+                    
+                </div>
+                <div class="button">
+                    <div class="btn-share later fl" @click="showPopUp=false"><span class="linear">稍后再来</span></div>
+                    <div class="btn-share goto fr" @click="showPopUp=false"><span class="linear">去粘贴吧</span></div>
+                </div>
+            </div>
+        </div> 
+
+        <div class="wechat_qrcode" v-show="showWechat">
+            <span class="mask" @click="showWechatLayer()"></span>
+            <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/naus/qrcode.png')}" />
+        </div>
+
+    </section>
+
+</main>

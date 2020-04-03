@@ -1,0 +1,270 @@
+<div class="page-content">
+    <p class="banner-txt">每逢佳节胖三斤，年后一起来燃烧卡路里吧！</p>
+
+    <!-- 活动大使 -->
+    <div class="am-details">
+        <!-- <scroller
+            class="note"
+            :thumb-color="'#afcfff'"> -->
+        <div class="fl-box note">
+            <p class="note-p">感谢星光，让我认识了你们！</p>
+        </div>
+        <!-- </scroller> -->
+        <div class="fl-box opts">
+            <div class="sprite button button-enter" @click="enterRoom">进入直播间</div>
+            <div :class="['sprite button', amAttended ? 'btn-yiguanzhu-nor' : 'button-atte']" @click="attend">+关注</div>
+        </div>
+    </div>
+
+    <!-- progress 进程toggle -->
+    <div class="fl-box progress">
+        <div class="progress-i">
+            <div
+                :class="['sprite btn-pro-s1 button button-stage1', showStage === 1 ? 'btn-pro-s1' : 'btn-pro-s1-dis']"
+                @click="changeStage(1)">瘦身萌新</div>
+            <p class="label label-time label-stage1">2.26 - 2.28</p>
+        </div>
+        <div class="progress-i">
+            <div
+                :class="['sprite button button-stage2', showStage === 2 ? 'btn-pro-s2' : 'btn-pro-s2-dis']"
+                @click="changeStage(2)">瘦身达人</div>
+            <p class="label label-time label-stage2">3.1 - 3.2</p>
+        </div>
+        <div class="after"></div>
+    </div>
+
+    <!-- tabs 榜单tab -->
+    <div class="fl-box rank-tabh">
+        <div
+            :class="['sprite tab-i button button-tab1', currRankType === 1 ? 'btn-RB-pre active' : 'btn-RB-nor']"
+            @click="changeTab(1)">日榜</div>
+        <div
+            v-show="showStage <= 1"
+            :class="['sprite tab-i button button-tab2', currRankType === 2 ? 'btn-SSMXB-pre active' : 'btn-SSMXB-nor']"
+            @click="changeTab(2)">瘦身萌新榜</div>
+        <div
+            v-show="showStage === 2"
+            :class="['sprite tab-i button button-tab3', currRankType === 3 ? 'btn-SSDRB-pre active' : 'btn-SSDRB-nor']"
+            @click="changeTab(3)">瘦身达人榜</div>
+        <div
+            :class="['sprite tab-i button button-tab4', currRankType === 4 ? 'btn-JSJLB-pre active' : 'btn-JSJLB-nor']"
+            @click="changeTab(4)">健身教练榜</div>
+    </div>
+
+    <!-- ranks 榜单内容 -->
+    <div class="rank rank-content" v-show="isRankFirstLoading"></div>
+    <div class="rank rank-content" v-show="!isRankFirstLoading">
+        <div :class="['day-select', showDaylist && 'active']" v-if="currRankType === 1 && currDayRank > -1">
+            <div class="value" @click="toggleDaylist">{{
+                    currDayList[currDayRank]
+            }}</div>
+            <div class="select-list">
+                <div class="select-inner">
+                    <div
+                        v-for="(d, di) in currDayList"
+                        v-if="currDay >= di"
+                        class="select-opt"
+                        :key="'date_' + di"
+                        @click="changeDay(di)">{{ d }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="fl-box rank-listh">
+            <div class="rank-cell rank-cell-1">排&nbsp;名</div>
+            <div class="rank-cell rank-cell-2">{{ currRankType === 4 ? '用&nbsp;户' : '主&nbsp;播' }}</div>
+            <div class="rank-cell rank-cell-3">燃烧卡路里</div>
+        </div>
+        <!-- 榜单列表 -->
+        <component
+            ref="rank-scroller"
+            :class="['rank-listc', 'rank-type-' + currRankType, !currRank.meCenter && 'rank-nocenter']"
+            :is="scroller"
+            :right="6"
+            :thumb-color="'#2fb8f9'">
+            <p class="rank-holder" v-if="currStage === 0">活动尚未开始</p>
+            <p class="rank-holder" v-if="currStage > 0 && currRank.list.length === 0">给喜欢的主播送【享瘦餐】，就能助Ta燃烧卡路里。</p>
+            <!-- rank item -->
+            <template
+                v-if="currStage > 0 && currRank.list.length > 0"
+                v-for="(item, ind) in currRank.list">
+                <div
+                    class="fl-box rank-row"
+                    :key="currRank.type + '_' + ind"
+                >
+                    <div class="rank-cell rank-cell-1">{{ ind+1 }}</div>
+                    <div class="fl-ver rank-cell rank-cell-2">
+                        <div class="headpic">
+                            <img
+                                :src="item.headPic"
+                                :alt="item.nickname"
+                                class="avatar"
+                                @click="currRankType !== 4 && goRoom(item)">
+                            <span v-if="currRankType !== 4 && item.isPlaying" class="live">Live</span>
+                        </div>
+                        <p class="fl-ver name">
+                            <span class="txt-of nickname">{{ item.nickname }}</span>
+                            <span :class="['level_icon', (currRankType === 4 ? 'u_level_icon_' : 'm_level_icon_') + item.level]"></span>
+                        </p>
+                    </div>
+                    <div class="rank-cell rank-cell-3">{{ item.score }}</div>
+                </div>
+                <p
+                    v-if="currStage > 0 && currRankType === 1 && ind === 0"
+                    :class="['sprite rank-row-status', currDayRank < sepStageIndex ? 'txt-rewards' : 'txt-rewards2'] ">奖励5000/10000燃烧卡路里，当日23:59:59结算</p>
+            </template>
+        </component>
+        <div v-if="currRankType === 4" class="rank-tips">仅展示前100位用户</div>
+        <div v-else class="rank-tips">仅展示前100位主播</div>
+        <!-- 榜单个人中心 -->
+        <div class="fl-box rank-center-md" v-if="currRankType !== 4 && currRank.meCenter">
+            <div class="intro">
+                <div class="headpic">
+                    <img
+                        :src="currRank.meCenter.headPic"
+                        :alt="currRank.meCenter.nickName"
+                        class="avatar"
+                        @click="goRoom(currRank.meCenter)">
+                    <span v-if="currRank.meCenter.isPlaying" class="live">Live</span>
+                </div>
+                <p class="fl-box name">
+                    <span class="txt-of nickname">{{ currRank.meCenter.nickName }}</span>
+                    <span :class="'level_icon m_level_icon_' + currRank.meCenter.level"></span>
+                </p>
+            </div>
+            <div class="fl-box me-status">
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[0].name }}</h5>
+                    <p>{{ currRank.meCenter.pairInfos[0].value }}</p>
+                </div>
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[2].name }}</h5>
+                    <p>{{ currRank.meCenter.pairInfos[2].value }}</p>
+                </div>
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[1].name }}</h5>
+                    <p>{{ currRank.meCenter.pairInfos[1].value }}</p>
+                </div>
+                <div class="me-status-i">
+                    <h5>{{ currRank.meCenter.pairInfos[3].name }}</h5>
+                    <p>{{ currRank.meCenter.pairInfos[3].value }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="fl-box rank-center-user" v-if="currRankType === 4 && currRank.meCenter">
+            <div class="index">{{ currRank.meCenter.rank }}</div>
+            <div class="intro">
+                <div class="headpic">
+                    <img :src="currRank.meCenter.headPic" :alt="currRank.meCenter.nickName" class="avatar">
+                </div>
+                <p class="fl-box name">
+                    <span class="txt-of nickname">{{ currRank.meCenter.nickname }}</span>
+                    <span :class="'level_icon u_level_icon_' + currRank.meCenter.level"></span>
+                </p>
+            </div>
+            <div class="fl-box me-status">
+                <!-- <div class="me-status-i me-status-rank">
+                    <h5>榜单排名</h5>
+                    <p>{{ currRank.meCenter.rank }}</p>
+                </div> -->
+                <div class="me-status-i">
+                    <h5>燃烧卡路里</h5>
+                    <p>{{ currRank.meCenter.totalScore }}</p>
+                </div>
+                <div class="me-status-i prog">
+                    <h5>今日燃烧卡路里</h5>
+                    <div class="prog-tube">
+                        <div class="prog-tube-in" :style="{
+                            width: (currRank.meCenter.score/100 >> 0) + '%'
+                        }"></div>
+                        <span class="prog-tube-txt">{{ currRank.meCenter.score }}/10000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- copyright -->
+    <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+</div>
+
+<!-- floater -->
+<div class="floater sprite btn-rules button button-rules" @click="toggleRule">瘦身攻略</div>
+
+<!-- rules -->
+<div class="layer layer-rules" v-show="ruleState">
+    <div class="layer-inner">
+        <div class="sprite btn-close-pre button icon-close" @click="toggleRule"></div>
+        <component
+            ref="rules-scroller"
+            class="layer-content"
+            :is="scroller"
+            :right="4"
+            :thumb-color="'#494D61'">
+            <div class="sprite txt-rules rule-title">瘦身攻略</div>
+            <p class="rule-h"><span class="txt-bold">活动时间：</span>2月26日 12:00:00-3月2日 23:59:59</p>
+            <p class="rule-h fl-ver"><span class="txt-bold">活动礼物：</span><span class="sprite icon-gift"></span>=10克拉=燃烧1卡路里</p>
+            <p class="rule-h line-mt"><span class="txt-bold">瘦身萌新：</span>2月26日 12:00:00-2月28日 23:59:59</p>
+            <p class="rule-i"><span class="txt-index">1）</span>主播每日日榜第一名奖励<span class="txt-yellow">5000</span>燃烧卡路里，每日<span class="txt-yellow">23:59:59</span>结算。奖励的卡路里，自动算入主播当日活动日榜，以及瘦身萌新榜。对主播直播间榜单不生效，仅对主播活动榜单生效。</p>
+            <p class="rule-i"><span class="txt-index">2）</span>主播燃烧<span class="txt-yellow">10000</span>卡路里，即可晋级为瘦身达人。点亮【瘦身达人】勋章<span class="sprite badge-dr"></span>48小时，自第一阶段时间结束，系统自动下发。</p>
+            <p class="rule-i"><span class="txt-index">3）</span>只有成为瘦身达人的主播才可以参与第二阶段【瘦身达人】活动，成绩不累计至第二阶段。</p>
+            <p class="rule-i"><span class="txt-index">4）</span>用户送出享瘦餐，即记录在健身教练榜，当日累计送出<span class="txt-yellow">10000</span>卡路里的享瘦餐，触发房间通知飘屏。点亮【健身教练】勋章<span class="sprite badge-jl"></span>，即时生效，有效期24小时。数据不清零，累计至第二阶段。</p>
+            <p class="rule-h line-mt"><span class="txt-bold">瘦身达人：</span>3月1日 00:00:00-3月2日 23:59:59</p>
+            <p class="rule-i"><span class="txt-index">1）</span>主播每日日榜第一名奖励<span class="txt-yellow">10000</span>燃烧卡路里，每日<span class="txt-yellow">23:59:59</span>结算。奖励的卡路里，自动算入主播当日活动日榜，以及瘦身达人榜。对主播直播间榜单不生效，仅对主播活动榜单生效。</p>
+            <p class="rule-i"><span class="txt-index">2）</span>用户送出享瘦餐，即记录在健身教练榜，当日累计送出<span class="txt-yellow">10000</span>卡路里的享瘦餐，触发房间通知飘屏。点亮【健身教练】徽章，即时生效，有效期24小时。</p>
+            <p class="rule-i"><span class="txt-index">3）</span>成为瘦身达人的主播燃烧卡路里前5名主播获得克拉、勋章奖励。若有相同成绩，按照先到先得排序。于活动结束的<span class="txt-yellow">7个工作日</span>发放。</p>
+            <div class="rule-table">
+                <div class="fl-box th">
+                    <div class="td tcell-1">瘦身达人榜</div>
+                    <div class="td tcell-2">克拉、勋章</div>
+                </div>
+                <div class="fl-box tr">
+                    <div class="td tcell-1">第一名</div>
+                    <div class="td tcell-2">300000克拉、<span class="sprite badge-dr"></span>7日</div>
+                </div>
+                <div class="fl-box tr">
+                    <div class="td tcell-1">第二名</div>
+                    <div class="td tcell-2">200000克拉、<span class="sprite badge-dr"></span>5日</div>
+                </div>
+                <div class="fl-box tr">
+                    <div class="td tcell-1">第三名</div>
+                    <div class="td tcell-2">150000克拉、<span class="sprite badge-dr"></span>3日</div>
+                </div>
+                <div class="fl-box tr">
+                    <div class="td tcell-1">第四、五名</div>
+                    <div class="td tcell-2">100000克拉、<span class="sprite badge-dr"></span>3日</div>
+                </div>
+            </div>
+            <p class="rule-i"><span class="txt-index">4）</span>健身教练榜前五名用户获得礼物、勋章奖励。若有相同成绩，按照先到先得排序。于活动结束的7个工作日发放。</p>
+            <div class="rule-table">
+                <div class="fl-box th">
+                    <div class="td tcell-1">健身教练榜</div>
+                    <div class="td tcell-2">礼物、勋章</div>
+                </div>
+                <div class="fl-box tr">
+                    <div class="td tcell-1">第一名</div>
+                    <div class="td tcell-2">30000个比心、<span class="sprite badge-jl"></span>7日</div>
+                </div>
+                <div class="fl-box tr">
+                    <div class="td tcell-1">第二名</div>
+                    <div class="td tcell-2">20000个比心、<span class="sprite badge-jl"></span>5日</div>
+                </div>
+                <div class="fl-box tr">
+                    <div class="td tcell-1">第三名</div>
+                    <div class="td tcell-2">15000个比心、<span class="sprite badge-jl"></span>3日</div>
+                </div>
+                <div class="fl-box tr">
+                    <div class="td tcell-1">第四、五名</div>
+                    <div class="td tcell-2">10000个比心、<span class="sprite badge-jl"></span>3日</div>
+                </div>
+            </div>
+            <p class="rule-tip">注：【健身教练】勋章生效时长可叠加。</p>
+        </component>
+    </div>
+</div>
+
+<!-- toast msg层 -->
+<div class="toast-container" v-show="toastState" @click="hideToast">
+    <div class="toast-msg">{{ toastMsg }}</div>
+</div>
+
+<loading ref="loading" />

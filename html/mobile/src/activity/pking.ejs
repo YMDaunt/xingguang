@@ -1,0 +1,376 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="wrap">
+        <div class="ban">
+            <div class="mes-scroll">
+                <div class="scroll-con">
+                    <div id="scrollEle">
+                        <span v-for="(item, index) in broadArr">{{item}}</span>
+                    </div>
+                    <div id="scrollEle2"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 称号 -->
+        <section class="fight">
+            <div class="fight-con">
+                <div class="see-title" @click="ch()"></div>
+                <p>集齐指定数量的的称号，即可获得对应的礼物或者座驾！</p>
+                <div class="title-pic"></div>
+                <div class="step-title">
+                    <!-- 集齐3个 -->
+                    <div class="num3">
+                        <h3>集齐3个不同的称号奖励</h3>
+                        <div class="pic-con">
+                            <div class="pic-mod">
+                                <strong>主播</strong>
+                                <b></b>
+                                <span>2小时热门推荐</span>
+                            </div>
+                            <div class="pic-user">
+                                <strong>用户</strong>
+                                <b></b>
+                                <span>PK守护勋章 x7天</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 集齐4个 -->
+                    <div class="num4">
+                        <h3>集齐4个不同的称号奖励</h3>
+                        <div class="pic-con">
+                            <div class="pic-mod">
+                                <strong>主播</strong>
+                                <b></b>
+                                <span>萌太熊 x1</span>
+                            </div>
+                            <div class="pic-user">
+                                <strong>用户</strong>
+                                <b @click="doPkSvg()"><i></i></b>
+                                <span @click="doPkSvg()">PK守护座驾 x7天</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 集齐5个 -->
+                    <div class="num5">
+                        <h3>集齐≥5个不同的称号奖励</h3>
+                        <div class="pic-con">
+                            <div class="pic-mod">
+                                <strong>主播</strong>
+                                <b></b>
+                                <span>怦然心动 x1</span>
+                            </div>
+                            <div class="pic-user">
+                                <strong>用户</strong>
+                                <b @click="doLbSvg()"><i></i></b>
+                                <span @click="doLbSvg()">PK守护座驾(典藏版) x7天</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="small-tip">集齐指定数量称号，奖励就会自动下发至您的背包哟！</p>
+            </div>
+        </section>
+
+        <!-- 排行榜 -->
+        <section class="rank">
+            <div class="tab-tit">
+                <div :class="{'choose': tabCon}" @click="tab('choose')"></div>
+                <div :class="{'choose': !tabCon}" @click="tab('')"></div>
+            </div>
+            <p class="rank-tip"><span v-show="tabCon">点击总积分，即可查看积分每日明细</span></p>
+            <div class="tab-con">
+                <div class="mod-rank" v-show="tabCon">
+                    <div class="top-three">
+                        <div class="step">
+                            <div v-for="(item, index) in modArr" v-if="index < 3">
+                                <div class="cover-pic" v-bind:data-rid="item.rid"  @click="inlive($event)"></div>
+                                <a v-if="item.isPlaying" v-bind:data-rid="item.rid"  @click="inlive($event)"></a>
+                                <div class="mes">
+                                    <h3>{{item.nickname}}</h3>
+                                    <strong @click="showGift($event)" v-bind:data-mid="item.id" >总积分:{{item.score}}</strong>
+                                    <span>目前连胜：{{item.comboWinTimes}}场</span>
+                                    <div v-if="!item.isLoved" v-bind:data-id="item.id" class="care" @click="attention($event,index)"></div>
+                                    <div v-else class="cared"></div>
+                                </div>
+                            </div>
+                            <ul>
+                                <li v-for="(item, index) in modArr" v-if="index < 3">
+                                    <div class="img-area">
+                                        <img :src="item.headPic" alt="" />
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- mod 4+ -->
+                    <div class="top-other">
+                        <div class="rank-out other-mod">
+                            <ul>
+                                <li  v-for="(item, index) in modArr" v-if="index >= 3">
+                                    <div class="number">{{index+1}}</div>
+                                    <div class="rank-img">
+                                        <img :src="item.headPic" alt="" v-bind:data-rid="item.rid"  @click="inlive($event)"/>
+                                        <b v-if="item.isPlaying" v-bind:data-rid="item.rid"  @click="inlive($event)"></b>
+                                    </div>
+                                    <div class="rank-name">
+                                        <strong>{{item.nickname}}</strong>
+                                        <span>目前连胜：{{item.comboWinTimes}}场</span>
+                                    </div>
+                                    <div class="rank-mark" @click="showGift($event)" v-bind:data-mid="item.id">总积分{{item.score}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- 我的主播排名 -->
+                    <div class="mines mine-mod" v-show="uid != false">
+                        <div v-if="myModArr.rank" class="my-rank">{{myModArr.rank}}</div>
+                        <div v-else class="my-rank">未上榜</div>
+                        <div class="my-img">
+                            <img v-if="myModArr.rid == null" :src="myModArr.headPic" alt="" />
+                            <img v-else :src="myModArr.headPic" v-bind:data-rid="myModArr.rid" @click="inlive($event)" alt="" />
+                            <b v-if="myModArr.isPlaying"></b>
+                        </div>
+                        <div class="my-mes">
+                            <strong>{{myModArr.nickName}}</strong>
+                            <span @click="showGift($event)" v-bind:data-mid="myModArr.uid">总积分{{myModArr.score}}</span>
+                        </div>
+                        <div class="my-mark">
+                            <strong>目前连胜:{{myModArr.comboWinTimes}}场</strong>
+                            <span>{{myModArr.rankComment}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user-rank" v-show="!tabCon">
+                    <div class="top-three">
+                        <div class="step">
+                            <div v-for="(item, index) in userArr" v-if="index < 3">
+                                <div class="cover-pic" v-bind:data-rid="item.rid"></div>
+                                <div class="mes">
+                                    <h3>{{item.nickname}}</h3>
+                                    <strong v-bind:data-mid="item.id" >贡献值:{{item.score}}</strong>
+                                </div>
+                            </div>
+                            <ul>
+                                <li v-for="(item, index) in userArr" v-if="index < 3">
+                                    <div class="img-area">
+                                        <img :src="item.headPic" alt="" />
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- mod 4+ -->
+                    <div class="top-other">
+                        <div class="rank-out other-user">
+                            <ul>
+                                <li  v-for="(item, index) in userArr" v-if="index >= 3">
+                                    <div class="number">{{index+1}}</div>
+                                    <div class="rank-img">
+                                        <img :src="item.headPic" alt="" />
+                                    </div>
+                                    <div class="rank-name">
+                                        <strong>{{item.nickname}}</strong>
+                                    </div>
+                                    <div class="rank-mark">贡献值{{item.score}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- 我的用户排名 -->
+                    <div class="mines mine-user" v-show="uid != false">
+                        <div v-if="myUserArr.rank" class="my-rank">{{myUserArr.rank}}</div>
+                        <div v-else class="my-rank">未上榜</div>
+                        <div class="my-img">
+                            <img :src="myUserArr.headPic" alt="" />
+                        </div>
+                        <div class="my-mes">
+                            <strong>{{myUserArr.nickName}}</strong>
+                            <span>贡献值{{myUserArr.score}}</span>
+                        </div>
+                        <div class="my-mark">
+                            <span>{{myUserArr.rankComment}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 今日神豪 -->
+        <section class="rich">
+            <div class="rich-con">
+                <div class="step">
+                    <div v-for="(item, index) in richArr" v-if="index < 3">
+                        <div class="cover-pic"></div>
+                        <div class="mes">
+                            <h3>{{item.nickname}}</h3>
+                            <span>贡献值：{{item.score}}</span>
+                        </div>
+                    </div>
+                    <ul>
+                        <li v-for="(item, index) in richArr" v-if="index < 3">
+                            <div class="img-area">
+                                <img :src="item.headPic" alt="" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 我的神豪排名 -->
+            <div class="mines mine-rich" v-show="uid != false">
+                <img class="rich-img" :src="myRichArr.headPic">
+                <div class="rich-mes">
+                    <strong>{{myRichArr.nickName}}</strong>
+                    <span>贡献值:{{myRichArr.score}}</span>
+                </div>
+                <div class="rich-dis">{{myRichArr.rankComment}}</div>
+            </div>
+        </section>
+        
+        <div class="copyright">本次活动最终解释权归平台运营团队所有</div>
+        <!-- 规则按钮 -->
+        <div class="rule-btn" @click="ruleBox = !ruleBox"></div>
+
+        
+        <!-- 弹窗 -->
+        <div class="posi rulebox" v-show="ruleBox">
+            <div class="com-box">
+                <div class="close" @click="ruleBox = !ruleBox"></div>
+                <h2>
+                    <span></span>
+                    <b></b>
+                </h2>
+                <div class="rule-con">
+                    <div class="rule-out">
+                        <ul>
+                            <li class="clearfix">
+                                <span>1</span>
+                                <strong>活动时间：<b>7月26日 13:00:00-7月31日 23:59:59</b>。</strong>
+                            </li>
+                            <li class="clearfix">
+                                <span>2</span>
+                                <strong>主播通过指定PK或者随机PK都可获取积分。</strong>
+                            </li>
+                            <li class="clearfix">
+                                <span>3</span>
+                                <strong>
+                                    PK积分：
+                                    <br />1）PK双方克拉值总和≥5000，本场PK记为有效PK，否则双方都无成绩；PK双方任意一方手动结束PK，双方都无成绩；这两种情况中，用户若有贡献值，会计入榜单，但是在集称号中无效；
+                                    <br />2）获胜增加10分，失败减少5分，平局双方各减少2分；
+                                    <br />3）单场PK克拉每达到10000，额外奖励5分，此处获得积分无上限（A主播PK值是50000克拉，可获得奖励25分）；
+                                    <br />4）3/4/5连胜额外增加10/20/30分，以此类推最高加40分；
+                                    <br />5）终结对手的3/4/5连胜额外加10/20/30分，以此类推最高加40分；
+                                    <br />6）单日每PK累计到达3场，额外奖励5分，不足3场的余数不计分，每日上限为奖励40分；
+                                    <br />7）PK积分最低为0，不会出现负分。（A主播现在积分为0分，该场PK失败，则还是0分）；
+                                    <br />8）若积分相同，按照ID降序排序。
+                                    <br /><b>注：若发现有恶意刷积分现象，平台有权利取消其活动成绩</b>
+                                </strong>
+                            </li>
+                            <li class="clearfix">
+                                <span>4</span>
+                                <strong>
+                                    PK达到指定成就时，即可获得相应称号
+                                    <br />1）每个称号只可获得一次；
+                                    <br />2）主播获得称号时，会立即在本直播间飘屏通知，用户获得称号时，会立即在其所在直播间飘屏通知，并出现祝贺特效（仅PC端用户可看到祝贺特效哦~）；
+                                    <br />3）集齐指定数量的的称号，即可获得对应的礼物或者座驾！
+                                </strong>
+                            </li>
+                            <div class="gift"></div>
+                            <p>注：勋章奖励在活动结束后，即时下发；克拉奖励在活动结束的7个工作日内下发至个人账户。</p>
+                        </ul>
+                    </div>
+                </div>
+            </div>    
+        </div>
+        
+        <!-- 称号统计 -->
+        <div class="posi chenghao" v-show="chBox">
+            <div class="com-box">
+                <div class="close" @click="chBox = !chBox"></div>
+                <h2>
+                    <span></span>
+                    <b></b>
+                </h2>
+                <div class="ch-con">
+                    <div class="ch-tit">
+                        <div :class="{'choose-tit': tabCh}" @click="tabTitle('choose-tit')"></div>
+                        <div :class="{'choose-tit': !tabCh}" @click="tabTitle('')"></div>
+                    </div>
+                    <div class="ch-tab">
+                        <div class="mod-ch" v-show="tabCh">
+                            <ul>
+                                <li class="clearfix" v-for="(item, index) in myModTitle">
+                                    <b :class="[item.own ?'alpha': '']"></b>
+                                    <strong v-if="!item.own">未获得</strong>
+                                    <strong class="alpha" v-else>获得时间</strong>
+                                    <span :class="[item.own ?'alpha': '']"><em v-if="item.time != '' ">{{item.time}}</em></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="user-ch" v-show="!tabCh">
+                            <ul>
+                                <li class="clearfix" v-for="(item, index) in myUserTitle">
+                                    <b :class="[item.own ?'alpha': '']"></b>
+                                    <strong v-if="!item.own">未获得</strong>
+                                    <strong class="alpha" v-else>获得时间</strong>
+                                    <span :class="[item.own ?'alpha': '']"><em v-if="item.time != '' ">{{item.time}}</em></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 积分统计 -->
+        <div class="posi integral" v-show="jfBox">
+            <div class="com-box">
+                <div class="close" @click="closeJf()"></div>
+                <h2>
+                    <span></span>
+                    <b></b>
+                </h2>
+                <div class="inte-con">
+                    <div class="inte-tit">
+                        <div v-for="(item,index) in jfArr" :key="index" :class="{'':item.timeFlag==-1,'inte-choose':item.timeFlag==0,'inte-cant':item.timeFlag==1}" @click="tabJf($event, index)" v-bind:data-time="item.timeFlag">{{item.date}}</div>
+                    </div>
+                    <h3>
+                        <span>积分</span>
+                        <span>积分时间</span>
+                        <span>积分详情</span>
+                    </h3>
+                    <div class="inte-code">
+                        <div class="inte-cover">
+                            <p class="none-jf" v-if="showJfArr.length == 0">
+                                哇，还没有积分呢，快去PK获得积分吧~
+                            </p>
+                            <ul v-else>
+                                <li class="clearfix" v-for="(item,index) in showJfArr">
+                                    <div class="inte-jf">{{item.score}}</div>
+                                    <div class="inte-time">{{item.time}}</div>
+                                    <div class="inte-mes">{{item.detail}}</div>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="inte-line"></div>
+                    <div class="all-inte">积分总计： {{todayScore}}</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- svg -->
+        <div class="posi svg-con" v-show="svgPlayer" @click="removeSvg()"></div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '谁是PK王？',
+        content: '这一次为荣誉而战！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/pking/share.png")}'
+    });
+</script>

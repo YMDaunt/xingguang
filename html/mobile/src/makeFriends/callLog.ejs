@@ -1,0 +1,31 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="wrap">
+        <div class="code-no" v-if="noCode">
+            <div></div>
+        </div>
+        <div class="code-list">
+            <ul class="code-load">
+                <li v-for="(item, index) in codeArr">
+                    <div class="code-name">
+                        <strong>{{item.nickname}}</strong>
+                        <span>通话时长 {{item.duration}}</span>
+                    </div>
+                    <div class="code-mes">
+                        <strong v-if="item.type == 1">来电</strong>
+                        <strong v-else>去电</strong>
+                        <span>{{item.startTime}}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    // var gjShareParam = JSON.stringify({
+    //     title: '通话记录',
+    //     content: '',
+    //     link: location.href,
+    //     imgLink: ''
+    // });
+</script>

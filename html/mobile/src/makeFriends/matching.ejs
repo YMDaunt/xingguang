@@ -1,0 +1,39 @@
+<main id="app" v-cloak>
+    <div class="hasChance" v-if="hasChance">
+        <div class="header" v-if="showHeader"></div>
+        <div class="result"  v-if="showResult">
+            <p class="title">老板，我们为你推荐：</p>
+            <div class="userInfo" @click="goPersonalPage(userInfo.uid)">
+                <img :src="userInfo.headPic" alt="妹子头像">
+                <div class="mask"></div>
+                <span class="nickname">{{userInfo.nickname}}</span>
+
+            </div>
+            <p class="message">推荐理由：{{message}}</p>
+            <div class="liao-btn" @click="greet(userInfo.uid)" >我要撩</div>
+            <div class="reMatching" @click="reMatching">重新匹配</div>
+        </div>
+        <div v-else>
+            <div class="move" v-show="showBg"></div>
+            <div class="liao-btn" @click="play" v-show="showBg">我要撩妹</div>
+            <p class="tips matching" v-show="!showBg">别着急，妹子马上来...</p>
+            <div class="cancel-btn" @click="cancel" v-show="!showBg">取消</div>
+        </div>
+        <div id="svgContainer"></div>
+    </div>
+    <div class="noChance" v-else>
+        <p class="tips">今日撩妹次数已用完，明天不见不散</p>
+        <ul>
+            <li v-for="(item,index) in otherList" :key="index">
+                <div class="avatar-box">
+                    <div class="avatar" @click="goPersonalPage(item.uid)">
+                        <img :src="item.headPic" alt="头像">
+                    </div>
+                    <div class="nickname">{{item.nickname}}</div>
+                </div>
+                <div class="no-liao-btn" @click="greet(item.uid)">我要撩</div>
+            </li>
+        </ul>
+    </div>
+
+</main>

@@ -1,0 +1,27 @@
+<div id="app" v-cloak  @click="captrueClick">
+    <!-- /* img path - "../../../../static_guojiang_tv/src/pc/v4/img/activity/burnCalorie" */ -->
+    <div class="page-bgs">
+        <!-- bgs -->
+        <div class="page-bg bg1"></div>
+        <div class="page-bg bg2"></div>
+        <div class="page-bg bg3"></div>
+        <div class="page-bg bg4"></div>
+    </div>
+
+    <%= content %>
+</div>
+
+<script>
+(function adaptation () {
+    let href = window.location
+    if (/Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone|SymbianOS/i.test(navigator.userAgent)) {
+        if (href.host.indexOf('www') >= 0) {
+            window.location.href = '//m.tuho.tv/dist' + href.pathname
+        }
+    } else {
+        if (href.host.indexOf('www') < 0) {
+            window.location.href = '//www.tuho.tv' + href.pathname.replace('/dist', '')
+        }
+    }
+}())
+</script>

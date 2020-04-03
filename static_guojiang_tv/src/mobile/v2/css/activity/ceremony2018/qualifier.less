@@ -1,0 +1,393 @@
+// ../../../img/activity/ceremony2018/qualifier
+
+@activityName: 'activity/ceremony2018/qualifier';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+@imgUrl: '../../../img/activity/ceremony2018';
+
+.getSprite (@w, @h, @posx, @posy) {
+    @pad: 5;
+    display: inline-block;
+    background-position: (@posx + @pad)/@bf (@posy + @pad)/@bf;
+    width: (@w + @pad*2)/@bf;
+    height: (@h + @pad*2)/@bf;
+}
+
+/* 定义全局基值 S */
+
+// 用户徽章
+.badge-sprite {
+    background-image: url('@{imgUrl}/qualifier/badge.png');
+    background-repeat: no-repeat;
+    background-size: 215/@bf 1288/@bf;
+    font-size: 0;
+}
+.badge_2 {
+	.getSprite(195, 107, -10, -10);
+}
+.badge_3 {
+	.getSprite(195, 109, -10, -137);
+}
+.badge_4 {
+	.getSprite(195, 109, -10, -266);
+}
+.badge_5 {
+	.getSprite(195, 109, -10, -395);
+}
+.badge_6 {
+	.getSprite(195, 109, -10, -524);
+}
+.badge_7 {
+	.getSprite(195, 109, -10, -653);
+}
+.badge_8 {
+	.getSprite(195, 109, -10, -782);
+}
+.badge_9 {
+	.getSprite(195, 109, -10, -911);
+}
+.badge_10 {
+	.getSprite(195, 109, -10, -1040);
+}
+.badge_1 {
+	.getSprite(195, 109, -10, -1169);
+}
+
+// 其他icon
+.o-sprite {
+    background-image: url('@{imgUrl}/qualifier/icons.png');
+    background-repeat: no-repeat;
+    background-size: 341/@bf 1548/@bf;
+    font-size: 0;
+}
+.tbg_right {
+	.getSprite(265, 57, -10, -132);
+}
+.txt_gift {
+	.getSprite(254, 58, -10, -286);
+}
+.txt_rules {
+	.getSprite(321, 58, -10, -364);
+}
+.btn_rules {
+	.getSprite(216, 220, -10, -1318);
+}
+.close {
+	.getSprite(97, 86, -10, -528);
+}
+.star {
+	.getSprite(28, 26, -10, -10);
+}
+.tab_all {
+	.getSprite(285, 94, -10, -634);
+}
+.tab_all_a {
+	.getSprite(285, 94, -10, -748);
+}
+.tab_day {
+	.getSprite(285, 94, -10, -862);
+}
+.tab_day_a {
+	.getSprite(285, 94, -10, -976);
+}
+.tab_user {
+	.getSprite(285, 94, -10, -1090);
+}
+.tab_user_a {
+	.getSprite(285, 94, -10, -1204);
+}
+.takein {
+	.getSprite(176, 66, -10, -442);
+}
+.takein_disabled {
+	.getSprite(166, 56, -10, -56);
+}
+.tbg_left {
+	.getSprite(267, 57, -10, -209);
+}
+
+.ticket-status {
+    .o-sprite {
+        .o-sprite;
+    }
+    
+    .takein {
+        .takein;
+    }
+
+    .takein_disabled {
+        .takein_disabled;
+    }
+}
+/* 定义全局基值 E */
+
+/* 定义可复用样式 S */
+// 渐变字体
+.linear-txt {
+    position: relative;
+    color: #bf9a42;
+
+    &:before{
+        content: attr(text);
+        position: absolute;
+        z-index: 10;
+        width: 100%;
+        color:#ffd87d;
+        mask: linear-gradient(to right, transparent, #ffd87d 50%, transparent);
+    }
+}
+// 渐变边框
+.gradient-bd (@bW) {
+    border: @bW/@bf solid;
+    border-image: linear-gradient(to right,#bf9a42, #ffd87d 50%, #bf9a42) 1;
+}
+// TOAST
+.toast-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 30;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+
+    .info {
+        padding: 20/@bf 30/@bf;
+        border-radius: 10/@bf;
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 38/@bf;
+        color: #fff;
+        max-width: 860/@bf;
+
+        .txt {
+            font-size: 36/@bf;
+            margin: 20/@bf 0;
+        }
+    }
+}
+/* 定义可复用样式 E */
+
+/* 定义普通样式 S */
+/* 背景图 */
+.page-bgs {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: #000;
+
+    .page-bg {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 1127/@bf;
+        background-image: url('@{imgUrl}/preState/banner.jpg');
+    }
+}
+
+/* 页面内容 */
+.page-content {
+    position: relative;
+    z-index: 2;
+}
+
+.timeline {
+    padding-top: 820/@bf;
+    height: 1127/@bf;
+}
+
+.star-title {
+    .gradient-bd(6);
+    width: 830/@bf;
+    height: 80/@bf;
+    margin: 36/@bf auto 80/@bf;
+    font-size: 40/@bf;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:before,
+    &:after {
+        content: '';
+        .o-sprite;
+        .star;
+        margin: 0px 10/@bf;
+    }
+}
+
+// 侧边按钮
+.floater{
+    position: fixed;
+    right: 0px;
+    bottom: 37%;
+    z-index: 10;
+
+    &.btn-rules {
+        .o-sprite;
+        .btn_rules;
+    }
+}
+
+// 榜单
+.ranks {
+    .main-tab {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .mt-i {
+        .o-sprite;
+        margin: 0 20/@bf;
+    }
+
+    .mt-i:first-child {
+        .tab_day;
+
+        &.active {
+            .tab_day_a;
+        }
+    }
+
+    .mt-i:nth-child(2) {
+        .tab_all;
+
+        &.active {
+            .tab_all_a;
+        }
+    }
+
+    .mt-i:nth-child(3) {
+        .tab_user;
+
+        &.active {
+            .tab_user_a;
+        }
+    }
+
+    .mt-content {
+        .gradient-bd(10);
+        margin: 0px 40/@bf;
+        padding: 10/@bf;
+    }
+
+    .mt-c-inner {
+        .gradient-bd(4);
+    }
+
+    // 日榜
+    .time-tab {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12/@bf 0;
+        border-bottom: 3/@bf solid #7e6b3d;
+
+        .tt-i {
+            background-color: #3a2f14;
+            width: 134/@bf;
+            height: 60/@bf;
+            color: #756234;
+            font-size: 42/@bf;
+            font-weight: bold;
+            margin: 0px 8/@bf;
+            transform: skewX(-20deg);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tt-i.active {
+            background-color: #000;
+            color: #fed77c;
+            border: 3/@bf solid #bf9a42;
+        }
+
+        .tt-i.disabled {
+            background: #080703;
+            color: #515151;
+            border: 1px solid #515151;
+        }
+    }
+
+    // 榜单内容高度
+    .tt-content .xg-rank .rank-list,
+    .game-ranks .rank-list,
+    .user-ranks .rank-list {
+        min-height: 5.65rem;
+        max-height: 19rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    // 分割线
+    .rank-sep {
+        font-size: 28/@bf;
+        color: #ffdb88;
+        text-align: center;
+        line-height: 100/@bf;
+        background: #000;
+        opacity: 0.5;
+    }
+
+    // 预选赛 大人物榜 徽章
+    .cell-user {
+        .badge {
+            height: 70/@bf;
+        }
+        .badge:before {
+            content: '';
+            .badge-sprite;
+            position: relative;
+            top: -30/@bf;
+            left: -10/@bf;
+        }
+
+        .badge-0:before {
+            .badge_1;
+        }
+        .badge-1:before {
+            .badge_2;
+        }
+        .badge-2:before {
+            .badge_3;
+        }
+        .badge-3:before {
+            .badge_4;
+        }
+        .badge-4:before {
+            .badge_5;
+        }
+        .badge-5:before {
+            .badge_6;
+        }
+        .badge-6:before {
+            .badge_7;
+        }
+        .badge-7:before {
+            .badge_8;
+        }
+        .badge-8:before {
+            .badge_9;
+        }
+        .badge-9:before {
+            .badge_10;
+        }
+    }
+}
+
+// copyright
+.copyright {
+    text-align: center;
+    font-size: 36/@bf;
+    color: #685a39;
+    padding: 120/@bf 0;
+}
+/* 定义普通样式 E */

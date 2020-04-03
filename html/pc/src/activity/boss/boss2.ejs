@@ -1,0 +1,113 @@
+<main id="app" v-cloak>
+    <section class="boss">
+        <div class="big-boss box-corner">
+            <div class="corner top"></div>
+            <div class="corner right"></div>
+            <div class="corner bottom"></div>
+            <div class="corner left"></div>
+            <div class="boss-icon"></div>
+            <div class="warning" v-show=" !noBoss && trackInfo.isLowBlood"></div>
+        </div>
+        <p class="where-boss" v-show="!noBoss">Boss正在 <span class="nickname">{{trackInfo.nickname}}</span> 直播间</p>
+        <p class="no-boss" v-show="noBoss"></p>
+        <div class="button" v-show="!noBoss" @click="attack">
+            <p class="tips" v-show="!attacked">点击进入boss所在直播间</p>
+        </div>
+        <div class="button disable" v-show="noBoss"></div>
+        <p class="count-time">距离BOSS逃离还有 <span class="count-time-content">{{countDownTime}}</span></p>
+    </section>
+    <section class="page-rules">
+        <div class="gift"></div>
+        <ul class="page-rules-content box-corner">
+            <div class="corner top"></div>
+            <div class="corner right"></div>
+            <div class="corner bottom"></div>
+            <div class="corner left"></div>
+            <div class="boss-icon"></div>
+            <li>1.活动时间：5月22日 12:00:00——5月25日 23:59:59</li>
+            <li>2.活动期间，每日上午10点—次日凌晨2点之间,每个时段会在平台放出一只世界Boss。在Boss所在直播间击打Boss，若成功在该直播间击败Boss，则可获得全站飘屏并参与炸房获得奖励。完成官方boss“最后一击”的用户还可获得“宠物蛋”，可自行放出一只Boss，放出后有效击打时间为20分钟。</li>
+            <li>3.<span class="warn">用户在直播间击打Boss视作向该直播间主播进行打赏</span>，主播收益参照常规礼物的规则。</li>
+            <li>4.击打BOSS既有概率<span class="warn">触发宝箱福利！</span>快点举起你的小锤锤吧！</li>
+            <li>5.追击榜单的相应用户及主播将获得活动奖励。详情请见具体活动规则。</li>
+        </ul>
+    </section>
+    <Rank></Rank>
+    <section class="record">
+        <div class="record-title"></div>
+        <div class="record-content box-corner">
+            <div class="corner top"></div>
+            <div class="corner right"></div>
+            <div class="corner bottom"></div>
+            <div class="corner left"></div>
+            <div class="content">
+                <ul class="record-content-title">
+                    <li>场次</li>
+                    <li>总打击血量</li>
+                    <li>获得奖励</li>
+                </ul>
+                <div class="record-scroll-box">
+                    <ul class="record-list">
+                        <li v-for="(item,index) in recordList" :key="item.id">
+                            <div class="num">{{item.beastName}}</div>
+                            <div class="num">{{item.cost}}</div>
+                            <div class="num">{{item.award}}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="rules-btn" @click="popup(true)"></div>
+    <section class="rules-box" v-show="showRules">
+        <div class="rules box-corner">
+            <div class="corner top"></div>
+            <div class="corner right"></div>
+            <div class="corner bottom"></div>
+            <div class="corner left"></div>
+            <div class="rules-content">
+                <div class="close" @click="popup(false)">&times;</div>
+                <div class="rules-scroll-box">
+                    <ul>
+                        <li>1.活动时间：5月22日 12:00:00——5月25日 23:59:59。非此活动时段发生的击打和放出boss行为都不计入活动榜单（活动结束前未逃窜完毕的Boss除外）。
+                        </li>
+                        <li>2.活动期间，每日上午10点—次日0点之间,每个时段会在平台放出一只世界Boss。Boss随机出现在直播间，在指定时间20s内，点击击Boss，血量与克拉1：1消耗，若在指定时间内成功击打完全部血量，则将获得全平台飘屏和炸房奖励。完成官方Boss最后一击的用户还将获得一颗“宠物蛋”。
+                        </li>
+                        <li>3.获得“宠物蛋”的用户可在任意直播间放出一只新boss，但若平台此时有另外一只boss在活动，则暂时无法送出。该只boss放出后有效时间20分钟（宠物蛋在背包中半年不会失效，请尽快使用）。击败用户Boss不会获得宠物蛋。
+                        </li>
+                        <li>
+                            4.多次击打BOSS既有概率击落宝箱，获得宝箱特权！
+                        </li>
+                        <li>5.Boss最低血量为0，若用户最后一击血量超出Boss剩余血量，不会退回无效血量，但主播收益增加不受影响。
+                        </li>
+                        <li>6.活动奖励：奖励将于活动结束后7个工作日内发放。
+                            <table class="table">
+                                <tr>
+                                    <td>奖励</td>
+                                    <td>击打榜</td>
+                                    <td>主播榜</td>
+                                </tr>
+                                <tr>
+                                    <td>第一名</td>
+                                    <td>50000克拉</td>
+                                    <td>50000克拉</td>
+                                </tr>
+                                <tr>
+                                    <td>第二名</td>
+                                    <td>40000克拉</td>
+                                    <td>40000克拉</td>
+                                </tr>
+                                <tr>
+                                    <td>第三名</td>
+                                    <td>30000克拉</td>
+                                    <td>30000克拉</td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li>6.活动最终解释权归星光直播所有。
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

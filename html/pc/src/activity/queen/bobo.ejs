@@ -1,0 +1,91 @@
+<main class="main_box" id="app">
+    <div class="ban">
+        <div class="wow"></div>
+    </div>
+    <div class="own-gift">
+        <div></div>
+        <p>
+            <strong>波波女王</strong>
+            <em>10克拉/个</em>
+        </p>
+        <a href="javascript:void(0)" @click="inlive()"></a>
+    </div>
+    <!-- 守护榜单 -->
+    <section class="the-rank">
+        <div class="rank-tit" v-lazy-container="{ selector: 'img' }">
+            <img data-src="${require('../../../../../static_guojiang_tv/src/pc/v4/img/activity/queen/bobo/(6).jpg')}">
+            <div class="wow"></div>
+        </div>
+        <div class="rank-con">
+            <div class="rank-area">
+                <div class="rank-three">
+                    <ul class="clearfix">
+
+                        <li v-for="(item,index) in userRank" v-if="index < 3" v-cloak>
+                            <div class="user-img">
+                                <b :class="'icon-top' + index"></b>
+                                <img v-lazy="item.head_pic_1" alt="" />
+                                <strong>{{item.nickname}}</strong>
+                            </div>
+                            <span>贡献值：{{item.num.pnum}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="rank-other">
+                    <div class="rank-other-tit clearfix">
+                        <div class="rank-num">排名</div>
+                        <div class="rank-name">昵称</div>
+                        <div class="rank-val">贡献值</div>
+                    </div>
+                    <div class="other-cover">
+                        <ul class="clearfix">
+                            <li v-for="(item,index) in userRank" v-if="index >= 3" v-cloak>
+                                <div class="rank-num">{{index +1}}</div>
+                                <div class="rank-name">
+                                    <img v-lazy="item.head_pic_1" alt="" />
+                                    <strong>{{item.nickname}}</strong>
+                                </div>
+                                <div class="rank-val">{{item.num.pnum}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>  
+
+    <!-- 规则 -->
+    <section>
+        <div class="box"></div>
+        <div class="rules">
+            <div class="rules-tit" v-lazy-container="{ selector: 'img' }">
+                <img data-src="${require('../../../../../static_guojiang_tv/src/pc/v4/img/activity/queen/bobo/(1).jpg')}">
+                <div class="wow"></div>
+            </div>
+            <div class="rules-con">
+                <P>1.活动时间：2018/03/22 12:00:00 -- 03/26 23:59:59；</P>
+                <P>2.活动期间内，在波波女郎的直播间内，每送满3000个活动礼物——<strong>波波女王</strong>，即可炸出守护红包，快来抢克拉吧！</P>
+                <P>3.活动期间请遵守星光直播文明公约；</P>
+                <P>4.本活动最终解释权归星光直播所有。</P>
+            </div>
+        </div>
+    </section>
+
+    <!-- 问答 -->
+    <section class="question-con" v-lazy-container="{ selector: 'img' }">
+        <div class="question-tit">
+            <img data-src="${require('../../../../../static_guojiang_tv/src/pc/v4/img/activity/queen/bobo/(2).jpg')}">
+            <div class="wow"></div>
+        </div>
+        <img data-src="${require('../../../../../static_guojiang_tv/src/pc/v4/img/activity/queen/bobo/(3).jpg')}" class="question">
+        <img data-src="${require('../../../../../static_guojiang_tv/src/pc/v4/img/activity/queen/bobo/(4).jpg')}" class="question">
+    </section>
+</main>
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '星光女神',
+        content: '女神驾到，霸气全开！',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/pc/v4/img/activity/queen/bobo/share.png")}'
+    });
+</script>

@@ -1,0 +1,25 @@
+// ../../img/activity/SFStocking
+
+@activityName: 'activity/SFStocking';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+@imgUrl: '../../img/activity/SFStocking';
+
+/* 定义颜色字体大小 S */
+
+/* 定义颜色字体大小 E */
+
+@spritePic: '@{imgUrl}/pic.png';
+@import './SFStockingMixin.less';
+
+/* 背景图 背景图样式未拆分到组件的原因是rem backgroundUrl计算由less计算生成 */
+.page-bgs {
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 1370/@bf;
+        background-image: url('@{imgUrl}/bg1.jpg');
+    }
+    .bg2 {
+        height: 2570/@bf;
+        background-image: url('@{imgUrl}/bg2.jpg');
+    }
+}

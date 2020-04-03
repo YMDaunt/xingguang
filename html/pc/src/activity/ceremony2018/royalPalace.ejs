@@ -1,0 +1,107 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../../static_guojiang_tv/src/pc/v4/img/activity/ceremony2018/royalPalace" */ -->
+    <div class="page-bgs">
+        <!-- bgs -->
+        <div class="page-bg bg1"></div>
+        <div class="page-bg bg2"></div>
+        <div class="page-bg bg3"></div>
+    </div>
+
+    <div class="page-content">
+        <!-- 年度最佳主播 -->
+        <div class="sec-throne throne-zb-1">
+            <div class="throne-title">
+                <span class="txt txt-ndzjzb">年度最佳主播</span>
+            </div>
+            <div class="throne-list">
+                <div class="throne-i throne-0 zhubo">
+                    <span class="before"></span>
+                    <div class="infos">
+                        <span class="icon-cown-0"></span>
+                        <p class="name name-0">🍡叫我大团子🍡</p>
+                    </div>
+                    <div class="clicker-0" @click="goRoom('9173285')"></div>
+                </div>
+            </div>
+        </div>
+        <!-- 年度赛道主播 -->
+        <div v-for="zpath, pind in zhubos" class="sec-throne">
+            <div class="throne-title">
+                <span :class="'txt txt-nd' + zpath.cname + 'zb'">{{ zpath.name }}</span>
+            </div>
+            <div class="throne-list">
+                <div :class="'throne-i throne-2 ' + zpath.cname">
+                    <span :class="['before', zpath.cname + '-sprite', zpath.cname + '_top_2']"></span>
+                    <span class="throne-bg-2"></span>
+                    <!-- <span class="holder"></span> -->
+                    <div class="infos">
+                        <span class="icon-cown-2"></span>
+                        <p class="name name-2">{{ zpath.list[1].name }}</p>
+                    </div>
+                </div>
+                <div :class="'throne-i throne-1 ' + zpath.cname">
+                    <span :class="['before', zpath.cname + '-sprite', zpath.cname + '_top_1']"></span>
+                    <span class="throne-bg-1"></span>
+                    <div class="infos">
+                        <span class="icon-cown-1"></span>
+                        <p class="name name-1">{{ zpath.list[0].name }}</p>
+                    </div>
+                </div>
+                <div :class="'throne-i throne-3 ' + zpath.cname">
+                    <span :class="['before', zpath.cname + '-sprite', zpath.cname + '_top_3']"></span>
+                    <span class="throne-bg-3"></span>
+                    <div class="infos">
+                        <span class="icon-cown-3"></span>
+                        <p class="name name-3">{{ zpath.list[2].name }}</p>
+                    </div>
+                </div>
+                <div class="clicker-layer">
+                    <div class="clicker-2" @click="goRoom(zpath.list[1].mid)"></div>
+                    <div class="clicker-1" @click="goRoom(zpath.list[0].mid)"></div>
+                    <div class="clicker-3" @click="goRoom(zpath.list[2].mid)"></div>
+                </div>
+            </div>
+        </div>
+        <!-- 年度大人物 -->
+        <div class="sec-throne2 throne-user">
+            <div class="throne-title">
+                <span class="txt txt-nddrw">年度大人物</span>
+            </div>
+            <div class="throne-list">
+                <div class="throne-i throne-0 user">
+                    <span class="before"></span>
+                    <span v-if="!users[0]" class="holder"></span>
+                    <div v-else class="avatar">
+                        <img :src="users[0].headPic" alt="头像" class="pic">
+                        <p class="name">{{ users[0].nickname }}</p>
+                        <div class="badge-sprite badge_1"></div>
+                    </div>
+                </div>
+                <div v-for="user, uind in 9" class="throne-i throne-1 user">
+                    <span class="before"></span>
+                    <span v-if="!users[uind + 1]" class="holder"></span>
+                    <div v-else class="avatar">
+                        <img :src="users[uind + 1].headPic" alt="头像" class="pic">
+                        <p class="name">{{ users[uind + 1].nickname }}</p>
+                        <div :class="'badge-sprite badge_' + (uind + 2)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function adaptation () {
+    let href = window.location
+    if (/Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone|SymbianOS/i.test(navigator.userAgent)) {
+        if (href.host.indexOf('www') >= 0) {
+            window.location.href = '//m.tuho.tv/dist' + href.pathname
+        }
+    } else {
+        if (href.host.indexOf('www') < 0) {
+            window.location.href = '//www.tuho.tv' + href.pathname.replace('/dist', '')
+        }
+    }
+}())
+</script>

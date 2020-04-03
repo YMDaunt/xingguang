@@ -1,0 +1,212 @@
+<main id="app" v-cloak>
+    <div class="subscribe">
+        <input type="text" name="email" class="sbu_email" placeholder="輸入您的郵箱.." v-model="email">
+        <span class="sub_btn" @click="submitEmail()">訂閱電子報</span>
+    </div>
+
+    <div class="bg">
+        <div class="top"></div>
+        <div class="circle circle-little circle1"></div>
+        <div class="circle circle-big circle2"></div>
+        <div class="circle circle-little circle3"></div>
+        <div class="circle circle-big circle4"></div>
+        <div class="circle circle-little circle5"></div>
+        <div class="circle circle-big circle6"></div>
+        <canvas class="line-round lr1"  width="1920" height="3500"></canvas>
+        
+        <!-- <div class="bottom"></div> -->
+    </div>
+    <section class="sec-content scroll_body">
+        <div class="header">
+            <div class="logo"></div>
+            <h3>基於區塊鏈的自演進式</h3>
+            <h2><span class="linear">社交</span>網絡生態</h2>
+            <p class="instruction">NAUS.io是壹個基於ETH區塊鏈基礎設施的互動式社交分發SAAS平臺，人們可以在這裏建立自己的去中心化社交網絡生態，比如：IM系統、多人語音視頻、直播、圖片/視頻Feed、社交遊戲等多種社交互動系統。</p>
+            <a class="download" href="#">白皮書PDF下載</a>
+        </div>
+        <div class="live">
+            <canvas class="line-middle lr2"  width="700" height="80"></canvas>
+            <div class="title"><div class="tippin-logo"></div><p class="title-content">首席合作夥伴 Tippin Live</p></div>
+            <div class="tippin-pic"></div>
+        </div>
+        <div class="part1">
+            <p class="title"><span class="linear">NAUS生態體系</span>的組成部分</p>
+            <ul>
+                <li>
+                    <div class="logo logo-1 fl"></div>
+                    <div class="content fl">
+                        <p class="li-title"><span class="linear">NAUS</span>基金會</p>
+                        <p class="content-text">負責NAUS Chain（底層鏈）、NAB（通證TOKEN）、NAUS數字錢包及數字錢包SDK、NAUS智能合約範本、NAUS區塊鏈瀏覽器的開發運營。</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="logo logo-2 fl"></div>
+                    <div class="content fl">
+                        <p class="li-title"><span class="linear">NAUS</span>認證基礎設施提供商</p>
+                        <p class="content-text">提供NAUS智能合約發售平臺、NAUS智能合 約交易商城的開發及運營。其中，發售平臺為 NAUS智能合約的壹級市場，用戶可在利用默 認範本設置好智能合約後在此首次發售給其它 用戶；交易商城為NAUS的二級市場，已經出
+                            售的智能合約可在此繼續流通並增值。
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="logo logo-3 fl"></div>
+                    <div class="content fl">
+                        <p class="li-title"><span class="linear">NAUS</span>商業合作夥伴</p>
+                        <p class="content-text">包括社交平臺、內容平臺、垂直交友平臺、語 聊平臺、IM系統、直播平臺、MCN機構、在 線視頻平臺、投資公司等，是NAUS上用戶進 行社交活動的APP承載，也是NAUS生態的資 源輸入者及價值傳遞者。
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="logo logo-4 fl"></div>
+                    <div class="content fl">
+                        <p class="li-title"><span class="linear">NAUS</span> Partner</p>
+                        <p class="content-text">社交網絡平臺參與的普通用戶，也包括網紅、 大V、知名學者、粉絲、投資人等個人參與者， 是 NAUS上智能合約的主體發行者。
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <div class="market-bg"></div>
+        </div>
+        <div class="part2">
+            <p class="text">
+                我們認為理想的社交網絡是由參與者（用戶）、內容、相互關系這三者為核心，並以其相互持續激蕩構成的生命體系，天然帶有自由的、去中心化的、公平的、私密的、靈活的、可保障的特征。同時社交網網絡的本質是匹配問題，包括個人與個人/團體長期的匹配、基於特定需求的匹配、基於特定場景的匹配，以個人/團隊與內容的匹配。
+            </p>
+            <div class="compare-content"></div>
+            
+        </div>
+        <div class="compare">
+            <div class="title-bg">
+                <p class="title">NAUS与目前主流的中心化社交网络进行了如下对比：</p>
+            </div>
+            <ul class="explain">
+                <li class="header">
+                    <span class="special"></span>
+                    <span class="special">NAUS</span>
+                    <span class="special">FACEBOOk</span>
+                    <span class="special">WECHAT</span>
+                    <span class="special">TWITTER</span>
+                </li>
+                <li>
+                    <span><em class="linear">組織方式</em></span>
+                    <span>去中心化</span>
+                    <span>中心化</span>
+                    <span>中心化</span>
+                    <span>中心化</span>
+                </li>
+                <li>
+                    <span><em class="linear">社交分類</em></span>
+                    <span>熟人/陌生人社交</span>
+                    <span>熟人社交</span>
+                    <span>熟人社交</span>
+                    <span>陌生人社交</span>
+                </li>
+                <li>
+                    <span><em class="linear">特征提取</em></span>
+                    <span>小範圍群組共識+經濟調節</span>
+                    <span>用戶自分類<br>+中心化分配</span>
+                    <span>用戶自分類</span>
+                    <span>用戶自分類<br>+中心化分配</span>
+                </li>
+                <li>
+                    <span><em class="linear">匹配方式</em></span>
+                    <span>精確標簽匹配</span>
+                    <span>熟人關系匹配</span>
+                    <span>通訊錄匹配</span>
+                    <span>內容匹配</span>
+                </li>
+                <li>
+                    <span><em class="linear">產品形式</em></span>
+                    <span>DApp組合（SNS Feed+即時通訊+社區內容+語音/直播+輕遊戲）</span>
+                    <span>SNS Feed</span>
+                    <span>即時通訊</span>
+                    <span>社區內容</span>
+                </li>
+                <li>
+                    <span><em class="linear">代幣體系</em></span>
+                    <span>可流通代幣</span>
+                    <span>無代幣</span>
+                    <span>法幣</span>
+                    <span>無代幣   </span>
+                </li>
+                <li>
+                    <span><em class="linear">激勵方式</em></span>
+                    <span>資產化激勵</span>
+                    <span>自封閉激勵</span>
+                    <span>自封閉激勵</span>
+                    <span>自封閉激勵</span>
+                </li>
+                <li>
+                    <span><em class="linear">用戶擴展</em></span>
+                    <span>可為不同的DApp提供海量用戶的並集</span>
+                    <span>不可跨APP擴展</span>
+                    <span>不可跨APP擴展</span>
+                    <span>不可跨APP擴展</span>
+                </li>
+            </ul>
+        </div>
+        <div class="maker">
+            <p class="title">創始人</p>
+            <div class="info">
+                <div class="avatar-box"><div class="avatar"></div></div>
+                <div class="name-honor fr">
+                    <p class="name linear">Carl</p>
+                    <p class="honor linear">基金會名譽主席</p>
+                </div>
+            </div>
+            <p class="about">互聯網連續創業者，Tippen Live創始人，曾擔任與迅雷（NASDAQ： XNET）聯運的某實時社交產品運營VP，在互聯網產品的產品設計、 開發運營上有豐富經驗。崔陽曾擔任中視典（中國TOP VR公司） 大區銷售總負責人，有著豐富的政府公關、高校資源。</p>
+            
+        </div>
+        <div class="institution">
+            <p class="title">基石投資機構</p>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="slide-1"></div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="slide-2"></div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="slide-3"></div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="slide-4"></div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        <div class="contact">
+            <div class="share">            
+                <a><button class="share-btn v" @click="popup('v')"></button></a>
+                <!-- <button class="share-btn f" @click="popup('f')"></button> -->
+                <a target="_blank" href="https://twitter.com/NausGlobal"><button class="share-btn t"></button></a>
+                <a><button class="share-btn w" @click="popup('t')"></button></a>
+                <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=a6279d0353c1a90c02840d6d4316944e91e9b9bf848699e0a07f7f34837785a8"><button class="share-btn q" ></button></a>
+            </div>
+            <p class="linear">聯系我們</p>
+            <p class="linear">NAUS亞洲區官方唯壹指定接受信息郵箱 : cuiyyss@gmail.com </p>
+            <p class="copyright">Private Policy Copyright © 2018 NAUS.io, All Rights Reserved</p>
+
+            <canvas class="galaxy"></canvas>
+        </div>
+        <div class="popup" v-show="showPopUp">
+            <div class="content">
+                <div class="share-text">
+                    <p class="title"><span class="linear">链接已复制</span>成功</p>
+                    <p class="text">{{shareLink}} </p>
+                    <!-- <div class="copy"></div> -->
+                </div>
+                <div class="button">
+                    <div class="btn-share later fl" @click="showPopUp=false"><span class="linear">稍后再来</span></div>
+                    <div class="btn-share goto fr" @click="showPopUp=false"><span class="linear">去粘贴吧</span></div>
+                </div>
+            </div>
+        </div> 
+
+        <div class="wechat_qrcode" v-show="showWechatLayer">
+            <span class="mask" @click="showWechatLayer=!showWechatLayer"></span>
+            <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/naus/qrcode.png')}" />
+        </div>
+    </section>
+</main>

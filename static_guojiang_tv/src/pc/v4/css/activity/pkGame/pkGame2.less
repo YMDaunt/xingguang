@@ -1,0 +1,171 @@
+// ../../../img/activity/pkGame/pkGame2
+
+@activityName: 'activity/pkGame/pkGame2';
+@bf: 1px*10/6;
+@imgUrl: '../../../img/activity/pkGame/pkGame2';
+
+/* 背景图 */
+.page-bgs {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+
+    .page-bg {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 300px;
+        background-image: url('@{imgUrl}/bg0.jpg');
+    }
+    .bg2 {
+        height: 300px;
+        background-image: url('@{imgUrl}/bg1.jpg');
+    }
+    .bg3 {
+        height: 437px;
+        background-image: url('@{imgUrl}/bg2.jpg');
+    }
+}
+
+@import '../../../../../mobile/v2/css/activity/pkGame/pkGame2.mixin.less';
+
+.deco-t-1 {
+    position: absolute;
+    left: 0px;
+    z-index: -1;
+    width: 1600/@bf;
+    height: 2400/@bf;
+    background: radial-gradient(circle at 0% 50%, #55215d 10%, #31283b 60%, transparent);
+}
+
+.deco-t-2 {
+    position: absolute;
+    right: 0px;
+    z-index: -1;
+    width: 1600/@bf;
+    height: 3200/@bf;
+    background: radial-gradient(circle at 100% 50%, #2c2553 10%, #31283b 60%, transparent);
+}
+
+.deco-1 {
+    top: 900px;
+}
+
+.deco-2 {
+    top: 3600px;
+}
+
+.deco-3 {
+    top: 2100px;
+}
+
+.deco-4 {
+    top: 4600px;
+}
+
+.banner {
+    height: 600px;
+}
+
+.btn,
+.rank-top3 .score,
+.rank-wrapper .rank-listc .rank-cell-3,
+.n-headpic,
+.headpic,
+.curr-inner,
+.subdates-i,
+.medal-pic-wrapper {
+    cursor: pointer;
+}
+
+.hot-battle {
+    width: 100%;
+    margin: 54px auto 0;
+}
+
+.hot-battle-box {
+    height: 353px;
+}
+
+.hot-battle-box .toper-i {
+    margin-top: 60px;
+}
+
+.tab-time {
+    max-width: 1080/@bf;
+    margin-left: auto;
+    margin-right: auto;
+
+    .tab-i {
+        height: 60px;
+    }
+}
+
+.title-h2 {
+    margin: 0 auto;
+    transform: translateX(-55px);
+}
+
+.rank-top3 .rank-top-i2 .headpic {
+    width: 116px;
+}
+
+.hot-battle-box .live-value {
+    line-height: 26px;
+}
+
+.floater {
+    left: 50%;
+    bottom: 30%;
+    transform: translateX(280%);
+}
+
+.layer-inner {
+    width: 1080/@bf;
+}
+
+.layer-rules .rule-h, .layer-rules .rule-i, .layer-rules .td-cell {
+    font-size: 18px;
+}
+
+.layer-rules .badge-require {
+    transform: translateY(0%) skewX(-6deg);
+}
+
+.layer-rules .pkrw-table .td-2 {
+    width: 246px;
+}
+
+.layer-title .medals {
+    height: 29.5rem;
+}
+
+.copyright {
+    margin: 60px 0;
+}
+
+.rank-wrapper .rank-listc {
+    height: 550px;
+}
+
+.layer-score .currdate {
+    height: 46px;
+}
+
+.layer-score .score-list {
+    height: 340px;
+}
+
+/* SVG动画层 */
+.svg-layer {
+    .svg-container {
+        width: 1080/@bf;
+        margin: 0 auto;
+        position: relative;
+    }
+}

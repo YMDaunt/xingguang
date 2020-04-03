@@ -1,0 +1,10 @@
+<div id="app" v-cloak>
+    <nav class="clearfix">
+        <router-link 
+            to="/" class="fl">{{info.navKey}}守护的<span>（{{info.toGInfo && info.guardOtherNum}}）</span></router-link>
+        <router-link 
+            to="/beGuard" class="fr">守护{{info.navKey}}的<span>（{{info.gInfo && info.gInfo.length}}）</span></router-link>
+    </nav>
+
+    <router-view :info="info" :constsarr="constsArr"></router-view>
+</div>

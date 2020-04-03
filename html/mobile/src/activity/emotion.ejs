@@ -1,0 +1,27 @@
+<main class="main_box" id="app" v-cloak>
+	<section class="part-1">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/emotion/1.jpg')}">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/emotion/2.jpg')}">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/emotion/3.jpg')}">
+		<span class="book-btn" v-on:click="book" v-bind:class="{'gary-btn':isLove}">{{stateName}}<i></i></span>
+	</section>
+	<section >		
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/emotion/4.jpg')}">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/emotion/5.jpg')}">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/emotion/6.jpg')}">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/emotion/7.jpg')}">
+	</section>
+	<section class="part-2">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/emotion/8.jpg')}">
+		<span class="signup-btn" v-on:click="signup"></span>
+	</section>	
+</main>
+
+<script>
+	var gjShareParam = JSON.stringify({
+        title: '《果酱最现场》颜值VS才华，你站谁？',
+        content: '6月3日，看新锐演员罗伦希、央广主持珂孜，唇枪舌战！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/emotion/share.jpg")}'
+    });
+</script>

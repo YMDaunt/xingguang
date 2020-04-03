@@ -1,0 +1,243 @@
+<main class="main_box" id="app" v-cloak>
+    <div class="wrap">
+        <div class="ban"></div> 
+        
+        <div class="out-cover">
+            <!-- 榜单切换 -->
+            <section class="rank-con">
+                <h2></h2>
+                <div class="common-con">
+                    <div class="tab-con">
+                        <div class="tab-tit">
+                            <div :class="{'choose': tabCon}" @click="tab('choose')"></div>
+                            <div :class="{'choose': !tabCon}" @click="tab('')"></div>
+                        </div>
+                        <div class="tab-rank">
+                            <!-- 主播榜单 -->
+                            <div class="mod-rank" v-show="tabCon">
+                                <ul class="top-three clearfix">
+                                    <li v-for="(item,index) in modArr" v-if="index < 3">
+                                        <div class="img-area">
+                                            <img :src="item.head_pic_1"  v-bind:data-rid="item.id" @click="inlive($event)" alt="" />
+                                            <b></b>
+                                            <span v-if="item.is_playing == 1" @click="inlive($event)" v-bind:data-rid="item.id"></span>
+                                            <em></em>
+                                        </div>
+                                        <div class="mes-area">
+                                            <div>
+                                                <strong>{{item.nickname}}</strong>
+                                                <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                            </div>
+                                            <span>收到 {{item.num}}</span>
+                                        </div>
+                                        <div v-if="!item.is_attention" v-bind:data-id="item.id"  @click="attention($event,index)" class="care"></div>
+                                        <div v-else class="cared"></div>
+                                    </li>
+                                </ul>
+                                <div class="mod-out">
+                                    <ul class="top-other other-mod">
+                                        <li v-for="(item,index) in modArr" v-if="index >= 3">
+                                            <div class="number">{{index+1}}</div>
+                                            <div class="other-img">
+                                                <img :src="item.head_pic_1" v-bind:data-rid="item.id" @click="inlive($event)" alt="" />
+                                                 <b v-if="item.is_playing == 1" @click="inlive($event)" v-bind:data-rid="item.id"></b>
+                                            </div>
+                                            <div class="other-mes">
+                                                <strong>{{item.nickname}}</strong>
+                                                <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                            </div>
+                                            <div class="mark">收到 {{item.num}}</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- 用户榜单 -->
+                            <div class="user-rank" v-show="!tabCon">
+                                <ul class="top-three">
+                                    <li v-for="(item,index) in userArr" v-if="index < 3">
+                                        <div class="img-area">
+                                            <img :src="item.head_pic_1"  v-bind:data-id="item.id" alt="" />
+                                            <b></b>
+                                            <em></em>
+                                        </div>
+                                        <div class="mes-area">
+                                            <div>
+                                                <strong>{{item.nickname}}</strong>
+                                                <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                            </div>
+                                            <span>送出 {{item.num}}</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="user-out">
+                                    <ul class="top-other other-user">
+                                        <li v-for="(item,index) in userArr" v-if="index >= 3">
+                                            <div class="number">{{index+1}}</div>
+                                            <div class="other-img">
+                                                <img :src="item.head_pic_1" alt="" />
+                                            </div>
+                                            <div class="other-mes">
+                                                <strong>{{item.nickname}}</strong>
+                                                <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                            </div>
+                                            <div class="mark">送出 {{item.num}}</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 趣味榜 -->
+            <section class="rank-qw">
+                <h2></h2>
+                <div class="common-con">
+                    <div class="time">
+                        <span>抢榜时间还剩</span>
+                        <div class="currenttime c_clearfix">
+                            <div v-for="item in restTime"  v-if="restTime[0] !== '-'">{{item}}</div>
+                            <div v-for="(item,index) in restTime" :class="{'noact-time':index===0}" v-if="restTime[0] === '-'">{{item}}</div>
+                        </div>
+                    </div>
+                    <div class="recommend">
+                        <div class="recommend-tit">
+                            <div>排名</div>
+                            <div>主播昵称</div>
+                            <div>趣味</div>
+                            <div>奖励</div>
+                        </div>
+                        <ul>
+                            <li v-for="(item,index) in nowTj" v-if="index < 3" class="clearfix">
+                                <div>{{index + 1}}</div>
+                                <div>
+                                    <div class="re-img">
+                                        <img :src="item.head_pic_1" alt="" v-bind:data-rid="item.mid" @click="inlive($event)">
+                                        <b></b>
+                                    </div>
+                                    <div class="re-mes">
+                                        <strong>{{item.nickname}}</strong>
+                                        <b :class="'level_icon m_level_icon_' + item.level"></b>
+                                    </div>
+                                </div>
+                                <div>{{item.score}}</div>
+                                <div>{{item.award}}</div>
+                            </li>
+                        </ul>
+                        <p>*1个小风筝=1趣味</p>
+                        <div class="btn-code" @click="tj()">查看往期记录</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 推荐 -->
+            <section class="rank-tj">
+                <h2></h2>
+                <div class="common-con">
+                    <div  class="recommend-other clearfix">
+                        <div v-for="(item,index) in playTj">
+                            <div class="re-other-left">
+                                <img :src="item.head_pic_1" @click="inlive($event)" v-bind:data-rid="item.id" alt="" />
+                                <b v-if="item.is_playing"></b>
+                                <div v-if="!item.is_attention" v-bind:data-id="item.id"  @click="attention2($event,index)" class="samll-care"><b>+</b>关注</div>
+                                <div v-else class="samll-cared">已关注</div>
+                            </div>
+                            <div class="re-other-right">
+                                <strong>{{item.nickname}}</strong>
+                                <span>时间：{{item.time}}</span>
+                                <p>内容：{{item.desc}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p>点击关注可以收到开播提醒哦！</p>
+                </div>
+            </section>
+
+            <div class="copy-text">本活动最终解释权归星光直播所有</div>
+        </div>
+    </div>
+
+    <div class="rule-btn" @click="rule()"></div>
+    
+    <!-- 规则弹窗 -->
+    <div class="posi rules" v-show="showRule">
+        <div class="rules-con">
+            <div class="close-btn" @click="closeWin()"></div>
+            <h2></h2>
+            <div class="common-con">
+                <div class="rule-out">
+                    <div class="rule-coover">
+                        <div class="rule-text">
+                            <p>1.活动时间：<strong>2018/04/04 12:00:00—04/09 23:59:59。</strong></p>
+                            <p>2.此次活动分阶段炸房，每天前五次炸房送出指定数量的“小风筝”即可炸房，从第六次炸房起，每次炸房需送出3000个“小风筝”。</p>
+                            <b></b>
+                            <p>3.每天0点刷新进度条，0点后，直播间当前进度条炸完，再从第一次炸房（500个“小风筝”）开始炸房。</p>
+                            <p>4.仙气榜前5名主播可获得踏青礼品，礼品将于活动结束后15个工作日内发放。</p>
+                            <p>5.每小时（计算周期：每小时0分1秒至59分59秒）内收到最多“小风筝”的前三名主播奖获得活动推荐机会，活动推荐从此小时结束后生效，推荐时长见“实时趣味榜”。</p>
+                            <p>注：若主播在推荐期间下线，将自动取消活动推荐位。</p>
+                            <p>6.本次活动最终解释权归星光直播所有。</p>
+                        </div>
+                        <div class="rule-gift">
+                            <h3></h3>    
+                            <ul class="clearfix">
+                                <li>
+                                    <b></b>
+                                    <p>La Mer 精华乳霜60ml</p>
+                                </li>
+                                <li>
+                                    <b></b>
+                                    <p>DW简约风女表</p>
+                                </li>
+                                <li>
+                                    <b></b>
+                                    <p>周大福<br />银镶珍珠托帕石项链</p>
+                                </li>
+                                <li>
+                                    <b></b>
+                                    <p>MARC JACOBS <br />雏菊梦境女士淡香水 100ml</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 历史推荐弹窗 -->
+    <div class="posi tj-histroy" v-show="showTj">
+        <div class="tj-con">
+            <div class="close-btn" @click="closeWin()"></div>
+            <h2></h2>
+            <div class="common-con">
+                <div class="tj-list">
+                    <div class="tj-list-out">
+                        <div class="per-tj" v-for="(item,day) in passTj">
+                            <div class="date-time">{{day}}</div>
+                            <div class="per-tj-out">
+                                <div class="hour-time" v-for="(hourPrize,hour) in item">{{hour}}
+                                    <div v-for="(item,index) in hourPrize">
+                                        <span>{{item.nickname}}</span>
+                                        <span>获得</span>
+                                        <span>{{item.award}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '一起踏青趣',
+        content: '踏青赏花正当时',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/taqing/share.jpg")}'
+    });
+</script>

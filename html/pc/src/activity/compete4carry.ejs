@@ -1,0 +1,828 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/pc/v4/img/activity/compete4carry" */ -->
+
+    <!-- banner -->
+    <div class="xg-container banner">
+        <div class="xg-bg-content banner-content">
+            <p class="ac-time">{{ ['', '入围赛' + aTime.pre.join('-'), '晋级赛' + aTime.promote.join('-'), '决赛' + (aTime.final[0] === aTime.final[1] ? aTime.final[0] : aTime.final.join('-')), '入围赛' + aTime.pre.join('-')][nowStage] }}</p>
+        </div>
+    </div>
+
+    <!-- 活动时间 及 今日C位 -->
+    <div class="xg-container infos">
+        <div class="xg-content infos-content">
+            <!-- <p class="desc">星光C位争夺战，即将拉开序幕！各位金主大大，不来pick一下这群颜值与实力并存的小姐姐吗？快为你心爱的主播疯狂打call吧！只要有一颗爱主播的心，助力女神C位出道不是梦。</p> -->
+            <div class="m-title times-title">活动时间</div>
+            <div class="xg-box times-box">
+                <div class="xg-box-c">
+                    <div class="stage-progress"></div>
+                    <div :class="['stage', nowStage === 1 && 'active', currStage >= 1 && currStage !== 4 && 'ago']" @click="changeCompetion(1)">
+                        <div class="title">入围赛</div>
+                        <div class="icon-time"></div>
+                        <div class="time">{{ aTime.pre.join('-') }}</div>
+                    </div>
+                    <div :class="['stage', nowStage === 2 && 'active', currStage >= 2 && currStage !== 4 && 'ago']" @click="changeCompetion(2)">
+                        <div class="title">晋级赛</div>
+                        <div class="icon-time"></div>
+                        <div class="time">{{ aTime.promote.join('-') }}</div>
+                    </div>
+                    <div :class="['stage', nowStage === 3 && 'active', currStage >= 3 && currStage !== 4 && 'ago']" @click="changeCompetion(3)">
+                        <div class="title">决赛</div>
+                        <div class="icon-time"></div>
+                        <div class="time">{{ aTime.final.join('-') }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-title today-title">今日C位</div>
+            <div class="xg-box topC-box">
+                <div class="xg-box-c">
+                    <div class="avatar" @click="goRoom(todayCarry.id)">
+                        <img :src="todayCarry.headPic" alt="今日c位" v-show="!todayCarry.isDefault">
+                        <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/activity/compete4carry/avatar_default.png')}" alt="今日c位" v-show="todayCarry.isDefault">
+                    </div>
+                    <div class="bg-name">{{ todayCarry.isDefault ? '虚位以待' : todayCarry.nickname }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 榜单区域 -->
+    <!-- 榜单切换头 -->
+    <div class="xg-container board-h">
+        <div class="xg-content board-h-c">
+            <div class="m-title board-title">排行榜</div>
+            <ul :class="['tab-header', ['hours', 'days', 'zhubos', 'users'][boardType]]">
+                <li class="xg-box tab-h-i tab-h-hours" @click="changeBoard(0)">
+                    <div class="xg-box-c">小时榜</div>
+                </li>
+                <li class="xg-box tab-h-i tab-h-days" @click="changeBoard(1)">
+                    <div class="xg-box-c">日榜</div>
+                </li>
+                <li class="xg-box tab-h-i tab-h-zhubos" @click="changeBoard(2)">
+                    <div class="xg-box-c">明星榜</div>
+                </li>
+                <li class="xg-box tab-h-i tab-h-users" @click="changeBoard(3)">
+                    <div class="xg-box-c">粉丝榜</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 榜单内容区域 -->
+    <!-- 小时榜 -->
+    <div :class="['xg-container board-m tab-content tab-c-hours', boardType === 0 && 'active']">
+        <div class="xg-content board-m-c">
+            <!-- 入围赛 - 榜单 S -->
+            <div class="box-pre" v-show="nowStage === 1">
+                <div class="xg-box">
+                    <div class="xg-box-c">
+                        <!-- 倒计时 -->
+                        <p class="timecount" ref="preTimeCount"></p>
+
+                        <XgList :theader="[{
+                                className: 'col-rank',
+                                name: '排名'
+                            }, {
+                                className: 'col-name',
+                                name: '主播'
+                            }, {
+                                className: 'col-time',
+                                name: '通关时间'
+                            }]" :tbody="preCompetion.hours.list"
+                                :none-tips="'还没有主播累计获得300积分呢~'"
+                                :need-skr="true"
+                                :skt-state="preCompetion.hours.sState"></XgList>
+                        <p class="list-desc">只显示前20名主播</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 入围赛 - 榜单 E -->
+            <!-- 晋级赛 S -->
+            <div class="box-post" v-show="nowStage === 2">
+                <div class="xg-box">
+                    <div class="xg-box-c">
+                        <!-- 倒计时 -->
+                        <p class="timecount" ref="promTimeCount"></p>
+                        <!-- TOP1 -->
+                        <div class="promote-top-value">闪耀值：{{ promoteCompetion.hours.topValue }}</div>
+                        <div class="promote-top" v-skt :skt-state="promoteCompetion.hours.sState">
+                            <div class="zhubo">
+                                <div class="avatar">
+                                    <div class="pic" @click="goRoom(promoteCompetion.hours.topZhubo.id)" need-skt>
+                                        <img :src="promoteCompetion.hours.topZhubo.headPic" alt="avatar" v-show="promoteCompetion.hours.topZhubo.rid">
+                                    </div>
+                                    <span class="live" v-show="promoteCompetion.hours.topZhubo.isPlaying">LIVE</span>
+                                </div>
+                                <p class="name" need-skt>{{ promoteCompetion.hours.topZhubo.rid ?promoteCompetion.hours.topZhubo.nickname : '虚位以待' }}</p>
+                            </div>
+                            <div class="sep"></div>
+                            <div class="user">
+                                <div class="avatar">
+                                    <div class="pic" need-skt>
+                                        <img :src="promoteCompetion.hours.topUser.headPic" alt="avatar" v-show="promoteCompetion.hours.topUser.id">
+                                    </div>
+                                </div>
+                                <p class="name" need-skt>{{ promoteCompetion.hours.topUser.id ? promoteCompetion.hours.topUser.nickname : '虚位以待' }}</p>
+                            </div>
+                        </div>
+                        <!-- 个人中心 -->
+                        <MeCenter :is-zhubo="user.isZhubo"
+                                  :me-center="promoteCompetion.hours.meCenter"
+                                  :type="2"></MeCenter>
+                    </div>
+                </div>
+                <!-- 历史 - TOP1 -->
+                <div class="m-title h-title"><span class="derc-left"></span>历史TOP1<span class="derc-right"></span></div>
+                <div class="xg-box">
+                    <div class="xg-box-c">
+                        <p class="xg-tips" v-show="promoteCompetion.hours.topHistory.length === 0">还未产生TOP1主播呢~</p>
+                        <ul class="promote-history" v-skt :skt-state="promoteCompetion.hours.sState" skt-list="9">
+                            <li class="promote-h-i" v-for="(item, index) in promoteCompetion.hours.topHistory" :key="index">
+                                <div class="avatar">
+                                    <div class="pic" need-skt @click="goRoom(item.id)">
+                                        <img :src="item.headPic" alt="avatar">
+                                    </div>
+                                    <span class="live" v-show="item.isPlaying">LIVE</span>
+                                </div>
+                                <p class="name" need-skt>{{ item.nickname }}</p>
+                                <p class="time" need-skt>{{ item.time }}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- 晋级赛 E -->
+            <!-- 决赛 S -->
+            <div class="box-final" v-show="nowStage === 3">
+                <div class="xg-box">
+                    <div class="xg-box-c">
+                        <!-- 倒计时 -->
+                        <p class="timecount" ref="finalTimeCount"></p>
+                        <!-- TOP1 战队 -->
+                        <div class="top-team" v-skt :skt-state="finalCompetion.hours.sState">
+                            <div class="final-top-value" need-skt>战队闪耀值：{{ getFinalHoursTop.totalShineNum }}</div>
+                            <div class="leader">
+                                <div class="avatar">
+                                    <div class="pic" need-skt @click="goRoom(getFinalHoursTop.members[0].id)">
+                                        <img :src="getFinalHoursTop.members[0].headPic" alt="avatar" v-show="getFinalHoursTop.members[0].rid">
+                                    </div>
+                                    <span class="live" v-show="getFinalHoursTop.members[0].isPlaying">LIVE</span>
+                                </div>
+                                <p class="name" need-skt>{{ getFinalHoursTop.members[0].rid ? getFinalHoursTop.members[0].nickname : '虚位以待' }}</p>
+                                <p class="value" need-skt>闪耀值：{{ getFinalHoursTop.members[0].score || 0 }}</p>
+                            </div>
+                            <ul class="team-members slide-down">
+                                <span class="icon-triangle-down"></span>
+                                <li class="team-m-i" v-for="(item, index) in getFinalHoursTop.members.slice(1)" :key="index">
+                                    <div class="avatar">
+                                        <div class="pic" need-skt @click="goRoom(item.id)">
+                                            <img :src="item.headPic" alt="avatar" v-show="item.rid">
+                                        </div>
+                                        <span class="live" v-show="item.isPlaying">LIVE</span>
+                                    </div>
+                                    <p class="name" need-skt>{{ item.rid ? item.nickname : '虚位以待' }}</p>
+                                    <p class="value" need-skt>闪耀值：{{ item.score || 0 }}</p>
+                                </li>
+                                <span class="icon-triangle-up" @click="toggleSlide"></span>
+                            </ul>
+                        </div>
+                        <!-- 个人中心 -->
+                        <MeCenter :is-zhubo="user.isZhubo"
+                                  :me-center="finalCompetion.hours.meCenter"
+                                  :type="3"></MeCenter>
+                    </div>
+                </div>
+                <!-- 历史 - TOP1 战队 -->
+                <div class="m-title history-title h-title"><span class="derc-left"></span>历史TOP1<span class="derc-right"></span></div>
+                <div class="xg-box">
+                    <div class="xg-box-c">
+                        <p class="xg-tips" v-show="finalCompetion.hours.topTeamHistory.length === 0">还未产生TOP1战队呢~</p>
+                        <ul class="final-history" v-skt :skt-state="finalCompetion.hours.sState" skt-list="2">
+                            <li class="final-team" v-for="(team, index) in getFinalTopHistory" :key="index">
+                                <p class="time" need-skt>{{ team.timeRange }}</p>
+                                <ul class="team-box">
+                                    <li class="member" v-for="(member, tindex) in team.members.slice(0, 3)" :key="'m' + tindex">
+                                        <div class="avatar">
+                                            <div class="pic" need-skt @click="goRoom(member.id)">
+                                                <img :src="member.headPic" alt="avatar">
+                                            </div>
+                                            <span class="live" v-show="member.isPlaying">LIVE</span>
+                                        </div>
+                                        <p class="name" need-skt>{{ member.nickname }}</p>
+                                    </li>
+                                </ul>
+                                <ul class="team-box-more slide-up">
+                                    <span class="icon-triangle-down"></span>
+                                    <li class="member" v-for="(member, tindex) in team.members.slice(3)" :key="'m' + tindex">
+                                        <div class="avatar">
+                                            <div class="pic" need-skt @click="goRoom(member.id)">
+                                                <img :src="member.headPic" alt="avatar">
+                                            </div>
+                                            <span class="live" v-show="member.isPlaying">LIVE</span>
+                                        </div>
+                                        <p class="name" need-skt>{{ member.nickname }}</p>
+                                    </li>
+                                    <span class="icon-triangle-up" @click="toggleSlide"></span>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 日榜 -->
+    <div :class="['xg-container board-m tab-content tab-c-days', boardType === 1 && 'active']">
+        <div class="xg-content board-m-c">
+            <div class="xg-box">
+                <div class="xg-box-c">
+                    <!-- 入围赛 - 榜单 S -->
+                    <div class="box-pre" v-show="nowStage === 1">
+                        <XgList ref="listOfPreDays" :theader="[{
+                                className: 'col-rank',
+                                name: '排名'
+                            }, {
+                                className: 'col-name',
+                                name: '主播'
+                            }, {
+                                className: 'col-score',
+                                name: '闪耀值'
+                            }]" :tbody="preCompetion.days.list"
+                                :pageload="true"
+                                :need-skr="true"
+                                :skt-state="preCompetion.days.sState"></XgList>
+                        <p class="list-desc">只显示前100名主播</p>
+                        <!-- 个人中心 -->
+                        <MeCenter :is-zhubo="user.isZhubo"
+                                  :me-center="preCompetion.days.meCenter"
+                                  :type="1"></MeCenter>
+                    </div>
+                    <!-- 入围赛 - 榜单 E -->
+
+                    <!-- 晋级赛 S -->
+                    <div class="box-post" v-show="nowStage === 2">
+                        <XgList ref="listOfPromDays" :theader="[{
+                                className: 'col-rank',
+                                name: '排名'
+                            }, {
+                                className: 'col-name',
+                                name: '主播'
+                            }, {
+                                className: 'col-score',
+                                name: '闪耀值'
+                            }]" :tbody="promoteCompetion.days.list"
+                                :pageload="true"
+                                :need-skr="true"
+                                :none-tips="'暂无数据'"
+                                :skt-state="promoteCompetion.days.sState"></XgList>
+                        <p class="list-desc">只显示前100名主播</p>
+                        <!-- 个人中心 -->
+                        <MeCenter :is-zhubo="user.isZhubo"
+                                  :me-center="promoteCompetion.days.meCenter"
+                                  :type="1"></MeCenter>
+                    </div>
+                    <!-- 晋级赛 E -->
+
+                    <!-- 决赛 S -->
+                    <div class="box-final" v-show="nowStage === 3">
+                        <div class="xg-tips" v-show="getFinalList.length === 0">虚位以待</div>
+                        <div v-show="getFinalList.length !== 0" class="sk-container" v-skt :skt-state="finalCompetion.days.sState" skt-list="2">
+                            <div class="final-list" v-for="(team, index) in getFinalList" :key="index">
+                                <p class="team-rank" need-skt>NO.{{ index + 1 }}</p>
+                                <div class="team-value" need-skt>战队积分：<span>{{ team.totalScore }}</span>&nbsp;&nbsp;战队闪耀值：<span>{{ team.totalShineNum }}</span></div>
+                                <ul class="team-box">
+                                    <li class="member" v-for="(member, tindex) in team.members.slice(0, 3)" :key="'m' + tindex">
+                                        <div class="avatar">
+                                            <div class="pic" need-skt @click="goRoom(member.id)">
+                                                <img :src="member.headPic" alt="avatar">
+                                            </div>
+                                            <span class="live" v-show="member.isPlaying">LIVE</span>
+                                        </div>
+                                        <p class="name" need-skt>{{ member.nickname }}</p>
+                                        <p class="shine" need-skt>闪耀值：{{ member.score }}</p>
+                                    </li>
+                                </ul>
+                                <ul :class="['team-box-more', index === 0 ? 'slide-down' : 'slide-up']">
+                                    <span class="icon-triangle-down"></span>
+                                    <li class="member" v-for="(member, tindex) in team.members.slice(3)" :key="'m' + tindex">
+                                        <div class="avatar">
+                                            <div class="pic" need-skt @click="goRoom(member.id)">
+                                                <img :src="member.headPic" alt="avatar">
+                                            </div>
+                                            <span class="live" v-show="member.isPlaying">LIVE</span>
+                                        </div>
+                                        <p class="name" need-skt>{{ member.nickname }}</p>
+                                        <p class="shine" need-skt>闪耀值：{{ member.score }}</p>
+                                    </li>
+                                    <span class="icon-triangle-up" @click="toggleSlide"></span>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 决赛 E -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 明星榜 -->
+    <div :class="['xg-container board-m tab-content tab-c-zhubos', boardType === 2 && 'active']">
+        <div class="xg-content board-m-c">
+            <div class="xg-box">
+                <div class="xg-box-c">
+                    <!-- 入围赛 - 榜单 S -->
+                    <div class="box-pre" v-show="nowStage === 1">
+                        <XgList ref="listOfPreZhubos" :theader="[{
+                                className: 'col-rank',
+                                name: '排名'
+                            }, {
+                                className: 'col-name',
+                                hasValue: true,
+                                name: '主播'
+                            }, {
+                                className: 'col-score col-point',
+                                name: '积分'
+                            }]" :tbody="preCompetion.zhubos.list"
+                                :pageload="true"
+                                :need-skr="true"
+                                :skt-state="preCompetion.zhubos.sState"></XgList>
+                        <p class="list-desc">只显示前100名主播</p>
+                    </div>
+                    <!-- 入围赛 - 榜单 E -->
+
+                    <!-- 晋级赛 S -->
+                    <div class="box-post" v-show="nowStage === 2">
+                        <XgList ref="listOfPromZhubos" :theader="[{
+                                className: 'col-rank',
+                                name: '排名'
+                            }, {
+                                className: 'col-name',
+                                hasValue: true,
+                                name: '主播'
+                            }, {
+                                className: 'col-score col-point',
+                                name: '积分'
+                            }]" :tbody="promoteCompetion.zhubos.list"
+                                :pageload="true"
+                                :need-skr="true"
+                                :skt-state="promoteCompetion.zhubos.sState"></XgList>
+                        <p class="list-desc">只显示前100名主播</p>
+                    </div>
+                    <!-- 晋级赛 E -->
+
+                    <!-- 决赛 S -->
+                    <div class="box-final" v-show="nowStage === 3">
+                        <div class="xg-tips" v-show="getFinalList.length === 0">虚位以待</div>
+                        <div v-show="getFinalList.length !== 0" v-skt :skt-state="finalCompetion.days.sState" skt-list="2">
+                            <div class="final-list" v-for="(team, index) in getFinalList" :key="index">
+                                <p class="team-rank" need-skt>NO.{{ index + 1 }}</p>
+                                <div class="team-value" need-skt>战队积分：<span>{{ team.totalScore }}</span>&nbsp;&nbsp;战队闪耀值：<span>{{ team.totalShineNum }}</span></div>
+                                <ul class="team-box">
+                                    <li class="member" v-for="(member, tindex) in team.members.slice(0, 3)" :key="'m' + tindex">
+                                        <div class="avatar">
+                                            <div class="pic" need-skt @click="goRoom(member.id)">
+                                                <img :src="member.headPic" alt="avatar">
+                                            </div>
+                                            <span class="live" v-show="member.isPlaying">LIVE</span>
+                                        </div>
+                                        <p class="name" need-skt>{{ member.nickname }}</p>
+                                        <p class="shine" need-skt>闪耀值：{{ member.score }}</p>
+                                    </li>
+                                </ul>
+                                <ul :class="['team-box-more', index === 0 ? 'slide-down' : 'slide-up']">
+                                    <span class="icon-triangle-down"></span>
+                                    <li class="member" v-for="(member, tindex) in team.members.slice(3)" :key="'m' + tindex">
+                                        <div class="avatar">
+                                            <div class="pic" need-skt @click="goRoom(member.id)">
+                                                <img :src="member.headPic" alt="avatar">
+                                            </div>
+                                            <span class="live" v-show="member.isPlaying">LIVE</span>
+                                        </div>
+                                        <p class="name" need-skt>{{ member.nickname }}</p>
+                                        <p class="shine" need-skt>闪耀值：{{ member.score }}</p>
+                                    </li>
+                                    <span class="icon-triangle-up" @click="toggleSlide"></span>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 决赛 E -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 粉丝榜 -->
+    <div :class="['xg-container board-m tab-content tab-c-users', boardType === 3 && 'active']">
+        <div class="xg-content board-m-c">
+            <div class="xg-box">
+                <div class="xg-box-c">
+                    <div v-show="nowStage !== 4">
+                        <!-- 列表内容 不区分入围赛与决赛 -->
+                        <XgList ref="listOfUsers" :theader="[{
+                                className: 'col-rank',
+                                name: '排名'
+                            }, {
+                                className: 'col-name',
+                                name: '用户'
+                            }, {
+                                className: 'col-score',
+                                name: '应援值'
+                            }]" :tbody="userList.list"
+                                :pageload="true"
+                                :need-skr="true"
+                                :skt-state="userList.sState"
+                                :disable-go-room="true" ></XgList>
+                        <p class="list-desc">只显示前100名用户</p>
+                        <!-- 个人中心 -->
+                        <MeCenter :is-zhubo="user.isLogined"
+                                  :me-center="userList.meCenter"
+                                  :type="4"></MeCenter>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+
+    <!-- Modal弹框 -->
+    <div :class="['xg-modal', ['rewards', 'rules', 'teams'][ui.modalType]]" v-show="ui.modalState">
+        <!-- 活动奖励 -->
+        <div class="xg-modal-c modal-rewards">
+            <div class="m-title rewards-title">活动奖励</div>
+            <div class="modal-close" @click="closeModal"></div>
+            <div class="xg-box">
+                <div class="xg-box-c">
+                    <div class="sub-title">主播奖励</div>
+                    <div class="zhubo-rewards">
+                        <p class="rules-i"><span class="rules-icon">1</span>前三战队获得奖励(主播根据队伍及队内名次，奖励不同）</p>
+                        <p class="rules-i"><span class="rules-icon">2</span>TOP1为决赛战队中闪耀值最高的主播</p>
+                        <p class="rules-i"><span class="rules-icon">3</span>若战队队员决赛少于50000闪耀值，则不发放该队员克拉奖励</p>
+                        <p class="rules-i txt-bold">冠军战队</p>
+                        <p class="rules-i flex-c">TOP1&nbsp;&nbsp;350000克拉&nbsp;&nbsp;&nbsp;&nbsp;C位金勋章<span class="icon-c-gold"></span>x7日</p>
+                        <p class="rules-i flex-c">其他队员&nbsp;&nbsp;100000克拉&nbsp;&nbsp;&nbsp;&nbsp;C位金勋章<span class="icon-c-gold"></span>x3日</p>
+                        <p class="rules-i txt-bold">亚军战队</p>
+                        <p class="rules-i flex-c">TOP1&nbsp;&nbsp;250000克拉&nbsp;&nbsp;&nbsp;&nbsp;C位银勋章<span class="icon-c-silver"></span>x7日</p>
+                        <p class="rules-i flex-c">其他队员&nbsp;&nbsp;80000克拉&nbsp;&nbsp;&nbsp;&nbsp;C位银勋章<span class="icon-c-silver"></span>x3日</p>
+                        <p class="rules-i txt-bold">季军战队</p>
+                        <p class="rules-i flex-c">TOP1&nbsp;&nbsp;200000克拉&nbsp;&nbsp;&nbsp;&nbsp;C位铜勋章<span class="icon-c-copper"></span>x7日</p>
+                        <p class="rules-i flex-c">其他队员&nbsp;&nbsp;50000克拉&nbsp;&nbsp;&nbsp;&nbsp;C位铜勋章<span class="icon-c-copper"></span>x3日</p>
+                    </div>
+                    <div class="sub-title">用户奖励</div>
+                    <div class="user-rewards">
+                        <p class="rules-i flex-c"><span class="txt-bold">第一名</span>&nbsp;&nbsp;最强应援金勋章<span class="icon-y-gold"></span>x15日</p>
+                        <p class="rules-i flex-c"><span class="txt-bold">第二名</span>&nbsp;&nbsp;最强应援银勋章<span class="icon-y-silver"></span>x10日</p>
+                        <p class="rules-i flex-c"><span class="txt-bold">第三名</span>&nbsp;&nbsp;最强应援铜勋章<span class="icon-y-copper"></span>x7日</p>
+                        <p class="rules-i flex-c"><span class="txt-bold">第四、五名</span>&nbsp;&nbsp;最强应援铜勋章<span class="icon-y-copper"></span>x3日</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 活动规则 -->
+        <div class="xg-modal-c modal-rules">
+            <div class="m-title rules-title">活动规则</div>
+            <div class="modal-close" @click="closeModal"></div>
+            <div class="xg-box">
+                <div class="xg-box-c" ref="rulesList">
+                    <div class="tab-rules-h">
+                        <div :class="['tab-r-h-i', rulesTabType === 0 && 'active']" @click="changeRulesTab(0)">
+                            <div class="name">入围赛</div>
+                            <div class="time">{{ aTime.pre.join('-') }}</div>
+                        </div>
+                        <div :class="['tab-r-h-i', rulesTabType === 1 && 'active']" @click="changeRulesTab(1)">
+                            <div class="name">晋级赛</div>
+                            <div class="time">{{ aTime.promote.join('-') }}</div>
+                        </div>
+                        <div :class="['tab-r-h-i', rulesTabType === 2 && 'active']" @click="changeRulesTab(2)">
+                            <div class="name">决赛</div>
+                            <div class="time">{{ aTime.final.join('-') }}</div>
+                        </div>
+                    </div>
+                    <div class="sub-title">活动礼物</div>
+                    <div class="rules-gifts">
+                        <div class="gifts-i gifts-pick">
+                            <div class="gift-title gifts-t">Pick你</div>
+                            <div class="avatar"></div>
+                            <div class="desc">
+                                <p>=10克拉</p>
+                                <p>=10闪耀值</p>
+                                <p>=10应援值</p>
+                            </div>
+                        </div>
+                        <div class="gifts-i gifts-call">
+                            <div class="gift-title gifts-t">Call</div>
+                            <div class="avatar"></div>
+                            <div class="desc">
+                                <p>=10999克拉</p>
+                                <p>=10999闪耀值</p>
+                                <p>=10999应援值</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-title">主播玩法</div>
+                    <!-- 入围赛 主播玩法 -->
+                    <div class="rules-zhubo" v-show="rulesTabType === 0">
+                        <p class="rules-i"><span class="rules-icon">1</span>活动时间：{{ aTime.preTime }}。</p>
+                        <p class="rules-i"><span class="rules-icon">2</span>主播完成指定关卡，即可获得对应积分。</p>
+                        <div class="xg-table">
+                            <div class="xg-row xg-th">
+                                <div class="xg-cell">关卡</div>
+                                <div class="xg-cell">通关闪耀值</div>
+                                <div class="xg-cell">奖励积分</div>
+                            </div>
+                            <div class="xg-row">
+                                <div class="xg-cell">初级</div>
+                                <div class="xg-cell">6660</div>
+                                <div class="xg-cell">30</div>
+                            </div>
+                            <div class="xg-row">
+                                <div class="xg-cell">中级</div>
+                                <div class="xg-cell">13140</div>
+                                <div class="xg-cell">70</div>
+                            </div>
+                            <div class="xg-row">
+                                <div class="xg-cell">终级</div>
+                                <div class="xg-cell">33440</div>
+                                <div class="xg-cell">200</div>
+                            </div>
+                            <div class="xg-row">
+                                <div class="xg-cell">关卡循环开启</div>
+                            </div>
+                        </div>
+                        <p class="rules-i">奖励：每日00:00-11:59 12:00-23:59，每个时段累计获得300积分的前20位主播即可触发全站飘屏并掉落直播间红包，由其中贡献最大的用户冠名。</p>
+                        <p class="rules-i"><span class="rules-icon">3</span>每日闪耀值前五名主播获得不同数量的积分和开播飘屏通知奖励。每日闪耀值第一名主播次日荣登C位！</p>
+                        <div class="xg-table">
+                            <div class="xg-row">
+                                <div class="xg-cell xg-cell-2">排名</div>
+                                <div class="xg-cell">1</div>
+                                <div class="xg-cell">2</div>
+                                <div class="xg-cell">3</div>
+                                <div class="xg-cell">4</div>
+                                <div class="xg-cell">5</div>
+                            </div>
+                            <div class="xg-row">
+                                <div class="xg-cell xg-cell-2">开播飘屏通知</div>
+                                <div class="xg-cell">5</div>
+                                <div class="xg-cell">4</div>
+                                <div class="xg-cell">3</div>
+                                <div class="xg-cell">2</div>
+                                <div class="xg-cell">1</div>
+                            </div>
+                            <div class="xg-row">
+                                <div class="xg-cell xg-cell-2">积分</div>
+                                <div class="xg-cell">200</div>
+                                <div class="xg-cell">150</div>
+                                <div class="xg-cell">100</div>
+                                <div class="xg-cell">80</div>
+                                <div class="xg-cell">60</div>
+                            </div>
+                        </div>
+                        <p class="rules-i"><span class="rules-icon">4</span>明星榜前100位主播进入晋级赛，积分相同的按照闪耀值排名。</p>
+                        <p class="rules-i"><span class="rules-icon">5</span>活动中主播淘汰，所有榜单清零且不再计值;三个赛段榜单数据不累计。</p>
+                    </div>
+                    <!-- 晋级赛 主播玩法 -->
+                    <div class="rules-zhubo" v-show="rulesTabType === 1">
+                        <p class="rules-i"><span class="rules-icon">1</span>活动时间：{{ aTime.promoteTime }}。</p>
+                        <p class="rules-i"><span class="rules-icon">2</span>主播每收到30000闪耀值活动礼物，即可获得积分188分。</p>
+                        <p class="rules-i"><span class="rules-icon">3</span>主播每小时总榜名次上升奖励积分：</p>
+                        <p class="rules-i">1）上升1个名次，奖励20分；</p>
+                        <p class="rules-i">2）上升≥2个名次，奖励30分；</p>
+                        <p class="rules-i">3）若本小时是第一名，下个小时还是第一名，奖励30分。</p>
+                        <p class="rules-i"><span class="rules-icon">4</span>每小时活动礼物收礼闪耀值TOP1主播即可触发全站飘屏并掉落直播间红包，以及活动礼物下小时冠名权。红包雨由其中贡献最大的用户冠名。</p>
+                        <p class="rules-i"><span class="rules-icon">5</span>每日闪耀值前五名主播获得不同数量的积分和开播飘屏通知奖励。每日闪耀值第一名主播次日荣登C位！</p>
+                        <div class="xg-table">
+                            <div class="xg-row">
+                                <div class="xg-cell xg-cell-2">排名</div>
+                                <div class="xg-cell">1</div>
+                                <div class="xg-cell">2</div>
+                                <div class="xg-cell">3</div>
+                                <div class="xg-cell">4</div>
+                                <div class="xg-cell">5</div>
+                            </div>
+                            <div class="xg-row">
+                                <div class="xg-cell xg-cell-2">开播飘屏通知</div>
+                                <div class="xg-cell">5</div>
+                                <div class="xg-cell">4</div>
+                                <div class="xg-cell">3</div>
+                                <div class="xg-cell">2</div>
+                                <div class="xg-cell">1</div>
+                            </div>
+                            <div class="xg-row">
+                                <div class="xg-cell xg-cell-2">积分</div>
+                                <div class="xg-cell">200</div>
+                                <div class="xg-cell">150</div>
+                                <div class="xg-cell">100</div>
+                                <div class="xg-cell">80</div>
+                                <div class="xg-cell">60</div>
+                            </div>
+                        </div>
+                        <p class="rules-i"><span class="rules-icon">6</span>明星榜前60位主播进入决赛，积分相同的按照闪耀值排名。</p>
+                        <p class="rules-i"><span class="rules-icon">7</span>活动中主播淘汰，所有榜单清零且不再计值;三个赛段榜单数据不累计。</p>
+                    </div>
+                    <!-- 决赛 主播玩法 -->
+                    <div class="rules-zhubo" v-show="rulesTabType === 2">
+                        <p class="rules-i"><span class="rules-icon">1</span>活动时间：{{ aTime.finalTime }}。</p>
+                        <p class="rules-i"><span class="rules-icon">2</span>进入决赛的60位主播按照排名，共产生10支战队，每队=1名队长+5名队员，每队6人。其中，各队队长=晋级的前10名主播，各队队员进行S形组队，具体如下：</p>
+                        <div class="xg-table">
+                            <div class="xg-row xg-th">
+                                <div class="xg-cell xg-cell-cus">队伍</div>
+                                <div class="xg-cell">一</div>
+                                <div class="xg-cell">二</div>
+                                <div class="xg-cell">三</div>
+                                <div class="xg-cell">四</div>
+                                <div class="xg-cell">五</div>
+                                <div class="xg-cell">六</div>
+                                <div class="xg-cell">七</div>
+                                <div class="xg-cell">八</div>
+                                <div class="xg-cell">九</div>
+                                <div class="xg-cell">十</div>
+                            </div>
+                            <div class="xg-row">
+                                <div class="xg-cell xg-cell-cus xg-cell-h">晋级赛明星榜名次</div>
+                                <div class="xg-cell xg-inner-t xg-cell-h">
+                                    <div class="xg-row">
+                                        <div class="xg-cell">1</div>
+                                        <div class="xg-cell">2</div>
+                                        <div class="xg-cell">3</div>
+                                        <div class="xg-cell">4</div>
+                                        <div class="xg-cell">5</div>
+                                        <div class="xg-cell">6</div>
+                                        <div class="xg-cell">7</div>
+                                        <div class="xg-cell">8</div>
+                                        <div class="xg-cell">9</div>
+                                        <div class="xg-cell">10</div>
+                                    </div>
+                                    <div class="xg-row">
+                                        <div class="xg-cell">20</div>
+                                        <div class="xg-cell">19</div>
+                                        <div class="xg-cell">18</div>
+                                        <div class="xg-cell">17</div>
+                                        <div class="xg-cell">16</div>
+                                        <div class="xg-cell">15</div>
+                                        <div class="xg-cell">14</div>
+                                        <div class="xg-cell">13</div>
+                                        <div class="xg-cell">12</div>
+                                        <div class="xg-cell">11</div>
+                                    </div>
+                                    <div class="xg-row">
+                                        <div class="xg-cell">21</div>
+                                        <div class="xg-cell">22</div>
+                                        <div class="xg-cell">23</div>
+                                        <div class="xg-cell">24</div>
+                                        <div class="xg-cell">25</div>
+                                        <div class="xg-cell">26</div>
+                                        <div class="xg-cell">27</div>
+                                        <div class="xg-cell">28</div>
+                                        <div class="xg-cell">29</div>
+                                        <div class="xg-cell">30</div>
+                                    </div>
+                                    <div class="xg-row">
+                                        <div class="xg-cell">40</div>
+                                        <div class="xg-cell">39</div>
+                                        <div class="xg-cell">38</div>
+                                        <div class="xg-cell">37</div>
+                                        <div class="xg-cell">36</div>
+                                        <div class="xg-cell">35</div>
+                                        <div class="xg-cell">34</div>
+                                        <div class="xg-cell">33</div>
+                                        <div class="xg-cell">32</div>
+                                        <div class="xg-cell">31</div>
+                                    </div>
+                                    <div class="xg-row">
+                                        <div class="xg-cell">41</div>
+                                        <div class="xg-cell">42</div>
+                                        <div class="xg-cell">43</div>
+                                        <div class="xg-cell">44</div>
+                                        <div class="xg-cell">45</div>
+                                        <div class="xg-cell">46</div>
+                                        <div class="xg-cell">47</div>
+                                        <div class="xg-cell">48</div>
+                                        <div class="xg-cell">49</div>
+                                        <div class="xg-cell">50</div>
+                                    </div>
+                                    <div class="xg-row">
+                                        <div class="xg-cell">60</div>
+                                        <div class="xg-cell">59</div>
+                                        <div class="xg-cell">58</div>
+                                        <div class="xg-cell">57</div>
+                                        <div class="xg-cell">56</div>
+                                        <div class="xg-cell">55</div>
+                                        <div class="xg-cell">54</div>
+                                        <div class="xg-cell">53</div>
+                                        <div class="xg-cell">52</div>
+                                        <div class="xg-cell">51</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="rules-i"><span class="rules-icon">3</span>各战队每累计收到30000闪耀值活动礼物，即可获得积分188分；若积分相同，则按照战队总闪耀值排名。</p>
+                        <p class="rules-i"><span class="rules-icon">4</span>每小时闪耀值TOP1战队的6位主播直播间，即可触发全站飘屏并掉落直播间红包。</p>
+                        <p class="rules-i">注①按照该小时6位主播闪耀值排序，每隔3分钟依次下发一次红包雨，第一次下发在下小时开始时；②若该小时该队有主播闪耀值低于5000，则该主播无红包雨奖励。</p>
+                        <p class="rules-i"><span class="rules-icon">5</span>活动中主播淘汰，所有榜单清零且不再计值;三个赛段榜单数据不累计。</p>
+                    </div>
+                    <!-- 用户玩法 不区分赛制 -->
+                    <div class="sub-title">用户玩法</div>
+                    <div class="rules-user">
+                        <p class="rules-i"><span class="rules-icon">1</span>用户一次性送出1314个“Pick你”礼物，该直播间将开启5分钟1.3倍闪耀值buff，buff开启时会触发房间飘屏通知。</p>
+                        <p class="rules-i">注：最新触发的buff覆盖正在生效的buff，生效时间不叠加；<span v-show="rulesTabType===1">buff仅在进入晋级赛的主播直播间生效，已淘汰主播无buff加成。</span><span v-show="rulesTabType===2">buff仅在进入决赛的主播直播间生效，已淘汰主播无buff加成。</span></p>
+                        <p class="rules-i">例：主播收到价值1000闪耀值礼物，则实际统计为1300闪耀值。但是加成部分（300闪耀值）主播无分成。</p>
+                        <p class="rules-i"><span class="rules-icon">2</span>当日累计送出100000应援值礼物，触发房间通知飘屏。点亮<span class="icon-hao"></span>【壕】徽章，即时生效，有效期24小时。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 我的战队 -->
+        <div class="xg-modal-c modal-teams">
+            <div class="modal-close" @click="closeModal"></div>
+            <div class="xg-box">
+                <div class="xg-box-c">
+                    <ul class="team-box">
+                        <li class="member" v-for="(member, tindex) in getMyTeam.members" :key="'mm' + tindex">
+                            <div class="avatar">
+                                <div class="pic" @click="goRoom(member.id)">
+                                    <img :src="member.headPic" alt="avatar">
+                                </div>
+                                <span class="live" v-show="member.isPlaying">LIVE</span>
+                            </div>
+                            <p class="name">{{ member.nickname }}</p>
+                            <p class="shine">闪耀值：{{ member.score }}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 漂浮按钮 -->
+    <div class="float-btns">
+        <div class="xg-btn btn-rewards" @click="showModal(0)"></div>
+        <div class="xg-btn btn-rules" @click="showModal(1)"></div>
+    </div>
+
+    <!-- toast -->
+    <div class="xg-layer" v-show="toast.state">
+        <div class="msg">{{ toast.msg }}</div>
+    </div>
+</div>
+
+<script type="text/template" id="template-table">
+    <div>
+        <!-- 列表头 -->
+        <div class="xg-th th-hours" v-if="tbody.length !== 0">
+            <div v-for="th in theader" :class="'xg-cell ' + th.className">{{ th.name }}</div>
+        </div>
+        <!-- 列表内容 -->
+        <ul class="list-hours tb-hours" ref="list" v-skt :skt-state="sktState" skt-list="8">
+            <p class="xg-tips" v-show="tbody.length === 0">{{ noneTips }}</p>
+            <li class="xg-row" v-for="(item, index) in tbody" :key="index">
+                <div :class="['xg-cell col-rank', index === 0 && 'icon-rank-top']" need-skt>{{ index + 1 }}</div>
+                <div class="xg-cell col-name">
+                    <div class="avatar">
+                        <div class="pic" need-skt @click="disableGoRoom ? '' : goRoom(item.id)">
+                            <img :src="item.headPic" alt="avatar">
+                        </div>
+                        <span class="live" v-show="item.isPlaying">LIVE</span>
+                    </div>
+                    <div class="vbox">
+                        <p class="name" need-skt>{{ item.nickname }}</p>
+                        <p class="shine" v-if="theader[1].hasValue">闪耀值：{{ item.score }}</p>
+                    </div>
+                </div>
+                <div v-if="theader[2].className === 'col-time'" class="xg-cell col-time" need-skt>{{ item.score | formatDate }}</div>
+                <div v-else-if="theader[2].className.indexOf('col-point') !== -1" class="xg-cell col-score" need-skt>{{ item.point }}</div>
+                <div v-else :class="'xg-cell ' + theader[2].className" need-skt>{{ item.score }}</div>
+            </li>
+        </ul>
+    </div>
+</script>
+
+<script type="text/template" id="teamplete-meCenter">
+    <div v-if="isZhubo && meCenter">
+        <div class="list-sep"></div>
+        <div class="me-center">
+            <div class="col-rank" v-if="type===1 || type===4">{{ meCenter.rank }}</div>
+            <div class="col-name">
+                <div class="avatar">
+                    <div class="pic" @click="goRoom(meCenter.id)">
+                        <img :src="meCenter.headPic" alt="avatar">
+                    </div>
+                    <span class="live" v-show="meCenter.isPlaying">LIVE</span>
+                </div>
+                <div class="me-infos">
+                    <p class="name">{{ meCenter.nickName }}</p>
+                    <p class="score" v-if="type===1 || type==3">闪耀值：{{ meCenter.score }}</p>
+                    <p class="score" v-if="type===4">应援值：{{ meCenter.score }}</p>
+                    <p class="txt" v-if="type!==4">{{ meCenter.rankComment }}</p>
+                    <span v-if="type===3" class="btn-myteam" @click="showModal(2)">我的战队信息</span>
+                    <div class="progress" v-if="type===4">
+                        <span class="label">今日应援值</span>
+                        <div class="value">
+                            <b :style="{width: (meCenter.help/100000)*100+'%'}"></b>
+                            <span>{{ meCenter.help }}/{{ 100000 }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,26 @@
+<div id="app" v-cloak>
+    <div v-if="isModerator">
+        <bg-layout :bgs=2></bg-layout>
+        <page-content>
+            <div class="panel" >
+                <span class="text">当前等级</span>
+                <div class="modInfo fl">
+                    <div class="level">Lv.{{modInfo.mLevel}}</div>
+                    <div class="level-progress">
+                        <div class="current-level" :style="{width:currentProgress}"></div>
+                    </div>
+                    <p>当前经验值：{{modInfo.mod_level_coin}}</p>
+                    <p>距离升级：{{modInfo.mod_next_level_need_more}}</p>
+                    <p>经验值：1经验值=1克拉</p>
+                </div>
+                <div class="avatar-wrap fr">
+                    <img :src="modInfo.head_pic_1" alt="头像">
+                </div>
+            </div>
+            <div class="tip" @click="popup"></div>
+        </page-content>
+    </div>
+    <div v-else>
+        <p class="error_hint">很抱歉，您还不是主播~</p>
+    </div>
+</div>

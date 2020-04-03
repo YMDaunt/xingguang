@@ -1,0 +1,55 @@
+<main class="main_box" id="app">
+    <section class="banner">
+        <div class="room-btn sprite" @click="goRoom"></div>
+    </section>
+    <section class="sort-table">
+        <div class="box-layout sort-wrap">
+            <div class="box-layout layout-content">
+                <div class="sort-head sprite"></div>
+                <div class="top-sort clearfix">
+                    <div :class="'top-sort-'+index" v-for="(item,index) in rankList" v-if="index < 3">
+                        <div class="top-sort-avator sprite">
+                            <div class="avator-img">
+                                <img :src="item.headPic">
+                            </div>
+                        </div>
+                        <div class="top-gift-name">{{item.nickname}}</div>
+                        <p class="top-gift-num">贡献值：{{item.pnum}}</p>
+                    </div>
+                </div>
+                <!-- 榜单 -->
+                <div class="sort-body">
+                    <div class="sort-item sort-th">
+                        <span class="sort-number">排名</span>
+                        <span class="sort-nickname">昵称</span>
+                        <span class="sort-contribut">贡献值</span>
+                    </div>
+                    <div class="sort-lists-wrap">
+                        <ul class="sort-lists">
+                            <li class="sort-item" v-for="(item,index) in rankList" v-if="index >= 3">
+                                <span class="sort-number">
+                                    <span class="number-box">{{index+1}}</span>
+                                </span>
+                                <div class="sort-lists-avator">
+                                    <img :src="item.headPic">
+                                </div>
+                                <span class="sort-nickname">{{item.nickname}}</span>
+                                <span class="sort-contribut">{{item.pnum}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="footer"></section>
+</main>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '星光女神',
+        content: '女神驾到，霸气全开！',
+        link: location.href,
+        imgLink: '${require("../../../../../static_guojiang_tv/src/mobile/v2/img/activity/queen/lanfeier/share.jpg")}'
+    });
+</script>

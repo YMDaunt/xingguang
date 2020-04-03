@@ -1,0 +1,51 @@
+// ../../img/activity/huaweiRecharge
+
+@activityName: 'huaweiRecharge';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+@baseImgPath: '../../img/activity/huaweiRecharge';
+
+
+.bgms(@imgName,@width,@height) {
+    background-image: url('../../img/activity/@{activityName}/@{imgName}');
+    background-size: @width @height;
+}
+
+#app {
+    animation:show 1s;
+}
+
+@keyframes show{
+    from{opacity: 0}
+    to{opacity: 1}
+}
+
+.banner{
+    width: 1080/@bf;
+    height: 698/@bf;
+    .bgms('banner.jpg',1080/@bf,698/@bf);
+}
+
+.gift{
+    width: 1080/@bf;
+    height: 938/@bf;
+    .bgms('gift.jpg',1080/@bf,938/@bf);
+}
+
+.rules{
+    position: relative;
+    width: 1080/@bf;
+    height: 1194/@bf;
+    .bgms('rules.jpg',1080/@bf,1194/@bf);
+    .recharge-btn{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        bottom:270/@bf;
+        width:726/@bf;
+        height: 182/@bf;
+        .bgms('recharge-btn.png',726/@bf,182/@bf);
+        &:active{
+        .bgms('recharge-btn-hover.png',726/@bf,182/@bf);
+        }
+    }
+}

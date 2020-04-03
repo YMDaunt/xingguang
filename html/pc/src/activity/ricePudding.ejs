@@ -1,0 +1,201 @@
+<canvas id="canvas" width="1000" height="700"></canvas>
+<div class="wrapper" id="app" v-cloak>
+    <Cover-bg 
+        :overriding-styles="{'position':'relative','height':'929','background-image': 'url('+imgUrl+'banner.png)','background-size':'auto 100%'}">
+        <Box
+            @click.native="toggleRule"
+            :overriding-styles="{'position':'fixed','top':401,'right':20,'width':249,'height':383,'background-position': '-10 -563','z-index':'fz(4)','cursor':'pointer'}"
+            class-name="sprite"
+            >
+        </Box>
+        <Box
+            @click.native="toggleRule"
+            :overriding-styles="{}"
+            class-name="left-bg"
+            >
+        </Box>
+        <Box
+            @click.native="toggleRule"
+            :overriding-styles="{}"
+            class-name="right-bg"
+            >
+        </Box>
+    </Cover-bg>
+    <Box 
+        class-name="sprite"
+        :overriding-styles="{'margin': '0 auto','margin-top': '10',width: 310,height: 86,'background-position': '-980 -495'}"
+        >
+    </Box>
+    <sort-bg :lists="currentLists" v-on:changetap="storeTap" v-on:addlove="addLoveHandle">
+    </sort-bg>
+    <Box 
+        class-name="sprite"
+        :overriding-styles="{'margin': '0 auto','margin-top': '40',width: 310,height: 86,'background-position': '-986 -165'}"
+        >
+    </Box>
+    <text-div 
+        :overriding-styles="{color:'#fff','text-align':'center','margin-top':35,'line-height':'fz(1)','font-size': 30}">
+            抢榜时间还剩
+    </text-div>
+    <div class="currenttime c_clearfix">
+        <div v-for="item in restTime" :class="'time-'+item" v-if="restTime[0] !== '-'"></div>
+        <div v-for="(item,index) in restTime" :class="{'noact-time':index===0}" v-if="restTime[0] === '-'">{{item}}</div>
+    </div>
+    <!-- 实时甜度榜 -->
+    <border-img>
+        <div class="current-recommend" slot="body">
+            <div class="recommend-name c_clearfix">
+                <span class="reco-sort">排名</span>
+                <span class="reco-nickname">主播昵称</span>
+                <span class="reco-num">甜度</span>
+                <span class="reco-prize">奖励</span>
+            </div>
+            <ul>
+                <li class="recommend-item" v-for="(item,index) in recommendLists" v-if="recommendLists.length > 0" :class="{'recommend-item-ie c_clearfix':isIE}">
+                    <span class="reco-sort">
+                        <span class="reco-sort-bg sprite">{{index+1}}</span>
+                    </span>
+                    <span class="reco-nickname">
+                        <div class="reco-nick-block" @click="goRoom(item['mid'])">
+                            <span class="reco-avator" :class="'reco-avator-'+index"></span>
+                            <img :src="item['head_pic_1']">
+                            <p class="reco-avator-nick">{{item['nickname']}}</p>
+                        </div>
+                    </span>
+                    <span class="reco-num">{{item['score']}}</span>
+                    <span class="reco-prize">{{item['award']}}</span>
+                </li>
+            </ul>
+            <p class="gift-declar">*1个腊八粥=1甜度</p>
+        </div>
+    </border-img>
+
+    <Box 
+       :overriding-styles="{'position':'relative','z-index':'fz(2)','width':416,'height':146,'background-position': '-293 -559','margin': '0 auto','margin-top': 70,'cursor':'pointer'}"
+       class-name="sprite"
+       @click.native="toggleLog">
+    </Box>
+    <Box
+
+        :overriding-styles="{'height':80,'line-height': 80,'color':'#fff','text-align':'center','margin-top': 68,'background':'rgba(0,0,0,0.4)'}">
+        本活动最终解释权归星光直播所有
+    </Box>
+    <!-- 活动规则 -->
+    <div class="rule-wrap" :style="{visibility:rulesStatus?'visible':'hidden'}" @click="toggleRule">
+        <border-img>
+            <div class="rule-close sprite" @click="toggleRule" slot="head"></div>
+            <Box :overriding-styles="{}" class-name="rules-block" slot="body">
+                <text-div 
+                    :overriding-styles="{'color': 'fz(#620700)','font-size': 42,'text-align': 'center','line-height': 'fz(2)'}">
+                    活动规则
+                </text-div>
+                <p class="rules-txt">
+                    1.活动时间：2018/01/22 12:00:00—01/27 23:59:59。
+                </p>
+                <p class="rules-txt">
+                    2.活动期间，单个主播直播间每收到3000个“腊八粥”，即可炸出腊八节红包！快来抢克拉吧！
+                </p>
+                <p class="rules-txt">3.甜甜榜前5名可获得腊八节礼品，礼品将于活动结束后15个工作日内发放。</p>
+                <p class="rules-txt">4.每小时（计算周期：每小时0分1秒至59分59秒）内收到最多腊八粥的前三名主播奖获得活动推荐机会，活动推荐从此小时结束后生效，推荐时长见“实时甜度榜”。</p>
+                <p class="rules-txt">注：若主播在推荐期间下线，将自动取消活动推荐位。</p>
+                <p class="rules-txt">5.本次活动最终解释权归星光直播所有</p>
+                <text-div 
+                    :overriding-styles="{'color': 'fz(#620700)','font-size': '40','font-weight': 'bold','text-align': 'center','line-height': 'fz(2)',}">
+                    活动奖励
+                </text-div>
+                <div class="prize-gift-block" :class="{'gift-block-ie c_clearfix':isIE}">
+                    <rule-gift :sort-num="1">
+                        <p>丹尼尔惠灵顿</p>
+                        <p>尼龙带女表+金色手镯</p>
+                    </rule-gift>
+                    <rule-gift :sort-num="2">
+                        <p>SWAROVSKI</p>
+                        <p>黑天鹅戒指</p>
+                    </rule-gift>
+                    <rule-gift :sort-num="3">
+                        <p>PANDORA</p>
+                        <p>经典基础手镯</p>
+                    </rule-gift>
+                    <rule-gift :sort-num="4">
+                        <p>返利3%</p>
+                    </rule-gift>
+                </div>
+
+                <div class="prize-declar">
+                    <div class="prize-declar-item" :class="{'prize-declar-ie c_clearfix':isIE}">
+                        <span class="prize-declar-txt prize-declar-left">排名</span>
+                        <span class="prize-declar-txt prize-declar-right">奖励</span>
+                    </div>
+                    <div class="prize-declar-item" :class="{'prize-declar-ie c_clearfix':isIE}">
+                        <span class="prize-declar-txt prize-declar-left">1</span>
+                        <span class="prize-declar-txt prize-declar-right">
+                            <p>丹尼尔惠灵顿尼龙带女表</p>
+                            <p>+金色手镯</p>
+                            <p>活动推荐5天</p>
+                        </span>
+                    </div>
+                    <div class="prize-declar-item" :class="{'prize-declar-ie c_clearfix':isIE}">
+                        <span class="prize-declar-txt prize-declar-left">2</span>
+                        <span class="prize-declar-txt prize-declar-right">
+                            <p>SWAROVSKI 黑天鹅戒指</p>
+                            <p>活动推荐5天</p>
+                        </span>
+                    </div>
+                    <div class="prize-declar-item" :class="{'prize-declar-ie c_clearfix':isIE}">
+                        <span class="prize-declar-txt prize-declar-left">3</span>
+                        <span class="prize-declar-txt prize-declar-right">
+                            <p>PANDORA经典基础手镯</p>
+                            <p>活动推荐5天</p>
+                        </span>
+                    </div>
+                    <div class="prize-declar-item" :class="{'prize-declar-ie c_clearfix':isIE}">
+                        <span class="prize-declar-txt prize-declar-left">4~5</span>
+                        <span class="prize-declar-txt prize-declar-right">
+                            <p>返利3%</p>
+                            <p>活动推荐3天</p>
+                        </span>
+                    </div>
+                </div>
+                <p class="rule-declar">
+                    注：返利数量=主播榜单收入*返利额度
+                </p>
+                <p class="rule-declar">返利金额为克拉（非收益），将于活动结束后15个工作日内发放到主播账户内。</p>
+                <p class="rule-declar">活动推荐时间从2018/01/28 01:00:00起算。</p>
+            </Box>
+        </border-img>
+    </div>
+    <!-- 往期记录 -->
+    <div class="prize-log" :style="{visibility:prizeLogStatus?'visible':'hidden'}" @click="toggleLog">
+        <border-img>
+            <div class="rule-close sprite" slot="head" @click="toggleLog"></div>
+            <Box :overriding-styles="{}" class-name="rules-block" slot="body">
+                <text-div 
+                    :overriding-styles="{'color': 'fz(#620700)','font-size': 40,'text-align': 'center','line-height': 'fz(2)',}">
+                    往期记录
+                </text-div>
+                <div class="log-day" v-for="(item,day) in lastSweetLists">
+                    <p class="log-time">{{day}}</p>
+                    
+                    <div v-for="(hourPrize,hour) in item">
+                        <p class="log-time">{{hour}}</p>
+                        <div class="log-item c_clearfix" v-for="prize in hourPrize">
+                            <span class="log-nickname">{{prize['nickname']}}</span>
+                            <span class="log-center">获得</span>
+                            <span class="log-gift">{{prize['award']}}</span>
+                        </div>
+                    </div>
+                </div>
+
+            </Box>
+        </border-img>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var gjShareParam = JSON.stringify({
+        title: '甜糯腊八节',
+        content: '甜甜腊八节，重新解锁上热门的新姿势！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/customized18/share.jpg")}'
+    });
+</script>

@@ -1,0 +1,525 @@
+<div id="app" v-cloak>
+    <!-- /* img path - "../../../../static_guojiang_tv/src/pc/v4/img/activity/thk2018" */ -->
+    <div class="page-bgs">
+        <!-- bgs -->
+        <div class="page-bg bg1"></div>
+        <div class="page-bg bg2"></div>
+        <div class="page-bg bg3"></div>
+    </div>
+
+    <div class="page-content">
+        <!-- banner -->
+        <div class="section banner"></div>
+
+        <!-- broadcast广播 -->
+        <div class="broadcast">
+            <div :class="['msg-wrap', bdMsgs.length === 1 && 'one-msg']" ref="msgwrap">
+                <ul class="msglist" ref="msgs">
+                    <li class="msg" v-for="msg in bdMsgs">{{ msg }}</li>
+                    <template v-if="bdMsgs.length > 1">
+                        <li class="msg" v-for="msg in bdMsgs">{{ msg }}</li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 夺宝 -->
+        <div class="section treasure desc-box">
+            <div class="txt-sprite t1">10克拉赢全年限定礼物！</div>
+            <!-- 普通夺宝礼物 -->
+            <p class="now-volume">
+                <span :class="['txt-sprite num_' + page.currVol[0]]"></span>
+                <span :class="['txt-sprite num_' + page.currVol[1]]"></span>
+                <span :class="['txt-sprite num_' + page.currVol[2]]"></span>
+            </p>
+            <p class="next-vol-time" v-show="!page.lastStageForNS && page.activityStatus !== 2">下期开始时间：{{ gifts[0] ? gifts[0].nextStageTime.split(' ')[1] : '' }}</p>
+            <ul class="trealist">
+                <trea-item v-for="(gift, gind) in gifts" :source="gift" :key="gind" :show-timer="true" :astatus="page.activityStatus" ref="treas"></trea-item>
+            </ul>
+        </div>
+
+        <!-- 高级礼物夺宝 -->
+        <div class="section mtrea desc-box">
+            <!-- 高级夺宝礼物 -->
+            <div class="txt-sprite t2">高级礼物 不限时夺宝</div>
+            <ul class="m-trealist">
+                <trea-item v-for="(gift, gind) in mgifts" :source="gift" :key="gind" :show-timer="page.lastStage" :astatus="page.activityStatus" ref="treasM">
+                    <p class="vol" slot="vol">
+                        <span :class="['txt-sprite num_' + gift.stage[0]]"></span>
+                        <span :class="['txt-sprite num_' + gift.stage[1]]"></span>
+                        <span :class="['txt-sprite num_' + gift.stage[2]]"></span>
+                    </p>
+                </trea-item>
+            </ul>
+        </div>
+
+        <!-- 夺宝攻略 -->
+        <div class="section srules desc-box">
+            <div class="txt-sprite t3">夺宝攻略</div>
+            <p class="srule-i"><i class="icons-sprite icon_r1"></i>活动时间：<span>11.20 12:00:00—11.25 23:59:59</span>。</p>
+            <p class="srule-i"><i class="icons-sprite icon_r2"></i>如何购买：您可以选择自己喜欢的宝贝，并填写<span>任意份数</span>参与夺宝。每份数<span>仅需消耗10克拉</span>，即可获得一个或多个幸运号码，等待开奖（号码非自选）。</p>
+            <p class="srule-i"><i class="icons-sprite icon_r3"></i>开奖时间：当单品达到开奖份数则系统自动开奖，开奖前五分钟停止售卖，每固定间隔时长更新一次宝贝，具体刷新时间请见期数下方下期时间。如果商品在开奖时间未达到开奖份数，则全额返还用户购买时所花费的克拉数。</p>
+            <p class="srule-i">注：<span>高级礼物（爱心飞机、泰坦号）无开奖限时，活动结束前5分钟结束售卖。</span></p>
+            <p class="srule-i"><i class="icons-sprite icon_r4"></i>开奖规则：按照购买份数进行等概率随机，购买越多份数，获得幸运大奖的概率越高。例如：A需要700份数购买，用户B购买3份数，则中奖概率为3/700。</p>
+            <p class="srule-i"><i class="icons-sprite icon_r5"></i>获奖用户奖品将自动下发至您的背包。</p>
+            <p class="srule-i"><i class="icons-sprite icon_r6"></i>您可在开奖记录表中查询中奖及参与记录。</p>
+            <p class="srule-i"><i class="icons-sprite icon_r7"></i>本活动期间，如存在违规行为（包括但不限于恶意套取奖品、机器作弊等违反诚实信用原则行为），将取消您的中奖资格，必要时追究法律责任。</p>
+        </div>
+
+        <!-- 中奖记录 -->
+        <div class="section records">
+            <ul class="tab-h tab-h-records">
+                <li :class="['tab-h-i btn-sprite tab_opened', ui.tabRecords === 0 && 'active']" @click="changeTabRe(0)">已开奖</li>
+                <li :class="['tab-h-i btn-sprite tab_wons', ui.tabRecords === 1 && 'active']" @click="changeTabRe(1)">我的中奖纪录</li>
+                <li :class="['tab-h-i btn-sprite tab_records', ui.tabRecords === 2 && 'active']"  @click="changeTabRe(2)">我的夺宝记录</li>
+            </ul>
+            <ul class="tab-m tab-m-records desc-box">
+                <!-- 已开奖 -->
+                <li class="tab-m-i" v-show="ui.tabRecords === 0">
+                    <list-table ref="recordsOpened" :source="records.opened" :placeholder="'未到开奖时间，进度条集满，即可提前开奖！'"></list-table>
+                </li>
+                <!-- 我的中奖记录 -->
+                <li class="tab-m-i" v-show="ui.tabRecords === 1">
+                    <list-table ref="recordsWon" :source="records.won" :placeholder="'多试几次，你就是下一个夺宝锦鲤！'"></list-table>
+                </li>
+                <!-- 我的夺宝记录 -->
+                <li class="tab-m-i" v-show="ui.tabRecords === 2">
+                    <list-table ref="recordsTakein" :source="records.takein" :placeholder="'还没有记录哦，立即参与收获宝贝吧！'"></list-table>
+                </li>
+            </ul>
+        </div>
+
+        <!-- footer copyright -->
+        <p class="copyright">本活动最终解释权归平台运营团队所有</p>
+
+        <!-- float btns侧边按钮 -->
+        <div class="float-box">
+            <div class="btn-sprite btn_rules" @click="showLayer('layer', 0)"></div>
+            <div class="btn-sprite btn_ache" @click="showLayerAche"></div>
+            <div class="btn-sprite btn_list" @click="showLayer('listLayer')"></div>
+        </div>
+
+        <!-- layer -->
+        <div class="layer" v-show="ui.layer">
+            <!-- 活动规则 -->
+            <div class="layer-rules desc-box" v-show="ui.layerType === 0">
+                <div class="btn-sprite btn_close2" @click="closeLayer"></div>
+                <div class="layer-wrap">
+                    <div class="txt-sprite t_rules">活动规则</div>
+                    <p class="rules-i width-label"><i class="icons-sprite icon_r1"></i>活动时间：11.20 12:00:00-11.25 23:59:59。</p>
+                    <p class="rules-i width-label"><i class="icons-sprite icon_r2"></i>活动礼物：烤火鸡=10克拉=10感恩值。</p>
+                    <p class="rules-i sub-t">【玩法一】感恩有你 撑我到底！</p>
+                    <p class="rules-i">1. 每15分钟感恩值Top1主播，直播间赠送感恩红包加全站飘屏，由其中最大贡献的用户冠名。</p>
+                    <p class="rules-i">2. TOP1次数最多的主播，奖励app端广告位*2日。若TOP1次数相同，则按照先到先得原则排名。</p>
+                    <p class="rules-i sub-t">【玩法二】感恩有你 加成up up up！</p>
+                    <p class="rules-i">1. 活动期间，用户一次性送出1314个“烤火鸡”，该直播间开启5分钟1.3倍感恩值buff，buff开启时，会触发房间飘屏通知。</p>
+                    <p class="rules-i">注：最新触发的buff覆盖正在生效的buff，buff时间不叠加。</p>
+                    <p class="rules-i">例: buff期间，主播收到价值1000感恩值礼物，则活动所有榜单实际统计为1300感恩值。但是主播直播间仍然显示为1000星光礼物。</p>
+                    <p class="rules-i sub-t">【玩法三】谁是火鸡猎场上的宠儿</p>
+                    <p class="rules-i">1. 每个成就活动期间只可获得一次。</p>
+                    <p class="rules-i">2. 获得成就时，会立即在其所在直播间飘屏通知，并出现祝贺特效。（手机用户需要更新到V4.8.0以上才可以看到祝贺特效哦）</p>
+                    <p class="rules-i">3. 勋章时长可累计。</p>
+                    <!-- 成就表 -->
+                    <achieve-table></achieve-table>
+                    <div class="txt-sprite t_rewards">活动奖励</div>
+                    <div class="rewards-box">
+                        <div class="rewards-t"><div class="txt-sprite t_mod">主播榜</div></div>
+                        <div class="rewards-i">
+                            <p class="r-i-title r-i-title-1">主播榜第一名</p>
+                            <p class="r-i-p">350000克拉</p>
+                        </div>
+                        <div class="rewards-i">
+                            <p class="r-i-title r-i-title-2">主播榜第二名</p>
+                            <p class="r-i-p">250000克拉</p>
+                        </div>
+                        <div class="rewards-i">
+                            <p class="r-i-title r-i-title-3">主播榜第三名</p>
+                            <p class="r-i-p">150000克拉</p>
+                        </div>
+                        <div class="rewards-i">
+                            <p class="r-i-title r-i-title-4">主播榜第四、五名</p>
+                            <p class="r-i-p">100000克拉</p>
+                        </div>
+                    </div>
+                    <div class="rewards-box">
+                        <div class="rewards-t"><div class="txt-sprite t_user">用户榜</div></div>
+                        <div class="rewards-i">
+                            <p class="r-i-title r-i-title-1">用户榜第一名</p>
+                            <p class="r-i-p">价值350000克拉的年度助力票</p>
+                        </div>
+                        <div class="rewards-i">
+                            <p class="r-i-title r-i-title-2">用户榜第二名</p>
+                            <p class="r-i-p">价值250000克拉的年度助力票</p>
+                        </div>
+                        <div class="rewards-i">
+                            <p class="r-i-title r-i-title-3">用户榜第三名</p>
+                            <p class="r-i-p">价值150000克拉的年度助力票</p>
+                        </div>
+                        <div class="rewards-i">
+                            <p class="r-i-title r-i-title-4">用户榜第四、五名</p>
+                            <p class="r-i-p">价值100000克拉的年度助力票</p>
+                        </div>
+                    </div>
+                    <p class="rules-i sub-t">奖励说明：</p>
+                    <p class="rules-i">1. 年度助力票会在2018星光年度活动预选赛开始时 ，下发到用户背包。</p>
+                    <p class="rules-i">2. 年度助力票主播无分成，仅增加主播直播间星光值和年度活动榜单数据。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- layer -->
+        <div class="layer" v-show="ui.layer && ui.layerType !== 0">
+            <!-- 我的成就 -->
+            <div class="layer-achieve desc-box" v-show="ui.layerType === 1">
+                <div class="btn-sprite btn_close2" @click="closeLayer"></div>
+                <div class="ache-title">
+                    <div class="txt-sprite t_ache"></div>
+                    <div class="icons-sprite icon_qs" @click="showAchieve"></div>
+                </div>
+                <div class="panel">
+                    <div class="achieve-i" v-for="ma in achieves">
+                        <div :class="['avatar ache-sprite', 'honor_' + ma.classType + (ma.own ? '_a' : '')]"></div>
+                        <div class="progress" v-if="ma.progress">
+                            <b :style="{width: (ma.progress.num/ma.progress.target).toFixed(2) * 100 + '%'}"></b>
+                            <span>{{ ma.progress.num }}/{{ ma.progress.target }}</span>
+                        </div>
+                        <div class="progress" v-else>
+                            <b :style="{width: ma.own ? '100%' : '0%'}"></b>
+                            <span>{{ ma.own ? 1 : 0}}/{{ 1 }}</span>
+                        </div>
+                        <!-- <div class="progress-holder" v-else></div> -->
+                        <template v-if="ma.own">
+                            <p class="state">获得时间</p>
+                            <p class="state-time">{{ ma.time }}</p>
+                        </template>
+                        <template v-else>
+                            <p class="state">未获得</p>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <!-- 夺宝幸运号码 -->
+            <div class="layer-takein desc-box2" v-show="ui.layerType === 2">
+                <div class="btn-sprite btn_close" @click="closeLayer"></div>
+                <div class="t-txt">恭喜您！参与成功！</div>
+                <div class="t-txt">您的幸运号码为</div>
+                <div class="lucky-num">{{ form.luckyNum }}</div>
+                <div class="t-tips">（单次购买多份数则获得连续的幸运号码）</div>
+            </div>
+            <!-- 夺宝礼物购买 -->
+            <div class="layer-buy desc-box2" v-show="ui.layerType === 3">
+                <div class="btn-sprite btn_close" @click="closeLayer"></div>
+                <div class="t-title">请填写份数</div>
+                <div class="gift-avatar">
+                    <img :src="form.cgPic" alt="头像"/>
+                </div>
+                <div class="input-box">
+                    <span class="btn-sprite btn_minus" @click="stepInputNum(-1)"></span>
+                    <input ref="buyInput" @click="inputFocus" @input="buyInput" />
+                    <span class="btn-sprite btn_add" @click="stepInputNum(1)"></span>
+                </div>
+                <p class="t-tips">最大可购买份数{{ form.cgCanBuyNum }}</p>
+                <p class="t-warn">总共消耗<span>{{ form.cgCaclPrice }}</span>克拉</p>
+                <div class="btns">
+                    <div class="btn-sprite btn_buy" @click="buyGift"></div>
+                    <div class="btn-sprite btn_off" @click="cancelBuy"></div>
+                </div>
+            </div>
+            <!-- 余额不足 -->
+            <div class="layer-charge desc-box2" v-show="ui.layerType === 4">
+                <div class="btn-sprite btn_close" @click="closeLayer"></div>
+                <div class="t-txt">余额不足，快去充值吧！</div>
+                <div class="btns">
+                    <div class="btn-sprite btn_cancel" @click="cancelCharge"></div>
+                    <div class="btn-sprite btn_charge" @click="goCharge"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- layer-list榜单 -->
+        <div class="layer" v-show="ui.listLayer">
+            <div class="layer-list desc-box">
+                <div class="btn-sprite btn_close2" @click="closeListLayer"></div>
+                <ul class="tab-h tab-h-list">
+                    <li :class="['tab-h-i btn-sprite tab_thk', ui.listTabType === 0 && 'active']" @click="changeTabList(0)">感恩榜</li>
+                    <li :class="['tab-h-i btn-sprite tab_mod', ui.listTabType === 1 && 'active']" @click="changeTabList(1)">主播榜</li>
+                    <li :class="['tab-h-i btn-sprite tab_user', ui.listTabType === 2 && 'active']" @click="changeTabList(2)">用户榜</li>
+                </ul>
+                <div class="board-list">
+                    <ul class="tab-m">
+                        <!-- 感恩榜 -->
+                        <li ref="top1list" class="tab-h-m tab-m-thk" v-show="ui.listTabType === 0">
+                            <p class="time-count" v-show="page.activityStatus === 1">
+                                <span ref="thkMin10" class="txt-sprite t_num_0"></span>
+                                <span ref="thkMin1" class="txt-sprite t_num_0"></span>
+                                <span class="txt-sprite t_z_fen"></span>
+                                <span ref="thkSec10" class="txt-sprite t_num_0"></span>
+                                <span ref="thkSec1" class="txt-sprite t_num_0"></span>
+                                <span class="txt-sprite t_z_miao"></span>
+                            </p>
+                            <!-- 当前top1 -->
+                            <p class="top-value">感恩值：{{ listThk.top1Score }}</p>
+                            <div class="top-lover">
+                                <div class="zhubo">
+                                    <div class="avatar" v-if="listThk.top1">
+                                        <img :src="listThk.top1.headPic" alt="头像" @click="goRoom(listThk.top1.id)">
+                                        <span class="live" v-if="listThk.top1.isPlaying"></span>
+                                    </div>
+                                    <div class="avatar noone" v-else></div>
+                                    <p class="nickname">{{ listThk.top1 ? listThk.top1.nickname : '虚位以待' }}</p>
+                                </div>
+                                <div class="top-lover-sep"></div>
+                                <div class="user">
+                                    <div class="avatar" v-if="listThk.top1">
+                                        <img :src="listThk.top1.uHeadPic" alt="">
+                                    </div>
+                                    <div class="avatar noone" v-else></div>
+                                    <p class="nickname">{{ listThk.top1 ? listThk.top1.uNickname : '虚位以待' }}</p>
+                                </div>
+                            </div>
+                            <div class="zhubo-center" v-if="listThk.meCenter">
+                                <div class="avatar">
+                                    <div class="pic">
+                                        <img :src="listThk.meCenter.headPic" alt="头像" @click="goRoom(listThk.meCenter.id)">
+                                        <span class="live" v-if="listThk.meCenter.isPlaying"></span>
+                                    </div>
+                                </div>
+                                <div class="desc">
+                                    <p class="nickname">{{ listThk.meCenter.nickName }}</p>
+                                    <p class="value">{{ listThk.meCenter.rankComment }}</p>
+                                </div>
+                            </div>
+                            <!-- 历史top1 -->
+                            <div class="txt-sprite t_tophis">历史TOP1</div>
+                            <div class="list-sep2"></div>
+                            <div class="list-table lt-top1">
+                                <div class="lt-th">
+                                    <div class="lt-cell-1">排名</div>
+                                    <div class="lt-cell-2">主播</div>
+                                    <div class="lt-cell-3">TOP1次数</div>
+                                </div>
+                                <div class="list-table-content">
+                                    <div :class="['lt-tr', topi === 0 && 'lt-tr-0']" v-for="(item, topi) in listTop1list.list" :key="topi">
+                                        <div class="lt-cell-1">{{ topi + 1 }}</div>
+                                        <div class="lt-cell-2">
+                                            <div class="pic">
+                                                <img :src="item.headPic" alt="头像" @click="goRoom(item.id)">
+                                                <span class="live" v-if="item.isPlaying"></span>
+                                            </div>
+                                            <p class="nickname">{{ item.nickname }}</p>
+                                        </div>
+                                        <div class="lt-cell-3">{{ item.score }}次</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- 主播榜 -->
+                        <li class="tab-h-m tab-h-mod" v-show="ui.listTabType === 1">
+                            <rank-top3 :source="listMod.list.slice(0, 3)" :type="0"></rank-top3>
+                            <p class="list-sep"></p>
+                            <rank-list ref="modlist" :source="listMod.list.slice(3)" :type="0"></rank-list>
+                            <p class="tips">仅展示前100名主播</p>
+                            <p class="list-sep" v-if="listMod.meCenter"></p>
+                            <rank-mecenter v-if="listMod.meCenter" :source="listMod.meCenter" :type="0"></rank-mecenter>
+                        </li>
+                        <!-- 用户榜 -->
+                        <li class="tab-h-m tab-h-user" v-show="ui.listTabType === 2">
+                            <rank-top3 :source="listUser.list.slice(0, 3)" :type="1"></rank-top3>
+                            <p class="list-sep"></p>
+                            <rank-list ref="userlist" :source="listUser.list.slice(3)" :type="1"></rank-list>
+                            <p class="tips">仅展示前100名用户</p>
+                            <p class="list-sep" v-if="listUser.meCenter"></p>
+                            <rank-mecenter v-if="listUser.meCenter" :source="listUser.meCenter" :type="1"></rank-mecenter>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- layer-achieve -->
+        <div class="layer achieve-layer" v-show="ui.achieveLayer" @click="hideAchieve">
+            <achieve-table></achieve-table>
+        </div>
+
+        <!-- svg-layer -->
+        <div class="svg-layer" v-show="ui.svgLayer" @click="stopSvg">
+            <div class="svg-container"></div>
+        </div>
+
+        <!-- toast -->
+        <div class="toast" v-show="ui.toast">
+            <div class="msg">{{ ui.toastMsg }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- 夺宝礼物 -->
+<script type="text/template" id="com-trea-item">
+    <li class="trea-i">
+        <slot name="vol"></slot>
+        <div class="pic">
+            <div :class="['badge icons-sprite', source.badge && 'icon_' + source.badge]"></div>
+            <div class="img">
+                <img :src="source.img" :alt="source.desc">
+            </div>
+        </div>
+        <div class="opration">
+            <p class="name">{{ source.desc }}</p>
+            <p class="target">总需：<span>{{ source.capacity }}</span>份数</p>
+            <div class="progress"><b class="progress-bar" :style="{width: ((source.num / source.capacity) * 100).toFixed(2) + '%' }"></b></div>
+            <div class="details">
+                <div class="details-i takein">
+                    <p class="num">{{ source.num }}</p>
+                    <p class="txt">已参与份数</p>
+                </div>
+                <div class="details-i remain">
+                    <p class="num">{{ source.leftNum }}</p>
+                    <p class="txt">剩余份数</p>
+                </div>
+            </div>
+            <div class="btns">
+                <div class="btn-sprite btn_preview" @click="trigger('preview', source.product_id)">预览</div>
+                <div :class="['btn-sprite btn_join', (source.status != '0' || astatus === 2) && 'disabled']" @click="source.status == '0' && astatus !== 2 && trigger('join', source)">立即参与夺宝</div>
+            </div>
+            <template v-if="showTimer && astatus === 1">
+                <div class="tips" v-if="source.status == '1'">已开奖</div>
+                <!-- <div class="tips" v-if="source.status === '2'">已退款</div> -->
+                <div class="tips" v-if="source.status == '0'">距结束：<span ref="timer"></span></div>
+            </template>
+        </div>
+    </li>
+</script>
+
+<!-- 数据表 -->
+<script type="text/template" id="com-list-table">
+    <div :class="'list-table lt-' + source.name">
+        <div class="lt-th">
+            <div v-for="(th, index) in source.table" :class="'lt-cell-' + index">{{ th.name }}</div>
+        </div>
+        <div class="lt-content" ref="list">
+            <div class="tips" v-if="source.list.length === 0">{{ placeholder }}</div>
+            <div v-for="(th, datai) in source.list" :class="'lt-tr lt-tr-' + datai % 2">
+                <div v-for="(tr, vali) in source.table" :class="'lt-cell-' + vali">
+                    <template v-if="tr.key === 'lottery_desc' && th[tr.key].indexOf('-') !== -1">
+                        {{ th[tr.key].split('-')[0] }}~<br/>{{ th[tr.key].split('-')[1] }}
+                    </template>
+                    <template v-else>
+                        {{ th[tr.key] }}
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- top3 -->
+<script type="text/template" id="com-rank-top3">
+    <ul :class="'top3 top3-' + ['mod', 'user'][type]">
+        <li class="top-i" v-for="item, index in source">
+            <div class="pic">
+                <img :src="item.headPic" alt="头像" @click="type !== 1 && trigger('goRoom', item.id)" />
+                <span class="live" v-if="type === 0 && item.isPlaying"></span>
+            </div>
+            <p class="nickname">{{ item.nickname }}</p>
+            <p class="value">感恩值：{{ item.score }}</p>
+            <span v-if="type === 0" :class="['btn-sprite', item.isLoved ? 'btn_attended' : 'btn_attend']" @click="trigger('attention', item)"></span>
+        </li>
+    </ul>
+</script>
+
+<!-- rank-list 榜单列表 -->
+<script type="text/template" id="com-rank-list">
+    <div :class="'list-table lt-' + ['mod', 'user'][type]">
+        <div class="lt-th">
+            <div class="lt-cell-1">排名</div>
+            <div class="lt-cell-2">{{ ['主播', '用户'][type] }}</div>
+            <div class="lt-cell-3">感恩值</div>
+        </div>
+        <div ref="list" class="list-table-content">
+            <div class="lt-tr" v-for="(item, ind) in source">
+                <div class="lt-cell-1">{{ ind + 4 }}</div>
+                <div class="lt-cell-2">
+                    <div class="pic">
+                        <img :src="item.headPic" alt="头像" @click="type !== 1 && trigger('goRoom', item.id)">
+                        <span class="live" v-if="type === 0 && item.isPlaying"></span>
+                    </div>
+                    <p class="nickname">{{ item.nickname }}</p>
+                </div>
+                <div class="lt-cell-3">{{ item.score }}</div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- rank-mecenter 榜单个人中心 -->
+<script type="text/template" id="com-rank-mecenter">
+    <div class="me-center">
+        <div class="avatar">
+            <div class="pic">
+                <img :src="source.headPic" alt="头像" @click="type === 0 && trigger('goRoom', source.uid)">
+                <span class="live" v-if="type === 0 && source.isPlaying"></span>
+            </div>
+            <p class="nickname">{{ source.nickName }}</p>
+        </div>
+        <div class="pair-infos">
+            <div class="pair-infos-i">
+                <h5>{{ source.pairInfos[0].name }}</h5>
+                <p>{{ source.pairInfos[0].value }}</p>
+            </div>
+            <div class="pair-infos-i">
+                <h5>{{ source.pairInfos[1].name }}</h5>
+                <p>{{ source.pairInfos[1].value }}</p>
+            </div>
+            <div class="pair-infos-i">
+                <h5>{{ source.pairInfos[2].name }}</h5>
+                <p>{{ source.pairInfos[2].value }}</p>
+            </div>
+            <div class="pair-infos-i">
+                <h5>{{ source.pairInfos[3].name }}</h5>
+                <p>{{ source.pairInfos[3].value }}</p>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- 成就的表格 -->
+<script type="text/template" id="com-achieve">
+    <div class="xg-table">
+        <div class="xg-th">
+            <div class="xg-cell-1">序号</div>
+            <div class="xg-cell-2">成就</div>
+            <div class="xg-cell-3">获得要求</div>
+            <div class="xg-cell-4">成就奖励</div>
+        </div>
+        <div class="xg-tr">
+            <div class="xg-cell-1">1</div>
+            <div class="xg-cell-2"><div class="ache-sprite-s honor_hunter_s"></div></div>
+            <div class="xg-cell-3">给≥20位不同的主播送过“烤火鸡“</div>
+            <div class="xg-cell-4"><span class="icons-sprite chick_badge"></span>*1日</div>
+        </div>
+        <div class="xg-tr">
+            <div class="xg-cell-1">2</div>
+            <div class="xg-cell-2"><div class="ache-sprite-s honor_king_s"></div></div>
+            <div class="xg-cell-3">一次性送出1314个“烤火鸡”，开启一次感恩节buff</div>
+            <div class="xg-cell-4"><span class="icons-sprite chick_badge"></span>*1日</div>
+        </div>
+        <div class="xg-tr">
+            <div class="xg-cell-1">3</div>
+            <div class="xg-cell-2"><div class="ache-sprite-s honor_killer_s"></div></div>
+            <div class="xg-cell-3">参与夺宝≥20期</div>
+            <div class="xg-cell-4"><span class="icons-sprite chick_badge"></span>*3日</div>
+        </div>
+        <div class="xg-tr">
+            <div class="xg-cell-1">4</div>
+            <div class="xg-cell-2"><div class="ache-sprite-s honor_ender_s"></div></div>
+            <div class="xg-cell-3">夺宝抽中“感恩有你”≥5次</div>
+            <div class="xg-cell-4"><span class="icons-sprite icon_headline"></span>*1</div>
+        </div>
+        <div class="xg-tr">
+            <div class="xg-cell-1">5</div>
+            <div class="xg-cell-2"><div class="ache-sprite-s honor_all_s"></div></div>
+            <div class="xg-cell-3">为15分钟感恩值Top1主播贡献最大的次数≥20次</div>
+            <div class="xg-cell-4"><span class="icons-sprite icon_headline"></span>*3</div>
+        </div>
+    </div>
+</script>

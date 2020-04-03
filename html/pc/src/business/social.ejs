@@ -1,0 +1,75 @@
+<article>
+<div class="banner" @click="showDownLayer = !showDownLayer"></div>
+<div class="content_wrap clearfix">
+    <div class="content_left fl">
+        <div class="inner_banner" @click="showDownLayer = !showDownLayer">
+            <div class="ib_avatar_wrap left">
+                <img :src="uConnectAvatar">
+                <p>私聊听众</p>
+            </div>
+            <div class="ib_avatar_wrap right">
+                <img :src="mConnectAvatar">
+                <p>服务主播</p>
+            </div>
+            <p class="hint" v-cloak>有{{connectMembersNum}}人正在连线中......</p>
+            <div id="phoneAnimation" class="phone_animation"></div>
+        </div>
+
+        <ul class="list clearfix">
+            <li v-for="item in voiceArr" :key="item.id" v-cloak>
+                <img :src="getContentAvatar(item.id)" class="avatar">
+                <p class="title">
+                    <span class="text"  v-once>
+                        {{item.name}}<span class="status_icon" :class="{free: getStatus()}"></span>
+                    </span>
+                </p>
+                <div class="label_wrap" v-html="getLabel()"  v-once>
+                  
+                </div>
+                <p class="chat_num"  v-once>{{getChatNum()}}次私密聊天</p>
+                <span class="star"></span>
+
+                <div class="voice_wrap clearfix" @click="startVoice(item.id)">
+                    <span class="voice_icon fl" :class="{active: voiceArr[item.id-1]['isPlaying']}"></span>
+                    <span class="voice_length fr">{{item.time}}''</span>
+                </div>
+
+                <hr>
+                <button class="yue_btn" @click="showDownLayer = !showDownLayer">约她</button>
+            </li>
+        </ul>
+    </div>
+    <div class="content_right fr" @click="showDownLayer = !showDownLayer">
+        <h2>
+            <span>声优排行</span>
+        </h2>
+        <ul>
+            <li class="clearfix" v-for="item in sideList" :key="item.id" v-cloak>
+                <div class="avatar_wrap fl">
+                    <img :src="getSideAvatar(item.id)" class="avatar">
+                    <img :src="getSideMaskImg(item.id)" class="avatar_mask" v-if="item.id < 4">
+                </div>
+                <div class="desc_wrap fl">
+                    <P class="nickname">{{item.name}}</P>
+                    <p class="num" v-once>{{getChatNum()}}次接单</p>
+                </div>
+            </li>
+           
+        </ul>
+    </div>
+</div>
+<div class="down_layer" v-show="showDownLayer" v-cloak>
+    <span class="mask" @click="showDownLayer = !showDownLayer"></span>
+    <div class="down_content">
+        <span class="close" @click="showDownLayer = !showDownLayer">+</span>
+        <p>下载全民交友，即刻与声优主播零距离互动</p>
+        <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/business/social/qrcode.png')}" class="qrcode">
+        <img src="${require('../../../../static_guojiang_tv/src/pc/v4/img/chat/img_1.png')}" class="bottom">
+    </div>
+</div>
+<div class="opacity">
+    <div id="voiceVideo"></div>
+</div>
+</article>
+
+<script type="text/javascript" src="//static.guojiang.tv/pc/js/ckplayer/ckplayer.js"></script>

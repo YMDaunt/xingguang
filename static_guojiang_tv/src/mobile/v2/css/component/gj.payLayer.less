@@ -1,0 +1,58 @@
+@bf:108rem;
+.border-radius (@radius : 50%){
+    border-radius:  @radius;
+    -webkit-border-radius:  @radius;
+    -o-border-radius:  @radius;
+    -moz-border-radius:  @radius;
+    -ms-border-radius:  @radius;
+}
+.payLayer-ui{
+	width: 735/@bf;.border-radius(28/@bf);
+	h4{font-size:16px;color:#313131;text-align: center;padding:66/@bf 0 50/@bf;border-bottom: none;}
+	.pay_icon{background: url(../../img/component/payLayer/type_v2.png?v=0712) no-repeat;background-size:593/@bf 328/@bf;display: inline-block;}
+	.pay_alipay{background-position:  0 0;width: 288/@bf;height: 120/@bf;
+		&:active{background-position: 0 -130/@bf;width: 288/@bf;height: 120/@bf;}
+	}
+	.pay_wechat{background-position:  -302/@bf 0;width: 288/@bf;height: 120/@bf;
+		&:active{background-position: -302/@bf -130/@bf;width: 288/@bf;height: 120/@bf;}
+	}
+	.pay_ios{background-position: -1/@bf -263/@bf;width: 50/@bf;height: 60/@bf;margin-right: 16/@bf;}
+	.pl_paytype_wrap{
+		display: flex;justify-content:space-around;-webkit-justify-content:space-around;
+		padding:20/@bf 0 45/@bf;
+		border-bottom-left-radius: 40/@bf;border-bottom-right-radius: 40/@bf;
+		button{background: #ff0071;font-size: 15px;color:#ffffff;width: 612/@bf;height: 120/@bf;border-radius:65/@bf;margin:0 auto;line-height: 120/@bf;border:none;
+			&:active{    background: #ff0071;}
+		}
+	}
+	.pu2_top, .pl_paytype_wrap{background: #fff;}
+	.pu2_top{border-top-left-radius: 40/@bf;border-top-right-radius: 40/@bf;}
+	li p{font-size: 15px;color:#394144;text-align: center;padding-top: 55/@bf;}
+	li[data-type="iospay"]{
+		width: 610/@bf;
+		height: 120/@bf;
+		border: 1px solid #000000;
+		border-radius: 60/@bf;
+		font-size: 22px;
+		color:#000000;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		&:active{
+			background: #cccccc;
+		}
+	}	
+	
+	.pl_custom{font-size: 15px;color:#666666;text-align: center;}
+
+	.counter_wrap{
+		width: 555/@bf;margin:0 auto 50/@bf;
+		span{width: 60/@bf;height: 60/@bf;border-radius: 60/@bf;border:1px solid #666666;font-size:20px;color:#666666;text-align: center;line-height: 60/@bf;display: inline-block;    font-weight: bold;vertical-align: middle;}
+		input{width: 330/@bf;height: 102/@bf;border:1px solid #cbcbcb;border-radius: 50/@bf;text-align: center;line-height: 102/@bf;color:#45b1b4;font-size: 17px;margin:0 40/@bf;background: none;}
+	}
+}
+div.layui-m-layer .layui-m-layerchild{  .border-radius(28/@bf);}
+div.layui-m-layer div.payLayer{background: none;
+	.layui-m-layercont{padding: 0;}
+}
+.split_line_2{background: url(../../img/store/split_line.png) no-repeat;background-size:733/@bf 86/@bf;width:733/@bf;height:84/@bf;position: relative;left:0;top:0;display: block;}

@@ -1,0 +1,26 @@
+<main class="main_box fadeIn animated" id="app" v-cloak>
+	<section class="banner-box">
+		<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/xgRecall/1.png')}">
+		<p><span>{{nickname}}</span>邀请您领取回家大礼包</p>
+	</section>
+	<section class="code-box">
+		<p>您的专属召回码</p>
+		<p>{{code}}</p>
+		<p>速速下载<span>星光直播APP</span>！复制专属召回码，在活动页面“礼包领取通道”填写召回码，即可领取丰厚奖励！  </p>
+	</section>
+	<section class="download-box">
+		<img class="bg_1" src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/xgRecall/2.png')}">
+		<span @click="clickToDown">
+			<img class="download-btn" src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/xgRecall/download_btn.png')}">
+		</span>
+	</section>
+</main>
+
+<script>
+	var gjShareParam = JSON.stringify({
+        title: '星光召回令！',
+        content: '成功邀请老用户，即可获得丰厚奖励。召回用户等级越高，奖励越丰厚哦！一年一次的机会，还不行动起来！',
+        link: location.href,
+        imgLink: '${require("../../../../static_guojiang_tv/src/mobile/v2/img/activity/xgRecall/share.png")}'
+    });
+</script>

@@ -1,0 +1,725 @@
+@activityName: 'activity/valentineDay';
+@bf: 10/7px;; // 1080px -> fontSize -> 108px
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+}
+
+.bgms(@imgName,@width,@height) {
+    background-image: url('../../img/@{activityName}/@{imgName}');
+    background-size: @width / @bf @height / @bf;
+}
+
+.sprite {
+    background-image: url('../../img/@{activityName}/css_sprites.png');
+    background-repeat: no-repeat;
+    background-size: 1410 / @bf 721 / @bf;
+}
+
+@keyframes show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/***************common end************/
+
+#app {
+    background: url('../../img/@{activityName}/1.jpg') no-repeat 50% 0, url('../../img/@{activityName}/2.jpg') no-repeat 50% 816px, url('../../img/@{activityName}/3.jpg') no-repeat 50% 1690px,url('../../img/@{activityName}/4.jpg') no-repeat 50% 2642px;
+    background-color: #ffc9ce;
+    margin-top: 5px;
+    animation: show 1s;
+    overflow: hidden;
+}
+
+
+.giftbox {
+    width: 1080/@bf;
+    margin: 1165px auto 0; 
+    overflow: hidden;
+    .title {
+        width: 1007 / @bf;
+        height: 62 / @bf;
+        .sprite;
+        margin: 0 auto;
+        background-position: -393 / @bf -92 / @bf;
+    }
+    .gift1 {
+        width: 380 / @bf;
+        margin-left: 140 / @bf;
+    }
+    .gift2 {
+        width: 380 / @bf;
+        margin-right: 140 / @bf;
+    }
+    .gift1-img {
+        width: 248 / @bf;
+        height: 363 / @bf;
+        .sprite;
+        margin: 20 / @bf auto 10 / @bf;
+        background-position: -10 / @bf -348 / @bf;
+    }
+    .gift2-img {
+        width: 363 / @bf;
+        height: 318 / @bf;
+        .sprite;
+        margin: 20 / @bf auto 55 / @bf;
+        background-position: -10 / @bf -10 / @bf;
+    }
+    .gift1-btn {
+        width: 400 / @bf;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .gift2-btn {
+        width: 400 / @bf;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .purchase {
+        width: 152 / @bf;
+        height: 77 / @bf;
+        margin: 40 / @bf auto;
+        border-radius: 10 / @bf;
+        background-color: #9000ff;
+        color: #fff;
+        font-size: 42 / @bf;
+        text-align: center;
+        line-height: 77 / @bf;
+        cursor: pointer;
+        &:active {
+            opacity: 0.6;
+        }
+    }
+    .out{
+        background-color: #ccc;   
+    }
+    .preview {
+        cursor: pointer;
+        width: 152 / @bf;
+        height: 77 / @bf;
+        margin: 40 / @bf auto;
+        border-radius: 10 / @bf;
+        background-color: #e50012;
+        color: #fff;
+        font-size: 42 / @bf;
+        text-align: center;
+        line-height: 77 / @bf;
+        &:active {
+            opacity: 0.6;
+        }
+    }
+}
+.rankbox {
+    margin: 20 / @bf auto;
+    width: 1007 / @bf;
+    .title {
+        width: 1007 / @bf;
+        height: 62 / @bf;
+        .sprite;
+        margin: 0 auto;
+        background-position: -393 / @bf -10 / @bf;
+    }
+    .rank-wrap {
+        width: 1007 / @bf;
+        margin: 50 / @bf 0;
+        overflow: hidden;
+        background: -webkit-repeating-linear-gradient(
+            -45deg,
+            #fd8ea3 0px,
+            #fd8ea3 20px,
+            #fd728c 20px,
+            #fd728c 40px
+        );
+    }
+    .rank {
+        width: 967 / @bf;
+        margin: 20 / @bf auto;
+        background-color: #ffece5;
+        overflow: hidden;
+        li{
+            width: 50%;
+            float: left;
+            height: 300/@bf;
+            display: flex;
+            justify-content: space-around;
+            .nickname{
+                margin: -10/@bf auto 20/@bf;
+                font-size: 30/@bf;
+                color:#9000ff;
+                text-align: center;
+                width: 180/@bf;
+                .ellipsis;
+            }
+        }
+        .prevlist{
+            height: 840/@bf;
+            overflow: hidden;
+            li{
+                height: 400/@bf;
+                &:first-child{
+                    width:100%;
+                }
+            }
+        }
+        .lastlist{
+            height: 1260/@bf;
+            li:nth-child(7){
+                width: 100%;
+            }
+        }
+    }
+}
+.platform {
+    background-position: -720 / @bf -174 / @bf;
+    .sprite;
+    width: 530 / @bf;
+    height: 27 / @bf;
+    margin: 0 auto 50 / @bf;
+}
+.rules-btn {
+    position: fixed;
+    left:50%;
+    transform: translate(160%,0);
+    top: 580 / @bf;
+    width: 277px;
+    height: 64px;
+    background: url('../../img/activity/valentineDay/rules-btn.png') no-repeat 0 0 scroll;
+    z-index: 9;
+    cursor: pointer;
+}
+.rules-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 99;
+}
+.rules-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1007 / @bf;
+    height: 1066 / @bf;
+    background: -webkit-repeating-linear-gradient(
+        -45deg,
+        #fd8ea3 0px,
+        #fd8ea3 20px,
+        #fd728c 20px,
+        #fd728c 40px
+    );
+    .rules {
+        display: table;
+        width: 967 / @bf;
+        height: 1026 / @bf;
+        margin: 20 / @bf auto;
+        background-color: #ffece5;
+    }
+    .title {
+        width: 307 / @bf;
+        height: 62 / @bf;
+        .sprite;
+        margin: 30 / @bf auto 20 / @bf;
+        background-position: -393 / @bf -174 / @bf;
+    }
+    ul {
+        height: 900 / @bf;
+    }
+    .rules-item {
+        font-size: 32 / @bf;
+        color: #e50012;
+        margin: 0 30 / @bf;
+        line-height: 55 / @bf;
+    }
+    .gift-rules-box {
+        display: flex;
+        justify-content: space-around;
+        .giftname,
+        .price {
+            font-size: 23 / @bf;
+            text-align: center;
+        }
+    }
+    .gift1 .gift {
+        width: 126 / @bf;
+        height: 115 / @bf;
+        .sprite;
+        margin: 11 / @bf auto;
+        background-position: -393 / @bf -437 / @bf;
+    }
+    .gift2 .gift {
+        width: 137 / @bf;
+        height: 137 / @bf;
+        margin: 0 auto;
+        .sprite;
+        background-position: -393 / @bf -256 / @bf;
+    }
+    .boomrules {
+        width: 873 / @bf;
+        height: 212 / @bf;
+        margin: 40 / @bf auto 20 / @bf;
+        .bgms('1.png', 873, 212);
+    }
+    table,
+    th,
+    tr,
+    td {
+        border: 1px solid #e50012;
+        font-size: 38 / @bf;
+        text-align: center;
+        border-collapse: collapse; 
+        color: #e50012;
+    }
+            .table {
+        width: 650 / @bf;
+        margin: 20 / @bf auto;
+        tr {
+            height: 70 / @bf;
+        }
+    }
+}
+.close {
+    position: absolute;
+    top: -20 / @bf;
+    right: -20 / @bf;
+    width: 79 / @bf;
+    height: 79 / @bf;
+    .sprite;
+    background-position: -492 / @bf -573 / @bf;
+    cursor: pointer;
+    &:active {
+        background-position: -393 / @bf -573 / @bf;
+    }
+}
+.svg-layer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    z-index: 40;
+    #svgContainer {
+        width: 100%;
+        height: 100%;
+    }
+}
+.purchaseBox-wrap {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    z-index: 40;
+}
+.purchaseBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 856 / @bf;
+    height: 513 / @bf;
+    .bgms('purchase.png', 856, 513);
+    .close {
+        top: 30 / @bf;
+        right: 30 / @bf;
+    }
+    .title {
+        margin:80/@bf auto 20/@bf;
+        color: #ff001e;
+        font-size: 40/@bf;
+        text-align: center;
+    }
+    .selectBox {
+      position: relative;
+      width: 470/@bf;
+      height: 83/@bf;
+      margin:0 auto;
+      text-align: center;
+      .reduce-btn,.add-btn{
+        position: absolute;
+        top: 0;
+          cursor: pointer;
+        width: 123/@bf;
+        height: 83/@bf;
+        line-height: 83/@bf;
+        background-color: #ff4251;
+        color: #FFF;
+        font-size: 68/@bf;
+        border-radius: 10/@bf;
+      }
+      .reduce-btn{
+        left:0;
+    }
+    .add-btn{
+        right: 0;
+    }
+      .num{
+        position: absolute;
+        top: 0;
+        left:0;
+        margin:0 30/@bf;
+        height: 81/@bf;
+        width: 410/@bf;
+        line-height: 81/@bf;
+        color:#ff001e;
+        font-size: 50/@bf;
+        text-align: center;
+        z-index: -1;
+        padding:0 5px;
+        border:1px solid #ff4251;
+      }
+    }
+    .price {
+        font-size: 40/@bf;
+        color: #ff001e;
+        margin:20/@bf auto;
+        text-align: center;
+    }
+    .purchase-btn {
+        width: 152 / @bf;
+        height: 77 / @bf;
+        margin: 40 / @bf auto;
+        border-radius: 10 / @bf;
+        background-color: #9000ff;
+        color: #fff;
+        font-size: 42 / @bf;
+        text-align: center;
+        line-height: 77 / @bf;
+        cursor: pointer;
+        &:active {
+            opacity: 0.6;
+        }
+    }
+}
+
+.prevlist{
+    li{
+        margin-bottom: 30/@bf;
+    }
+    .heard{
+        position: absolute;
+        top: 0;
+        left:50%;
+        transform: translate(-50%,0);
+        width: 46/@bf;
+        height: 83/@bf;
+        .sprite;
+        background-position: -278/@bf -348/@bf;
+    }
+    .live{
+        position: absolute;
+        top:55/@bf;
+        right: -20/@bf;
+        width: 89/@bf;
+        height: 42/@bf;
+        .sprite;
+        transform:scale(0.8);
+        background-position: -550/@bf -340/@bf;
+    }
+    
+    .sweet{
+        span{
+            font-size: 28/@bf;
+        }
+        font-size: 30/@bf;
+        color: red;
+        font-weight: bold;
+        text-align: center;
+        float: left;
+        width: 100%;
+    }
+    .index1{
+        position: relative;
+        width: 380/@bf;
+        margin-top: 35/@bf;
+        .mod{
+            position: relative;
+            width: 180/@bf;
+            float: left;
+        }
+        .user{
+            position: relative;
+            width: 180/@bf;
+            float: right;
+        }
+        .crown{
+            position: absolute;
+            top: 0;
+            left:50%;
+            transform:translate(-50%,0);
+            width: 110/@bf;
+            height: 65/@bf;
+            .sprite;
+            background-position: -669/@bf -437/@bf;
+        }
+        .avatar-wrap{
+            width: 180/@bf;
+            height: 180/@bf;
+            margin:50/@bf 0 40/@bf;
+            border-radius: 50%;
+            overflow: hidden;
+            border:2/@bf solid #f69b00;
+        }
+        .index{
+            position: absolute;
+            bottom: 65/@bf;
+            left:50%;
+            transform: translate(-50%,0);
+            width: 171/@bf;
+            height: 39/@bf;
+            .sprite;
+            background-position:-821/@bf -252/@bf;
+        }
+    }
+    .index2,.index3{
+        position: relative;
+        width: 380/@bf;
+        .mod{
+            position: relative;
+            width: 180/@bf;
+            float: left;
+        }
+        .user{
+            position: relative;
+            width: 180/@bf;
+            float: right;
+        }
+    }
+    .index2{
+        .crown{
+            position: absolute;
+            top: 0;
+            left:50%;
+            transform:translate(-50%,0);
+            width: 110/@bf;
+            height: 65/@bf;
+            .sprite;
+            background-position: -799/@bf -437/@bf;
+        }
+        .avatar-wrap{
+            width: 180/@bf;
+            height: 180/@bf;
+            margin:50/@bf 0 40/@bf;
+            border-radius: 50%;
+            overflow: hidden;
+            border:2/@bf solid #a0a3a6;
+        }
+        .index{
+            position: absolute;
+            bottom: 65/@bf;
+            left:50%;
+            transform: translate(-50%,0);
+            width: 171/@bf;
+            height: 39/@bf;
+            .sprite;
+            background-position:-1014/@bf -252/@bf;
+        }
+    }
+    .index3{
+        .crown{
+            position: absolute;
+            top: 0;
+            left:50%;
+            transform:translate(-50%,0);
+            width: 110/@bf;
+            height: 65/@bf;
+            .sprite;
+            background-position: -539/@bf -437/@bf;
+        }
+        .avatar-wrap{
+            width: 180/@bf;
+            height: 180/@bf;
+            margin:50/@bf 0 40/@bf;
+            border-radius: 50%;
+            overflow: hidden;
+            border:2/@bf solid #f87b27;
+        }
+        .index{
+            position: absolute;
+            bottom: 65/@bf;
+            left:50%;
+            transform: translate(-50%,0);
+            width: 171/@bf;
+            height: 39/@bf;
+            .sprite;
+            background-position:-1219/@bf -252/@bf;
+        }
+    }
+}
+
+.lastlist{
+    overflow: hidden;
+    &:before{
+        content:"";
+        display: block;
+        float: left;
+        width: 916/@bf;
+        height: 4/@bf;
+        .sprite;
+        margin:0 25/@bf;
+        background-position: -393/@bf -413/@bf;
+    }
+    .box{
+        width: 350/@bf;
+        margin:50/@bf 50/@bf 0 50/@bf;
+        overflow: hidden;
+    }
+    .modbox,.userbox{
+        position: relative;
+        float: left;
+        .live{
+            position: absolute;
+            top:10/@bf;
+            right: -40/@bf;
+            width: 89/@bf;
+            height: 42/@bf;
+            .sprite;
+            transform:scale(0.8);
+            background-position: -550/@bf -340/@bf;
+        }
+    }
+    .mod,.user{
+        width: 140/@bf;
+        height: 140/@bf;
+        border-radius: 50%;
+        background:linear-gradient(to right,#567fe9,#fbb4ee,#567fe9);
+        overflow: hidden;
+    }
+    .avatar-wrap{
+        width: 134/@bf;
+        height: 134/@bf;
+        margin:3/@bf auto;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    .heart{
+        float: left;
+        width: 46/@bf;
+        height: 43/@bf;
+        margin: 50/@bf 12/@bf;
+        .sprite;
+        background-position: -929/@bf -437/@bf;
+    }
+    .sweet{
+        span{
+            font-size: 28/@bf;
+        }
+        font-size: 30/@bf;
+        color: red;
+        font-weight: bold;
+        text-align: center;
+        float: left;
+        width: 100%;
+    }
+    .nickname{
+        margin:10/@bf auto!important;
+        width: 140/@bf!important;
+    }
+}
+
+.personal{
+    position: relative;
+    width: 956/@bf;
+    height: 357/@bf;
+    margin:0 auto 20/@bf;
+    .bgms('personal.png',956,357);
+    &:before{
+        position: absolute;
+        top: -60/@bf;
+        content:"";
+        display: block;
+        float: left;
+        width: 916/@bf;
+        height: 4/@bf;
+        .sprite;
+        margin: 30/@bf 25/@bf;
+        background-position: -393/@bf -413/@bf;
+    }
+    .personal-l{
+        float: left;
+    }
+    .personal-r{
+        float: right;
+        margin:60/@bf 40/@bf 0 0;
+        li{
+            width: 600/@bf;
+            float: none;
+            height: 60/@bf;
+            div{
+                line-height: 60/@bf;
+                color: #fff;
+                font-size: 34/@bf;
+                width: 200/@bf;
+                text-align: center;
+                font-weight: bold;
+            }
+            .name{
+                text-shadow:4/@bf 4/@bf 3/@bf rgb(151,0,0);
+                font-size: 38/@bf;
+            }
+        }
+    }
+    .personalbox{
+        position: relative;
+        margin:55/@bf 0 10/@bf 110/@bf;
+        width: 177/@bf;
+        height: 177/@bf;
+        border-radius: 50%;
+        background:linear-gradient(to right,#567fe9,#fbb4ee,#567fe9);
+        display: table;
+    }
+    .avatar-wrap{
+        width: 167/@bf;
+        height: 167/@bf;
+        margin: 5/@bf auto;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    .live{
+        position: absolute;
+        top:10/@bf;
+        right: -30/@bf;
+        width: 89/@bf;
+        height: 42/@bf;
+        .sprite;
+        transform:scale(0.8);
+        background-position: -550/@bf -340/@bf;
+    }
+    .username{
+        width: 177/@bf;
+        .ellipsis;
+        color:#fff;
+        text-align: center;
+        margin-left:110/@bf;
+        font-size: 36/@bf;
+        text-shadow:4/@bf 4/@bf 3/@bf rgb(151,0,0); 
+    }
+}

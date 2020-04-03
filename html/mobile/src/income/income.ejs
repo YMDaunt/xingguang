@@ -1,0 +1,17 @@
+<article class="article">
+	<!-- 选自webpack-seed/pages/alert/index/content.ejs -->
+	<div id="page-wrapper">
+	  <div class="container-fluid" >
+	  	<h1>income</h1>
+	    <h2 class="page-header"></h2>
+	  </div>
+	</div>
+<%= packageId %>
+	<section id="app"></section>
+
+	<!--显示头像-->
+	<button @click="showAvatar">点hah我ya!，显示美女头像</button>
+
+	<img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/test.png')}" v-show="isShowAvatar"/>
+	<span class="img_bg"></span>
+</article>

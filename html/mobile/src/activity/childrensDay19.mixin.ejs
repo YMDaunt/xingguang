@@ -1,0 +1,390 @@
+<div class="page-content">
+    <!-- PK BLOCK S -->
+    <div class="sec-h cl-orange">热门童心对战</div>
+    <div class="pk-box">
+        <div class="pk-couple fl-center">
+            <div class="pk-i pk-sender">
+                <div class="pk-avatar-wrap pic pk-a-border">
+                    <img
+                        v-if="pkToper"
+                        class="pk-avatar r-img"
+                        :src="pkToper.fromHeadPic"
+                        :alt="pkToper.fromNickname"
+                        @click="goRoom({ rid: pkToper.fromRid, id: pkToper.fromMid })">
+                    <div v-else class="pic pk-a-holder"></div>
+                </div>
+                <p class="pk-name fl-center">
+                    <span class="nick txt-of cl-do">{{ pkToper ? pkToper.fromNickname : '虚位以待' }}</span>
+                    <span v-if="pkToper" :class="'level_icon m_level_icon_' + pkToper.fromLevel"></span>
+                </p>
+            </div>
+            <div class="pk-i pk-reciver">
+                <div class="pk-avatar-wrap pic pk-a-border">
+                    <img
+                        v-if="pkToper"
+                        class="pk-avatar r-img"
+                        :src="pkToper.toHeadPic"
+                        :alt="pkToper.toNickname"
+                        @click="goRoom({ rid: pkToper.toRid, id: pkToper.toMid })">
+                    <div v-else class="pic pk-a-holder"></div>
+                </div>
+                <p class="pk-name fl-center">
+                    <span class="nick txt-of cl-do">{{ pkToper ? pkToper.toNickname : '虚位以待' }}</span>
+                    <span v-if="pkToper" :class="'level_icon m_level_icon_' + pkToper.toLevel"></span>
+                </p>
+            </div>
+        </div>
+        <div class="pk-progress" :style="calcPkProgress">
+            <div class="pk-p-score pk-p-sender">{{ pkToper ? pkToper.fromScore : 0 }}</div>
+            <div class="pk-p-score pk-p-reciver">{{ pkToper ? pkToper.toScore : 0 }}</div>
+        </div>
+        <div v-show="!pkToper" class="pk-holder">
+            <div class="pic txt-pk-holder"></div>
+        </div>
+    </div>
+    <!-- PK BLOCK E -->
+
+    <!-- SCORE BLOCK S -->
+    <div class="score-wrap">
+        <div class="sec-h cl-orange">星光宝宝福利大放送</div>
+        <div class="score-desc fs cl-do">
+            活动期间全部主播每产生120w童心值，<br/>获得童心值前10名的主播和贡献值前10用户给予奖励
+            <div class="pic icon-qs btn" @click="toggleRW">?</div>
+            <div class="pc-tips">点击查看星光宝宝福利大放送奖励</div>
+        </div>
+        <div class="score-progress cl-do fs">{{ rwScore }}/1200000</div>
+        <div :class="['score-stage pic btn-pro fs-xl fl-center', rwStage]">
+            <span class="btn pic icon-left" @click="rwGo('prev')"></span>
+            <span class="txt-blpm">{{ rwStage === 'curr' ? '本轮' : '上一轮' }}排名</span>
+            <span class="btn pic icon-right" @click="rwGo('curr')"></span>
+        </div>
+        <div class="score-tab l-tab fl-b">
+            <div :class="['l-tab-i btn fl-center', rwTab === 'mod' && 'active']" @click="changeRWTab('mod')">
+                <span :class="['pic', rwTab === 'mod' ? 'txt-mod-a' : 'txt-mod']">主播</span>
+            </div>
+            <div :class="['l-tab-i btn fl-center', rwTab === 'user' && 'active']" @click="changeRWTab('user')">
+                <span :class="['pic', rwTab === 'user' ? 'txt-user-a' : 'txt-user']">用户</span>
+            </div>
+        </div>
+        <div class="score-rank">
+            <div class="l-thead">
+                <div class="l-th cell-1">排名</div>
+                <div class="l-th cell-2">{{ rwTab === 'mod' ? '本轮主播童心值' : '本轮用户贡献值' }}</div>
+                <div class="l-th cell-3">奖励</div>
+            </div>
+            <div class="sr-body">
+                <p v-if="rwRank.list.length === 0" class="rank-holder">去为自己喜爱的主播送礼物，快快占领拿奖励啦~</p>
+                <div v-for="(r, ri) in rwRank.list" :key="'rwRank_' + ri" class="l-tr">
+                    <div class="l-td cell-1">
+                        <span class="sr-ind">{{ ri + 1 }}</span>
+                    </div>
+                    <div class="l-td cell-2 fl-b ai-c">
+                        <img class="sr-avatar r-img" :src="r.headPic" :alt="r.nickname" @click="rwTab === 'mod' && goRoom(r)" />
+                        <div v-show="r.isPlaying" class="pic live"></div>
+                        <p class="sr-name txt-of cl-do">{{ r.nickname }}</p>
+                        <div :class="['level_icon', (rwTab === 'mod' ? 'm_level_icon_' : 'u_level_icon_') + r.level]"></div>
+                        <p class="sr-value txt-of">{{ r.score }}</p>
+                    </div>
+                    <div class="l-td cell-3 txt-of" v-html="r.score >= 40000 ? rwRewards[rwTab][rwRewards.map[ri]].join('<br/>') : '--'"></div>
+                </div>
+            </div>
+            <p class="sep-txt">注：本轮获得奖励需{{ rwTab === 'mod' ? '童心值' : '贡献值' }} ≥ 40000，若人数不足按实际人数发放</p>
+            <p v-if="showRWCenter" class="sep-line"></p>
+            <div v-if="showRWCenter" class="me-center fl-center">
+                <div class="brief">
+                    <div class="headpic" @click="rwTab === 'mod' && goRoom(rwRank.meCenter)">
+                        <img :src="rwRank.meCenter.headPic" alt="" class="mc-avatar r-img">
+                        <div v-show="rwRank.meCenter.isPlaying" class="pic live"></div>
+                    </div>
+                    <div class="lvname fl-center">
+                        <span class="nick txt-of">{{ rwRank.meCenter.nickName }}</span>
+                        <div :class="['level_icon', (rwTab === 'mod' ? 'm_level_icon_' : 'u_level_icon_') + rwRank.meCenter.level]"></div>
+                    </div>
+                </div>
+                <div class="status fl-b ai-c">
+                    <div v-for="(pi, pind) in [0, 2, 1, 3]" :key="'rw_mc_' + pind" class="status-i">
+                        <p class="key">{{ calcRMCenterInfos[pi].name }}</p>
+                        <p class="value txt-of" v-html="calcRMCenterInfos[pi].value"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SCORE BLOCK E -->
+
+    <!-- MOD/USER RANK BLOCK S -->
+    <div class="mu-tab l-tab fl-b">
+        <div :class="['l-tab-i btn fl-center', dataRTab === 'mod' && 'active']" @click="changeDTab('mod')">
+            <span :class="['pic', dataRTab === 'mod' ? 'txt-tx-a' : 'txt-tx']">童心榜</span>
+        </div>
+        <div :class="['l-tab-i btn fl-center', dataRTab === 'user' && 'active']" @click="changeDTab('user')">
+            <span :class="['pic', dataRTab === 'user' ? 'txt-gx-a' : 'txt-gx']">贡献榜</span>
+        </div>
+    </div>
+    <div :class="['mu-rank', dataRTab]">
+        <!-- rank top 3 -->
+        <div v-if="currRank.list.length !== 0" class="mur-top3">
+            <div v-for="(item, i) in currRank.list.slice(0, 3)" :class="['mur-top3-i', 'mur-top3-i' + i]">
+                <div class="headpic">
+                    <img class="avatar" :src="item.headPic" alt="头像" @click="dataRTab === 'mod' && goRoom(item)">
+                    <div :class="['pic cown', 'cown-' + (i+1)]"></div>
+                    <div v-show="item.isPlaying" class="pic live"></div>
+                </div>
+                <div class="nickname">
+                    <div class="txt-of name">{{ item.nickname }}</div>
+                    <div :class="['level_icon', (dataRTab === 'mod' ? 'm_level_icon_' : 'u_level_icon_') + item.level]"></div>
+                </div>
+                <div class="txt-of score">{{ dataRTab === 'mod' ? '童心值' : '贡献值' }}：{{ item.score }}</div>
+                <div v-if="dataRTab === 'mod'" :class="['btn fl-center btn-atte', item.isLoved && 'disable']" @click="!item.isLoved && atte(item)">{{ item.isLoved ? '已关注' : '关注'}}</div>
+            </div>
+        </div>
+        <div class="l-thead">
+            <div class="l-th cell-1">排名</div>
+            <div class="l-th cell-2">昵称</div>
+            <div class="l-th cell-3">{{ dataRTab === 'mod' ? '童心值' : '贡献值' }}</div>
+        </div>
+        <!-- rank others -->
+        <component
+            ref="rank-scroller"
+            class="mur-body"
+            :is="scroller"
+            :right="6"
+            :thumb-color="'#d55a03'">
+            <p v-if="currRank.list.length === 0" class="rank-holder">快去给喜爱的主播送礼物吧~</p>
+            <div v-for="(item, ind) in currRank.list.slice(3)" class="l-tr">
+                <div class="l-td cell-1">
+                    <span class="mur-ind">{{ ind + 4 }}</span>
+                </div>
+                <div class="l-td cell-2 fl-b ai-c">
+                    <img
+                        class="mur-avatar r-img"
+                        alt=""
+                        :src="item.headPic"
+                        @click="dataRTab === 'mod' && goRoom(item)" />
+                    <div v-show="item.isPlaying" class="pic live"></div>
+                    <p class="mur-name txt-of">{{ item.nickname }}</p>
+                    <div :class="['level_icon', (dataRTab === 'mod' ? 'm_level_icon_' : 'u_level_icon_') + item.level]"></div>
+                </div>
+                <div class="l-td cell-3">{{ item.score }}</div>
+            </div>
+        </component>
+        <p v-show="currRank.list.length !== 0" class="sep-txt">当前仅展示前100名{{ dataRTab === 'mod' ? '主播' : '用户' }}</p>
+        <p v-if="showDRCenter" class="sep-line"></p>
+        <div v-if="showDRCenter" class="me-center fl-center">
+            <div class="brief">
+                <div class="headpic" @click="dataRTab === 'mod' && goRoom(currRank.meCenter)">
+                    <img :src="currRank.meCenter.headPic" alt="" class="mc-avatar r-img">
+                    <div v-show="currRank.meCenter.isPlaying" class="pic live"></div>
+                </div>
+                <div class="lvname fl-center">
+                    <span class="nick txt-of">{{ currRank.meCenter.nickName }}</span>
+                    <div :class="['level_icon', (dataRTab === 'mod' ? 'm_level_icon_' : 'u_level_icon_') + currRank.meCenter.level]"></div>
+                </div>
+            </div>
+            <div class="status fl-b ai-c">
+                <div v-for="(pi, pind) in [0, 2, 1, 3]" :key="'dr_mc_' + pind" class="status-i">
+                    <p class="key">{{ currRank.meCenter.pairInfos[pi].name }}</p>
+                    <p :class="['value txt-of', dataRTab === 'mod' && pi === 1 && currRank.meCenter.pairInfos[pi].value !== 0 && 'underline']"
+                        @click="dataRTab === 'mod' && pi === 1 && currRank.meCenter.pairInfos[pi].value !== 0 && toggleGD()">
+                        {{ currRank.meCenter.pairInfos[pi].value }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MOD/USER RANK BLOCK E -->
+
+    <!-- COPYRIGHT -->
+    <p class="copyright cl-do fs">本活动最终解释权归平台运营团队所有</p>
+</div>
+
+<!-- FLOATER -->
+<div class="floater btn pic btn-rule" @click="toggleRule">活动规则</div>
+
+<!-- REWARDS -->
+<div class="layer layer-rewards" v-show="lRWShow"  @click="toggleRW">
+    <div class="layer-inner" @click.stop="">
+        <div class="btn pic btn-close" @click="toggleRW"></div>
+        <p class="rw-h sec-h cl-orange">星光宝宝福利大放送奖励</p>
+        <component
+            ref="rw-scroller"
+            class="layer-content"
+            :is="scroller"
+            :right="7"
+            :thumb-color="'#d55a03'">
+            <div class="rw-table">
+                <div class="l-thead">
+                    <div class="l-th cell-1">主播名次</div>
+                    <div class="l-th cell-2">奖励</div>
+                    <div class="l-th cell-3">用户名次</div>
+                    <div class="l-th cell-4">奖励</div>
+                </div>
+                <div class="l-tr">
+                    <div class="l-td cell-1">1</div>
+                    <div class="l-td cell-2">萌萌喵*1<br/>开播飘屏*2</div>
+                    <div class="l-td cell-3">1</div>
+                    <div class="l-td cell-4">年度助力票*100<br/>童趣party*2</div>
+                </div>
+                <div class="l-tr">
+                    <div class="l-td cell-1">2、3</div>
+                    <div class="l-td cell-2">麦克风*2<br/>开播飘屏*2</div>
+                    <div class="l-td cell-3">2、3</div>
+                    <div class="l-td cell-4">年度助力票*60<br/>童趣party*2</div>
+                </div>
+                <div class="l-tr">
+                    <div class="l-td cell-1 pad-fix"><span>4、5、<br/>6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+                    <div class="l-td cell-2">麦克风*1<br/>开播飘屏*1</div>
+                    <div class="l-td cell-3 pad-fix"><span>4、5、<br/>6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+                    <div class="l-td cell-4">年度助力票*40<br/>童趣party*1</div>
+                </div>
+                <div class="l-tr">
+                    <div class="l-td cell-1 pad-fix"><span>7、8、<br/>9、10&nbsp;&nbsp;</span></div>
+                    <div class="l-td cell-2">光之翼*1<br/>开播飘屏*1</div>
+                    <div class="l-td cell-3 pad-fix"><span>7、8、<br/>9、10&nbsp;&nbsp;</span></div>
+                    <div class="l-td cell-4">年度助力票*20<br/>童趣party*1</div>
+                </div>
+            </div>
+            <p class="rw-t rw-i">奖励说明：</p>
+            <p class="rw-i">1、每个主播单日获得开播飘屏上限为6个，自次日零点起，每日首次开播下发，每日下发一次。</p>
+            <p class="rw-i">2、礼物奖励实时下发至背包。</p>
+            <p class="rw-i">3、童趣party：奖励下发至背包，送出即有炸房效果，掉落克拉，主播无分成，该礼物6.2 23:59:59失效，每个用户单日获得童趣party上限为6个；</p>
+            <p class="rw-i">4、年度助力票会在6月份2019星光年度盛典第一季预选赛开始时 ，下发到用户背包，年度助力票主播无分成，仅增加主播直播间星光值和年度盛典榜单数据，助力票=10克拉/张。</p>
+            <p class="rw-i">5、该榜单数据不含PK额外的奖励值。</p>
+        </component>
+    </div>
+</div>
+
+<!-- GRADES -->
+<div class="layer layer-grades" v-show="lGDShow" @click="toggleGD">
+    <div class="layer-inner" @click.stop="">
+        <div class="btn pic btn-close" @click="toggleGD"></div>
+        <p class="grades-h">
+            童心值：<span class="cl-dp">{{ pkDetails.scoreTotal }}</span>，其中由PK奖励的童心值为：<span class="cl-dp">{{ pkDetails.awardTotal }}</span>
+        </p>
+        <p class="pic txt-pkjl">PK记录</p>
+        <div class="l-thead">
+            <div class="l-th cell-1">PK时间</div>
+            <div class="l-th cell-2">战况</div>
+            <div class="l-th cell-3">总票数</div>
+            <div class="l-th cell-4">我方票数</div>
+            <div class="l-th cell-5">本场奖励童心值</div>
+        </div>
+        <component
+            ref="gd-scroller"
+            class="layer-content"
+            :is="scroller"
+            :right="7"
+            :thumb-color="'#d55a03'">
+            <p v-show="pkDetails.list.length === 0" class="gd-holder">未产生有效PK记录，快去PK吧~</p>
+            <div v-for="(item, ii) in pkDetails.list" :key="'pk_re_' + ii" class="l-tr">
+                <div class="l-td cell-1">{{ item.pkTime.split(' ')[0] }}<br/>{{ item.pkTime.split(' ')[1] }}</div>
+                <div class="l-td cell-2">{{ item.pkResult }}</div>
+                <div class="l-td cell-3">{{ item.totalScore }}</div>
+                <div class="l-td cell-4">{{ item.myScore }}</div>
+                <div class="l-td cell-5">{{ item.award }}</div>
+            </div>
+        </component>
+        <p class="grades-tip">注：仅计算有效PK，即总票数大于等于5000且任意一方不得主动结束PK</p>
+    </div>
+</div>
+
+<!-- RULES -->
+<div class="layer layer-rules" v-show="lRuleShow" @click="toggleRule">
+    <div class="layer-inner" @click.stop="">
+        <div class="btn pic btn-close" @click="toggleRule"></div>
+        <p class="rule-h sec-h cl-orange">活动规则</p>
+        <component
+            ref="rules-scroller"
+            class="layer-content"
+            :is="scroller"
+            :right="7"
+            :thumb-color="'#d55a03'">
+            <p class="rule-i">1、活动时间：<span class="cl-dp">2019.05.28 12:00:00 ---- 06.01 23:59:59</span></p>
+            <p class="rule-i">2、活动礼物：本次活动不设置专属礼物，活动礼物为礼物面板中的全部礼物，但角标为周星和打榜的礼物除外，背包、守护、粉丝团面板的礼物送出均不增加童心值及贡献值。<span class="cl-dp">1克拉=1童心值，1克拉值=1贡献值。</span></p>
+            <img src="${require('../../../../static_guojiang_tv/src/mobile/v2/img/activity/childrensDay19/rule-pic.jpg')}" alt="活动礼物" class="rule-pic" />
+            <p class="rule-i">3、童心对战：PK胜利一方获得本场总PK票数的5%对应的的童心值，失败一方获得自己PK票数的3%对应的的童心值。平局则双方均获得各自PK票数的3%对应的童心值。主播通过PK奖励的童心值单日上限为20w，以PK结束时间（胜负分出时）计算进当日上限值。仅计算有效PK(双方票数之和大于等于5000且任意一方不得手动结束PK)。计算方式均为四舍五入取整。</p>
+            <p class="rule-i">4、星光宝宝福利大放送：活动期间全平台主播每产生120w童心值，该120w中获得童心值前10的主播给予奖励（童心值需大于4w），会实时在<span class="cl-dp">本轮获奖主播直播间飘屏通知</span>。120w中贡献值前10的用户给予奖励（贡献值需大于4w）。每轮童心值及贡献值不累计，PK奖励值不加入此部分。</p>
+            <div class="rw-table">
+                <div class="l-thead">
+                    <div class="l-th cell-1">主播名次</div>
+                    <div class="l-th cell-2">奖励</div>
+                    <div class="l-th cell-3">用户名次</div>
+                    <div class="l-th cell-4">奖励</div>
+                </div>
+                <div class="l-tr">
+                    <div class="l-td cell-1">1</div>
+                    <div class="l-td cell-2">萌萌喵*1<br/>开播飘屏*2</div>
+                    <div class="l-td cell-3">1</div>
+                    <div class="l-td cell-4">年度助力票*100<br/>童趣party*2</div>
+                </div>
+                <div class="l-tr">
+                    <div class="l-td cell-1">2、3</div>
+                    <div class="l-td cell-2">麦克风*2<br/>开播飘屏*2</div>
+                    <div class="l-td cell-3">2、3</div>
+                    <div class="l-td cell-4">年度助力票*60<br/>童趣party*2</div>
+                </div>
+                <div class="l-tr">
+                    <div class="l-td cell-1 pad-fix"><span>4、5、<br/>6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+                    <div class="l-td cell-2">麦克风*1<br/>开播飘屏*1</div>
+                    <div class="l-td cell-3 pad-fix"><span>4、5、<br/>6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+                    <div class="l-td cell-4">年度助力票*40<br/>童趣party*1</div>
+                </div>
+                <div class="l-tr">
+                    <div class="l-td cell-1 pad-fix"><span>7、8、<br/>9、10&nbsp;&nbsp;</span></div>
+                    <div class="l-td cell-2">光之翼*1<br/>开播飘屏*1</div>
+                    <div class="l-td cell-3 pad-fix"><span>7、8、<br/>9、10&nbsp;&nbsp;</span></div>
+                    <div class="l-td cell-4">年度助力票*20<br/>童趣party*1</div>
+                </div>
+            </div>
+            <p class="rw-t rw-i">星光宝宝福利大放送奖励下发说明：</p>
+            <p class="rw-i">1、礼物奖励实时下发至背包。</p>
+            <p class="rw-i">2、每个主播单日获得开播飘屏上限为6个，自次日零点起，每日首次开播下发，每日下发一次。</p>
+            <p class="rw-i">3、童趣party：奖励下发至背包，送出即有炸房效果，掉落克拉，主播无分成，该礼物6.2 23:59:59失效，每个用户单日获得童趣party上限为6个。</p>
+            <p class="rule-i">5、活动奖励</p>
+            <div class="rl-table">
+                <div class="l-thead">
+                    <div class="l-th cell-1">童心榜</div>
+                    <div class="l-th cell-2">奖励</div>
+                    <div class="l-th cell-3">童趣榜</div>
+                    <div class="l-th cell-4">奖励</div>
+                </div>
+                <div class="l-tr">
+                    <div class="l-td cell-1">第一名</div>
+                    <div class="l-td cell-2">300000克拉</div>
+                    <div class="l-td cell-3">第一名</div>
+                    <div class="l-td cell-4">年度助力票*30000<br/>上头条*20</div>
+                </div>
+                <div class="l-tr">
+                    <div class="l-td cell-1">第二名</div>
+                    <div class="l-td cell-2">200000克拉</div>
+                    <div class="l-td cell-3">第二名</div>
+                    <div class="l-td cell-4">年度助力票*20000<br/>上头条*15</div>
+                </div>
+                <div class="l-tr">
+                    <div class="l-td cell-1">第三名</div>
+                    <div class="l-td cell-2">150000克拉</div>
+                    <div class="l-td cell-3">第三名</div>
+                    <div class="l-td cell-4">年度助力票*15000<br/>上头条*10</div>
+                </div>
+                <div class="l-tr">
+                    <div class="l-td cell-1">第四、五名</div>
+                    <div class="l-td cell-2">100000克拉</div>
+                    <div class="l-td cell-3">第四、五名</div>
+                    <div class="l-td cell-4">年度助力票*10000<br/>上头条*8</div>
+                </div>
+            </div>
+            <p class="rw-i rw-t">奖励说明：</p>
+            <p class="rw-i">1、年度助力票会在6月份2019星光年度盛典第一季预选赛开始时 ，下发到用户背包。</p>
+            <p class="rw-i">2、年度助力票主播无分成，仅增加主播直播间星光值和年度盛典榜单数据。</p>
+            <p class="rw-i">3、克拉奖励将于活动结束的5个工作日内发放。</p>
+            <p class="rw-i">4、上头条奖励在活动结束后，即时下发至背包。</p>
+        </component>
+    </div>
+</div>
+
+<!-- toast msg层 -->
+<div class="toast-container" v-show="toastState" @click="hideToast">
+    <div class="toast-msg">{{ toastMsg }}</div>
+</div>
+
+<loading ref="loading" />

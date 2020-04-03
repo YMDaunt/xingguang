@@ -1,0 +1,601 @@
+// ../../../img/activity/queen/tangbao
+
+@activityName: 'queen/tangbao';
+@baseSize: 108rem; // 1080px -> fontSize -> 108px
+
+@contentBorderColor: #b0d6e3;
+
+@giftInfoFS: 40/@baseSize;
+@giftInfoNameColor: #537ee9;
+@giftInfoPriceColor: #0665b1;
+
+@imFS: 36/@baseSize;
+@imAskerFColor: #0665b1;
+@imAskerBgColor: #8ac9e8;
+@imReplyFColor: #fff;
+@imReplyBgColor: #537ee9;
+
+@cownFS: 32/@baseSize;
+@cownFColor: #51110c;
+
+@cownInfoNameFs: 34/@baseSize;
+@cownInfoNameColor: #537ee9;
+@cownInfoConFs: 32/@baseSize;
+@cownInfoConColor: #0665b1;
+
+@billIIndFS: 36/@baseSize;
+@billIIndFColor: #0665b1;
+@billINameFS: 36/@baseSize;
+@billINameFColor: #537ee9;
+@billIConFS: 34/@baseSize;
+@billIConFColor: #0665b1;
+
+@ruleFS: 36/@baseSize;
+@ruleFColor: #537ee9;
+
+//滚动更流畅
+body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+}
+
+#app button {
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+#app .button {
+    outline: none;
+    border: none;
+    text-align: center;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+#app img {
+    width: 100%;
+    height: 100%;
+}
+
+/* 通过less函数抽离公共样式 */
+.getBgStyles (@width, @height, @picName) {
+    width: @width/@baseSize;
+    height: @height/@baseSize;
+    background: url('../../../img/activity/queen/tangbao/@{picName}') no-repeat center;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.getContentBox () {
+    margin: (133/2)/@baseSize 30/@baseSize 0;
+    border: 8/@baseSize solid @contentBorderColor;
+}
+
+.getSpriteBgSize () {
+    background-size: 800/@baseSize 768/@baseSize;
+}
+
+@titleSpriteTop: 0, -134, -269, -405;
+.getTitle (@index) {
+	width: 516/@baseSize;
+    height: 133/@baseSize;
+    
+    background: url('../../../img/activity/queen/tangbao/sprite.png') no-repeat 0 extract(@titleSpriteTop, @index)/@baseSize;
+    margin: 0 auto;
+    transform: translateY(-50%);
+    .getSpriteBgSize;
+}
+
+.getSiderIcons () {
+    background-image: url('../../../img/activity/queen/tangbao/sider_icon.png');
+    background-repeat: no-repeat;
+    background-size: 450/@baseSize 953/@baseSize;
+}
+
+/* PC Mobile 公共样式部分 */
+
+/* Mobile 单独样式部分 */
+
+.banner {
+    .getBgStyles(1080, 751, 'mobile_banner.jpg');
+}
+
+.gifts {
+    .getBgStyles(1080, 974, 'bg1.jpg');
+
+    .content {
+        .getContentBox;
+
+        .title {
+            .getTitle(1);
+        }
+
+        .gifts-pic {
+            width: 400/@baseSize;
+            height: 400/@baseSize;
+            margin: -(83/2)/@baseSize auto 40/@baseSize;
+            overflow: hidden;
+        }
+
+        .gifts-info {
+            text-align: center;
+            font-size: @giftInfoFS;
+
+            .name {
+                color: @giftInfoNameColor;
+            }
+
+            .price {
+                color: @giftInfoPriceColor;
+            }
+        }
+
+        .go-room {
+            background: url('../../../img/activity/queen/tangbao/sprite.png') no-repeat 0 -548/@baseSize;
+            width: 270/@baseSize;
+            height: 94/@baseSize;
+            display: block;
+            margin: 40/@baseSize auto 40/@baseSize;
+            .getSpriteBgSize;
+
+            &:active {
+                background-position: 0 -653/@baseSize;
+            }
+        }
+    }
+}
+
+.questions {
+    .getBgStyles(1080, 1477, 'bg2.jpg');
+
+    .content {
+        .getContentBox;
+
+        .title {
+            .getTitle(2);
+        }
+
+        padding-bottom: 60/@baseSize;
+    }
+
+    .qlist {
+        margin: 0 18/@baseSize;
+
+        .item {
+            position: relative;
+
+            &.question {
+                margin-top: 54/@baseSize;
+
+                &.question:first-child {
+                    margin-top: 0;
+                }
+
+                .avatar {
+                    display: inline-block;
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+
+                    .pic {
+                        display: block;
+                        width: 122/@baseSize;
+                        height: 122/@baseSize;
+                        border-radius: 50%;
+                        margin: 0 auto;
+                    }
+
+                    .name {
+                        display: inline-block;
+                        font-size: 32/@baseSize;
+                        color: #537ee9;
+                        padding-top: 10/@baseSize;
+                    }
+                }
+
+                .word {
+                    display: block;
+                    position: relative;
+
+                    font-size: @imFS;
+                    color: @imAskerFColor;
+                    background: @imAskerBgColor;
+                    padding: 30/@baseSize;
+                    padding-bottom: 20/@baseSize;
+                    border-radius: 12/@baseSize;
+                    line-height: 58/@baseSize;
+
+                    margin-right: 184/@baseSize;
+                    margin-left: 154/@baseSize;
+
+                    &:after {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        border-top: 18/@baseSize solid transparent;
+                        border-bottom: 18/@baseSize solid transparent;
+                        border-right: 18/@baseSize solid @imAskerBgColor;
+                        top: 30/@baseSize;
+                        left: -16/@baseSize;
+                    }
+                }
+            }
+
+            &.answer {
+                margin-top: 50/@baseSize;
+
+                .avatar {
+                    display: inline-block;
+                    position: absolute;
+
+                    width: 154/@baseSize;
+                    height: 154/@baseSize;
+                    border-radius: 50%;
+                    top: -20/@baseSize;
+                    right: 0px;
+                }
+
+                .word {
+                    display: block;
+                    position: relative;
+
+                    font-size: @imFS;
+                    color: @imReplyFColor;
+                    background: @imReplyBgColor;
+
+                    padding: 30/@baseSize;
+                    padding-bottom: 20/@baseSize;
+                    border-radius: 12/@baseSize;
+                    line-height: 58/@baseSize;
+
+                    margin-left: 154/@baseSize;
+                    margin-right: 184/@baseSize;
+
+                    &:after {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        border-top: 18/@baseSize solid transparent;
+                        border-bottom: 18/@baseSize solid transparent;
+                        border-left: 18/@baseSize solid @imReplyBgColor;
+                        top: 30/@baseSize;
+                        right: -16/@baseSize;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.billboard {
+    .getBgStyles(1080, 2086, 'bg3.jpg');
+
+    .content {
+        .getContentBox;
+
+        .title {
+            .getTitle(3);
+        }
+
+        .cowns-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            margin-top: 40/@baseSize;
+            min-height: 204/@baseSize;
+
+            .throne {
+                position: relative;
+                margin: 0 30/@baseSize;
+
+                .badge {
+                    font-size: @cownFS;
+                    color: @cownFColor;
+                    text-align: center;
+                    line-height: 68/@baseSize;
+                }
+
+                &.second, &.third {
+                    width: 290/@baseSize;
+
+                    .cown {
+                        background: url('../../../img/activity/queen/tangbao/sprite.png') no-repeat -559/@baseSize -99/@baseSize;
+                        width: 116/@baseSize;
+                        height: 70/@baseSize;
+                        .getSpriteBgSize();
+
+                        position: absolute;
+                        top: -52/@baseSize;
+                        left: 50%;
+                        transform: translateX(-50%);
+                    }
+
+                    .avatar {
+                        width: 204/@baseSize;
+                        height: 204/@baseSize;
+                        border-radius: 50%;
+                        margin: 0 auto;
+                        overflow: hidden;
+                        border: 4/@baseSize solid #a0a3a6;
+                    }
+
+                    .badge {
+                        background: url('../../../img/activity/queen/tangbao/sprite.png') no-repeat -553/@baseSize -358/@baseSize;
+                        width: 234/@baseSize;
+                        height: 53/@baseSize;
+                        .getSpriteBgSize();
+
+                        position: absolute;
+                        top: 174/@baseSize;
+                        left: 50%;
+                        transform: translateX(-50%);
+                    }
+                }
+
+                &.third {
+                    .cown {
+                        background-position: -554/@baseSize -183/@baseSize;
+                    }
+
+                    .avatar {
+                        border-color: #f87b27;
+                    }
+
+                    .badge {
+                        background-position: -553/@baseSize -419/@baseSize;
+                    }
+                }
+
+                &.first {
+                    width: 305/@baseSize;
+
+                    .cown {
+                        background: url('../../../img/activity/queen/tangbao/sprite.png') no-repeat -543/@baseSize 0;
+                        width: 139/@baseSize;
+                        height: 83/@baseSize;
+                        .getSpriteBgSize();
+
+                        position: absolute;
+                        top: -68/@baseSize;
+                        left: 50%;
+                        transform: translateX(-50%);
+                    }
+
+                    .avatar {
+                        width: 250/@baseSize;
+                        height: 250/@baseSize;
+                        border-radius: 50%;
+                        margin: 0 auto;
+                        overflow: hidden;
+                        border: 4/@baseSize solid #f69b00;
+                    }
+
+                    .badge {
+                        background: url('../../../img/activity/queen/tangbao/sprite.png') no-repeat -553/@baseSize -290/@baseSize;
+                        width: 238/@baseSize;
+                        height: 54/@baseSize;
+                        .getSpriteBgSize();
+
+                        position: absolute;
+                        top: 210/@baseSize;
+                        left: 50%;
+                        transform: translateX(-50%);
+                    }
+                }
+            }
+        }
+
+        .cowns-info-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 38/@baseSize;
+            padding-bottom: 40/@baseSize;
+            border-bottom: 8/@baseSize solid @contentBorderColor;
+            min-height: 190/@baseSize;
+
+            .info {
+                text-align: center;
+                margin: 0 30/@baseSize 0;
+
+                &.second, &.third {
+                    width: 290/@baseSize;
+                }
+
+                &.first {
+                    width: 305/@baseSize;
+                }
+
+                .nickname {
+                    color: @cownInfoNameColor;
+                    font-size: @cownInfoNameFs;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .contribute {
+                    color: @cownInfoConColor;
+                    font-size: @cownInfoConFs;
+                    padding-top: 12/@baseSize;
+                    white-space: nowrap;
+                    word-break: break-all;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+            }
+        }
+
+        .bill-list {
+            height: 1270/@baseSize;
+            overflow-y: auto;
+
+            padding: 0/@baseSize 0 0/@baseSize;
+
+            .bill-item {
+                display: flex;
+                align-items: center;
+                margin: 34/@baseSize 0px;
+
+                .i-index {
+                    width: 100/@baseSize;
+                    font-size: @billIIndFS;
+                    color: @billIIndFColor;
+                    font-weight: bold;
+                    text-align: center;
+                }
+
+                .i-avatar {
+                    width: 144/@baseSize;
+                    height: 144/@baseSize;
+                    border-radius: 50%;
+                    background: linear-gradient(#f8b4ee, #567fe9, #f8b4ee);
+
+                    overflow: hidden;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    img {
+                        width: 136/@baseSize !important;
+                        height: 136/@baseSize !important;
+                        display: inline-block;
+                        border-radius: 50%;
+                    }
+                }
+
+                .i-nickname {
+                    color: @billINameFColor;
+                    font-size: @billINameFS;
+                    width: 310/@baseSize;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin: 0px  72/@baseSize 0px 50/@baseSize;
+                }
+
+                .i-contribute {
+                    color: @billIConFColor;
+                    font-size: @billIConFS;
+                    width: 300/@baseSize;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+
+        /*定义滚动条宽高及背景，宽高分别对应横竖滚动条的尺寸*/
+        // .scrollbar::-webkit-scrollbar {
+        //     width: 12/@baseSize;
+        //     background-color: transparent;
+        // }
+        /*定义滚动条的轨道，内阴影及圆角*/
+        // .scrollbar::-webkit-scrollbar-track {
+        //     background-color: transparent;
+        // }
+        /*定义滑块，内阴影及圆角*/
+        // .scrollbar::-webkit-scrollbar-thumb {
+        //     border-radius: 12/@baseSize;
+        //     background-color: rgba(45, 97, 226, .8);
+        // }
+    }
+}
+
+.rules {
+    .getBgStyles(1080, 538, 'bg4.jpg');
+
+    .content {
+        .getContentBox;
+
+        .title {
+            .getTitle(4);
+        }
+
+        .rule-info {
+            margin-top: -20/@baseSize;
+            padding: 0px 34/@baseSize 50/@baseSize 22/@baseSize;
+
+            .desc {
+                font-size: @ruleFS;
+                color: @ruleFColor;
+                line-height: 60/@baseSize;
+            }
+        }
+    }
+
+    .copyright {
+        font-size: @ruleFS;
+        color: @ruleFColor;
+        text-align: center;
+        padding-top: 70/@baseSize;
+    }
+}
+
+.gift-left-sider {
+    .getSiderIcons;
+    width: 190/@baseSize;
+    height: 907/@baseSize;
+    background-position: 0px 0px;
+    position: absolute;
+    top: 920/@baseSize;
+    left: 0px;
+}
+
+.gift-right-sider {
+    .getSiderIcons;
+    width: 88/@baseSize;
+    height: 159/@baseSize;
+    background-position: -362/@baseSize -15/@baseSize;
+    position: absolute;
+    top: 1558/@baseSize;
+    right: 0px;
+}
+
+.qs-right-sider {
+    .getSiderIcons;
+    width: 88/@baseSize;
+    height: 159/@baseSize;
+    background-position: -362/@baseSize -15/@baseSize;
+    position: absolute;
+    top: 2900/@baseSize;
+    right: 0px;
+}
+
+.list-left-sider {
+    .getSiderIcons;
+    width: 112/@baseSize;
+    height: 160/@baseSize;
+    background-position: 0/@baseSize -17/@baseSize;
+    position: absolute;
+    top: 3566/@baseSize;
+    left: 0px;
+}
+
+.rule-right-sider {
+    .getSiderIcons;
+    width: 108/@baseSize;
+    height: 203/@baseSize;
+    background-position: -342/@baseSize -367/@baseSize;
+    position: absolute;
+    top: 5126/@baseSize;
+    right: 0px;
+}
+
+.rule-left-sider {
+    .getSiderIcons;
+    width: 77/@baseSize;
+    height: 108/@baseSize;
+    background-position: -369/@baseSize -840/@baseSize;
+    position: absolute;
+    top: 5646/@baseSize;
+    left: 0px;
+}
+
+.footer {
+    .getBgStyles(1080, 238, 'bg_bottom.jpg');
+}

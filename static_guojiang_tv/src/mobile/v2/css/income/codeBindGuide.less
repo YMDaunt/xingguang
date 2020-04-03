@@ -1,0 +1,34 @@
+@bf:108rem;
+.border-radius (@radius : 50%){
+    border-radius:  @radius;
+    -webkit-border-radius:  @radius;
+    -o-border-radius:  @radius;
+    -moz-border-radius:  @radius;
+    -ms-border-radius:  @radius;
+}
+body{background: #fff;user-select: text;}
+.bg{background: url(../../img/income/bind_code.png?v=0907) no-repeat;background-size: 750/@bf 450/@bf;display: block;margin: 0 auto;}
+section{
+	text-align: center;padding: 0 140/@bf;
+	h2{font-size: 18px;color:#333333;height: 157/@bf;line-height: 157/@bf;padding-top: 13/@bf;font-weight: normal;}
+	.step_1_img{.bg;background-position: 0 0;width: 750/@bf;height: 195/@bf;margin-bottom: 10/@bf;}
+	.step_2_img{.bg;background-position: 0 -200/@bf;width: 750/@bf;height: 195/@bf;margin-bottom: 10/@bf;}
+	p{font-size: 14px;color:#333333;line-height: 58/@bf;
+		span{color:#ff0071;}
+	}
+
+	.arrow_icon{.bg;background-position: 0 -400/@bf;width: 51/@bf;height: 53/@bf;margin:25/@bf auto 13/@bf;}
+	p.auth_code{
+		width: 800/@bf;height: 136/@bf;line-height: 136/@bf;text-align: center;border:1px solid #313131;.border-radius(65/@bf);font-size:18px;color:#ff0071;display: block;margin: 95/@bf auto 0;
+		span{padding-left: 40/@bf;    user-select: text;}
+	}
+	small{font-size: 14px;color:#959595;padding: 30/@bf 0 70/@bf;display: block;}
+
+	button{height: 136/@bf;width: 800/@bf;line-height: 136/@bf;font-size: 18px;color:#ffffff;background:#ff0071;.border-radius(65/@bf);display: block;margin: 0 auto;border:none;
+		&:active{background: #da500e;}
+	}
+}
+
+@media only screen and (max-width: 340px){
+	section{padding:0 100/@bf;}
+}

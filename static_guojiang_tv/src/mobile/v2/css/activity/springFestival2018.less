@@ -1,0 +1,35 @@
+// ../../img/activity/springFestival2018
+
+@activityName: 'activity/springFestival2018';
+@bf: 108rem; // 1080px -> fontSize -> 108px
+@imgUrl: '../../img/activity/springFestival2018';
+
+@import './springFestival2018.mixin.less';
+
+/* 背景图 */
+.page-bgs {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-color: #ca0606;
+
+    .page-bg {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    // 定义背景图高度及资源
+    .bg1 {
+        height: 1000/@bf;
+        background-image: url('@{imgUrl}/bg0.jpg');
+    }
+
+    .bg2, .bg3 {
+        height: 3054/@bf;
+        background-image: url('@{imgUrl}/bg1.jpg');
+    }
+}
+
+/* 定义普通样式 E */

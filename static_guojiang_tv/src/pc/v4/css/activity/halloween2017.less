@@ -1,0 +1,749 @@
+@imgUrl: "../../img/activity/halloween2017/";
+@bf: 108rem;
+[v-cloak] {
+    display: none
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+}
+
+.bg(@url) {
+    background-image: url('@{imgUrl}@{url}');
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+
+.sprite1 {
+    background-image: url('@{imgUrl}sprite1.png');
+    background-repeat: no-repeat;
+    background-size: 866px 269px;
+}
+
+.sprite2 {
+    background-image: url('@{imgUrl}sprite2.png');
+    background-repeat: no-repeat;
+    background-size: 1080px 1200px;
+}
+
+.sprite3 {
+    background-image: url('@{imgUrl}sprite3.png');
+    background-repeat: no-repeat;
+    background-size: 646px 479px;
+}
+
+#app {
+    background-color: #43228d;
+}
+
+.banner {
+    height: 1096px;
+        width: 1050px;
+    margin: 0 auto;
+    overflow: hidden;
+    .bg('banner.jpg');
+    background-size: 1080px 1096px;
+    .active-time {
+        margin-top: 80px;
+        font-size: 40px;
+        color: #fff;
+        font-weight: bold;
+        .num {
+            padding-left: 310px;
+        }
+    }
+}
+
+.package {
+    height: 1152px;
+        width: 1050px;
+    margin: 0 auto;
+    .bg('package.jpg');
+    background-size: 1080px 1152px;
+    overflow: hidden;
+    .price {
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 335px;
+        font-size: 27px;
+        color: #ff75d4;
+        overflow: hidden;
+        p {
+            width: 50%;
+            text-align: center;
+        }
+    }
+    .btn-group1 {
+        width: 80%;
+        margin: 50px auto 0;
+        overflow: hidden;
+        .gift-btn {
+            width: 50%;
+            display: flex;
+            justify-content: space-around;
+        }
+        .preview {
+            width: 182px;
+            height: 80px;
+            .sprite1;
+            background-position: 0 0;
+            &:active {
+                background-position: -190px 0;
+            }
+        }
+    }
+    .animate {
+        position: relative;
+        width: 382px;
+        height: 360px;
+        .corner {
+            position: absolute;
+            top: 10px;
+            left: 260px;
+            width: 91px;
+            height: 70px;
+            .sprite1;
+            background-position: -775px -5px;
+            animation: fadeIn 1s linear infinite;
+        }
+        .little-ghost {
+            position: absolute;
+            top: 130px;
+            left: 100px;
+            width: 64px;
+            height: 73px;
+            .sprite1;
+            background-position: -727px -100px;
+            animation: move 2s linear infinite;
+        }
+    }
+    .btn-group2 {
+        .inlive {
+            width: 270px;
+            height: 83px;
+            margin-left: 520px;
+            .sprite1;
+            background-position: -1px -186px;
+            &:active {
+                background-position: -300px -186px;
+            }
+        }
+        .follow_btn {
+            width: 189px;
+            height: 83px;
+            margin-left: 30px;
+            .sprite1;
+            background-position: -1px -90px;
+            &:active {
+                background-position: -207px -90px;
+            }
+        }
+        .following {
+            width: 189px;
+            height: 83px;
+            margin-left: 30px;
+            .sprite1;
+            background-position: -413px -90px;
+            &:active {
+            background-position: -413px -90px;
+            }
+        }
+    }
+}
+
+.close {
+    float: right;
+    position: absolute;
+    right: 40px;
+    top: 30px;
+    width: 108px;
+    height: 108px;
+    .sprite1;
+    background-position: -619px -161px;
+}
+
+.purchase {
+    width: 182px;
+    height: 80px;
+    .sprite1;
+    background-position: -380px 0;
+    &:active {
+        background-position: -570px 0;
+    }
+}
+
+.purchase_box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 962px;
+    height: 424px;
+    padding-top: 60px;
+    .bg('pop-bg.png');
+    background-size: 962px 424px;
+    z-index: 9999;
+    .close {
+        display: block;
+        right: 40px;
+        top: 40px;
+    }
+    .rows {
+        color: #fef722;
+        font-size: 50px;
+        width: 450px;
+        margin: 20px auto;
+    }
+    .giftNum {
+        color: #000;
+        width: 200px;
+        height: 50px;
+        padding-left:5px;
+        font-size: 34px;
+    }
+    .purchase_btn {
+        .purchase;
+        display: block;
+        margin: 40px auto 0;
+    }
+}
+
+
+
+.layer-smash,
+.mask,
+.s_layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #000;
+    opacity: .6;
+    filter: alpha(opacity=60);
+    z-index: 9998;
+}
+#svgContainer {
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    overflow: hidden
+}
+
+.list {
+    position: relative;
+    .title {
+        width: 480px;
+        height: 157px;
+        margin: 20px auto;
+        .sprite2;
+        background-position: 0 -360px;
+    }
+    .handler {
+        // width: 1100px;
+        height: 218px;
+        margin-top: 30px;
+            width: 1050px;
+    margin: 30px auto 0;
+        .witch,
+        .ghost {
+            .sprite2;
+            width: 351px;
+            float: left;
+        }
+        .witch {
+            height: 139px;
+            margin: 70px 0 0 100px;
+            background-position: -53px 0;
+        }
+        .witch-on {
+            width: 478px;
+            height: 215px;
+            margin: 10px 0 0 90px;
+            background-position: 0 -139px;
+        }
+        .ghost {
+            height: 142px;
+            margin: 75px 0 0 42px;
+            background-position: -509px 0;
+        }
+        .ghost-on {
+            width: 478px;
+            height: 218px;
+            margin: 10px 0 0 40px;
+            background-position: -478px -142px;
+        }
+    }
+    .handler-content {
+        position: absolute;
+        top: 340px;
+        left: 50%;
+        width: 1050px;
+        height: 2054px;
+        transform: translate(-50%, 0);
+        .bg('list-bg.png');
+        background-size: 1050px 2054px;
+        z-index: 1;
+    }
+    .rules_btn {
+        width: 692px;
+        height: 149px;
+        margin: 2054px auto 0;
+        .sprite2;
+        background-position: 0 -784px;
+        &:active {
+            background-position: 0 -624px;
+        }
+    }
+}
+
+.witch-list,
+.ghost-list {
+    .prev-list {
+        li {
+            float: left;
+            width: 400px;
+            margin: 30px 0 0 100px;
+            .avatar_wrap {
+                position: relative;
+                width: 164px;
+                margin: 0 auto;
+                height: 174px;
+                color: #fff;
+                .sprite3;
+                background-position: -4px -246px;
+                transform: scale(1.8);
+                .crown {
+                    position: absolute;
+                    top: -2px;
+                    left: 46px;
+                    width: 86px;
+                    height: 51px;
+                    z-index: 3;
+                    .sprite3;
+                    background-position: -4px -428px;
+                }
+                .avatar_box {
+                    position: absolute;
+                    top: 40px;
+                    left: 27px;
+                    width: 124px;
+                    height: 124px;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    z-index: 1;
+                    .avatar {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .live {
+                    position: absolute;
+                    left: 28px;
+                    top: 122px;
+                    width: 40px;
+                    height: 20px;
+                    .sprite3;
+                    background-position: -485px -75px;
+                    z-index: 3;
+                }
+                .index {
+                    position: absolute;
+                    left: -2px;
+                    top: 148px;
+                    width: 178px;
+                    height: 39px;
+                    line-height: 32px;
+                    text-align: center;
+                    font-size: 22px;
+                    font-weight: bold;
+                    .sprite3;
+                    background-position: -102px -440px;
+                    z-index: 3;
+                }
+            }
+            .info {
+                margin-top: 100px;
+                p {
+                    color: #fff;
+                    overflow: hidden;
+                    height: 55px;
+                    line-height: 55px;
+                    font-size: 35px;
+                }
+                .nickname,
+                .gift_num {
+                    display: block;
+                    width: 60%;
+                    text-align: right;
+                    float: left;
+                    padding-right: 20px;
+                    .ellipsis;
+                }
+                .level_icon {
+                    margin-top: 10px;
+                }
+            }
+        }
+        .follow_btn {
+            width: 100px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 26px;
+            padding: 5px 25px;
+            color: #fff;
+            border-radius: 20px;
+            font-weight: bold;
+            background: #e200bf;
+        }
+        .following {
+            width: 100px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 26px;
+            padding: 5px 25px;
+            color: #fff;
+            border-radius: 20px;
+            font-weight: bold;
+            background-color: #959595;
+        }
+        li.no0 {
+            float: none;
+            width: 600px;
+            margin: 150px auto 50px;
+            .avatar_wrap {
+                width: 403px;
+                height: 234px;
+                background-position: 0 0;
+                .crown {
+                    top: -10px;
+                    left: 135px;
+                    width: 118px;
+                    height: 70px;
+                    background-position: -422px -117px;
+                }
+                .avatar_box {
+                    top: 50px;
+                    left: 110px;
+                    width: 170px;
+                    height: 170px;
+                }
+                .live {
+                    left: 115px;
+                    top: 165px;
+                    width: 52px;
+                    height: 26px;
+                    background-position: -419px -72px;
+                }
+                .index {
+                    left: 74px;
+                    top: 200px;
+                    width: 243px;
+                    height: 52px;
+                    line-height: 45px;
+                    font-size: 26px;
+                    background-position: -403px 0;
+                }
+            }
+            .info {
+                margin-top: 130px;
+                p {
+                    font-size: 40px;
+                }
+                .follow_btn {
+                    width: 150px;
+                    height: 60px;
+                    line-height: 60px;
+                    font-size: 28px;
+                    padding: 5px 25px;
+                    border-radius: 30px;
+                }
+            }
+        }
+        li.no2 {
+            float: right;
+            margin: 30px 100px 0 0;
+            .avatar_wrap {
+                background-position: -177px -245px;
+                .crown {
+                    background-position: -297px -428px;
+                    ;
+                }
+            }
+        }
+    }
+    .last-list {
+        width: 820px;
+        height: 855px;
+        margin: 0 auto;
+        overflow: auto;
+        li {
+            padding: 25px 0 15px;
+            overflow: hidden;
+            border-bottom: 2px solid #937b8c;
+        }
+        .index {
+            float: left;
+            width: 90px;
+            height: 80px;
+            line-height: 100px;
+            text-align: center;
+            // padding-left: 20px;
+            font-size: 37px;
+            font-weight: bold;
+            color: #fef722;
+        }
+        .avatar_wrap {
+            float: left;
+            position: relative;
+            line-height: 120px;
+            .avatar_box {
+                width: 80px;
+                height: 80px;
+                border: 2px solid #b5b5b5;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+            .live {
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                margin-left: -35px;
+                width: 71px;
+                height: 23px;
+                .sprite3;
+                background-position: -410px -211px;
+            }
+        }
+        .info {
+            float: left;
+            height: 80px;
+            line-height: 80px;
+            color: #fff;
+            margin-left: 40px;
+            float: left;
+            font-size: 30px;
+            p{
+                float: left;
+            }
+            span {
+                display: block;
+                float: left;
+            }
+            .nickname {
+                width: 200px;
+                .ellipsis;
+            }
+            .level_icon {
+                margin-top: 20px;
+            }
+            .gift_num {
+                color: #fff;
+                margin-left: 30px;
+            }
+        }
+    }
+}
+
+.ghost-list {
+    .prev-list {
+
+        .info .gift_num {
+            width: 100%!important;
+            text-align: center!important;
+        }
+    }
+}
+
+
+.s_layer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    z-index: 99;
+    opacity: 1;
+    background: rgba(0, 0, 0, .6);
+    .rules {
+        position: relative;
+        margin:100px auto;
+        width: 1074px;
+        height: 2846px;
+        .bg('rules-bg.png');
+        background-size: 1074px 2846px;
+        color: #fef722;
+        font-size: 38px;
+        overflow: hidden;
+        // z-index: 99;
+        .close{
+            top:60px;
+            right:60px;
+        }
+        .content {
+            margin: 250px auto 0;
+            width: 900px;
+            li {
+                margin: 20px 10px;
+            }
+        }
+        .gift {
+            margin: 680px auto 0;
+            width: 950px;
+            // font-size: 14px;
+            li {
+                float: left;
+                margin: 50px auto 400px;
+                width: 475px;
+                text-align: center;
+            }
+        }
+    }
+}
+
+
+.ghost-live {
+    overflow: hidden;
+    .title {
+        width: 499px;
+        height: 230px;
+        margin: 50px auto 0;
+        .sprite2;
+        background-position: -492px -367px;
+    }
+    ul {
+        margin-top: 80px;
+        overflow: hidden;
+    }
+    .ghost-live-list {
+        width: 90%;
+        margin: 0 auto 80px;
+        overflow: hidden;
+        .avatar_wrap {
+            float: left;
+            position: relative;
+            width: 464px;
+            height: 373px;
+            .bg('ghost-bg.png');
+            background-size: 464px 373px;
+            .avatar {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 256px;
+                height: 256px;
+            }
+        }
+        .live {
+            position: absolute;
+            top: 70px;
+            right: 130px;
+            width: 71px;
+            height: 23px;
+            transform: scale(1.6);
+            .sprite3;
+            background-position: -410px -211px;
+        }
+        .info {
+            float: left;
+            margin-left: 30px;
+            .nickname {
+                font-size: 60px;
+                width:400px;
+                .ellipsis;
+                color: #fef722;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+            .content {
+                color: #fff;
+                font-size: 40px;
+                width: 450px;
+                overflow: hidden;
+            }
+            .bold {
+                font-weight: bold;
+            }
+            .time {
+                font-size: 40px;
+                color: #fff;
+            }
+            .follow_btn {
+                width: 189px;
+                height: 83px;
+                margin-top: 20px;
+                .sprite1;
+                background-position: -1px -90px;
+                &:active {
+                    background-position: -207px -90px; // background-position: -812px -183px;
+                }
+            }
+            .following {
+                width: 189px;
+                height: 83px;
+                margin-top: 20px;
+                .sprite1;
+                background-position: -416px -90px; // background-position: -812px -183px;
+                &:active {
+                background-position: -416px -90px; // background-position: -812px -183px;
+                }
+            }
+        }
+    }
+    .bottom {
+        width: 960px;
+        height: 242px;
+        margin: 50px auto 120px;
+        .sprite2;
+        background-position: 0 -941px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@keyframes fadeIn {
+    30% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes move {
+    0% {
+        transform: translate3d(0, 0, 0)
+    }
+    25% {
+        transform: translate3d(0, -50%, 0)
+    }
+    50% {
+        transform: translate3d(0, 0, 0)
+    }
+    75% {
+        transform: translate3d(0, 50%, 0)
+    }
+    100% {
+        transform: translate3d(0, 0, 0)
+    }
+}

@@ -1,0 +1,718 @@
+@bf: 1px * 10 / 7;
+@baseImgPath: '../../img/activity/treasure';
+
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
+h1,h2,h3,strong {
+    font-weight: normal;
+}
+[v-cloak] {
+    display: none;
+}
+body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /*ios*/
+}
+//水平居中对齐
+.transformCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/*两端对齐*/
+.flex-justify-between(){
+    -webkit-box-pack:justify;
+    -moz-justify-content:space-between;
+    -webkit-justify-content:space-between;
+    justify-content: space-between;
+}
+/*上下居中*/
+.flex-align(){
+    -webkit-box-align:center;
+    -moz-align-items:center;
+    -webkit-align-items:center;
+    align-items: center;
+}
+// 顺序
+.flex-left(){
+    -webkit-box-align:flex-start;
+    -moz-align-items:flex-start;
+    -webkit-align-items:flex-start;
+    align-items: flex-start;
+}
+.flex(){
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.flex-justify-center(){
+    -webkit-box-pack:center;
+    -moz-justify-content:center;
+    -webkit-justify-content:center;
+    justify-content: center;
+}
+//多余的字符用省略号显示
+.ellipsis() {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.cus {
+    cursor: pointer;
+}
+.bgm(@imgName) {
+    background-image: url('../../img/activity/treasure/@{imgName}');
+}
+
+.spt {
+    background-image: url('../../img/activity/treasure/spt.png');
+    background-repeat: no-repeat;
+    background-size: 1200/@bf 800/@bf;
+}
+.bs {
+    box-shadow: inset 0 18/@bf 6/@bf 0 #fff9e2,
+                inset 0 0 0 0 #fffae4,
+                inset 0 0 0 0 #fae6aa,
+                inset 0 -18/@bf 6/@bf 0 #fae6aa;
+}
+
+.wrap {
+    position: relative;
+    height: 2889px;
+    padding-top: 900px;
+    .bgm('pc_bg.jpg');
+    background-size: 1920px 3789px;
+    background-position: center top;
+} 
+.db-box {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 25/@bf 40/@bf;
+    border-radius: 30/@bf;
+    border: 5/@bf solid #f24e0b;
+    background: #fff1c6;
+    .bs;
+    > b {
+        display: block;
+        width: 564/@bf;
+        height: 74/@bf;
+        margin: 0 auto 20/@bf;
+        .spt;
+        background-position: -497/@bf -565/@bf;
+    }
+    .count-time {
+        .flex;
+        .flex-justify-center;
+        margin-bottom: 32/@bf;
+        font-size: 62/@bf;
+        line-height: 96/@bf;
+    }
+    .count-time span {
+        color: #f24d0b;
+    }
+    .count-time .time {
+        .flex;
+        color: #f24d0b;
+        div {
+            line-height: 96/@bf;
+            font-size: 62/@bf;
+            color: #f24d0b;
+        }
+    }
+    ul {
+        .flex;
+        .flex-justify-between;
+        flex-flow: row wrap;
+    }
+    ul li {
+        padding: 0 10/@bf;
+        width: 31%;
+        margin-bottom: 60/@bf;
+        > div {
+            padding-bottom: 30/@bf;
+            border-radius: 12/@bf;
+            position: relative;
+            background: #fff;
+        }
+        .img-area-out {
+            width: 100%;
+            height: 360/@bf;
+            padding-top: 10/@bf;
+            background: #d5c68b;
+            border-radius: 12/@bf 12/@bf 0 0;
+        }
+        img {
+            display: block;
+            width: 350/@bf;
+            height: 350/@bf;
+            margin: 0 auto;
+        }
+        > div > b {
+            position: absolute;
+            top: 6/@bf;
+            left: 6/@bf;
+            display: block;
+            width: 130/@bf;
+            height: 120/@bf;
+            .spt;
+            background-position: -28/@bf -16/@bf;
+        }
+        > div > strong {
+            display: block;
+            color: #f24d0b;
+            line-height: 118/@bf;
+            text-align: center;
+            font-weight: bold;
+            font-size: 42/@bf;
+        }
+    }
+    .jd {
+        width: 460/@bf;
+        margin: 0 auto;
+        .jd-line {
+            position: relative;
+            height: 34/@bf;
+            border-radius: 17/@bf;
+            border: 1px solid #ff0054;
+        }
+        > p {
+            text-align: right;
+            font-size: 36/@bf;
+            line-height: 50/@bf;
+        }
+        > p span {
+            color: #ff0028;
+        }
+        .now-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: #ff0054;
+            border-radius: 17/@bf;
+        }
+    }
+    .join, .joined {
+        width: 328/@bf;
+        height: 102/@bf;
+        margin: 40/@bf auto 0;
+        .spt;
+    }
+    .join {
+        background-position: -24/@bf -313/@bf;
+    }
+    .join:active {
+        opacity: 0.8;
+    }
+    .joined {
+        background-position: -22/@bf -192/@bf;
+    }
+}
+
+// 记录列表
+.recode {
+    position: relative;
+    width: 1200px;
+    margin: 296/@bf auto 0;
+    padding: 25/@bf 14/@bf;
+    border-radius: 30/@bf;
+    border: 5/@bf solid #f24e0b;
+    background: #fff1c6;
+    .bs;
+    .tab-tit {
+        position: absolute;
+        top: -104/@bf;
+        left: 50%;
+        width: 1000px;
+        height: 104/@bf;
+        margin-left: -500px;
+        .flex;
+        .flex-justify-between;
+        > span {
+            width: 308/@bf;
+            margin-top: -5/@bf;
+            height: 86/@bf;
+            .spt;
+            -webkit-transform: scale(1.5);
+               -moz-transform: scale(1.5);
+                -ms-transform: scale(1.5);
+                 -o-transform: scale(1.5);
+                    transform: scale(1.5);
+            .cus;
+        }
+        .choose {
+            width: 322/@bf;
+            height: 104/@bf;
+            margin-top: -24/@bf;
+        }
+        > span:first-child {
+            background-position: -369/@bf -16/@bf;
+        }
+        > span:nth-child(2) {
+            background-position: -369/@bf -154/@bf;
+        }
+        > span:last-child {
+            background-position: -369/@bf -293/@bf;
+        }
+        > .choose:first-child {
+            background-position: -704/@bf -16/@bf;
+        }
+        > .choose:nth-child(2) {
+            background-position: -704/@bf -154/@bf;
+        }
+        > .choose:last-child {
+            background-position: -704/@bf -293/@bf;
+        }
+    }
+    .code-ed, .code-my {
+        .tit-txt, li {
+            width: 94%;
+            margin: 0 auto;
+            .flex;
+            .flex-justify-between;
+            b, strong {
+                font-size: 32/@bf;
+            }
+        }
+        .tit-txt span, li span {
+            width: 24%;
+            text-align: center;
+        }
+        .tit-txt span:nth-child(3), li span:nth-child(3) {
+            width: 28%;
+        }
+        .tit-txt {
+            height: 80/@bf;
+            font-size: 32/@bf;
+            font-weight: bold;
+            color: #f24d0b;
+            line-height: 80/@bf;
+        }
+        li {
+            height: 80/@bf;
+            vertical-align: middle;
+        }
+        .p-li {
+            border-radius: 40/@bf;
+            background: #f5dba3;
+        }
+        li span {
+            position: relative;
+            font-size: 32/@bf;
+        }
+        li span b, li span strong {
+            display: block;
+            width: 100%;
+            max-height: 80/@bf;
+            color: #f24d0b;
+            font-weight: normal;
+            overflow: hidden;
+        }
+        li span strong {
+            color: #51110c;
+        }
+        li span b, li span strong {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+               -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                 -o-transform: translate(-50%, -50%);
+                    transform: translate(-50%, -50%);
+        }
+    }
+    .treasure-my {
+        .tit-txt, li {
+            width: 94%;
+            margin: 0 auto;
+            .flex;
+            .flex-justify-between;
+            b, strong {
+                font-size: 32/@bf;
+            }
+        }
+        .tit-txt {
+            height: 80/@bf;
+            font-size: 32/@bf;
+            font-weight: bold;
+            color: #f24d0b;
+            span b {
+                font-weight: bold;
+            }
+        }
+        li > span {
+            height: 80/@bf;
+        }
+        li strong, li b {
+            font-weight: normal;
+        }
+        .tit-txt > span, li > span {
+            position: relative;
+            width: 14%;
+            &:nth-child(3) {
+                width: 30%;
+            }
+            &:nth-child(4) {
+                width: 22%;
+            }
+            &:nth-child(1) {
+                width: 20%;
+            }
+            b, strong {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                display: block;
+                width: 100%;
+                text-align: center;
+                color: #51110c;
+                -webkit-transform: translate(-50%, -50%);
+                   -moz-transform: translate(-50%, -50%);
+                    -ms-transform: translate(-50%, -50%);
+                     -o-transform: translate(-50%, -50%);
+                        transform: translate(-50%, -50%);
+            }
+            strong {
+                font-weight: normal;
+            }
+            b {
+                color: #f24d0b;
+            }
+        }
+        .p-li {
+            border-radius: 80/@bf;
+            background: #f5dba3;
+        }
+    }
+    .list-out {
+        height: 800/@bf;
+        overflow-y: hidden;
+    }
+    .com-tips {
+        line-height: 800/@bf;
+        font-size: 40/@bf;
+        color: #f24d0b;
+        text-align: center;
+    }
+}
+
+.copyright {
+    width: 622/@bf;
+    height: 46/@bf;
+    margin: 118/@bf auto 0;
+    .spt;
+    background-position: -19/@bf -685/@bf;
+}
+.refresh {
+    position: fixed;
+    z-index: 9;
+    top: 30%;
+    right: 50px;
+    width: 148/@bf;
+    height: 145/@bf;
+    .spt;
+    background-position: -196/@bf -16/@bf;
+    .cus;
+}
+.rule-btn {
+    position: fixed;
+    z-index: 9;
+    top: 50%;
+    right: 50px;
+    width: 148/@bf;
+    height: 379/@bf;
+    .spt;
+    background-position: -1028/@bf -21/@bf;
+    .cus;
+}
+
+// 购买
+.buybox {
+    & > div {
+        position: relative;
+        width: 1024/@bf;
+        height: 800/@bf;
+        left: 50%;
+        top: 50%;
+        margin: -400/@bf 0 0 -512/@bf; 
+        border-radius: 34/@bf;
+        background: #fff;
+        padding: 24/@bf 15/@bf;
+        border: 5/@bf solid #f24e0b;
+        .bs;
+    }
+    h3 {
+        padding-top: 30/@bf;
+        color: #f24d0b;
+        text-align: center;
+        font-size: 36/@bf;
+    }
+    .gift-img-cover {
+        width: 296/@bf;
+        height: 296/@bf;
+        margin: 34/@bf auto 12/@bf;
+        border-radius: 50%;
+        background: #d5c68b;
+    }
+    img {
+        display: block;
+        width: 296/@bf;
+        height: 296/@bf;
+        border-radius: 50%;
+    }
+    .buy-num {
+        position: relative;
+        width: 428/@bf;
+        margin: 10/@bf auto 0;
+        .flex;
+        .flex-justify-center;
+        div {
+            position: absolute;
+            top: 0;
+            z-index: 9999;
+            width: 102/@bf;
+            height: 88/@bf;
+            .cus;
+        }
+        input {
+            display: block;
+            width: 94%;
+            height: 54px;
+            margin: 0 auto;
+            border-radius: 2/@bf;
+            border-top: 1px solid #ff77a4;
+            border-bottom: 1px solid #ff77a4;
+            text-align: center;
+            font-size: 36/@bf;
+            font-weight: bold;
+            line-height: 54px;
+        }
+        .dev {
+            left: 0;
+            .spt;
+            background-position: -24/@bf -444/@bf;
+        }
+        .add {
+            right: 0;
+            .spt;
+            background-position: -157/@bf -443/@bf; 
+        }
+        .dev:active {
+            opacity: 0.8;
+        }
+        .add:active {
+            opacity: 0.8;
+        }
+    }
+    p {
+        text-align: center;
+        line-height: 80/@bf;
+        color: #51110c;
+        font-size: 36/@bf;
+    }
+    strong {
+        display: block;
+        text-align: center;
+        color: #f24d0b;
+        line-height: 58/@bf;
+        font-size: 36/@bf;
+        b {
+            padding: 0 10/@bf;
+            color: #ff0054;
+            font-size: 36/@bf;
+        }
+    }
+    .sure-buy {
+        width: 294/@bf;
+        height: 86/@bf;
+        margin: 16/@bf auto 0;
+        .spt;
+        .cus;
+        background-position: -22/@bf -567/@bf;
+        &:active {
+            opacity: 0.8;
+        }
+    }
+}
+
+.close-btn {
+    position: absolute;
+    right: 16/@bf;
+    top: 16/@bf;
+    z-index: 9;
+    width: 96/@bf;
+    height: 96/@bf;
+    .spt;
+    background-position: -285/@bf -439/@bf;
+    .cus;
+}
+.close-btn:active {
+    opacity: 0.8;
+}
+
+// 余额不足
+.no-enough {
+    position: relative;
+    width: 1024/@bf;
+    height: 440/@bf;
+    left: 50%;
+    top: 50%;
+    margin: -220/@bf 0 0 -512/@bf; 
+    border-radius: 34/@bf;
+    background: #fff;
+    padding: 24/@bf 15/@bf;
+    border: 5/@bf solid #f24e0b;
+    .bs;
+    p {
+        padding: 68/@bf 0 48/@bf;
+        color: #f24d0b;
+        font-size: 40/@bf;
+        text-align: center;
+        font-weight: bold;
+    }
+    .not-enough-tips {
+        width: 460/@bf;
+        margin: 20/@bf auto 0/@bf;
+        > div {
+            .flex;
+            .flex-justify-between;   
+        }
+        > div div {
+            width: 196/@bf;
+            height: 92/@bf;
+            .spt;
+        }
+        .not-cz {
+            background-position: -405/@bf -441/@bf;
+        }
+        .do-cz {
+            background-position: -611/@bf -439/@bf;
+        }
+    }
+}
+
+// 幸运号码
+.luck {
+    position: relative;
+    width: 1024/@bf;
+    height: 480/@bf;
+    left: 50%;
+    top: 50%;
+    margin: -240/@bf 0 0 -512/@bf; 
+    border-radius: 34/@bf;
+    background: #fff;
+    padding: 80/@bf 15/@bf 0;
+    border: 5/@bf solid #f24e0b;
+    .bs;
+    > p {
+        color: #f24d0b;
+        font-size: 40/@bf;
+        line-height: 62/@bf;
+        text-align: center;
+    }
+    .number-txt {
+        width: 568/@bf;
+        height: 88/@bf;
+        margin: 38/@bf auto 34/@bf;
+        border: 1px solid #ff0054;
+        border-radius: 44/@bf;
+        text-align: center;
+        color: #51110c;
+        font-weight: bold;
+        line-height: 88/@bf;
+        font-size: 36/@bf;
+    }
+    span {
+        display: block;
+        text-align: center;
+        color: #51110c;
+        font-size: 36/@bf;
+    }
+}
+
+// 规则
+.rule-out {
+    position: relative;
+    width: 1024/@bf;
+    height: 860/@bf;
+    left: 50%;
+    top: 50%;
+    margin: -430/@bf 0 0 -512/@bf; 
+    border-radius: 34/@bf;
+    background: #faedb9;
+    padding: 30/@bf 15/@bf 0;
+    border: 5/@bf solid #f24e0b;
+    .bs;
+    .rule-cover {
+        height: 496px;
+        overflow-y: hidden;
+    }
+    h3 {
+        width: 300/@bf;
+        height: 92/@bf;
+        margin: 22/@bf auto 25/@bf;
+        .spt;
+        background-position: -851/@bf -434/@bf;
+    }
+    p {
+        margin-bottom: 20/@bf;
+        b {
+            font-size: 36/@bf;
+        }
+        span {
+            float: left;
+            width: 52/@bf;
+            height: 54/@bf;
+            line-height: 54/@bf;
+            text-align: center;
+            font-size: 36/@bf;
+            color: #faedb9;
+            .spt;
+            background-position: -362/@bf -587/@bf;
+        }
+        strong {
+            float: left;
+            width: 910/@bf;
+            margin-left: 10/@bf;
+            line-height: 58/@bf;
+            color: #51110c;
+            font-size: 36/@bf;
+        }
+        b {
+            font-weight: normal;
+            color: #ff2646;
+        }
+    }
+}
+
+
+
+.posi {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+}
+.tost {
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    top: 50%;
+    width: 680/@bf;
+    margin-left: -340/@bf;
+    height: 68/@bf;
+    line-height: 68/@bf;
+    text-align: center;
+    border-radius: 18/@bf;
+    color: #fff;
+    background: rgba(0 ,0, 0, 0.6);
+    font-size: 36/@bf;
+}
